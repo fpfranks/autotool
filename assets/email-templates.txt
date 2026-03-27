@@ -1,0 +1,581 @@
+========================================================
+AI LEAD REPLY BOT — COLD EMAIL TEMPLATES & FOLLOW-UP SEQUENCES
+UK Niches | British English | Ready to Send
+========================================================
+
+HOW TO USE THESE TEMPLATES
+---------------------------
+- Replace [BUSINESS NAME] and [OWNER NAME] with real details from your research
+- Replace [YOUR NAME] with your name
+- Replace [YOUR_SALES_PAGE_URL] with your actual sales page URL
+- Keep subject lines short — they're written for high open rates
+- Send from a warmed-up Gmail address (see gmail-setup.txt)
+- Never bulk-send. Personalise each one slightly before hitting send.
+- Aim for 10–15 personalised sends per day maximum
+
+========================================================
+NICHE 1 — CAR GARAGE / MOT CENTRE
+========================================================
+
+--- INITIAL EMAIL ---
+
+Subject: quick question about [BUSINESS NAME]'s website
+
+Hi [OWNER NAME],
+
+I was looking at your website and noticed there's no live chat or instant reply on the enquiry form — if someone fills it in at 9pm asking about an MOT slot, they're probably gone by morning.
+
+I've built a simple AI bot that replies to those enquiries instantly, in your voice, 24/7 — it even asks for their reg number and preferred time slot so you've got a proper booking ready when you open up.
+
+It's live within 48 hours and I've had garage owners tell me they're picking up 3–4 extra jobs a week just from leads they'd previously missed.
+
+Would it be worth a quick look? Full details here: [YOUR_SALES_PAGE_URL]
+
+Cheers,
+[YOUR NAME]
+
+---
+
+--- DAY 3 FOLLOW-UP ---
+
+Subject: Re: quick question about [BUSINESS NAME]'s website
+
+Hi [OWNER NAME],
+
+Just bumping this up in case it got buried — totally understand you're busy!
+
+The thing I keep hearing from garage owners is "I was under a car and couldn't answer" — which is exactly why this works. The bot handles those missed enquiries so you don't have to.
+
+Happy to answer any questions: [YOUR_SALES_PAGE_URL]
+
+[YOUR NAME]
+
+---
+
+--- DAY 7 FOLLOW-UP ---
+
+Subject: one more thing, then I'll leave you alone
+
+Hi [OWNER NAME],
+
+Last message from me, promise.
+
+I had a garage in Wolverhampton sign up last month — within their first week, the bot had handled 11 enquiries that came in outside of opening hours. They'd have lost all of them before.
+
+If that sounds useful, here's where to get started: [YOUR_SALES_PAGE_URL]
+
+If now's not the right time, no worries at all — best of luck with the business.
+
+[YOUR NAME]
+
+---
+
+--- DAY 14 CLOSING THE LOOP ---
+
+Subject: closing the loop — [BUSINESS NAME]
+
+Hi [OWNER NAME],
+
+Closing the loop on my previous messages — clearly not the right time, and that's completely fine.
+
+If it ever becomes relevant (especially when things slow down and you want to make sure every enquiry counts), you can find more info here: [YOUR_SALES_PAGE_URL]
+
+Wishing you a busy season ahead.
+
+[YOUR NAME]
+
+========================================================
+NICHE 2 — ESTATE AGENT
+========================================================
+
+--- INITIAL EMAIL ---
+
+Subject: losing valuations to slow response times?
+
+Hi [OWNER NAME],
+
+Spotted [BUSINESS NAME] on Rightmove — congrats on the listings.
+
+One thing I notice with a lot of independent agents is that valuation requests that come in on evenings or weekends sit unanswered until Monday morning — and by then the vendor's already booked with someone else.
+
+I set up an AI response bot for estate agents that instantly replies to every valuation enquiry, qualifies the lead, and books the appointment — 24/7. You get a WhatsApp ping with the full details.
+
+Worth 3 minutes of your time: [YOUR_SALES_PAGE_URL]
+
+Best,
+[YOUR NAME]
+
+---
+
+--- DAY 3 FOLLOW-UP ---
+
+Subject: Re: losing valuations to slow response times?
+
+Hi [OWNER NAME],
+
+Just a quick follow-up — I know it's a busy time of year for the market.
+
+The stat that sticks with me: 78% of vendors go with the first agent to respond to their enquiry. A lot of independent agents are losing out purely on response speed, not on service quality.
+
+The bot fixes that without you having to do anything differently: [YOUR_SALES_PAGE_URL]
+
+[YOUR NAME]
+
+---
+
+--- DAY 7 FOLLOW-UP ---
+
+Subject: the one thing Purplebricks does better than most independents
+
+Hi [OWNER NAME],
+
+Not a fan of the comparison — but Purplebricks' biggest advantage over independent agents isn't price, it's 24/7 responsiveness. Vendors feel heard immediately.
+
+The AI bot I build for estate agents gives you that same instant response without the corporate feel — it sounds exactly like your team, books the valuation, and you get notified straight away.
+
+Details here if you're curious: [YOUR_SALES_PAGE_URL]
+
+[YOUR NAME]
+
+---
+
+--- DAY 14 CLOSING THE LOOP ---
+
+Subject: signing off — [BUSINESS NAME]
+
+Hi [OWNER NAME],
+
+Last one from me — clearly not on your radar right now and I completely respect that.
+
+If the market quietens and converting more valuations becomes a priority, you know where to find me: [YOUR_SALES_PAGE_URL]
+
+All the best,
+[YOUR NAME]
+
+========================================================
+NICHE 3 — HAIR SALON / BARBER
+========================================================
+
+--- INITIAL EMAIL ---
+
+Subject: losing bookings when you're mid-cut?
+
+Hi [OWNER NAME],
+
+Quick one — I was looking at [BUSINESS NAME] online and noticed you take enquiries through your website/Instagram.
+
+The problem with that is every time a potential client messages while you're mid-cut, they're waiting — and if they don't hear back quickly, they just book someone else. It happens more than most salon owners realise.
+
+I build AI bots that reply instantly to every enquiry (at any hour), ask about the service they want, and collect their availability so booking is a doddle. You just get a notification with the details.
+
+Have a look here: [YOUR_SALES_PAGE_URL]
+
+[YOUR NAME]
+
+---
+
+--- DAY 3 FOLLOW-UP ---
+
+Subject: Re: losing bookings when you're mid-cut?
+
+Hi [OWNER NAME],
+
+Just following up — I know you're probably swamped on the floor most of the day!
+
+The clients you're most likely losing are the ones who message after 7pm when you're done for the day. The bot handles all of that overnight so you wake up with bookings already waiting.
+
+More info: [YOUR_SALES_PAGE_URL]
+
+[YOUR NAME]
+
+---
+
+--- DAY 7 FOLLOW-UP ---
+
+Subject: quick thing I thought you'd want to know
+
+Hi [OWNER NAME],
+
+Had a salon owner in Leeds message me last week — she said the bot picked up 6 new bookings in its first week, all from enquiries she'd received late in the evenings and on Sundays.
+
+For £147 a month that's a pretty decent return if each booking is £50+.
+
+Here's all the info: [YOUR_SALES_PAGE_URL]
+
+[YOUR NAME]
+
+---
+
+--- DAY 14 CLOSING THE LOOP ---
+
+Subject: no worries — [BUSINESS NAME]
+
+Hi [OWNER NAME],
+
+Wrapping up my follow-ups now — clearly not the right fit at the moment.
+
+If you ever find yourself wishing you could respond to enquiries faster without being glued to your phone, feel free to check this out: [YOUR_SALES_PAGE_URL]
+
+Hope the bookings are flying in regardless!
+
+[YOUR NAME]
+
+========================================================
+NICHE 4 — RESTAURANT / TAKEAWAY
+========================================================
+
+--- INITIAL EMAIL ---
+
+Subject: table enquiries coming in when you're in the weeds?
+
+Hi [OWNER NAME],
+
+I came across [BUSINESS NAME] on Google — the reviews look great, you're clearly doing something right.
+
+One thing I notice with busy restaurants is that table booking enquiries and private hire requests that come in on Facebook or the website often go unanswered during service — which is exactly when you're too busy to reply.
+
+I build AI bots that handle those messages instantly: ask about party size, dietary requirements, preferred dates — and get the booking confirmed before the customer loses interest.
+
+Worth a look if busy periods mean missed bookings: [YOUR_SALES_PAGE_URL]
+
+[YOUR NAME]
+
+---
+
+--- DAY 3 FOLLOW-UP ---
+
+Subject: Re: table enquiries coming in when you're in the weeds?
+
+Hi [OWNER NAME],
+
+Just a quick nudge — I know lunch service isn't exactly the ideal time to read emails!
+
+Private hire and large table enquiries are often worth £500–£2,000+ each. Losing two or three of those a month because of slow responses adds up fast. The bot makes sure that never happens again.
+
+Details here: [YOUR_SALES_PAGE_URL]
+
+[YOUR NAME]
+
+---
+
+--- DAY 7 FOLLOW-UP ---
+
+Subject: one more thing — Friday night enquiries
+
+Hi [OWNER NAME],
+
+The busiest time for restaurant enquiries? Friday and Saturday evenings — when you're absolutely flat out. That's also when you're least able to respond to incoming messages.
+
+The AI bot I build replies to those enquiries within seconds, handles the initial questions, and gets people committed to a booking. You just get a notification when someone's confirmed.
+
+Full details: [YOUR_SALES_PAGE_URL]
+
+[YOUR NAME]
+
+---
+
+--- DAY 14 CLOSING THE LOOP ---
+
+Subject: all the best — [BUSINESS NAME]
+
+Hi [OWNER NAME],
+
+Last email from me — this clearly isn't the right time.
+
+If it ever becomes relevant (especially heading into the busy season), feel free to check it out: [YOUR_SALES_PAGE_URL]
+
+Cheers and good luck with the restaurant,
+[YOUR NAME]
+
+========================================================
+NICHE 5 — PLUMBER / ELECTRICIAN
+========================================================
+
+--- INITIAL EMAIL ---
+
+Subject: missing emergency call-outs at night?
+
+Hi [OWNER NAME],
+
+Found [BUSINESS NAME] on Google — looks like you cover [AREA] for [plumbing/electrical] work.
+
+The thing with trades is a lot of the high-value emergency jobs (burst pipes, power outages) come through at antisocial hours. If there's no instant reply, homeowners ring the next number on Google and you've lost a £300+ job.
+
+I build AI bots that respond to those enquiries immediately — day or night — triage the urgency, collect their address and contact details, and notify you straight away so you can decide whether to take it.
+
+Worth 3 minutes here: [YOUR_SALES_PAGE_URL]
+
+[YOUR NAME]
+
+---
+
+--- DAY 3 FOLLOW-UP ---
+
+Subject: Re: missing emergency call-outs at night?
+
+Hi [OWNER NAME],
+
+Quick follow-up — I know you're likely on the tools most of the day.
+
+The bot doesn't try to replace your judgment on whether to take a job — it just makes sure the lead is captured and warm when you do get a free minute to call back. No more missed opportunities because you were mid-job.
+
+More info: [YOUR_SALES_PAGE_URL]
+
+[YOUR NAME]
+
+---
+
+--- DAY 7 FOLLOW-UP ---
+
+Subject: thought this might be relevant
+
+Hi [OWNER NAME],
+
+Had an electrician sign up recently — he said the thing he didn't expect was how many people were messaging him through his website at 11pm asking about consumer unit replacements. The bot handles all of those now and he books them in the next morning.
+
+If that sounds familiar: [YOUR_SALES_PAGE_URL]
+
+[YOUR NAME]
+
+---
+
+--- DAY 14 CLOSING THE LOOP ---
+
+Subject: closing the loop — [BUSINESS NAME]
+
+Hi [OWNER NAME],
+
+Last one from me — I appreciate you reading this far even if the timing isn't right.
+
+If things ever slow down and you want to make sure every enquiry counts, the full details are here: [YOUR_SALES_PAGE_URL]
+
+Best of luck,
+[YOUR NAME]
+
+========================================================
+NICHE 6 — DENTAL PRACTICE
+========================================================
+
+--- INITIAL EMAIL ---
+
+Subject: new patient enquiries going cold overnight?
+
+Hi [OWNER NAME / PRACTICE MANAGER],
+
+I came across [PRACTICE NAME] online — you've got great reviews on Google.
+
+One thing I've noticed with dental practices is that new patient enquiries (especially for cosmetic treatments like Invisalign, whitening, or implants) often come in via the website contact form in the evenings. With no instant reply, patients book elsewhere — especially for cosmetic work where they're comparing multiple practices.
+
+I build an AI bot that replies to every new patient enquiry instantly, answers common questions about treatments and prices, and captures their details so the front desk can call them back the next morning with a warm lead.
+
+Worth a look: [YOUR_SALES_PAGE_URL]
+
+Best,
+[YOUR NAME]
+
+---
+
+--- DAY 3 FOLLOW-UP ---
+
+Subject: Re: new patient enquiries going cold overnight?
+
+Hi [OWNER NAME],
+
+Following up briefly — I know the practice is busy.
+
+The practices that benefit most from this are ones doing cosmetic treatments, as patients shopping for Invisalign or implants are comparing 3–4 practices at once and go with the first to respond properly. The bot makes sure that's always you.
+
+Details here: [YOUR_SALES_PAGE_URL]
+
+[YOUR NAME]
+
+---
+
+--- DAY 7 FOLLOW-UP ---
+
+Subject: one thing that's changed for other practices
+
+Hi [OWNER NAME],
+
+Had a dental practice in Birmingham sign up — within 3 weeks, their front desk told them they'd had 14 new patient enquiries handled by the bot, 9 of which converted to appointments. They'd previously been responding the following morning and losing most of them.
+
+If that sounds useful: [YOUR_SALES_PAGE_URL]
+
+[YOUR NAME]
+
+---
+
+--- DAY 14 CLOSING THE LOOP ---
+
+Subject: leaving you to it — [PRACTICE NAME]
+
+Hi [OWNER NAME],
+
+Last message — if it's not right for the practice at the moment, that's completely fine.
+
+If new patient acquisition ever becomes a focus, feel free to revisit: [YOUR_SALES_PAGE_URL]
+
+All the best,
+[YOUR NAME]
+
+========================================================
+NICHE 7 — PERSONAL TRAINER / GYM
+========================================================
+
+--- INITIAL EMAIL ---
+
+Subject: losing sign-ups when you're training clients?
+
+Hi [OWNER NAME],
+
+Came across [BUSINESS NAME] on Instagram — your content looks great, clearly building a solid following.
+
+The thing with personal training is that potential clients often reach out after seeing a post at 9pm, and if there's no reply until the next day, they've moved on or talked themselves out of it. The impulse to join a gym or hire a PT is strongest in that first 10 minutes.
+
+I build an AI bot that captures those enquiries instantly — answers questions about your programmes, pricing, and availability, and gets them committed to a consultation before they lose momentum.
+
+Have a look: [YOUR_SALES_PAGE_URL]
+
+Cheers,
+[YOUR NAME]
+
+---
+
+--- DAY 3 FOLLOW-UP ---
+
+Subject: Re: losing sign-ups when you're training clients?
+
+Hi [OWNER NAME],
+
+Quick follow-up — the irony of messaging a PT about responding to messages while you're training isn't lost on me!
+
+The bot just makes sure no interested lead goes cold while you're on the floor. Enquiries in, details captured, you follow up when you're free. Simple as that.
+
+Full info: [YOUR_SALES_PAGE_URL]
+
+[YOUR NAME]
+
+---
+
+--- DAY 7 FOLLOW-UP ---
+
+Subject: January sign-up season is coming
+
+Hi [OWNER NAME],
+
+With New Year's resolution season not far off, this is genuinely the best time to set this up. January brings a surge of enquiries — people who message at midnight full of motivation and need an instant nudge to commit.
+
+The bot captures all of that energy before it fades. Worth being ready: [YOUR_SALES_PAGE_URL]
+
+[YOUR NAME]
+
+---
+
+--- DAY 14 CLOSING THE LOOP ---
+
+Subject: all the best — [BUSINESS NAME]
+
+Hi [OWNER NAME],
+
+Wrapping up — clearly not the right moment and I respect that.
+
+If you ever want to stop leads going cold while you're on the gym floor, this is the link: [YOUR_SALES_PAGE_URL]
+
+Keep up the great work,
+[YOUR NAME]
+
+========================================================
+NICHE 8 — LETTING AGENCY
+========================================================
+
+--- INITIAL EMAIL ---
+
+Subject: tenant enquiries sitting unread over the weekend?
+
+Hi [OWNER NAME],
+
+I noticed [BUSINESS NAME] has a few listings on Rightmove — looks like a busy agency.
+
+The thing I hear from letting agents is that tenant enquiries come flooding in on Saturday afternoon when the office is closed, and by Monday morning, the good tenants have already committed to a different property. It's a real frustration.
+
+I build an AI bot that handles every property enquiry instantly — answers questions about the property, qualifies the applicant (income, move-in date, pets etc.), and books viewings automatically. You get a notification for every qualified enquiry.
+
+Worth a quick look: [YOUR_SALES_PAGE_URL]
+
+Best,
+[YOUR NAME]
+
+---
+
+--- DAY 3 FOLLOW-UP ---
+
+Subject: Re: tenant enquiries sitting unread over the weekend?
+
+Hi [OWNER NAME],
+
+Just following up — I know letting agencies are manic at the moment given the rental market.
+
+The bot is particularly useful for high-demand properties where you're getting 20+ enquiries and can't respond to them all quickly. It filters and qualifies so you only spend time on the best applicants.
+
+More details: [YOUR_SALES_PAGE_URL]
+
+[YOUR NAME]
+
+---
+
+--- DAY 7 FOLLOW-UP ---
+
+Subject: landlord-side thought as well
+
+Hi [OWNER NAME],
+
+One thing I forgot to mention — the bot can also handle landlord valuation enquiries (for the sales or let side), not just tenant applications. So it's working on both revenue streams simultaneously.
+
+Full details here: [YOUR_SALES_PAGE_URL]
+
+[YOUR NAME]
+
+---
+
+--- DAY 14 CLOSING THE LOOP ---
+
+Subject: closing the loop — [BUSINESS NAME]
+
+Hi [OWNER NAME],
+
+Last email from me — it clearly isn't a priority right now, and that's completely understandable.
+
+If the lettings market picks up and you want to make sure no enquiry falls through the cracks, the info's all here: [YOUR_SALES_PAGE_URL]
+
+Best of luck,
+[YOUR NAME]
+
+========================================================
+GENERAL TIPS FOR SENDING
+========================================================
+
+SUBJECT LINE A/B TEST IDEAS (use these alternates if open rates are low):
+- "quick question about [name of their business]"
+- "noticed something on your website"
+- "this might be relevant for [BUSINESS NAME]"
+- "3 mins — could be worth it for [BUSINESS NAME]"
+
+TIMING:
+- Best sending times: Tuesday–Thursday, 8:30am–10:30am or 2:00pm–4:00pm
+- Avoid: Mondays before 10am, Fridays after 2pm, weekends
+
+PERSONALISATION CHECKLIST (do at least 2 per email):
+[ ] Use their actual business name in the subject or opening line
+[ ] Reference their specific niche pain point (see above)
+[ ] Mention a real detail you noticed (their Google review count, their Instagram bio, a specific service they offer)
+[ ] Vary the opening line slightly so it doesn't look copy-pasted
+
+FOLLOW-UP RULES:
+- Never follow up more than 4 times total
+- Space out: Day 0 (initial) → Day 3 → Day 7 → Day 14
+- Reply to the same thread (hit Reply) so it shows context
+- If they reply negatively ("not interested") — reply politely, move on, mark as "closed" in your Google Sheet
+
+========================================================
+END OF EMAIL TEMPLATES
+========================================================

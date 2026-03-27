@@ -1,0 +1,378 @@
+========================================================
+TALLY ONBOARDING FORM — BUILD INSTRUCTIONS
+AI Lead Reply Bot | Client Onboarding
+========================================================
+
+OVERVIEW
+---------
+This form is sent to clients immediately after they pay via Stripe. It collects everything your n8n workflow needs to build and configure their AI bot. The form is built in Tally.so (free plan is sufficient for this).
+
+Tally fields map directly to variables used in your n8n workflow, so field names must match EXACTLY as written below.
+
+========================================================
+STEP 1 — CREATE YOUR TALLY ACCOUNT
+========================================================
+
+1. Go to tally.so → Sign up (free)
+2. Create a new form → click "New form" → choose "Start from scratch"
+3. Give the form an internal name: "AI Bot Onboarding — [YOUR NAME]"
+   (This is internal only — clients don't see this)
+
+========================================================
+STEP 2 — FORM TITLE AND INTRO MESSAGE
+========================================================
+
+FORM TITLE (clients see this at the top):
+---
+Welcome! Let's Build Your AI Bot 🤖
+---
+
+INTRO MESSAGE (shown below the title, before the first question):
+---
+Thanks for getting started — you're in good hands.
+
+This short form takes around 10 minutes to complete. Once we receive it, we'll build your AI Lead Reply Bot and have it live within 48 hours.
+
+The more detail you give us, the better your bot will sound. There are no wrong answers — just tell us how your business works and we'll take it from there.
+
+If you get stuck on anything, email phillipsautomates@gmail.com and we'll help.
+---
+
+Button text for intro page: "Let's go →"
+
+========================================================
+STEP 3 — ALL FORM FIELDS
+========================================================
+
+Build these fields in the exact order listed. Field names (in brackets) are the variable names your n8n workflow will read — do not change them.
+
+-----------------------------------------------------------
+PAGE 1: ABOUT YOUR BUSINESS
+-----------------------------------------------------------
+
+FIELD 1
+Internal name: business_name
+Label: What's the name of your business?
+Type: Short text (single line)
+Required: YES
+Placeholder: e.g. City Auto Centre
+Description: This is how your bot will introduce itself to customers.
+
+FIELD 2
+Internal name: owner_name
+Label: Your name (or the name customers know you by)
+Type: Short text
+Required: YES
+Placeholder: e.g. Darren
+Description: We may use this in the bot's responses when signing off.
+
+FIELD 3
+Internal name: owner_email
+Label: Your email address
+Type: Email
+Required: YES
+Placeholder: e.g. darren@cityautocentre.co.uk
+Description: This is where we'll send updates and your weekly lead report.
+
+FIELD 4
+Internal name: owner_phone
+Label: Your mobile number (for WhatsApp lead notifications)
+Type: Phone number
+Required: YES
+Placeholder: e.g. 07712 345678
+Description: We'll send you a WhatsApp notification every time a qualified lead comes in.
+
+FIELD 5
+Internal name: business_niche
+Label: What type of business are you?
+Type: Dropdown (single select)
+Required: YES
+Options:
+  - Car Garage / MOT Centre
+  - Hair Salon / Barber
+  - Restaurant / Takeaway
+  - Estate Agent
+  - Letting Agency
+  - Plumber / Electrician
+  - Dental Practice
+  - Personal Trainer / Gym
+  - Other (please specify below)
+
+FIELD 6
+Internal name: business_niche_other
+Label: If you selected "Other", please describe your business type
+Type: Short text
+Required: NO
+Placeholder: e.g. Dog grooming, physiotherapy, driving school
+
+FIELD 7
+Internal name: business_address
+Label: What's your business address or area you cover?
+Type: Long text
+Required: YES
+Placeholder: e.g. 14 High Street, Wolverhampton, WV1 1AB — or — We cover all of West Yorkshire
+Description: The bot will share this with customers when they ask where you are or what areas you cover.
+
+FIELD 8
+Internal name: website_url
+Label: What's your website URL? (if you have one)
+Type: URL / Short text
+Required: NO
+Placeholder: e.g. www.cityautocentre.co.uk
+Description: Leave blank if you don't have a website yet.
+
+-----------------------------------------------------------
+PAGE 2: YOUR SERVICES AND PRICES
+-----------------------------------------------------------
+
+FIELD 9
+Internal name: services_list
+Label: List your main services (and prices if possible)
+Type: Long text
+Required: YES
+Placeholder: e.g.
+  MOT — £45
+  Full service — £120
+  Oil change — £65
+  Tyres — from £60 fitted
+  Bodywork repairs — quote required
+Description: Be as specific as you like. The more detail you give us, the better the bot can answer price questions.
+
+FIELD 10
+Internal name: services_not_offered
+Label: Is there anything you definitely DON'T do? (optional but helpful)
+Type: Long text
+Required: NO
+Placeholder: e.g. We don't do bodywork repairs / We only cut men's hair / We don't offer takeaway delivery
+Description: This helps the bot politely redirect customers who ask for things you can't help with.
+
+FIELD 11
+Internal name: average_job_value
+Label: What's the typical value of a new customer enquiry for you? (rough estimate is fine)
+Type: Short text
+Required: NO
+Placeholder: e.g. £80–£150 per visit
+Description: This helps us understand what a qualified lead is worth to your business.
+
+-----------------------------------------------------------
+PAGE 3: OPENING HOURS AND AVAILABILITY
+-----------------------------------------------------------
+
+FIELD 12
+Internal name: opening_hours
+Label: What are your opening hours?
+Type: Long text
+Required: YES
+Placeholder: e.g.
+  Monday–Friday: 8:30am–6pm
+  Saturday: 9am–4pm
+  Sunday: Closed
+Description: The bot will share these with customers who ask when you're open.
+
+FIELD 13
+Internal name: booking_process
+Label: How do customers currently book or get in touch with you?
+Type: Long text
+Required: YES
+Placeholder: e.g. They fill in the contact form on our website / They call us / They message us on Facebook / We use Booksy for appointments
+Description: This tells us where the bot needs to be connected and how it should direct customers.
+
+FIELD 14
+Internal name: booking_cta
+Label: What do you want the bot to ask customers to do?
+Type: Dropdown
+Required: YES
+Options:
+  - Call us during opening hours
+  - Fill in a booking form (link below)
+  - Give us their details so we can call them back
+  - Book directly via our calendar link (link below)
+  - Send us a WhatsApp message
+
+FIELD 15
+Internal name: booking_link
+Label: If you have a booking link or calendar link, paste it here
+Type: URL / Short text
+Required: NO
+Placeholder: e.g. https://booksy.com/en-gb/your-profile or your Calendly link
+Description: Leave blank if customers contact you directly.
+
+-----------------------------------------------------------
+PAGE 4: YOUR TONE AND STYLE
+-----------------------------------------------------------
+
+FIELD 16
+Internal name: tone_of_voice
+Label: How would you describe the tone of your business?
+Type: Dropdown
+Required: YES
+Options:
+  - Friendly and casual (like chatting to a local)
+  - Professional and polished
+  - Warm and welcoming (mid-range)
+  - Direct and no-nonsense
+  - Let the bot decide based on my niche
+
+FIELD 17
+Internal name: tone_example
+Label: Can you give us an example of how you'd naturally reply to a customer enquiry? (optional but really useful)
+Type: Long text
+Required: NO
+Placeholder: e.g. "Hi! Thanks for getting in touch — yes we've got slots this week, what day works for you? We're on the high street just past the Co-op. See you soon! — Dave"
+Description: Paste an actual reply you've sent to a customer, or just write one now. This helps us match your voice exactly.
+
+FIELD 18
+Internal name: owner_sign_off
+Label: What name should the bot sign off messages with?
+Type: Short text
+Required: YES
+Placeholder: e.g. Dave | The City Auto Centre Team | Sophie & the team
+Description: This appears at the end of bot messages, e.g. "See you soon — Dave"
+
+FIELD 19
+Internal name: frequently_asked_questions
+Label: What questions do customers ask you most often? (list as many as you like)
+Type: Long text
+Required: NO
+Placeholder: e.g.
+  "Do you do free estimates?" — Yes, always free
+  "Do you have parking?" — Yes, free on site
+  "Can I drop off without an appointment?" — Yes for MOTs, no for services
+  "Do you accept card payments?" — Yes, all major cards
+Description: The bot will know these answers off by heart and reply instantly when customers ask.
+
+-----------------------------------------------------------
+PAGE 5: CHANNELS AND TECHNICAL SETUP
+-----------------------------------------------------------
+
+FIELD 20
+Internal name: channels_to_connect
+Label: Where do most of your customer enquiries come from? (tick all that apply)
+Type: Multi-select checkboxes
+Required: YES
+Options:
+  - Website contact form
+  - Facebook Messenger / Facebook page inbox
+  - Instagram DMs
+  - Google Business Messages
+  - WhatsApp Business
+  - Email inbox
+  - I'm not sure — please advise
+
+FIELD 21
+Internal name: website_platform
+Label: If you have a website, what platform is it built on?
+Type: Dropdown
+Required: NO
+Options:
+  - WordPress
+  - Wix
+  - Squarespace
+  - Shopify
+  - GoDaddy Website Builder
+  - Custom / Agency-built
+  - I don't know
+  - I don't have a website
+
+FIELD 22
+Internal name: google_business_access
+Label: Do you have access to your Google Business Profile (formerly Google My Business)?
+Type: Dropdown
+Required: NO
+Options:
+  - Yes, I manage it myself
+  - Yes, my agency manages it
+  - No, I've never set it up
+  - I'm not sure
+
+FIELD 23
+Internal name: anything_else
+Label: Is there anything else you'd like us to know about your business before we start building?
+Type: Long text
+Required: NO
+Placeholder: e.g. We're closed for two weeks in August / We have a waitlist for new clients / Please don't mention competitor prices
+Description: Anything that helps us build a better bot — add it here.
+
+-----------------------------------------------------------
+PAGE 6: CONFIRMATION PAGE (shown after submission)
+-----------------------------------------------------------
+
+CONFIRMATION TITLE:
+Form received — we're on it!
+
+CONFIRMATION MESSAGE:
+---
+Thanks [owner_name] — we've got everything we need.
+
+Here's what happens next:
+
+→ Within 2 hours: You'll receive an email confirming we've received your form.
+→ Within 24 hours: We'll build your AI bot and do internal testing.
+→ Within 48 hours: Your bot goes live. We'll send you a test conversation so you can see exactly how it responds before real customers do.
+
+If anything changes in the meantime, or you want to add something, just email phillipsautomates@gmail.com.
+
+Speak soon!
+[YOUR NAME]
+---
+
+========================================================
+STEP 4 — TALLY SETTINGS
+========================================================
+
+Notifications (Settings → Notifications):
+- Enable "Email notifications" → send to phillipsautomates@gmail.com
+- Subject: "NEW ONBOARDING FORM — {business_name}"
+- Include all fields in the notification email
+
+Integrations (Settings → Integrations):
+- Connect Tally → Google Sheets: Map each field to the corresponding column in your leads sheet
+- Connect Tally → n8n (via Tally's Webhook option):
+  - Go to Settings → Webhooks → Add webhook
+  - Paste your n8n webhook URL: https://[YOUR-N8N-INSTANCE]/webhook/tally-onboarding
+  - Method: POST
+  - Format: JSON
+  - This will trigger your n8n bot-building workflow automatically when a form is submitted
+
+Branding (Settings → Design):
+- Primary colour: #6c63ff
+- Button style: Rounded
+- Font: Inter (or System Default)
+- Hide "Made with Tally" (requires Tally Pro — optional)
+
+Form URL (Settings → Share):
+- Customize your Tally URL slug: yourname-ai-onboarding (e.g. tally.so/r/yourname-onboarding)
+- Copy this URL and use it in:
+  - Your post-payment confirmation email (sent via n8n)
+  - Your Stripe success page
+  - Your welcome email template
+
+========================================================
+FIELD MAPPING REFERENCE FOR N8N
+========================================================
+
+When your n8n workflow reads the Tally webhook, it will receive a JSON object.
+Here are the key field names to reference:
+
+data.fields[0].value  → business_name
+data.fields[1].value  → owner_name
+data.fields[2].value  → owner_email
+data.fields[3].value  → owner_phone
+data.fields[4].value  → business_niche
+data.fields[6].value  → business_address
+data.fields[7].value  → website_url
+data.fields[8].value  → services_list
+data.fields[11].value → opening_hours
+data.fields[12].value → booking_process
+data.fields[15].value → tone_of_voice
+data.fields[17].value → owner_sign_off
+data.fields[18].value → frequently_asked_questions
+data.fields[19].value → channels_to_connect
+
+NOTE: Tally numbers fields sequentially from 0. If you add or remove fields,
+re-check the index numbers in your n8n workflow. Alternatively, use Tally's
+field labels in the webhook payload and match by label name instead of index.
+
+========================================================
+END OF TALLY FORM INSTRUCTIONS
+========================================================

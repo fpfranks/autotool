@@ -1,0 +1,232 @@
+========================================================
+STRIPE SETUP — COMPLETE INSTRUCTIONS
+AI Lead Reply Bot | UK Pricing (GBP)
+========================================================
+
+BEFORE YOU START
+-----------------
+- You'll need a Stripe account (free to create at stripe.com)
+- Use your real name or business name — this shows on customer receipts
+- Verify your identity and add your UK bank account details before going live
+- Enable UK address collection (needed for VAT purposes)
+- If you're not VAT registered yet, that's fine — just don't charge VAT until you are
+
+========================================================
+STEP 1 — CREATE YOUR STRIPE ACCOUNT
+========================================================
+
+1. Go to stripe.com → click "Start now"
+2. Enter your email address, set a password
+3. Verify your email
+4. Complete the business profile:
+   - Business type: Individual / Sole trader (most likely)
+   - Country: United Kingdom
+   - Business category: "Computer & Network Services" or "Information Technology & Services"
+   - Business website: your sales page URL (even if not live yet, use your domain)
+5. Add your bank account:
+   - Account holder name: [YOUR NAME]
+   - Sort code and account number from your UK bank
+6. Verify your identity (Stripe will ask for your date of birth and last 4 digits of NI number — standard)
+7. Payouts will typically arrive within 2–3 business days once verified
+
+========================================================
+STEP 2 — CREATE YOUR PRODUCTS
+========================================================
+
+You'll create TWO products in Stripe:
+
+--- PRODUCT 1: One-Time Setup Fee ---
+
+Path: Stripe Dashboard → Products → + Add product
+
+Product name: AI Lead Reply Bot — Setup Fee
+Description (this appears on the checkout page and receipt):
+---
+Your AI Lead Reply Bot will be built and deployed within 48 hours of you completing the onboarding form. This one-time fee covers: custom bot build, training on your business, integration with your website or social channels, and initial testing. You'll receive a confirmation email with next steps immediately after payment.
+---
+Price:
+- Amount: £297.00
+- Currency: GBP
+- Billing period: One time
+- Tax behaviour: Exclusive of tax (if not VAT registered, set tax rate to 0%)
+
+Save product. Copy the Product ID (starts with "prod_") — you'll need it.
+
+--- PRODUCT 2: Monthly Management Subscription ---
+
+Path: Stripe Dashboard → Products → + Add product
+
+Product name: AI Lead Reply Bot — Monthly Management
+Description:
+---
+Your monthly plan includes: AI bot hosting and uptime, monthly bot updates (prices, services, availability), WhatsApp lead notifications, weekly lead report, and priority UK email support. Cancel anytime — no contracts.
+---
+Price:
+- Amount: £147.00
+- Currency: GBP
+- Billing period: Monthly (recurring)
+- Tax behaviour: Exclusive of tax
+- Trial period: 0 days (you're not offering a free trial)
+
+Save product.
+
+========================================================
+STEP 3 — CREATE YOUR PAYMENT LINKS
+========================================================
+
+You'll create TWO payment links. The most important one is the combined "Setup + Subscribe" link.
+
+--- PAYMENT LINK A: Setup Fee Only (Bot Only plan) ---
+
+Path: Stripe Dashboard → Payment Links → + New
+
+1. Add product: "AI Lead Reply Bot — Setup Fee" (£297)
+2. Quantity: 1, fixed
+3. Customer information to collect: Name, Email, Phone number
+4. After payment: Redirect to a confirmation URL (see Step 5 below)
+5. Options → Adjust quantities: No
+6. Click "Create link"
+7. Copy this link → this is your [YOUR_STRIPE_LINK] for the "Bot Only" button
+
+--- PAYMENT LINK B: Setup + Monthly (Recommended plan) ---
+
+Path: Stripe Dashboard → Payment Links → + New
+
+1. Add product: "AI Lead Reply Bot — Setup Fee" (£297) — set as one-time
+2. Click "Add another product" → Add "AI Lead Reply Bot — Monthly Management" (£147/mo)
+3. Customer information: Name, Email, Phone number
+4. After payment: Redirect to confirmation URL
+5. Click "Create link"
+6. Copy this link → this is your [YOUR_STRIPE_LINK] for the "Bot + Managed" button
+
+NOTE: Stripe will charge £297 today and then £147 every month from the same date. The customer sees both line items clearly before paying.
+
+========================================================
+STEP 4 — PAYMENT LINK SETTINGS (Recommended)
+========================================================
+
+For both payment links, configure:
+
+Branding (Stripe Dashboard → Settings → Branding):
+- Logo: Upload your logo (even a simple text-based one is fine)
+- Brand colour: #6c63ff (your purple accent)
+- Button colour: #6c63ff
+- Icon: Upload a small square version of your logo
+
+Checkout behaviour:
+- Enable "Link" (Stripe's one-click checkout for returning customers) — this increases conversion
+- Enable Apple Pay and Google Pay — Stripe activates these automatically
+- Terms of service URL: your website's terms page (or leave blank for now)
+- Privacy policy URL: your website's privacy page (or leave blank for now)
+
+Tax settings:
+- If not VAT registered: set all tax rates to 0% — no action needed
+- If VAT registered: enable Stripe Tax (Dashboard → Tax → Enable) and set UK standard rate
+
+========================================================
+STEP 5 — SUCCESS PAGE MESSAGE
+========================================================
+
+After payment, Stripe will redirect to the URL you specify. Options:
+
+OPTION A (Simplest): Use Stripe's built-in confirmation screen
+- In payment link settings, choose "Show confirmation page"
+- Stripe will display: "Payment successful — thank you!"
+
+OPTION B (Recommended): Create a simple "thank you" page on your website
+URL: yourwebsite.com/thank-you
+
+EXACT TEXT TO PUT ON YOUR THANK YOU PAGE:
+---
+Headline: You're all set — let's build your bot.
+
+Body:
+Thanks for getting started with the AI Lead Reply Bot — brilliant decision!
+
+Here's what happens next:
+
+1. Check your inbox — you'll receive a confirmation email in the next few minutes with a link to your onboarding form.
+
+2. Fill in the form — it takes about 10 minutes. You'll tell us about your business, your services, your opening hours, and the tone you'd like the bot to use.
+
+3. We build your bot — within 48 hours of receiving your completed form, your AI bot will be live and handling enquiries.
+
+If you have any questions in the meantime, email phillipsautomates@gmail.com and we'll get back to you within a few hours.
+
+Excited to have you onboard!
+[YOUR NAME]
+---
+
+========================================================
+STEP 6 — SET UP WEBHOOK FOR N8N
+========================================================
+
+Your n8n automation needs to know when someone has paid so it can trigger the onboarding email automatically.
+
+Step-by-step:
+
+1. In Stripe Dashboard → Developers → Webhooks → + Add endpoint
+
+2. Endpoint URL format:
+   https://[YOUR-N8N-INSTANCE]/webhook/stripe-payment
+
+   If using n8n Cloud: your URL will look like:
+   https://[your-workspace].app.n8n.cloud/webhook/stripe-payment
+
+   If self-hosted: use your server URL with the n8n webhook path
+
+3. Events to listen for (select these):
+   - checkout.session.completed
+   - payment_intent.succeeded
+   - customer.subscription.created
+   - invoice.payment_succeeded
+
+4. Click "Add endpoint" → Stripe generates a Signing Secret (starts with "whsec_")
+
+5. Copy the Signing Secret immediately — you won't see it again unless you reveal it
+
+6. In your n8n workflow:
+   - Add a "Stripe Trigger" node (or use a Webhook node + manual Stripe verification)
+   - Paste the Signing Secret into the Stripe node credentials
+   - Set the webhook URL to match what you entered in Stripe
+
+7. Test the webhook:
+   - In Stripe → Webhooks → [your endpoint] → "Send test webhook"
+   - Event type: checkout.session.completed
+   - Verify the n8n workflow triggers correctly
+
+WHAT YOUR N8N WORKFLOW SHOULD DO ON TRIGGER:
+- Extract customer name, email, and phone from the Stripe payload
+- Send a confirmation email with the Tally onboarding form link
+- Add a row to your Google Sheet (leads tracker)
+- Optional: Send yourself a WhatsApp notification via Twilio or Meta API
+
+========================================================
+STEP 7 — TEST A PURCHASE BEFORE GOING LIVE
+========================================================
+
+1. In Stripe Dashboard → Settings → turn on "Test mode"
+2. Create a test payment using card number: 4242 4242 4242 4242, any future expiry, any CVC
+3. Verify: confirmation email sent, n8n workflow triggered, Google Sheet updated, thank you page loads
+4. Turn off Test mode and switch to Live mode before sharing your payment link
+
+========================================================
+STEP 8 — ONGOING STRIPE MANAGEMENT
+========================================================
+
+Cancellations:
+- If a client wants to cancel: Dashboard → Customers → find their name → Subscriptions → Cancel
+- This stops future payments. You can choose whether to cancel immediately or at the end of the period.
+
+Refunds:
+- Dashboard → Payments → find the payment → Refund
+- For partial refund (e.g. keeping setup fee, refunding first month): enter the amount manually
+- Stripe returns its processing fee for refunds within 90 days in most cases
+
+Revenue tracking:
+- Dashboard → Reports → Revenue — gives you monthly MRR (Monthly Recurring Revenue) view
+- Export as CSV monthly for your accounts
+
+========================================================
+END OF STRIPE SETUP
+========================================================

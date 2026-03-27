@@ -1,0 +1,303 @@
+========================================================
+GMAIL SETUP GUIDE — COLD OUTREACH + N8N OAUTH
+AI Lead Reply Bot | Complete Step-by-Step
+========================================================
+
+OVERVIEW
+---------
+This guide covers five things:
+(a) Creating a dedicated outreach Gmail account
+(b) Warming it up over 3 days before you start sending cold emails
+(c) Setting up a Gmail filter and label for tracking replies
+(d) Gmail settings to maximise deliverability
+(e) Connecting Gmail to n8n via OAuth for automation
+
+Estimated setup time: 45–60 minutes total
+(Warming period is 3 days but requires minimal effort per day)
+
+========================================================
+PART A — CREATING YOUR OUTREACH GMAIL ACCOUNT
+========================================================
+
+WHY A SEPARATE ACCOUNT?
+Using your main Gmail for cold outreach risks your primary inbox getting flagged as spam. A dedicated outreach account keeps things clean and protects your reputation.
+
+STEP 1: Choose a good email address
+Format options (choose one that looks professional):
+- [yourname]outreach@gmail.com
+- hello.[yourname].ai@gmail.com
+- [yourname].automation@gmail.com
+- [yourname]aiuk@gmail.com
+
+AVOID:
+- noreply@
+- info@
+- admin@
+- Anything with numbers at the end (e.g. joebloggs123@gmail.com — looks spammy)
+
+STEP 2: Create the account
+1. Go to accounts.google.com → "Create account" → "For my personal use"
+2. Enter the email address you've chosen
+3. Set a strong password (use a password manager)
+4. Do NOT skip the phone verification — Gmail requires it for new accounts and it helps with deliverability
+5. Fill in your real name (this appears as the sender name in emails)
+   Sender name to use: "[YOUR NAME] | AI Automation" or just "[YOUR NAME]"
+
+STEP 3: Complete the profile
+1. Add a profile picture — a professional headshot improves reply rates significantly
+   Tip: Use a real photo of yourself, not a logo
+2. Go to Gmail → Settings (cog) → See all settings → General
+3. Set "Send mail as": [YOUR NAME] <[yourname]outreach@gmail.com>
+
+STEP 4: Add a signature
+Go to Settings → General → Signature → Create new
+
+Suggested signature:
+---
+[YOUR NAME]
+AI Automation for UK Local Businesses
+[YOUR_SALES_PAGE_URL]
+---
+
+Keep it short. No images in the signature for cold outreach — images trigger spam filters.
+
+========================================================
+PART B — WARMING UP YOUR GMAIL ACCOUNT (3 DAYS)
+========================================================
+
+WHY YOU MUST WARM UP
+A brand new Gmail account sending cold emails immediately will be flagged as spam and potentially suspended. Warming = teaching Google that this is a real, human-used account.
+
+WARMING SCHEDULE:
+
+--- DAY 1 (Day of account creation) ---
+
+Morning:
+[ ] Send emails to 3–5 real email addresses you control or trust (family, friends, colleagues, your other Gmail accounts)
+    Subject: "Just testing a new email — ignore this"
+    Body: "Hi [Name], just testing out this new email address. Hope you're well!"
+[ ] Have those people REPLY to your email (this is important — replies signal legitimacy)
+[ ] Reply to their replies
+
+Afternoon:
+[ ] Send 2–3 more emails to different contacts
+[ ] Open and read emails in your inbox — click on links, interact naturally
+[ ] Mark a couple of emails as "Important" (star them)
+[ ] Subscribe to 2–3 legitimate newsletters (e.g. HubSpot Blog, Marketing Week, Campaign Monitor)
+
+--- DAY 2 ---
+
+Morning:
+[ ] Read and click links in the newsletters you subscribed to
+[ ] Reply to any emails from Day 1
+[ ] Send 5 more emails to real contacts — these can be slightly more "businessy" in nature
+    e.g. "Hey, I'm setting up a new outreach email for my AI automation work — this is a test"
+[ ] Spend 10 minutes reading and scrolling through emails (mimics human behaviour)
+
+Afternoon:
+[ ] Forward an email to yourself from your main account
+[ ] Mark one email as "Not spam" (go to Spam folder, pull something out — shows Gmail you use spam controls)
+[ ] Add 2 contacts to your Google Contacts from the account
+
+--- DAY 3 ---
+
+Morning:
+[ ] Send 5–10 emails — mix of personal and slightly professional
+[ ] Have at least 3 replies land in your inbox today
+[ ] Reply to 2–3 of them
+[ ] Open and interact with at least 10 emails in your inbox
+[ ] Click "Mark as important" on 2 emails
+
+Afternoon:
+[ ] Compose and send one "test" cold email to yourself (your other Gmail) — exactly as you'll be sending to leads
+[ ] Read it from the recipient side — check it doesn't look spammy, check formatting is correct
+[ ] Draft 5–10 real cold emails ready to send tomorrow (save as drafts, don't send yet)
+
+BY THE END OF DAY 3, YOUR ACCOUNT IS READY.
+
+ONGOING WARM-UP RULES (first 30 days of sending):
+- Week 1: Max 15 cold emails per day
+- Week 2: Max 25 cold emails per day
+- Week 3+: Max 40–50 cold emails per day
+- Always keep a mix of warm emails going (regular inbox activity) alongside cold sends
+- Never send more than 50 cold emails in one day from a Gmail account
+- If you see open rates drop suddenly, slow down for 2–3 days
+
+========================================================
+PART C — GMAIL FILTER FOR TRACKING REPLIES
+========================================================
+
+You want all replies to your cold emails automatically labelled so you can track them easily.
+
+STEP 1: Create a label
+1. Gmail left sidebar → scroll down → "+ Create new label"
+2. Label name: outreach-replies
+3. Optionally create sub-labels:
+   - outreach-replies/interested
+   - outreach-replies/not-interested
+   - outreach-replies/follow-up-needed
+
+STEP 2: Create the filter
+1. Gmail → Settings → See all settings → Filters and Blocked Addresses → "Create a new filter"
+2. In the "To" field, enter your outreach email address: [yourname]outreach@gmail.com
+3. Click "Create filter with this search"
+4. Tick: "Apply the label" → select "outreach-replies"
+5. Tick: "Never send it to Spam" (important!)
+6. Tick: "Also apply filter to matching conversations"
+7. Click "Create filter"
+
+Now every email that arrives in this inbox is labelled automatically. You can then manually sub-label them as interested/not-interested.
+
+STEP 3: Create a filter to avoid sending follow-ups to people who replied
+In your Gmail outreach tool or manually — before sending a Day 3/7/14 follow-up:
+1. Search Gmail for: from:[their email address]
+2. If they've replied, skip that person in your follow-up round
+
+========================================================
+PART D — GMAIL SETTINGS TO OPTIMISE DELIVERABILITY
+========================================================
+
+These settings reduce the chance of your emails landing in spam.
+
+SETTING 1: Enable Plain Text Sending
+For cold outreach, plain text emails get higher deliverability than HTML-heavy ones.
+- When composing cold emails, use the default compose window (not rich text if possible)
+- Avoid: bold text, bullet points, images, coloured text, multiple fonts in cold emails
+- Your email should look like it was typed by a human in Notepad
+
+SETTING 2: Disable email tracking for initial sends
+If you use a tracking tool (e.g. Mailtrack), disable open tracking for the first 2 weeks of a new account — tracking pixels can trigger spam filters on new domains.
+
+SETTING 3: Reply-to address
+Go to Settings → Accounts → "Send mail as" → Edit info
+Set a Reply-To address of [yourname]outreach@gmail.com (same account) — this is fine, just ensures replies land in the right place.
+
+SETTING 4: IMAP / POP access (needed for n8n)
+1. Gmail → Settings → See all settings → Forwarding and POP/IMAP
+2. Enable IMAP: "Enable IMAP" → Save Changes
+3. This allows n8n and other tools to read your inbox programmatically
+
+SETTING 5: Two-factor authentication
+1. Go to myaccount.google.com → Security → 2-Step Verification → Enable
+2. Use an authenticator app (Google Authenticator or Authy) — NOT SMS
+3. This is required before you can generate an OAuth token for n8n
+
+SETTING 6: Less secure apps / App passwords (if using older integrations)
+If n8n requires it:
+1. myaccount.google.com → Security → App passwords
+2. Create an app password for "Mail" on "Windows computer" (or your OS)
+3. Copy the 16-character password — use this in n8n instead of your regular password
+NOTE: OAuth (below) is more secure and preferred over app passwords.
+
+SETTING 7: Sending limits awareness
+Gmail free accounts: 500 emails/day hard limit
+Gmail Workspace (paid): 2,000 emails/day
+For cold outreach, stay well under these limits (max 50/day) to avoid suspension.
+
+DAILY HYGIENE CHECKLIST (takes 5 min/day):
+[ ] Read and reply to any positive replies first thing
+[ ] Label any replies (interested / not interested)
+[ ] Update your Google Sheet (leads-template.csv) with replied = Yes and notes
+[ ] Archive emails you've dealt with
+[ ] Check Spam folder daily — move any legitimate replies out
+
+========================================================
+PART E — GMAIL OAUTH IN N8N
+========================================================
+
+This connects your Gmail account to n8n so your workflows can send emails, read the inbox, and trigger on new replies automatically.
+
+STEP 1: Enable Gmail API in Google Cloud Console
+
+1. Go to console.cloud.google.com
+2. Sign in with your outreach Gmail account
+3. Create a new project:
+   - Click the project dropdown (top bar) → "New Project"
+   - Name: "n8n-gmail-integration" → Create
+4. Enable the Gmail API:
+   - Navigation menu → APIs & Services → Library
+   - Search "Gmail API" → Click it → "Enable"
+5. Enable the Google Sheets API (while you're here):
+   - Library → Search "Google Sheets API" → Enable
+
+STEP 2: Create OAuth 2.0 Credentials
+
+1. APIs & Services → Credentials → "+ Create Credentials" → "OAuth client ID"
+2. If prompted, configure the OAuth consent screen first:
+   - User type: External
+   - App name: "n8n Automation [YOUR NAME]"
+   - User support email: your outreach Gmail address
+   - Developer contact: same email
+   - Scopes → Add scopes:
+     - gmail.readonly
+     - gmail.send
+     - gmail.compose
+     - gmail.modify
+     - (If using Sheets) spreadsheets (read/write)
+   - Test users: Add your outreach Gmail address
+   - Save and continue
+3. Back to Create OAuth client ID:
+   - Application type: Web application
+   - Name: "n8n Gmail Client"
+   - Authorised redirect URIs: Add the following:
+     - https://[your-n8n-instance]/rest/oauth2-credential/callback
+     (If n8n Cloud: https://[your-workspace].app.n8n.cloud/rest/oauth2-credential/callback)
+     (If local testing: http://localhost:5678/rest/oauth2-credential/callback)
+4. Click "Create"
+5. COPY and SAVE:
+   - Client ID (looks like: 123456789-abc123.apps.googleusercontent.com)
+   - Client Secret (looks like: GOCSPX-abc123xyz)
+
+STEP 3: Add Gmail Credentials in n8n
+
+1. Open your n8n instance
+2. Left menu → Credentials → "+ Add Credential" → Search "Gmail"
+3. Select "Gmail OAuth2 API"
+4. Fill in:
+   - Client ID: paste from Step 2
+   - Client Secret: paste from Step 2
+5. Click "Sign in with Google" → A Google window opens
+6. Select your outreach Gmail account
+7. Grant all requested permissions
+8. You'll be redirected back to n8n with "Connected" shown in green
+
+STEP 4: Test the connection
+
+1. Create a simple n8n workflow:
+   - Manual Trigger → Gmail node (Send Email)
+   - To: your personal email
+   - Subject: "n8n Gmail test"
+   - Body: "This is a test from n8n"
+2. Run the workflow
+3. Check your personal inbox — if the email arrives, the connection works
+
+STEP 5: Set up the Gmail Trigger (to catch replies)
+
+1. In your outreach workflow, add a "Gmail Trigger" node
+2. Credential: select the Gmail OAuth credential you just created
+3. Trigger on: "New Email"
+4. Optional filters:
+   - Label: outreach-replies (to only trigger on labelled reply emails)
+   - Search filter: is:unread (to only trigger on unread emails)
+5. Polling interval: Every 5 minutes (or 15 minutes to be safe)
+6. Connect this trigger to your "reply handling" workflow:
+   - Parse the sender's name, email, and reply content
+   - Update the Google Sheet (set replied = Yes, add reply content to notes)
+   - Send yourself a WhatsApp notification: "REPLY from [sender name] at [business name]"
+
+========================================================
+QUICK REFERENCE — KEY DETAILS TO COPY/SAVE
+========================================================
+
+Outreach email address: ___________________________
+Sender name: ___________________________
+Gmail app password (if used): ___________________________
+Google Cloud Project ID: ___________________________
+OAuth Client ID: ___________________________
+OAuth Client Secret: ___________________________
+n8n credential name: ___________________________
+Gmail label for replies: outreach-replies
+
+========================================================
+END OF GMAIL SETUP
+========================================================
