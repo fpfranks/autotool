@@ -1,0 +1,104 @@
+========================================================
+CLIENT WELCOME EMAIL — PHILLIPS AUTOMATES
+Send this to every new client immediately after they pay
+========================================================
+
+WHEN TO SEND: Within 1 hour of receiving payment (ideally within minutes)
+HOW TO SEND: From phillipsautomates@gmail.com
+SUBJECT LINE: Welcome to Phillips Automates — here's what happens next 🎉
+
+========================================================
+THE EMAIL (copy and paste, fill in [BRACKETS])
+========================================================
+
+Subject: Welcome to Phillips Automates — here's what happens next 🎉
+
+Hi [FIRST NAME],
+
+Welcome aboard — really chuffed to have you with us!
+
+Here's what's going to happen over the next 24 hours:
+
+I'm going to build your AI reply bot and connect it to your Facebook and Instagram. From the moment it's live, every message that comes into your Facebook Page or Instagram — day or night — will get an instant, friendly reply in your name. You won't have to do a thing.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+THE ONE THING I NEED FROM YOU
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+To connect the bot to your Facebook Page, I need you to do one small thing — it takes about 2 minutes:
+
+1. Go to manychat.com on your phone or computer
+2. Click "Get Started Free" and sign in with the Facebook account you use to manage your business page (the one you use to post on Facebook as your business)
+3. When it asks which page to connect — select [BUSINESS NAME], then email me back your ManyChat login (the email and password you just created)
+
+That's honestly it. Once you've sent me those details, I'll take care of everything else.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+WHAT HAPPENS AFTER THAT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Once I have your ManyChat login, here's the timeline:
+
+✅ I build your bot (your opening hours, your services, your prices, your contact details — all written in a warm, friendly tone)
+✅ I test it to make sure everything works perfectly
+✅ I send you a "You're live!" email — usually within 24 hours
+✅ From that point on, every Facebook and Instagram message gets an instant reply
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+WHAT CHANGES FOR YOU (very little)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+- You can still see every conversation in your Facebook and Instagram inbox as normal — nothing is hidden from you
+- You can still reply to customers yourself whenever you like — the bot just handles it when you're busy
+- If your opening hours or prices ever change, just email me and I'll update the bot within 24 hours
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ANY QUESTIONS?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Just reply to this email — I'm a real person and I'll get back to you quickly.
+
+Really looking forward to getting this set up for you. You're about to stop losing customers to unanswered messages for good.
+
+Speak soon,
+
+Frankie
+phillipsautomates@gmail.com
+
+P.S. If you get stuck on the ManyChat step — don't worry, just email me and I'll walk you through it. It genuinely takes 2 minutes once you know what you're looking at.
+
+========================================================
+NOTES FOR FRANKIE — WHAT TO DO AFTER SENDING THIS EMAIL
+========================================================
+
+1. Add the client to your Google Sheet (or wherever you're tracking clients):
+   - Name, business name, email, date paid, date bot went live
+   - Status: "Awaiting ManyChat login"
+
+2. Wait for them to send you the ManyChat login
+   - Most clients do this within a few hours
+   - If no reply after 24 hours, send this nudge:
+
+   ---
+   Subject: Re: Welcome to Phillips Automates — quick nudge
+
+   Hi [NAME],
+
+   Just checking in — did you get a chance to set up the ManyChat account? It's the one thing holding me back from getting started on your bot.
+
+   If you got stuck at any point, just reply and I'll help you through it — takes 2 minutes once you know what you're looking for.
+
+   Frankie
+   phillipsautomates@gmail.com
+   ---
+
+3. Once you receive their login — work through the full ManyChat Setup Guide
+   (see manychat-setup-guide.txt)
+
+4. Send the "You're live!" email from manychat-setup-guide.txt when the bot is ready
+
+5. Update your tracker: Status → "Live" | Date live → [date]
+
+========================================================
+END OF CLIENT WELCOME EMAIL
+========================================================
