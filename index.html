@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Lead Reply Bot — Never Miss Another Enquiry | UK AI Automation</title>
+  <title>AI Reply Bot — Never Miss Another Customer Enquiry | Phillips Automates</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -106,691 +106,567 @@
       align-items: center;
       gap: 8px;
       background: rgba(108,99,255,0.15);
-      border: 1px solid rgba(108,99,255,0.4);
-      border-radius: 999px;
+      border: 1px solid rgba(108,99,255,0.35);
+      border-radius: 100px;
       padding: 7px 18px;
       font-size: 13px;
       font-weight: 600;
       color: var(--accent-light);
       margin-bottom: 28px;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.4px;
     }
     .hero-badge .dot {
       width: 7px; height: 7px;
-      border-radius: 50%;
       background: var(--green);
+      border-radius: 50%;
       animation: pulse 2s infinite;
     }
     @keyframes pulse {
       0%, 100% { opacity: 1; transform: scale(1); }
       50% { opacity: 0.5; transform: scale(1.4); }
     }
-
     h1 {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(36px, 6vw, 68px);
+      font-size: clamp(32px, 5.5vw, 62px);
       font-weight: 800;
-      line-height: 1.1;
-      margin-bottom: 24px;
+      line-height: 1.12;
       letter-spacing: -1.5px;
+      margin-bottom: 24px;
     }
-    h1 .highlight {
-      background: linear-gradient(135deg, var(--accent-light), var(--green));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
+    h1 .accent { color: var(--accent-light); }
+    h1 .green { color: var(--green); }
     .hero-sub {
-      font-size: clamp(17px, 2.5vw, 21px);
+      font-size: clamp(17px, 2.2vw, 22px);
       color: var(--text-muted);
       max-width: 640px;
-      margin: 0 auto 40px;
-      line-height: 1.65;
+      margin: 0 auto 16px;
+      line-height: 1.5;
     }
-
-    .hero-buttons {
+    .hero-sub2 {
+      font-size: 15px;
+      color: var(--green);
+      font-weight: 600;
+      margin-bottom: 40px;
+      letter-spacing: 0.2px;
+    }
+    .hero-cta-group {
       display: flex;
-      flex-wrap: wrap;
       gap: 14px;
       justify-content: center;
-      margin-bottom: 48px;
+      flex-wrap: wrap;
+      margin-bottom: 50px;
     }
-
     .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+      display: inline-block;
       background: linear-gradient(135deg, var(--accent), #9b6bff);
       color: #fff;
-      padding: 18px 36px;
-      border-radius: 12px;
+      padding: 16px 36px;
+      border-radius: 10px;
       text-decoration: none;
       font-weight: 700;
       font-size: 17px;
       transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 8px 32px rgba(108,99,255,0.4);
+      box-shadow: 0 4px 30px rgba(108,99,255,0.4);
     }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(108,99,255,0.55); }
-
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(108,99,255,0.55); }
     .btn-secondary {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: transparent;
-      border: 1.5px solid var(--border);
+      display: inline-block;
+      border: 1px solid var(--border);
       color: var(--text);
-      padding: 18px 32px;
-      border-radius: 12px;
+      padding: 16px 36px;
+      border-radius: 10px;
       text-decoration: none;
       font-weight: 600;
-      font-size: 16px;
+      font-size: 17px;
+      background: rgba(255,255,255,0.04);
       transition: border-color 0.2s, background 0.2s;
     }
     .btn-secondary:hover { border-color: var(--accent); background: rgba(108,99,255,0.08); }
 
     .hero-trust {
       display: flex;
-      flex-wrap: wrap;
-      gap: 24px;
       justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
       color: var(--text-muted);
       font-size: 14px;
-      font-weight: 500;
     }
-    .hero-trust span { display: flex; align-items: center; gap: 6px; }
+    .hero-trust span { display: flex; align-items: center; gap: 7px; }
     .hero-trust .icon { color: var(--green); font-size: 16px; }
 
-    /* ── SECTION HEADERS ── */
+    /* ── VIDEO ── */
+    .video-wrap {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 70px 20px;
+      text-align: center;
+    }
+    .video-label {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--accent-light);
+      margin-bottom: 18px;
+    }
+    .video-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(22px, 3.5vw, 34px);
+      font-weight: 700;
+      margin-bottom: 30px;
+    }
+    .video-container {
+      max-width: 720px;
+      margin: 0 auto;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      background: var(--bg3);
+      aspect-ratio: 16/9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .video-placeholder {
+      color: var(--text-muted);
+      font-size: 15px;
+      text-align: center;
+      padding: 20px;
+    }
+    .video-placeholder a {
+      color: var(--accent-light);
+      text-decoration: none;
+    }
+
+    /* ── SECTION LABELS ── */
     .section-label {
-      display: inline-block;
       font-size: 12px;
       font-weight: 700;
-      letter-spacing: 2px;
       text-transform: uppercase;
+      letter-spacing: 2px;
       color: var(--accent-light);
       margin-bottom: 14px;
     }
-    h2 {
+    .section-title {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(28px, 4vw, 46px);
-      font-weight: 700;
+      font-size: clamp(26px, 4vw, 42px);
+      font-weight: 800;
       line-height: 1.2;
       letter-spacing: -0.8px;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
-    h2 .g { color: var(--green); }
-    h2 .a { color: var(--accent-light); }
-    .section-intro {
-      font-size: 18px;
+    .section-sub {
       color: var(--text-muted);
+      font-size: 18px;
       max-width: 620px;
-      line-height: 1.65;
-      margin-bottom: 56px;
     }
 
-    /* ── PROBLEM ── */
-    #problem { background: var(--bg2); }
-    .problem-grid {
+    /* ── PROBLEM / PAIN ── */
+    .pain-section {
+      background: var(--bg2);
+    }
+    .pain-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 24px;
-      margin-top: 48px;
+      gap: 20px;
+      margin-top: 50px;
     }
-    .problem-card {
-      background: var(--card);
-      border: 1px solid rgba(255,80,80,0.15);
+    .pain-card {
+      background: rgba(255,60,60,0.05);
+      border: 1px solid rgba(255,60,60,0.2);
       border-radius: var(--radius);
-      padding: 32px;
+      padding: 28px;
     }
-    .problem-card .icon {
-      font-size: 36px;
-      margin-bottom: 16px;
-      display: block;
-    }
-    .problem-card h3 {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 10px;
-      color: #ff8080;
-    }
-    .problem-card p { color: var(--text-muted); font-size: 15px; line-height: 1.6; }
+    .pain-card .pain-icon { font-size: 28px; margin-bottom: 14px; }
+    .pain-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+    .pain-card p { color: var(--text-muted); font-size: 15px; line-height: 1.55; }
 
-    .stat-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 32px;
-      justify-content: center;
-      margin-top: 56px;
-      padding: 40px;
-      background: linear-gradient(135deg, rgba(108,99,255,0.08), rgba(0,212,170,0.06));
+    /* ── HOW IT WORKS ── */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+      margin-top: 50px;
+      position: relative;
+    }
+    .step {
+      background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
+      padding: 32px 28px;
+      text-align: center;
+      position: relative;
     }
-    .stat-item { text-align: center; }
-    .stat-item .num {
+    .step-num {
+      width: 44px; height: 44px;
+      background: linear-gradient(135deg, var(--accent), #9b6bff);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 17px;
+      margin: 0 auto 18px;
+      box-shadow: 0 4px 20px rgba(108,99,255,0.4);
+    }
+    .step h3 { font-size: 17px; font-weight: 700; margin-bottom: 10px; }
+    .step p { color: var(--text-muted); font-size: 15px; line-height: 1.55; }
+
+    /* ── CHANNELS ── */
+    .channels-section { background: var(--bg2); }
+    .channels-intro { margin-bottom: 50px; }
+    .channels-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    .channel-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 20px;
+      text-align: center;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .channel-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+    .channel-icon { font-size: 36px; margin-bottom: 12px; display: block; }
+    .channel-card h4 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+    .channel-card p { font-size: 13px; color: var(--text-muted); line-height: 1.4; }
+    .channel-badge {
+      display: inline-block;
+      background: rgba(0,212,170,0.15);
+      border: 1px solid rgba(0,212,170,0.35);
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 100px;
+      margin-top: 8px;
+      letter-spacing: 0.4px;
+    }
+    .channels-note {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 15px;
+      padding: 20px;
+      background: rgba(108,99,255,0.07);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    /* ── WHO IT'S FOR ── */
+    .niches-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 44px;
+    }
+    .niche-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: border-color 0.2s;
+    }
+    .niche-card:hover { border-color: var(--accent); }
+    .niche-icon { font-size: 26px; flex-shrink: 0; }
+    .niche-card span { font-weight: 600; font-size: 15px; }
+
+    /* ── ROI CALCULATOR ── */
+    .roi-section { background: var(--bg2); }
+    .roi-box {
+      background: linear-gradient(135deg, rgba(108,99,255,0.12), rgba(0,212,170,0.08));
+      border: 1px solid rgba(108,99,255,0.3);
+      border-radius: 20px;
+      padding: 50px 40px;
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .roi-box h3 {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 44px;
+      font-size: 26px;
       font-weight: 800;
-      background: linear-gradient(135deg, var(--accent-light), var(--green));
+      margin-bottom: 10px;
+    }
+    .roi-box .roi-sub {
+      color: var(--text-muted);
+      font-size: 15px;
+      margin-bottom: 40px;
+    }
+    .roi-rows { display: flex; flex-direction: column; gap: 14px; margin-bottom: 32px; }
+    .roi-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 10px;
+      font-size: 16px;
+    }
+    .roi-row .label { color: var(--text-muted); }
+    .roi-row .value { font-weight: 700; }
+    .roi-row.positive .value { color: var(--green); }
+    .roi-row.negative .value { color: #ff6b6b; }
+    .roi-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 8px 0;
+    }
+    .roi-result {
+      background: linear-gradient(135deg, var(--accent), var(--green));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      line-height: 1;
-    }
-    .stat-item .label { font-size: 14px; color: var(--text-muted); margin-top: 8px; }
-
-    /* ── SOLUTION ── */
-    #solution { background: var(--bg); }
-    .solution-split {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: center;
-      margin-top: 48px;
-    }
-    @media (max-width: 720px) { .solution-split { grid-template-columns: 1fr; gap: 36px; } }
-
-    .solution-visual {
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 32px;
-      position: relative;
-      overflow: hidden;
-    }
-    .solution-visual::before {
-      content: '';
-      position: absolute;
-      top: -80px; right: -80px;
-      width: 260px; height: 260px;
-      background: radial-gradient(circle, rgba(0,212,170,0.12), transparent 70%);
-    }
-    .mock-chat {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-    .chat-bubble {
-      padding: 14px 18px;
-      border-radius: 14px;
-      font-size: 14px;
-      line-height: 1.5;
-      max-width: 85%;
-    }
-    .chat-bubble.incoming {
-      background: rgba(255,255,255,0.07);
-      color: var(--text);
-      align-self: flex-start;
-      border-bottom-left-radius: 4px;
-    }
-    .chat-bubble.outgoing {
-      background: linear-gradient(135deg, var(--accent), #9b6bff);
-      color: #fff;
-      align-self: flex-end;
-      border-bottom-right-radius: 4px;
-    }
-    .chat-meta { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
-    .chat-label {
-      text-align: center;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--green);
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 4px;
-    }
-
-    .solution-points { list-style: none; }
-    .solution-points li {
-      display: flex;
-      gap: 14px;
-      margin-bottom: 22px;
-      align-items: flex-start;
-    }
-    .solution-points li .tick {
-      flex-shrink: 0;
-      width: 24px; height: 24px;
-      background: rgba(0,212,170,0.15);
-      border: 1px solid rgba(0,212,170,0.4);
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      margin-top: 2px;
-    }
-    .solution-points li .text strong {
-      display: block;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 3px;
-    }
-    .solution-points li .text span { color: var(--text-muted); font-size: 15px; }
-
-    /* ── HOW IT WORKS ── */
-    #how { background: var(--bg2); text-align: center; }
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 32px;
-      margin-top: 56px;
-      position: relative;
-    }
-    .step-card {
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 40px 32px;
-      position: relative;
-      transition: transform 0.25s, border-color 0.25s;
-    }
-    .step-card:hover { transform: translateY(-4px); border-color: var(--accent); }
-    .step-num {
-      width: 52px; height: 52px;
-      background: linear-gradient(135deg, var(--accent), #9b6bff);
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 800;
-      font-size: 22px;
-      color: #fff;
-      margin: 0 auto 24px;
-      box-shadow: 0 6px 20px rgba(108,99,255,0.35);
-    }
-    .step-card h3 {
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 12px;
-      font-family: 'Space Grotesk', sans-serif;
-    }
-    .step-card p { color: var(--text-muted); font-size: 15px; line-height: 1.6; }
-    .step-arrow {
-      position: absolute;
-      right: -22px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 28px;
-      color: var(--accent);
-      z-index: 2;
-    }
-    @media (max-width: 800px) { .step-arrow { display: none; } }
-
-    /* ── BENEFITS ── */
-    #benefits { background: var(--bg); }
-    .benefits-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-      margin-top: 48px;
-    }
-    .benefit-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 32px;
-      transition: border-color 0.25s, transform 0.25s;
-    }
-    .benefit-card:hover { border-color: var(--green); transform: translateY(-2px); }
-    .benefit-icon {
       font-size: 36px;
-      margin-bottom: 18px;
-      display: block;
+      font-weight: 900;
+      font-family: 'Space Grotesk', sans-serif;
     }
-    .benefit-card h3 {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 10px;
-      color: var(--text);
-    }
-    .benefit-card p { color: var(--text-muted); font-size: 15px; line-height: 1.6; }
-
-    /* ── TESTIMONIALS ── */
-    #testimonials { background: var(--bg2); }
-    .testi-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 28px;
-      margin-top: 48px;
-    }
-    .testi-card {
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 36px;
-      position: relative;
-    }
-    .testi-card::before {
-      content: '"';
-      position: absolute;
-      top: 16px; left: 28px;
-      font-size: 80px;
-      color: var(--accent);
-      opacity: 0.25;
-      font-family: Georgia, serif;
-      line-height: 1;
-    }
-    .stars {
-      color: #FFD700;
-      font-size: 18px;
-      margin-bottom: 16px;
-      letter-spacing: 2px;
-    }
-    .testi-text {
-      color: var(--text);
-      font-size: 16px;
-      line-height: 1.7;
-      margin-bottom: 24px;
-      font-style: italic;
-    }
-    .testi-author {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .avatar {
-      width: 46px; height: 46px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 18px;
-      color: #fff;
-      flex-shrink: 0;
-    }
-    .testi-name { font-weight: 700; font-size: 15px; }
-    .testi-biz { font-size: 13px; color: var(--text-muted); }
+    .roi-result-label { color: var(--text-muted); font-size: 14px; margin-top: 6px; }
+    .roi-footnote { color: var(--text-muted); font-size: 13px; margin-top: 20px; }
 
     /* ── PRICING ── */
-    #pricing { background: var(--bg); text-align: center; }
-    .pricing-wrapper {
+    .pricing-section { background: var(--bg); }
+    .pricing-grid {
       display: grid;
-      grid-template-columns: 1fr 1.05fr 1fr;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 24px;
-      margin-top: 56px;
-      align-items: center;
+      margin-top: 50px;
+      align-items: stretch;
     }
-    @media (max-width: 860px) { .pricing-wrapper { grid-template-columns: 1fr; max-width: 440px; margin-left: auto; margin-right: auto; } }
-
     .price-card {
-      background: var(--bg3);
+      background: var(--card);
       border: 1px solid var(--border);
       border-radius: 20px;
-      padding: 40px 32px;
+      padding: 36px 30px;
       position: relative;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
+    .price-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
     .price-card.featured {
-      background: linear-gradient(160deg, rgba(108,99,255,0.12), rgba(0,212,170,0.07));
-      border: 2px solid var(--accent);
-      transform: scale(1.02);
+      border-color: var(--accent);
+      background: linear-gradient(160deg, rgba(108,99,255,0.12), rgba(0,212,170,0.06));
+      box-shadow: 0 0 0 1px var(--accent), 0 20px 60px rgba(108,99,255,0.25);
+      transform: scale(1.03);
     }
-    .featured-label {
+    .price-card.featured:hover { transform: scale(1.03) translateY(-4px); }
+    .popular-badge {
       position: absolute;
       top: -14px;
       left: 50%;
       transform: translateX(-50%);
-      background: linear-gradient(135deg, var(--accent), var(--green));
+      background: linear-gradient(135deg, var(--accent), #9b6bff);
       color: #fff;
       font-size: 12px;
       font-weight: 700;
-      padding: 5px 20px;
-      border-radius: 999px;
-      letter-spacing: 0.5px;
+      padding: 5px 18px;
+      border-radius: 100px;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
       white-space: nowrap;
     }
-    .price-card h3 {
+    .plan-name {
+      font-family: 'Space Grotesk', sans-serif;
       font-size: 20px;
       font-weight: 700;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
-    .price-tag {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 50px;
-      font-weight: 800;
-      color: var(--text);
-      line-height: 1;
-      margin: 20px 0 6px;
-    }
-    .price-tag sup { font-size: 26px; vertical-align: top; margin-top: 10px; }
-    .price-sub { color: var(--text-muted); font-size: 14px; margin-bottom: 28px; }
-    .price-features { list-style: none; text-align: left; margin-bottom: 32px; }
-    .price-features li {
-      padding: 9px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-      font-size: 15px;
+    .plan-desc { color: var(--text-muted); font-size: 14px; margin-bottom: 26px; }
+    .plan-setup {
+      font-size: 13px;
       color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      margin-bottom: 6px;
     }
-    .price-features li .check { color: var(--green); font-size: 15px; }
-    .price-features li .cross { color: #ff6060; font-size: 15px; }
-
-    .stripe-btn {
+    .plan-setup strong { color: var(--text); font-size: 15px; }
+    .plan-price {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 48px;
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .plan-price .currency { font-size: 26px; vertical-align: top; margin-top: 8px; display: inline-block; }
+    .plan-period { color: var(--text-muted); font-size: 14px; margin-bottom: 28px; }
+    .plan-features {
+      list-style: none;
+      margin-bottom: 32px;
+      flex: 1;
+    }
+    .plan-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 15px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      line-height: 1.4;
+    }
+    .plan-features li:last-child { border-bottom: none; }
+    .plan-features .check { color: var(--green); font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .plan-features .cross { color: #555; font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .plan-features .dimmed { color: var(--text-muted); }
+    .plan-cta {
       display: block;
-      width: 100%;
-      background: linear-gradient(135deg, var(--accent), #9b6bff);
-      color: #fff;
-      padding: 16px;
-      border-radius: 12px;
-      text-decoration: none;
+      text-align: center;
+      padding: 15px;
+      border-radius: 10px;
       font-weight: 700;
       font-size: 16px;
-      text-align: center;
+      text-decoration: none;
       transition: opacity 0.2s, transform 0.2s;
-      box-shadow: 0 6px 24px rgba(108,99,255,0.35);
+      margin-top: auto;
     }
-    .stripe-btn:hover { opacity: 0.88; transform: translateY(-1px); }
-    .stripe-btn.ghost {
-      background: transparent;
-      border: 1.5px solid var(--border);
-      color: var(--text-muted);
-      box-shadow: none;
+    .plan-cta.primary {
+      background: linear-gradient(135deg, var(--accent), #9b6bff);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(108,99,255,0.4);
     }
-    .stripe-btn.ghost:hover { border-color: var(--accent); color: var(--text); }
-
-    .payment-note {
-      margin-top: 40px;
-      color: var(--text-muted);
-      font-size: 14px;
+    .plan-cta.secondary {
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: rgba(255,255,255,0.04);
+    }
+    .plan-cta:hover { opacity: 0.88; transform: translateY(-1px); }
+    .plan-note { text-align: center; font-size: 12px; color: var(--text-muted); margin-top: 12px; }
+    .pricing-guarantee {
+      text-align: center;
+      margin-top: 50px;
       display: flex;
-      align-items: center;
       justify-content: center;
-      gap: 8px;
-    }
-
-    /* ── GUARANTEE ── */
-    #guarantee {
-      background: linear-gradient(135deg, rgba(0,212,170,0.07), rgba(108,99,255,0.07));
-      border-top: 1px solid rgba(0,212,170,0.2);
-      border-bottom: 1px solid rgba(0,212,170,0.2);
-    }
-    .guarantee-inner {
-      display: flex;
-      gap: 48px;
       align-items: center;
+      gap: 14px;
       flex-wrap: wrap;
     }
     .guarantee-badge {
-      flex-shrink: 0;
-      width: 140px; height: 140px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--green), #00a884);
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      text-align: center;
-      box-shadow: 0 12px 40px rgba(0,212,170,0.3);
+      gap: 10px;
+      background: rgba(0,212,170,0.1);
+      border: 1px solid rgba(0,212,170,0.3);
+      border-radius: 100px;
+      padding: 12px 24px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--green);
     }
-    .guarantee-badge .days {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 42px;
-      font-weight: 900;
-      color: #0d0d14;
-      line-height: 1;
-    }
-    .guarantee-badge .day-label {
-      font-size: 13px;
-      font-weight: 700;
-      color: #0d0d14;
-      display: block;
-    }
-    .guarantee-text h2 { font-size: 32px; margin-bottom: 14px; }
-    .guarantee-text p { color: var(--text-muted); font-size: 16px; line-height: 1.7; max-width: 580px; }
 
-    /* ── FAQ ── */
-    #faq { background: var(--bg2); }
-    .faq-list { margin-top: 48px; display: flex; flex-direction: column; gap: 16px; max-width: 760px; margin-left: auto; margin-right: auto; }
-    .faq-item {
-      background: var(--bg3);
+    /* ── SOCIAL PROOF / TESTIMONIALS ── */
+    .testimonials-section { background: var(--bg2); }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 22px;
+      margin-top: 50px;
+    }
+    .testimonial {
+      background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      overflow: hidden;
+      padding: 30px;
+    }
+    .stars { color: #fbbf24; font-size: 18px; margin-bottom: 14px; letter-spacing: 2px; }
+    .testimonial p { font-size: 15px; line-height: 1.65; color: var(--text); margin-bottom: 18px; font-style: italic; }
+    .testimonial-author { display: flex; align-items: center; gap: 12px; }
+    .author-avatar {
+      width: 40px; height: 40px;
+      background: linear-gradient(135deg, var(--accent), var(--green));
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 16px;
+      flex-shrink: 0;
+    }
+    .author-name { font-weight: 700; font-size: 14px; }
+    .author-biz { color: var(--text-muted); font-size: 13px; }
+
+    /* ── FAQ ── */
+    .faq-section { background: var(--bg); }
+    .faq-list { margin-top: 50px; max-width: 720px; margin-left: auto; margin-right: auto; }
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 24px 0;
     }
     .faq-q {
-      width: 100%;
-      text-align: left;
-      background: none;
-      border: none;
-      padding: 24px 28px;
-      color: var(--text);
-      font-size: 16px;
-      font-weight: 600;
+      font-weight: 700;
+      font-size: 17px;
       cursor: pointer;
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 16px;
-      font-family: 'Inter', sans-serif;
+      user-select: none;
     }
-    .faq-q:hover { color: var(--accent-light); }
-    .faq-q .arrow { color: var(--accent); font-size: 22px; transition: transform 0.25s; flex-shrink: 0; }
-    .faq-q.open .arrow { transform: rotate(45deg); }
+    .faq-q .faq-toggle {
+      color: var(--accent-light);
+      font-size: 20px;
+      flex-shrink: 0;
+      transition: transform 0.25s;
+    }
+    .faq-item.open .faq-toggle { transform: rotate(45deg); }
     .faq-a {
-      display: none;
-      padding: 0 28px 24px;
       color: var(--text-muted);
       font-size: 15px;
       line-height: 1.7;
-      border-top: 1px solid var(--border);
+      margin-top: 14px;
+      display: none;
     }
-    .faq-a.open { display: block; }
+    .faq-item.open .faq-a { display: block; }
 
     /* ── FINAL CTA ── */
-    #final-cta {
-      background: var(--bg);
+    .final-cta-section {
+      background: linear-gradient(160deg, var(--bg3), var(--bg2));
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
       text-align: center;
-      padding: 100px 20px;
     }
-    .cta-box {
-      background: linear-gradient(135deg, rgba(108,99,255,0.12), rgba(0,212,170,0.08));
-      border: 1px solid var(--border);
-      border-radius: 28px;
-      padding: 72px 48px;
-      max-width: 780px;
-      margin: 0 auto;
-      position: relative;
-      overflow: hidden;
+    .final-cta-section h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(26px, 4vw, 44px);
+      font-weight: 800;
+      letter-spacing: -0.8px;
+      margin-bottom: 16px;
+      line-height: 1.2;
     }
-    .cta-box::before {
-      content: '';
-      position: absolute;
-      bottom: -120px; right: -120px;
-      width: 380px; height: 380px;
-      background: radial-gradient(circle, rgba(0,212,170,0.1), transparent 70%);
-    }
-    .cta-box h2 { font-size: clamp(28px, 4vw, 44px); margin-bottom: 18px; }
-    .cta-box p { color: var(--text-muted); font-size: 18px; margin-bottom: 36px; line-height: 1.6; }
+    .final-cta-section p { color: var(--text-muted); font-size: 18px; margin-bottom: 36px; }
+    .final-cta-group { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
     /* ── FOOTER ── */
     footer {
-      background: var(--bg2);
+      background: var(--bg);
       border-top: 1px solid var(--border);
-      padding: 48px 40px 32px;
+      padding: 40px 20px;
+      text-align: center;
     }
-    .footer-inner {
-      max-width: 960px;
-      margin: 0 auto;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 32px;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 40px;
+    .footer-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--accent-light);
+      margin-bottom: 12px;
     }
-    .footer-brand p { color: var(--text-muted); font-size: 14px; margin-top: 10px; max-width: 260px; line-height: 1.6; }
-    .footer-links h4 { font-size: 14px; font-weight: 700; margin-bottom: 14px; color: var(--text); }
-    .footer-links a {
-      display: block;
+    .footer-logo span { color: var(--green); }
+    footer p {
       color: var(--text-muted);
-      text-decoration: none;
-      font-size: 14px;
-      margin-bottom: 8px;
-      transition: color 0.2s;
-    }
-    .footer-links a:hover { color: var(--accent-light); }
-    .footer-bottom {
-      max-width: 960px;
-      margin: 0 auto;
-      border-top: 1px solid var(--border);
-      padding-top: 24px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      justify-content: space-between;
-      align-items: center;
       font-size: 13px;
-      color: var(--text-muted);
+      margin-bottom: 6px;
+      line-height: 1.6;
     }
-    .footer-bottom a { color: var(--text-muted); text-decoration: none; }
-    .footer-bottom a:hover { color: var(--text); }
-
-    /* ── VIDEO PLACEHOLDER ── */
-    .video-wrap {
-      margin-top: 48px;
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      overflow: hidden;
-      position: relative;
-      aspect-ratio: 16/9;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 16px;
-    }
-    .video-wrap .play-btn {
-      width: 72px; height: 72px;
-      background: linear-gradient(135deg, var(--accent), var(--green));
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      cursor: pointer;
-      box-shadow: 0 8px 32px rgba(108,99,255,0.4);
-      transition: transform 0.2s;
-      text-decoration: none;
-      color: #fff;
-    }
-    .video-wrap .play-btn:hover { transform: scale(1.08); }
-    .video-wrap p { color: var(--text-muted); font-size: 15px; }
+    footer a { color: var(--accent-light); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 640px) {
-      nav { padding: 12px 20px; }
-      section { padding: 64px 16px; }
-      .hero { padding: 72px 16px 60px; }
-      .guarantee-inner { justify-content: center; text-align: center; }
-      .cta-box { padding: 48px 24px; }
-      footer { padding: 40px 20px 28px; }
+    @media (max-width: 700px) {
+      nav { padding: 14px 20px; }
+      .price-card.featured { transform: none; }
+      .price-card.featured:hover { transform: translateY(-4px); }
+      .roi-box { padding: 36px 22px; }
+      .roi-row { flex-direction: column; gap: 4px; text-align: center; }
     }
   </style>
 </head>
@@ -798,541 +674,513 @@
 
 <!-- TOP BAR -->
 <div class="topbar">
-  🇬🇧 &nbsp;Built for UK local businesses &nbsp;·&nbsp; Setup in 48 hours &nbsp;·&nbsp; 30-day money-back guarantee
+  &#128161; Limited slots available this month — set up in 48 hours, cancel anytime
 </div>
 
 <!-- NAV -->
 <nav>
-  <a class="nav-logo" href="#hero">Phillips Automates</a>
-  <a class="nav-cta" href="[YOUR_STRIPE_LINK]">Get Started — £297</a>
+  <a href="#" class="nav-logo">Phillips<span>Automates</span></a>
+  <a href="#pricing" class="nav-cta">See Plans &darr;</a>
 </nav>
 
 <!-- HERO -->
-<section class="hero" id="hero">
+<section class="hero">
   <div class="container">
     <div class="hero-badge">
       <span class="dot"></span>
-      AI Automation for UK Local Businesses
+      AI Reply Bot — Live 24/7, Responds in 60 Seconds
     </div>
-
-    <h1>Stop Losing Customers<br/>to <span class="highlight">Missed Enquiries</span></h1>
-
+    <h1>
+      Never Miss Another<br>
+      Customer Enquiry —<br>
+      <span class="green">Your AI Reply Bot</span><br>
+      <span class="accent">Responds in 60 Seconds, 24/7</span>
+    </h1>
     <p class="hero-sub">
-      Your AI Lead Reply Bot responds to every website enquiry, missed call, or contact form submission instantly — 24/7 — in your voice, booking jobs you'd otherwise never see.
+      While you're working, sleeping, or just living your life — your AI Reply Bot answers every enquiry instantly across email, Facebook, Instagram, WhatsApp, SMS and your website.
     </p>
-
-    <div class="hero-buttons">
-      <a href="[YOUR_STRIPE_LINK]" class="btn-primary">
-        ▶ Get My AI Bot — £297 Setup
-      </a>
-      <a href="[YOUR_LOOM_VIDEO]" target="_blank" class="btn-secondary">
-        ▷ &nbsp;Watch 3-min Demo
-      </a>
+    <p class="hero-sub2">Set up in 48 hours. No tech knowledge needed. Cancel anytime.</p>
+    <div class="hero-cta-group">
+      <a href="#pricing" class="btn-primary">See Pricing &amp; Get Started</a>
+      <a href="#how-it-works" class="btn-secondary">See How It Works</a>
     </div>
-
     <div class="hero-trust">
-      <span><span class="icon">✔</span> No tech skills needed</span>
-      <span><span class="icon">✔</span> Live in 48 hours</span>
-      <span><span class="icon">✔</span> UK-based support</span>
-      <span><span class="icon">✔</span> 30-day guarantee</span>
+      <span><span class="icon">&#10003;</span> Plans from £47 setup + £27/mo</span>
+      <span><span class="icon">&#10003;</span> 30-day money-back guarantee</span>
+      <span><span class="icon">&#10003;</span> No contracts, cancel anytime</span>
     </div>
   </div>
 </section>
 
-<!-- PROBLEM -->
-<section id="problem">
+<!-- VIDEO -->
+<div class="video-wrap">
   <div class="container">
-    <span class="section-label">The Problem</span>
-    <h2>Every Day You're Open,<br/>Customers Are <span class="a">Slipping Away</span></h2>
-    <p class="section-intro">
-      Most local businesses lose 3–5 enquiries every single week simply because nobody responded fast enough. That's real revenue walking out the door.
-    </p>
-
-    <div class="problem-grid">
-      <div class="problem-card">
-        <span class="icon">📵</span>
-        <h3>You can't answer every call</h3>
-        <p>You're under a car, mid-haircut, or serving food. By the time you call back, they've already booked someone else. Studies show 78% of customers go with the first business to respond.</p>
-      </div>
-      <div class="problem-card">
-        <span class="icon">🕐</span>
-        <h3>Enquiries arrive at midnight</h3>
-        <p>A third of website enquiries come in outside business hours. Without an instant reply, that potential customer is gone before you even wake up.</p>
-      </div>
-      <div class="problem-card">
-        <span class="icon">💸</span>
-        <h3>You're paying for leads you never follow up</h3>
-        <p>Whether it's Google Ads, Facebook or a Yell listing — you're paying to attract enquiries. Letting them go unanswered means you're burning money, full stop.</p>
+    <p class="video-label">Watch it in action</p>
+    <h2 class="video-title">See the AI Reply Bot handle a real customer message</h2>
+    <div class="video-container">
+      <div class="video-placeholder">
+        <p>&#9654; Watch the 2-minute demo</p>
+        <p style="margin-top:10px;"><a href="[YOUR_LOOM_VIDEO]" target="_blank" rel="noopener">[YOUR_LOOM_VIDEO]</a></p>
+        <p style="margin-top:8px;font-size:13px;">Replace this with your Loom embed iframe</p>
       </div>
     </div>
-
-    <div class="stat-row">
-      <div class="stat-item">
-        <div class="num">78%</div>
-        <div class="label">of customers choose the<br/>first business to respond</div>
-      </div>
-      <div class="stat-item">
-        <div class="num">5 min</div>
-        <div class="label">average response time<br/>needed to win a lead</div>
-      </div>
-      <div class="stat-item">
-        <div class="num">£4,200</div>
-        <div class="label">average annual revenue<br/>lost to missed enquiries*</div>
-      </div>
-      <div class="stat-item">
-        <div class="num">1 in 3</div>
-        <div class="label">enquiries arrive outside<br/>of business hours</div>
-      </div>
-    </div>
-    <p style="text-align:center; color: var(--text-muted); font-size: 13px; margin-top: 12px;">*Based on average UK SME trade values and lead conversion rates.</p>
   </div>
-</section>
+</div>
 
-<!-- SOLUTION -->
-<section id="solution">
+<!-- PAIN SECTION -->
+<section class="pain-section">
   <div class="container">
-    <span class="section-label">The Solution</span>
-    <h2>Meet Your <span class="g">AI Lead Reply Bot</span></h2>
-    <p class="section-intro">
-      A done-for-you AI system that instantly replies to every enquiry in your tone of voice — qualifying the lead, answering questions, and pushing them to book. All while you get on with the job.
-    </p>
-
-    <div class="solution-split">
-      <div class="solution-visual">
-        <div class="chat-label">⚡ Live Response — 2 seconds</div>
-        <div class="mock-chat">
-          <div>
-            <div class="chat-bubble incoming">
-              Hi, do you have any slots for an MOT this week? My car's due on Friday.
-            </div>
-            <div class="chat-meta" style="padding-left: 8px;">Sarah M. · via website form · 11:47pm</div>
-          </div>
-          <div>
-            <div class="chat-bubble outgoing">
-              Hi Sarah! Thanks for getting in touch with City Auto Centre 👋 We do have availability this week — Thursday at 10am or Friday at 9am would work well. Shall I pencil you in? We're at 14 High Street, just need your reg and contact number.
-            </div>
-            <div class="chat-meta" style="text-align:right; padding-right: 8px;">AI Bot · 11:47pm · ⚡ Instant</div>
-          </div>
-          <div>
-            <div class="chat-bubble incoming">
-              Friday 9am is perfect! Reg is AB21 XYZ, and my number is 07712 345678
-            </div>
-            <div class="chat-meta" style="padding-left: 8px;">Sarah M. · 11:48pm</div>
-          </div>
-          <div style="background: rgba(0,212,170,0.1); border: 1px solid rgba(0,212,170,0.3); border-radius: 10px; padding: 12px 16px; font-size: 13px; color: var(--green); text-align: center; font-weight: 600;">
-            ✅ Lead qualified &amp; booked — owner notified
-          </div>
-        </div>
+    <p class="section-label">The Problem</p>
+    <h2 class="section-title">Every missed message is a lost customer</h2>
+    <p class="section-sub">If you're a takeaway, salon, garage, plumber, electrician, personal trainer or small shop — this is happening to you right now.</p>
+    <div class="pain-grid">
+      <div class="pain-card">
+        <div class="pain-icon">&#128241;</div>
+        <h3>They message at 9pm — and move on by 9:15pm</h3>
+        <p>Most small business owners can't reply to messages in the evening. Customers don't wait — they contact the next business on Google.</p>
       </div>
-
-      <div>
-        <ul class="solution-points">
-          <li>
-            <span class="tick">✓</span>
-            <span class="text">
-              <strong>Instant 24/7 Response</strong>
-              <span>Replies within seconds to every enquiry, whether it's 2pm or 2am. No more "sorry we missed you".</span>
-            </span>
-          </li>
-          <li>
-            <span class="tick">✓</span>
-            <span class="text">
-              <strong>Sounds Like You, Not a Robot</strong>
-              <span>We train the bot on your business — your services, your prices, your tone. Customers can't tell it's AI.</span>
-            </span>
-          </li>
-          <li>
-            <span class="tick">✓</span>
-            <span class="text">
-              <strong>Qualifies &amp; Books Automatically</strong>
-              <span>The bot asks the right questions, collects contact details, and tells the customer when to come in.</span>
-            </span>
-          </li>
-          <li>
-            <span class="tick">✓</span>
-            <span class="text">
-              <strong>You Get Notified Instantly</strong>
-              <span>Every qualified lead triggers a notification to your phone. You just turn up and do the job.</span>
-            </span>
-          </li>
-          <li>
-            <span class="tick">✓</span>
-            <span class="text">
-              <strong>Works on Your Existing Website</strong>
-              <span>No new software. No new website. Connects to your existing contact form, Facebook page, or Google profile.</span>
-            </span>
-          </li>
-        </ul>
+      <div class="pain-card">
+        <div class="pain-icon">&#128081;</div>
+        <h3>You're too busy during the day to answer</h3>
+        <p>You're mid-cut, under a car, cooking orders, or training a client. You can't stop to reply to every Facebook DM or website form.</p>
       </div>
-    </div>
-
-    <!-- Video placeholder -->
-    <div class="video-wrap">
-      <a href="[YOUR_LOOM_VIDEO]" target="_blank" class="play-btn">▶</a>
-      <p>Watch the 3-minute demo — see it handle a real enquiry</p>
+      <div class="pain-card">
+        <div class="pain-icon">&#128260;</div>
+        <h3>Messages pile up across too many platforms</h3>
+        <p>Instagram DMs, Facebook messages, emails, texts — managing all of them manually is a full-time job you never signed up for.</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">&#128184;</div>
+        <h3>Every lost lead costs you real money</h3>
+        <p>If a typical customer is worth £50–£300, losing even 2–3 per month to slow replies adds up to thousands lost every year.</p>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- HOW IT WORKS -->
-<section id="how">
+<section id="how-it-works">
   <div class="container">
-    <span class="section-label">How It Works</span>
-    <h2>Up and Running in <span class="g">48 Hours</span></h2>
-    <p class="section-intro" style="margin: 0 auto 0;">
-      Three simple steps — I do all the technical work. You just fill in a short form and go back to running your business.
-    </p>
-
+    <p class="section-label">How It Works</p>
+    <h2 class="section-title">Simple. Fast. Hands-free.</h2>
+    <p class="section-sub">You don't need to do anything technical. We handle the setup completely.</p>
     <div class="steps">
-      <div class="step-card" style="position: relative;">
+      <div class="step">
         <div class="step-num">1</div>
-        <h3>You Pay &amp; Fill the Form</h3>
-        <p>After checkout you're sent a short onboarding form. Takes 10 minutes. You tell us about your services, opening hours, pricing, and tone of voice.</p>
-        <span class="step-arrow">→</span>
+        <h3>You sign up &amp; we set everything up</h3>
+        <p>We connect your channels (email, Facebook, Instagram, WhatsApp, SMS, website form) and train the bot on your business. Live within 48 hours.</p>
       </div>
-      <div class="step-card" style="position: relative;">
+      <div class="step">
         <div class="step-num">2</div>
-        <h3>We Build &amp; Test Your Bot</h3>
-        <p>We build your AI bot, train it on your business, connect it to your website or social pages, and run test conversations. All within 48 hours.</p>
-        <span class="step-arrow">→</span>
+        <h3>Customer sends an enquiry — anywhere</h3>
+        <p>Whether they message on Instagram at midnight or fill in your website form on a Sunday — the bot catches it immediately.</p>
       </div>
-      <div class="step-card">
+      <div class="step">
         <div class="step-num">3</div>
-        <h3>It Goes Live &amp; Books Jobs</h3>
-        <p>Your bot goes live. Every enquiry is handled instantly. You get a notification for every qualified lead. Sit back and watch the bookings come in.</p>
+        <h3>AI replies in under 60 seconds</h3>
+        <p>A warm, professional reply is sent automatically — asking the right questions, capturing their details, and keeping the conversation going.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h3>You get a notification — lead already warm</h3>
+        <p>You receive a summary of the enquiry and the bot's reply. All you have to do is confirm the booking or follow up at your convenience.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- BENEFITS -->
-<section id="benefits">
+<!-- CHANNELS SECTION -->
+<section class="channels-section">
   <div class="container">
-    <span class="section-label">Why It Works</span>
-    <h2>Built for <span class="a">UK Local Businesses</span></h2>
-    <p class="section-intro">
-      Whether you run a garage, salon, restaurant, or trade business — this works for you. Here's what you actually get.
+    <div class="channels-intro">
+      <p class="section-label">Channels Covered</p>
+      <h2 class="section-title">One bot. Every channel your customers use.</h2>
+      <p class="section-sub">Choose the plan that covers the channels your customers already use to contact you.</p>
+    </div>
+    <div class="channels-grid">
+      <div class="channel-card">
+        <span class="channel-icon">&#9993;&#65039;</span>
+        <h4>Email</h4>
+        <p>Replies to every email enquiry automatically</p>
+        <span class="channel-badge">ALL PLANS</span>
+      </div>
+      <div class="channel-card">
+        <span class="channel-icon">&#127760;</span>
+        <h4>Website Form</h4>
+        <p>Contact forms, quote requests, booking forms</p>
+        <span class="channel-badge">ALL PLANS</span>
+      </div>
+      <div class="channel-card">
+        <span class="channel-icon">&#128172;</span>
+        <h4>Facebook</h4>
+        <p>Messenger DMs and page comments</p>
+        <span class="channel-badge">STANDARD+</span>
+      </div>
+      <div class="channel-card">
+        <span class="channel-icon">&#128247;</span>
+        <h4>Instagram</h4>
+        <p>Direct messages from your Instagram page</p>
+        <span class="channel-badge">STANDARD+</span>
+      </div>
+      <div class="channel-card">
+        <span class="channel-icon">&#128242;</span>
+        <h4>WhatsApp</h4>
+        <p>WhatsApp Business messages from customers</p>
+        <span class="channel-badge">FULL BUNDLE</span>
+      </div>
+      <div class="channel-card">
+        <span class="channel-icon">&#128236;</span>
+        <h4>SMS / Text</h4>
+        <p>Replies to text message enquiries</p>
+        <span class="channel-badge">FULL BUNDLE</span>
+      </div>
+    </div>
+    <p class="channels-note">
+      Not sure which channels your customers use most? Email us at <a href="mailto:phillipsautomates@gmail.com" style="color:var(--accent-light);">phillipsautomates@gmail.com</a> and we'll help you choose the right plan.
     </p>
+  </div>
+</section>
 
-    <div class="benefits-grid">
-      <div class="benefit-card">
-        <span class="benefit-icon">⚡</span>
-        <h3>Responds in Under 5 Seconds</h3>
-        <p>Way faster than any human. Customers get an instant, helpful reply the moment they send an enquiry — day or night, weekday or weekend.</p>
+<!-- WHO IT'S FOR -->
+<section>
+  <div class="container">
+    <p class="section-label">Who It's For</p>
+    <h2 class="section-title">Built for small UK businesses</h2>
+    <p class="section-sub">If you're a sole trader or small local business that gets customer enquiries — this is for you. You don't need a big team or a fancy website.</p>
+    <div class="niches-grid">
+      <div class="niche-card">
+        <span class="niche-icon">&#127860;</span>
+        <span>Takeaways &amp; Restaurants</span>
       </div>
-      <div class="benefit-card">
-        <span class="benefit-icon">📱</span>
-        <h3>Works Where Your Customers Are</h3>
-        <p>Website contact form, Facebook Messenger, Google Business messages, Instagram DMs — your bot handles them all from one place.</p>
+      <div class="niche-card">
+        <span class="niche-icon">&#9986;&#65039;</span>
+        <span>Hair Salons &amp; Barbers</span>
       </div>
-      <div class="benefit-card">
-        <span class="benefit-icon">🗣️</span>
-        <h3>Trained in Your Voice</h3>
-        <p>Casual and friendly, or professional and formal — we write the bot's responses to match how you'd actually talk to a customer. No robotic scripts.</p>
+      <div class="niche-card">
+        <span class="niche-icon">&#128663;</span>
+        <span>Garages &amp; MOT Centres</span>
       </div>
-      <div class="benefit-card">
-        <span class="benefit-icon">📋</span>
-        <h3>Full Lead Log Every Week</h3>
-        <p>Every conversation is saved and sent to you in a weekly summary. Name, number, service needed, and outcome — all in one clean report.</p>
+      <div class="niche-card">
+        <span class="niche-icon">&#128296;</span>
+        <span>Plumbers</span>
       </div>
-      <div class="benefit-card">
-        <span class="benefit-icon">🔔</span>
-        <h3>Instant WhatsApp Notifications</h3>
-        <p>The moment a lead is qualified, you get a WhatsApp ping with their details. No checking inboxes, no manual follow-up needed.</p>
+      <div class="niche-card">
+        <span class="niche-icon">&#9889;</span>
+        <span>Electricians</span>
       </div>
-      <div class="benefit-card">
-        <span class="benefit-icon">🔧</span>
-        <h3>Ongoing Support Included</h3>
-        <p>Monthly subscribers get priority support. Need to update your services, prices, or opening hours? Just drop us a message and it's done within 24 hours.</p>
+      <div class="niche-card">
+        <span class="niche-icon">&#127947;&#65039;</span>
+        <span>Personal Trainers</span>
+      </div>
+      <div class="niche-card">
+        <span class="niche-icon">&#128717;</span>
+        <span>Small Shops &amp; Retailers</span>
+      </div>
+      <div class="niche-card">
+        <span class="niche-icon">&#128205;</span>
+        <span>Any Local UK Business</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- TESTIMONIALS -->
-<section id="testimonials">
+<!-- ROI CALCULATOR -->
+<section class="roi-section">
   <div class="container">
-    <span class="section-label">What Clients Say</span>
-    <h2>Real Results from <span class="g">UK Businesses</span></h2>
-    <p class="section-intro">
-      Here's what a few of our clients said after their first 30 days.
-    </p>
-
-    <div class="testi-grid">
-      <div class="testi-card">
-        <div class="stars">★★★★★</div>
-        <p class="testi-text">
-          "I was losing leads left and right because I couldn't answer the phone while I was under a car. Now the bot handles all my website enquiries and I'm getting three or four extra bookings a week I'd have missed. Best £297 I've spent on the business."
-        </p>
-        <div class="testi-author">
-          <div class="avatar" style="background: linear-gradient(135deg, #6c63ff, #9b6bff);">DM</div>
+    <div style="text-align:center; margin-bottom: 50px;">
+      <p class="section-label">ROI Calculator</p>
+      <h2 class="section-title">How much could you make back?</h2>
+      <p class="section-sub" style="margin: 0 auto;">Most of our customers make back their monthly fee in the first week. Here's a simple example.</p>
+    </div>
+    <div class="roi-box">
+      <h3>Your numbers (Starter Plan example)</h3>
+      <p class="roi-sub">Based on a small salon, takeaway, or trades business on our Starter plan</p>
+      <div class="roi-rows">
+        <div class="roi-row positive">
+          <span class="label">Extra customers per month (just 2)</span>
+          <span class="value">+2 customers</span>
+        </div>
+        <div class="roi-row positive">
+          <span class="label">Average spend per customer</span>
+          <span class="value">£50</span>
+        </div>
+        <div class="roi-row positive">
+          <span class="label">Extra revenue per month</span>
+          <span class="value">+£100/month</span>
+        </div>
+        <hr class="roi-divider">
+        <div class="roi-row negative">
+          <span class="label">AI Reply Bot (Starter Plan)</span>
+          <span class="value">-£27/month</span>
+        </div>
+        <hr class="roi-divider">
+        <div class="roi-row" style="background: rgba(0,212,170,0.08); border: 1px solid rgba(0,212,170,0.2);">
+          <span class="label" style="font-weight:700; color: var(--green);">Your profit from the bot</span>
           <div>
-            <div class="testi-name">Darren Mitchell</div>
-            <div class="testi-biz">DM Autos, Wolverhampton · MOT &amp; Servicing</div>
+            <div class="roi-result">£73/month</div>
           </div>
         </div>
       </div>
-
-      <div class="testi-card">
-        <div class="stars">★★★★★</div>
-        <p class="testi-text">
-          "We'd been getting enquiries through our website at all hours and had no way to respond until the next morning. Half of them had already moved on. Since setting this up, our conversion rate on web enquiries has gone from maybe 20% to nearly 70%. Genuinely shocked."
-        </p>
-        <div class="testi-author">
-          <div class="avatar" style="background: linear-gradient(135deg, #00d4aa, #00a884);">SC</div>
-          <div>
-            <div class="testi-name">Sophie Clarke</div>
-            <div class="testi-biz">Clarke &amp; Co Hair, Leeds · Hair Salon</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="testi-card">
-        <div class="stars">★★★★★</div>
-        <p class="testi-text">
-          "Set-up was dead simple — filled in a form, had a quick call, and it was live two days later. Our Friday and Saturday night enquiries on Facebook now all get replied to instantly. It even asks the right questions about party sizes and dietary requirements. Brilliant service."
-        </p>
-        <div class="testi-author">
-          <div class="avatar" style="background: linear-gradient(135deg, #ff6b6b, #ff8e8e);">PK</div>
-          <div>
-            <div class="testi-name">Priya Kapoor</div>
-            <div class="testi-biz">Spice Garden Restaurant, Leicester · Indian Restaurant</div>
-          </div>
-        </div>
-      </div>
+      <p class="roi-footnote">
+        This is a conservative estimate — most businesses on our Standard or Full Bundle plans capture 5–10+ extra customers per month across all their channels. The bot works 24/7 without taking a day off.
+      </p>
     </div>
   </div>
 </section>
 
 <!-- PRICING -->
-<section id="pricing">
-  <div class="container">
-    <span class="section-label">Simple Pricing</span>
-    <h2>One Straightforward Price.<br/><span class="a">No Hidden Costs.</span></h2>
-    <p class="section-intro" style="margin: 0 auto 0;">
-      Most businesses recoup the setup cost within the first week. The ongoing fee covers hosting, AI credits, and priority support.
-    </p>
-
-    <div class="pricing-wrapper">
-      <!-- DIY -->
-      <div class="price-card">
-        <h3>Bot Only</h3>
-        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">You manage it yourself</p>
-        <div class="price-tag"><sup>£</sup>297</div>
-        <div class="price-sub">One-time setup fee</div>
-        <ul class="price-features">
-          <li><span class="check">✓</span> AI bot built &amp; deployed</li>
-          <li><span class="check">✓</span> 1 channel connected</li>
-          <li><span class="check">✓</span> 30 days of support</li>
-          <li><span class="cross">✗</span> No ongoing support</li>
-          <li><span class="cross">✗</span> No monthly updates</li>
-          <li><span class="cross">✗</span> No WhatsApp alerts</li>
-        </ul>
-        <a href="[YOUR_STRIPE_LINK]" class="stripe-btn ghost">Get Bot Only</a>
-      </div>
-
-      <!-- RECOMMENDED -->
-      <div class="price-card featured">
-        <span class="featured-label">⭐ Most Popular</span>
-        <h3>Bot + Managed</h3>
-        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">We handle everything ongoing</p>
-        <div class="price-tag"><sup>£</sup>297</div>
-        <div class="price-sub">Setup + £147/month thereafter</div>
-        <ul class="price-features">
-          <li><span class="check">✓</span> AI bot built &amp; deployed</li>
-          <li><span class="check">✓</span> Up to 3 channels connected</li>
-          <li><span class="check">✓</span> Monthly bot updates</li>
-          <li><span class="check">✓</span> WhatsApp lead alerts</li>
-          <li><span class="check">✓</span> Weekly lead report</li>
-          <li><span class="check">✓</span> Priority UK support</li>
-        </ul>
-        <a href="[YOUR_STRIPE_LINK]" class="stripe-btn">Get Started Now →</a>
-      </div>
-
-      <!-- ENTERPRISE -->
-      <div class="price-card">
-        <h3>Multi-Location</h3>
-        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">For chains &amp; franchises</p>
-        <div class="price-tag" style="font-size: 36px; margin-top: 28px;">Custom</div>
-        <div class="price-sub">Bespoke pricing per location</div>
-        <ul class="price-features">
-          <li><span class="check">✓</span> Everything in Managed</li>
-          <li><span class="check">✓</span> Per-location bots</li>
-          <li><span class="check">✓</span> Centralised reporting</li>
-          <li><span class="check">✓</span> CRM integration</li>
-          <li><span class="check">✓</span> Dedicated account manager</li>
-          <li><span class="check">✓</span> SLA guarantee</li>
-        </ul>
-        <a href="mailto:phillipsautomates@gmail.com" class="stripe-btn ghost">Get in Touch</a>
-      </div>
+<section class="pricing-section" id="pricing">
+  <div class="container-wide">
+    <div style="text-align:center; margin-bottom: 10px;">
+      <p class="section-label">Pricing</p>
+      <h2 class="section-title">Simple, honest pricing. No hidden fees.</h2>
+      <p class="section-sub" style="margin: 0 auto 16px;">One-off setup fee, then a monthly subscription. Cancel anytime — no contracts.</p>
     </div>
 
-    <p class="payment-note">🔒 Secure payment via Stripe &nbsp;·&nbsp; Cancel monthly plan anytime &nbsp;·&nbsp; 30-day money-back guarantee</p>
+    <div class="pricing-grid">
+
+      <!-- STARTER -->
+      <div class="price-card">
+        <div class="plan-name">Starter</div>
+        <div class="plan-desc">Email &amp; website enquiries covered. Perfect for getting started.</div>
+        <div class="plan-setup">One-off setup: <strong>£47</strong></div>
+        <div class="plan-price"><span class="currency">£</span>27</div>
+        <div class="plan-period">per month, cancel anytime</div>
+        <ul class="plan-features">
+          <li><span class="check">&#10003;</span> Email enquiry auto-replies</li>
+          <li><span class="check">&#10003;</span> Website contact form replies</li>
+          <li><span class="check">&#10003;</span> Replies in under 60 seconds</li>
+          <li><span class="check">&#10003;</span> Set up in 48 hours</li>
+          <li><span class="check">&#10003;</span> Daily summary report</li>
+          <li><span class="cross">&#10007;</span> <span class="dimmed">Facebook &amp; Instagram</span></li>
+          <li><span class="cross">&#10007;</span> <span class="dimmed">WhatsApp &amp; SMS</span></li>
+        </ul>
+        <a href="[STARTER_STRIPE_LINK]" class="plan-cta secondary">Get Started — £47 Setup</a>
+        <p class="plan-note">Then £27/month</p>
+      </div>
+
+      <!-- STANDARD (FEATURED) -->
+      <div class="price-card featured">
+        <span class="popular-badge">&#11088; Most Popular</span>
+        <div class="plan-name">Standard</div>
+        <div class="plan-desc">Add Facebook &amp; Instagram — where most local customers actually are.</div>
+        <div class="plan-setup">One-off setup: <strong>£97</strong></div>
+        <div class="plan-price"><span class="currency">£</span>47</div>
+        <div class="plan-period">per month, cancel anytime</div>
+        <ul class="plan-features">
+          <li><span class="check">&#10003;</span> Email enquiry auto-replies</li>
+          <li><span class="check">&#10003;</span> Website contact form replies</li>
+          <li><span class="check">&#10003;</span> <strong>Facebook Messenger replies</strong></li>
+          <li><span class="check">&#10003;</span> <strong>Instagram DM replies</strong></li>
+          <li><span class="check">&#10003;</span> Replies in under 60 seconds</li>
+          <li><span class="check">&#10003;</span> Set up in 48 hours</li>
+          <li><span class="check">&#10003;</span> Daily summary report</li>
+          <li><span class="cross">&#10007;</span> <span class="dimmed">WhatsApp &amp; SMS</span></li>
+        </ul>
+        <a href="[STANDARD_STRIPE_LINK]" class="plan-cta primary">Get Started — £97 Setup</a>
+        <p class="plan-note">Then £47/month &mdash; most businesses choose this</p>
+      </div>
+
+      <!-- FULL BUNDLE -->
+      <div class="price-card">
+        <div class="plan-name">Full Bundle</div>
+        <div class="plan-desc">Every channel covered. No enquiry ever goes unanswered, anywhere.</div>
+        <div class="plan-setup">One-off setup: <strong>£147</strong></div>
+        <div class="plan-price"><span class="currency">£</span>67</div>
+        <div class="plan-period">per month, cancel anytime</div>
+        <ul class="plan-features">
+          <li><span class="check">&#10003;</span> Email enquiry auto-replies</li>
+          <li><span class="check">&#10003;</span> Website contact form replies</li>
+          <li><span class="check">&#10003;</span> Facebook Messenger replies</li>
+          <li><span class="check">&#10003;</span> Instagram DM replies</li>
+          <li><span class="check">&#10003;</span> <strong>WhatsApp Business replies</strong></li>
+          <li><span class="check">&#10003;</span> <strong>SMS / Text message replies</strong></li>
+          <li><span class="check">&#10003;</span> Replies in under 60 seconds</li>
+          <li><span class="check">&#10003;</span> Set up in 48 hours</li>
+          <li><span class="check">&#10003;</span> Daily summary report</li>
+        </ul>
+        <a href="[FULL_STRIPE_LINK]" class="plan-cta secondary">Get Started — £147 Setup</a>
+        <p class="plan-note">Then £67/month — all 6 channels</p>
+      </div>
+
+    </div>
+
+    <div class="pricing-guarantee">
+      <span class="guarantee-badge">&#128736;&#65039; 30-Day Money-Back Guarantee</span>
+      <span style="color: var(--text-muted); font-size:15px;">If you're not happy within 30 days, we'll give you a full refund. No questions asked.</span>
+    </div>
   </div>
 </section>
 
-<!-- GUARANTEE -->
-<section id="guarantee">
+<!-- TESTIMONIALS -->
+<section class="testimonials-section">
   <div class="container">
-    <div class="guarantee-inner">
-      <div class="guarantee-badge">
-        <div>
-          <div class="days">30</div>
-          <span class="day-label">DAY<br/>GUARANTEE</span>
+    <p class="section-label" style="text-align:center;">What Customers Say</p>
+    <h2 class="section-title" style="text-align:center;">Real results from real UK businesses</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p>"We were losing loads of Facebook enquiries because we're always flat out in the kitchen. Since the bot went live we've picked up at least 5 extra orders a week that we'd have missed before. Well worth it."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">D</div>
+          <div>
+            <div class="author-name">Danny K.</div>
+            <div class="author-biz">Takeaway owner, Manchester</div>
+          </div>
         </div>
       </div>
-      <div class="guarantee-text">
-        <h2>Try It Risk-Free for <span class="g">30 Days</span></h2>
-        <p>
-          If your AI Lead Reply Bot isn't live and responding to enquiries within 48 hours of your onboarding form, or if you're genuinely not happy with how it performs in the first 30 days, I'll refund you in full. No questions, no hassle. I'm confident this will change how your business handles enquiries — but if it doesn't work for you, you pay nothing.
-        </p>
-        <p style="margin-top: 16px; font-size: 14px;">
-          To claim a refund, simply email <a href="mailto:phillipsautomates@gmail.com" style="color: var(--accent-light);">phillipsautomates@gmail.com</a> within 30 days of purchase.
-        </p>
+      <div class="testimonial">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p>"I was sceptical at first — I'm not very techy. But Frankie set the whole thing up and it was live in two days. My Instagram DMs get answered while I'm mid-cut and clients love the quick response."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">S</div>
+          <div>
+            <div class="author-name">Steph M.</div>
+            <div class="author-biz">Hair salon owner, Leeds</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p>"People ring me about emergency leaks at all hours — but I was missing the ones that came through my website at night. The bot captures all of those now and I call them back in the morning. Proper game changer."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">R</div>
+          <div>
+            <div class="author-name">Rob T.</div>
+            <div class="author-biz">Plumber, Birmingham</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- FAQ -->
-<section id="faq">
-  <div class="container" style="text-align: center;">
-    <span class="section-label">FAQ</span>
-    <h2>Common <span class="a">Questions</span></h2>
-    <p class="section-intro" style="margin: 0 auto 0;">
-      Everything you need to know before getting started.
-    </p>
-
+<section class="faq-section">
+  <div class="container">
+    <p class="section-label" style="text-align:center;">FAQ</p>
+    <h2 class="section-title" style="text-align:center;">Common questions</h2>
     <div class="faq-list">
+
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          Do I need any technical knowledge to use this?
-          <span class="arrow">+</span>
-        </button>
+        <div class="faq-q" onclick="toggleFaq(this)">
+          What exactly is the AI Reply Bot?
+          <span class="faq-toggle">+</span>
+        </div>
         <div class="faq-a">
-          None whatsoever. I handle 100% of the technical setup. All you need to do is fill in a short 10-minute onboarding form telling me about your business. I build it, test it, and connect it to your website or social media pages. If you can send a WhatsApp, you can use this.
+          It's an AI-powered assistant that automatically replies to customer enquiries on your behalf — within 60 seconds, 24 hours a day, 7 days a week. It responds in your tone, asks the right questions, and captures the customer's details so you can follow up. You choose which channels to cover based on your plan.
         </div>
       </div>
 
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          How quickly does it get set up?
-          <span class="arrow">+</span>
-        </button>
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Do I need to be technical to use this?
+          <span class="faq-toggle">+</span>
+        </div>
         <div class="faq-a">
-          In most cases, your bot is live within 48 hours of you completing the onboarding form. Once it's set up, you'll receive a test conversation so you can see exactly how it responds before it goes live to real customers.
+          Not at all. We handle the entire setup for you. You just tell us about your business — what you do, where you're based, your opening hours — and we configure everything. Most businesses are live within 48 hours of signing up.
         </div>
       </div>
 
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          What if a customer asks something the bot doesn't know?
-          <span class="arrow">+</span>
-        </button>
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Will the replies sound like a robot?
+          <span class="faq-toggle">+</span>
+        </div>
         <div class="faq-a">
-          The bot is trained to recognise when a question is outside its knowledge. In those cases, it politely lets the customer know that someone will be in touch shortly — and immediately sends you a WhatsApp notification so you can follow up personally. It never makes up answers or leaves a customer hanging.
+          No — and this is what most people are surprised by. The bot is trained to sound like you and your business. It uses a warm, conversational tone and British English. Customers rarely realise they're not talking to a person, and that's the whole point.
         </div>
       </div>
 
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          Can I cancel the monthly plan?
-          <span class="arrow">+</span>
-        </button>
+        <div class="faq-q" onclick="toggleFaq(this)">
+          What's the difference between the plans?
+          <span class="faq-toggle">+</span>
+        </div>
         <div class="faq-a">
-          Yes, absolutely. There's no contract or minimum term. You can cancel at any time by emailing us, and you won't be charged again from the following month. The bot will remain live until the end of your paid period.
+          The Starter plan (£47 setup + £27/month) covers email and website contact form replies. The Standard plan (£97 setup + £47/month) adds Facebook Messenger and Instagram DMs — ideal for most small businesses. The Full Bundle (£147 setup + £67/month) covers all six channels including WhatsApp Business and SMS text messages.
         </div>
       </div>
 
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          What kinds of businesses does this work best for?
-          <span class="arrow">+</span>
-        </button>
+        <div class="faq-q" onclick="toggleFaq(this)">
+          What if the bot gets something wrong?
+          <span class="faq-toggle">+</span>
+        </div>
         <div class="faq-a">
-          It works best for any local UK business that gets inbound enquiries — garages, MOT centres, hair salons, barbers, restaurants, takeaways, estate agents, letting agencies, plumbers, electricians, dentists, personal trainers, and gyms. Essentially, if you get messages from potential customers asking about prices, availability, or services, this will work brilliantly for you.
+          The bot is designed to be helpful but never over-promise. If a question is too specific or sensitive (like an exact quote for a job), it will ask the customer to call you or wait for you to get back to them. You always stay in control. You also receive a daily summary of every conversation the bot has had.
         </div>
       </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Can I cancel anytime?
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-a">
+          Yes, absolutely. There are no long-term contracts. You can cancel your monthly subscription at any time and you won't be charged again. We also offer a 30-day money-back guarantee — if you're not happy for any reason in the first 30 days, we'll give you a full refund.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          I'm on Instagram and Facebook — which plan do I need?
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-a">
+          The Standard plan at £97 setup + £47/month covers both Facebook Messenger and Instagram DMs, as well as email and website forms. That's what most salons, takeaways, and personal trainers go for — it's our most popular plan for a reason.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          How do I get started?
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-a">
+          Click one of the "Get Started" buttons above, complete the payment, and you'll receive an email from Frankie within a few hours with a short onboarding form to fill in. We'll take it from there — no back-and-forth, no tech headaches.
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
 
 <!-- FINAL CTA -->
-<section id="final-cta">
+<section class="final-cta-section">
   <div class="container">
-    <div class="cta-box">
-      <h2>Ready to Stop Missing <span class="g">Enquiries?</span></h2>
-      <p>Join UK businesses already using AI to capture every lead. Setup in 48 hours. 30-day money-back guarantee. Let's go.</p>
-      <div class="hero-buttons" style="justify-content: center;">
-        <a href="[YOUR_STRIPE_LINK]" class="btn-primary">
-          Get My AI Bot — £297 Setup
-        </a>
-        <a href="mailto:phillipsautomates@gmail.com" class="btn-secondary">
-          ✉ &nbsp;Have a Question First
-        </a>
-      </div>
-      <p style="color: var(--text-muted); font-size: 14px; margin-top: 24px;">🔒 Secure checkout via Stripe &nbsp;·&nbsp; Instant confirmation email</p>
+    <h2>Ready to stop losing customers to slow replies?</h2>
+    <p>Join small UK businesses already using the AI Reply Bot. Set up in 48 hours, no tech needed, cancel anytime.</p>
+    <div class="final-cta-group">
+      <a href="[STARTER_STRIPE_LINK]" class="btn-secondary">Starter — £47 + £27/mo</a>
+      <a href="[STANDARD_STRIPE_LINK]" class="btn-primary">Standard — £97 + £47/mo &#11088;</a>
+      <a href="[FULL_STRIPE_LINK]" class="btn-secondary">Full Bundle — £147 + £67/mo</a>
     </div>
+    <p style="margin-top: 24px; font-size: 14px; color: var(--text-muted);">
+      Questions? Email <a href="mailto:phillipsautomates@gmail.com" style="color:var(--accent-light);">phillipsautomates@gmail.com</a>
+    </p>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <a class="nav-logo" href="#hero">Phillips Automates</a>
-      <p>UK AI automation for local businesses. Built to save you time and win you more customers.</p>
-    </div>
-    <div class="footer-links">
-      <h4>Product</h4>
-      <a href="#solution">How It Works</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#testimonials">Testimonials</a>
-      <a href="#faq">FAQ</a>
-    </div>
-    <div class="footer-links">
-      <h4>Get Started</h4>
-      <a href="[YOUR_STRIPE_LINK]">Buy Now — £297</a>
-      <a href="[YOUR_LOOM_VIDEO]" target="_blank">Watch Demo</a>
-      <a href="mailto:phillipsautomates@gmail.com">Contact Us</a>
-    </div>
-    <div class="footer-links">
-      <h4>Legal</h4>
-      <a href="#">Privacy Policy</a>
-      <a href="#">Terms of Service</a>
-      <a href="#">Refund Policy</a>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <span>© 2025 Phillips Automates. All rights reserved.</span>
-    <span>Questions? <a href="mailto:phillipsautomates@gmail.com">phillipsautomates@gmail.com</a></span>
-  </div>
+  <div class="footer-logo">Phillips<span>Automates</span></div>
+  <p>&copy; 2025 Phillips Automates. All rights reserved.</p>
+  <p>Built by Frankie &mdash; <a href="mailto:phillipsautomates@gmail.com">phillipsautomates@gmail.com</a></p>
+  <p style="margin-top: 10px;">
+    <a href="#">Privacy Policy</a> &nbsp;&middot;&nbsp;
+    <a href="#">Terms &amp; Conditions</a> &nbsp;&middot;&nbsp;
+    <a href="#pricing">View Plans</a>
+  </p>
 </footer>
 
 <script>
-  function toggleFaq(btn) {
-    const answer = btn.nextElementSibling;
-    const isOpen = answer.classList.contains('open');
-    // Close all
-    document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('open'));
-    document.querySelectorAll('.faq-q').forEach(b => b.classList.remove('open'));
-    // Open clicked if it was closed
-    if (!isOpen) {
-      answer.classList.add('open');
-      btn.classList.add('open');
-    }
+  function toggleFaq(el) {
+    const item = el.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
   }
-
-  // Smooth scroll for anchor links
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const target = document.querySelector(a.getAttribute('href'));
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
-  });
 </script>
 
 </body>

@@ -1,0 +1,614 @@
+{
+  "name": "Phillips Automates — Daily UK Lead Scraper",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 8 * * 1-5"
+            }
+          ]
+        }
+      },
+      "id": "node-cron-trigger",
+      "name": "Daily Trigger (8am Mon-Fri)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Rotate through niches and cities based on day of week / week number\nconst niches = [\n  'hair salon',\n  'takeaway',\n  'car garage',\n  'plumber',\n  'personal trainer',\n  'electrician'\n];\n\nconst cities = [\n  'Manchester',\n  'Birmingham',\n  'Leeds',\n  'Sheffield',\n  'Liverpool',\n  'Bristol',\n  'Leicester',\n  'Nottingham',\n  'Newcastle',\n  'Glasgow'\n];\n\nconst now = new Date();\nconst dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 86400000);\n\n// Mon=1...Fri=5, use day-of-week (0=Sun offset to shift)\nconst dayOfWeek = now.getDay(); // 0=Sun, 1=Mon ... 5=Fri\nconst weekNumber = Math.floor(dayOfYear / 7);\n\n// Rotate niche by weekday (Mon-Fri maps to index 0-4, Sat-Sun repeats last)\nconst nicheIndex = (dayOfWeek - 1 + niches.length) % niches.length;\nconst cityIndex = weekNumber % cities.length;\n\nconst selectedNiche = niches[nicheIndex];\nconst selectedCity = cities[cityIndex];\n\nreturn [{\n  json: {\n    niche: selectedNiche,\n    city: selectedCity,\n    searchQuery: `${selectedNiche} in ${selectedCity} UK`,\n    dateAdded: now.toISOString().split('T')[0]\n  }\n}];"
+      },
+      "id": "node-set-search-params",
+      "name": "Set Niche & City (Daily Rotation)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://maps.googleapis.com/maps/api/place/textsearch/json",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "query",
+              "value": "={{ $json.searchQuery }}"
+            },
+            {
+              "name": "region",
+              "value": "uk"
+            },
+            {
+              "name": "language",
+              "value": "en-GB"
+            },
+            {
+              "name": "key",
+              "value": "YOUR_GOOGLE_PLACES_API_KEY"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "node-google-places-search",
+      "name": "Google Places Text Search",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse Google Places results and return individual place records\nconst results = $json.results || [];\nconst niche = $('Set Niche & City (Daily Rotation)').first().json.niche;\nconst city = $('Set Niche & City (Daily Rotation)').first().json.city;\nconst dateAdded = $('Set Niche & City (Daily Rotation)').first().json.dateAdded;\n\nconst places = [];\n\nfor (const place of results.slice(0, 30)) {\n  places.push({\n    json: {\n      place_id: place.place_id || '',\n      business_name: place.name || '',\n      address: place.formatted_address || '',\n      niche: niche,\n      city: city,\n      dateAdded: dateAdded\n    }\n  });\n}\n\nreturn places;"
+      },
+      "id": "node-parse-places-results",
+      "name": "Parse Places Results",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "url": "=https://maps.googleapis.com/maps/api/place/details/json?place_id={{ encodeURIComponent($json.place_id) }}&fields=name,formatted_phone_number,website,formatted_address&key=YOUR_GOOGLE_PLACES_API_KEY",
+        "options": {}
+      },
+      "id": "node-get-place-details",
+      "name": "Get Place Details (Phone & Website)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1120, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Merge place details with existing data\nconst detail = $json.result || {};\nconst prev = $('Parse Places Results').first().json;\n\nconst website = detail.website || '';\nconst phone = detail.formatted_phone_number || '';\n\nreturn [{\n  json: {\n    business_name: prev.business_name,\n    address: prev.address,\n    phone: phone,\n    website: website,\n    niche: prev.niche,\n    city: prev.city,\n    dateAdded: prev.dateAdded,\n    place_id: prev.place_id\n  }\n}];"
+      },
+      "id": "node-merge-details",
+      "name": "Merge Place Details",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1340, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.website }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "node-check-website",
+      "name": "Has Website?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1560, 300]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.website }}",
+        "options": {
+          "timeout": 10000,
+          "allowUnauthorizedCerts": true
+        }
+      },
+      "id": "node-scrape-homepage",
+      "name": "Scrape Business Website (Homepage)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1780, 180],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// Regex to find email addresses in scraped HTML\nconst html = $json.data || $json.body || '';\nconst emailRegex = /[a-zA-Z0-9._%+\\-]+@[a-zA-Z0-9.\\-]+\\.[a-zA-Z]{2,}/g;\nconst found = html.match(emailRegex) || [];\n\n// Filter out common non-human emails\nconst filtered = found.filter(e => {\n  const lower = e.toLowerCase();\n  return !lower.includes('noreply') &&\n         !lower.includes('no-reply') &&\n         !lower.includes('donotreply') &&\n         !lower.includes('example.com') &&\n         !lower.includes('sentry') &&\n         !lower.includes('wixpress') &&\n         !lower.includes('schema') &&\n         !lower.includes('w3.org');\n});\n\nconst uniqueEmails = [...new Set(filtered)];\n\n// Pass through all previous fields plus emails found\nconst prev = $('Merge Place Details').first().json;\n\nreturn [{\n  json: {\n    ...prev,\n    emails_found: uniqueEmails,\n    primary_email: uniqueEmails.length > 0 ? uniqueEmails[0] : '',\n    email_found_on: 'homepage'\n  }\n}];"
+      },
+      "id": "node-extract-email-homepage",
+      "name": "Extract Emails from Homepage",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2000, 180]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.primary_email }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "node-check-email-found-homepage",
+      "name": "Email Found on Homepage?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [2220, 180]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Try common contact page URLs\nconst baseUrl = $('Merge Place Details').first().json.website || '';\nlet contactUrl = '';\n\nif (baseUrl) {\n  // Strip trailing slash\n  const base = baseUrl.replace(/\\/$/, '');\n  contactUrl = `${base}/contact`;\n}\n\nreturn [{\n  json: {\n    ...$json,\n    contact_url: contactUrl\n  }\n}];"
+      },
+      "id": "node-build-contact-url",
+      "name": "Build Contact Page URL",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2440, 300]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.contact_url }}",
+        "options": {
+          "timeout": 10000,
+          "allowUnauthorizedCerts": true
+        }
+      },
+      "id": "node-scrape-contact-page",
+      "name": "Scrape Contact Page",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2660, 300],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extract emails from contact page HTML\nconst html = $json.data || $json.body || '';\nconst emailRegex = /[a-zA-Z0-9._%+\\-]+@[a-zA-Z0-9.\\-]+\\.[a-zA-Z]{2,}/g;\nconst found = html.match(emailRegex) || [];\n\nconst filtered = found.filter(e => {\n  const lower = e.toLowerCase();\n  return !lower.includes('noreply') &&\n         !lower.includes('no-reply') &&\n         !lower.includes('donotreply') &&\n         !lower.includes('example.com') &&\n         !lower.includes('sentry') &&\n         !lower.includes('wixpress') &&\n         !lower.includes('schema') &&\n         !lower.includes('w3.org');\n});\n\nconst uniqueEmails = [...new Set(filtered)];\n\n// If we came from homepage branch without email, pull prev from Merge Details\n// If we came from homepage branch with no email, prev is already correct\nlet prev;\ntry {\n  prev = $('Extract Emails from Homepage').first().json;\n} catch(e) {\n  prev = $('Merge Place Details').first().json;\n}\n\nreturn [{\n  json: {\n    ...prev,\n    emails_found: uniqueEmails,\n    primary_email: uniqueEmails.length > 0 ? uniqueEmails[0] : '',\n    email_found_on: 'contact_page'\n  }\n}];"
+      },
+      "id": "node-extract-email-contact",
+      "name": "Extract Emails from Contact Page",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2880, 300]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "id": "node-merge-email-results",
+      "name": "Merge Email Results",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [3100, 240]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.primary_email }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "node-filter-has-email",
+      "name": "Filter: Has Email?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [3320, 240]
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "resource": "spreadsheet",
+        "operation": "get",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_LEADS_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Sheet1",
+          "mode": "name"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "email",
+              "lookupValue": "={{ $json.primary_email }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "node-check-duplicate",
+      "name": "Check: Email Already in Sheet?",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.4,
+      "position": [3540, 180]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {},
+          "conditions": [
+            {
+              "leftValue": "={{ $json.row_number }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "node-check-not-duplicate",
+      "name": "Not a Duplicate?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [3760, 180]
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "resource": "spreadsheet",
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_LEADS_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Sheet1",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "business_name": "={{ $('Merge Place Details').first().json.business_name }}",
+            "email": "={{ $json.primary_email }}",
+            "phone": "={{ $('Merge Place Details').first().json.phone }}",
+            "website": "={{ $('Merge Place Details').first().json.website }}",
+            "city": "={{ $('Merge Place Details').first().json.city }}",
+            "niche": "={{ $('Merge Place Details').first().json.niche }}",
+            "status": "new",
+            "date_added": "={{ $('Merge Place Details').first().json.dateAdded }}",
+            "email_found_on": "={{ $json.email_found_on }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "node-add-to-sheet",
+      "name": "Add Lead to Google Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.4,
+      "position": [3980, 140]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Log skipped duplicate to console (no action needed)\nconsole.log('Duplicate lead skipped:', $json.primary_email);\nreturn [{ json: { skipped: true, reason: 'duplicate', email: $json.primary_email } }];"
+      },
+      "id": "node-skip-duplicate",
+      "name": "Skip Duplicate (Log Only)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [3980, 280]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Log no-email result\nconsole.log('No email found for:', $json.business_name);\nreturn [{ json: { skipped: true, reason: 'no_email', business: $json.business_name } }];"
+      },
+      "id": "node-skip-no-email",
+      "name": "Skip (No Email Found)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [3540, 340]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Log no-website result\nconsole.log('No website for:', $json.business_name);\nreturn [{ json: { skipped: true, reason: 'no_website', business: $json.business_name } }];"
+      },
+      "id": "node-skip-no-website",
+      "name": "Skip (No Website)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1780, 420]
+    }
+  ],
+  "connections": {
+    "Daily Trigger (8am Mon-Fri)": {
+      "main": [
+        [
+          {
+            "node": "Set Niche & City (Daily Rotation)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Niche & City (Daily Rotation)": {
+      "main": [
+        [
+          {
+            "node": "Google Places Text Search",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Places Text Search": {
+      "main": [
+        [
+          {
+            "node": "Parse Places Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Places Results": {
+      "main": [
+        [
+          {
+            "node": "Get Place Details (Phone & Website)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Place Details (Phone & Website)": {
+      "main": [
+        [
+          {
+            "node": "Merge Place Details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Place Details": {
+      "main": [
+        [
+          {
+            "node": "Has Website?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has Website?": {
+      "main": [
+        [
+          {
+            "node": "Scrape Business Website (Homepage)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Skip (No Website)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Scrape Business Website (Homepage)": {
+      "main": [
+        [
+          {
+            "node": "Extract Emails from Homepage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Emails from Homepage": {
+      "main": [
+        [
+          {
+            "node": "Email Found on Homepage?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email Found on Homepage?": {
+      "main": [
+        [
+          {
+            "node": "Merge Email Results",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Build Contact Page URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Contact Page URL": {
+      "main": [
+        [
+          {
+            "node": "Scrape Contact Page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Scrape Contact Page": {
+      "main": [
+        [
+          {
+            "node": "Extract Emails from Contact Page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Emails from Contact Page": {
+      "main": [
+        [
+          {
+            "node": "Merge Email Results",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge Email Results": {
+      "main": [
+        [
+          {
+            "node": "Filter: Has Email?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter: Has Email?": {
+      "main": [
+        [
+          {
+            "node": "Check: Email Already in Sheet?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Skip (No Email Found)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check: Email Already in Sheet?": {
+      "main": [
+        [
+          {
+            "node": "Not a Duplicate?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Not a Duplicate?": {
+      "main": [
+        [
+          {
+            "node": "Add Lead to Google Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Skip Duplicate (Log Only)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": ""
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-01-01T00:00:00.000Z",
+      "updatedAt": "2025-01-01T00:00:00.000Z",
+      "id": "tag-lead-scraper",
+      "name": "Lead Generation"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2025-01-01T00:00:00.000Z",
+  "versionId": "v1",
+  "_meta": {
+    "description": "Phillips Automates — Daily UK Lead Scraper",
+    "instructions": [
+      "Replace YOUR_GOOGLE_PLACES_API_KEY with your actual Google Places API key (free tier covers ~150 searches/day).",
+      "Replace YOUR_LEADS_SHEET_ID with the ID from your Google Sheet URL (between /d/ and /edit).",
+      "Your Google Sheet (Sheet1) must have these column headers in row 1: business_name, email, phone, website, city, niche, status, date_added, email_found_on",
+      "Connect your Google Sheets credential in n8n (OAuth2 service account recommended).",
+      "The workflow runs Mon-Fri at 8am server time — adjust the cron expression if needed.",
+      "Target: 15-25 new leads per day depending on niche density in each city.",
+      "Niches rotate daily: hair salon (Mon), takeaway (Tue), car garage (Wed), plumber (Thu), personal trainer (Fri).",
+      "Cities rotate weekly across all 10 UK cities listed."
+    ]
+  }
+}
