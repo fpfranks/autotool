@@ -1,26 +1,40 @@
 // Phillips Automates — Google Apps Script
-// Paste this entire file into script.google.com, then deploy as a web app.
-// Set: Execute as = Me, Who has access = Anyone
+// Paste this into script.google.com → Deploy as Web App
+// Execute as: Me  |  Who has access: Anyone
 
 const SHEET_NAME = 'Customers';
+
+function getSheet() {
+  const props = PropertiesService.getScriptProperties();
+  let ssId = props.getProperty('SS_ID');
+  let ss;
+
+  if (ssId) {
+    try { ss = SpreadsheetApp.openById(ssId); } catch(e) { ssId = null; }
+  }
+
+  if (!ssId) {
+    ss = SpreadsheetApp.create('Phillips Automates — Customers');
+    props.setProperty('SS_ID', ss.getId());
+  }
+
+  let sheet = ss.getSheetByName(SHEET_NAME);
+  if (!sheet) {
+    sheet = ss.insertSheet(SHEET_NAME);
+    sheet.appendRow([
+      'ID','Business','Owner','Email','Phone','Channels',
+      'Instagram','Messenger','WhatsApp','TikTok','SMS','Email Bot','Telegram',
+      'Status','Fee','Date'
+    ]);
+    sheet.setFrozenRows(1);
+  }
+  return sheet;
+}
 
 function doPost(e) {
   try {
     const data = JSON.parse(e.postData.contents);
-    const ss = SpreadsheetApp.getActiveSpreadsheet();
-    let sheet = ss.getSheetByName(SHEET_NAME);
-
-    // Create sheet + headers if it doesn't exist yet
-    if (!sheet) {
-      sheet = ss.insertSheet(SHEET_NAME);
-      sheet.appendRow([
-        'ID','Business','Owner','Email','Phone','Channels',
-        'Instagram','Messenger','WhatsApp','TikTok','SMS','Email Bot','Telegram',
-        'Status','Fee','Date'
-      ]);
-      sheet.setFrozenRows(1);
-    }
-
+    const sheet = getSheet();
     const ch = data.channelData || {};
     sheet.appendRow([
       String(Date.now()),
@@ -40,11 +54,9 @@ function doPost(e) {
       '47',
       new Date().toLocaleDateString('en-GB')
     ]);
-
     return ContentService
       .createTextOutput(JSON.stringify({ ok: true }))
       .setMimeType(ContentService.MimeType.JSON);
-
   } catch (err) {
     return ContentService
       .createTextOutput(JSON.stringify({ ok: false, error: err.message }))
@@ -54,18 +66,14 @@ function doPost(e) {
 
 function doGet(e) {
   try {
-    const ss = SpreadsheetApp.getActiveSpreadsheet();
-    const sheet = ss.getSheetByName(SHEET_NAME);
-
-    if (!sheet || sheet.getLastRow() < 2) {
+    const sheet = getSheet();
+    if (sheet.getLastRow() < 2) {
       return ContentService
         .createTextOutput(JSON.stringify({ customers: [] }))
         .setMimeType(ContentService.MimeType.JSON);
     }
-
     const rows = sheet.getDataRange().getValues();
     const headers = rows[0];
-
     const customers = rows.slice(1).map(row => {
       const r = {};
       headers.forEach((h, i) => { r[h] = row[i]; });
@@ -90,11 +98,9 @@ function doGet(e) {
         fromSheet: true
       };
     });
-
     return ContentService
       .createTextOutput(JSON.stringify({ customers }))
       .setMimeType(ContentService.MimeType.JSON);
-
   } catch (err) {
     return ContentService
       .createTextOutput(JSON.stringify({ customers: [], error: err.message }))
