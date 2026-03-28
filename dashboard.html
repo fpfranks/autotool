@@ -104,46 +104,40 @@
   <!-- DASHBOARD -->
   <div id="page-dashboard" class="page active">
     <div class="page-header flex-between">
-      <div><h1>Dashboard</h1><p>Your business at a glance</p></div>
-      <div style="font-size:12px;color:var(--muted)" id="dash-date"></div>
+      <div><h1>Command Centre</h1><p id="dash-date"></p></div>
+      <button class="btn btn-ghost btn-sm" onclick="fetchFromSheet(localStorage.getItem('pa_gas_url'))" title="Sync customers from sales page">🔄 Sync</button>
     </div>
+
+    <!-- Stats -->
     <div class="grid-4">
       <div class="stat"><div class="stat-label">Active Clients</div><div class="stat-value green" id="s-active">0</div><div class="stat-sub">paying £27/mo</div></div>
       <div class="stat"><div class="stat-label">Monthly Revenue</div><div class="stat-value purple" id="s-revenue">£0</div><div class="stat-sub">recurring</div></div>
-      <div class="stat"><div class="stat-label">ManyChat Cost</div><div class="stat-value orange" id="s-cost">£0</div><div class="stat-sub">£12/mo per client</div></div>
       <div class="stat"><div class="stat-label">Monthly Profit</div><div class="stat-value green" id="s-profit">£0</div><div class="stat-sub">after costs</div></div>
+      <div class="stat"><div class="stat-label">Emails to Action</div><div class="stat-value orange" id="s-email-action">0</div><div class="stat-sub" id="s-email-sub">all up to date</div></div>
     </div>
-    <div class="grid-2">
+
+    <!-- Do This Now + Outreach -->
+    <div class="grid-2" style="margin-top:14px">
       <div class="card">
-        <div class="card-title">Recent Customers</div>
+        <div class="card-title" style="margin-bottom:14px">⚡ Do This Now</div>
+        <div id="dash-actions"></div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="margin-bottom:14px">📤 Today's Outreach</div>
+        <div id="dash-outreach"></div>
+      </div>
+    </div>
+
+    <!-- Recent Clients + Automation Status -->
+    <div class="grid-2" style="margin-top:14px">
+      <div class="card">
+        <div class="card-title" style="margin-bottom:14px">👥 Recent Clients</div>
         <div id="dash-customers"><div class="empty">No customers yet</div></div>
+        <button class="btn btn-ghost" style="width:100%;margin-top:10px;font-size:12px" onclick="nav('customers',document.querySelector('[onclick*=customers]'))">View all clients →</button>
       </div>
       <div class="card">
-        <div class="card-title">Next Tasks</div>
-        <div id="dash-todos"></div>
-        <button class="btn btn-ghost" style="width:100%;margin-top:10px;font-size:12px" onclick="nav('todo',document.querySelector('[onclick*=todo]'))">View all →</button>
-      </div>
-    </div>
-    <div class="grid-4 mt-4">
-      <div class="card" style="text-align:center;cursor:pointer" onclick="nav('customers',document.querySelector('[onclick*=customers]'))">
-        <div style="font-size:28px;margin-bottom:8px">👥</div>
-        <div style="font-weight:600;font-size:14px">Add Customer</div>
-        <div style="font-size:12px;color:var(--muted);margin-top:4px">Track a new paying client</div>
-      </div>
-      <div class="card" style="text-align:center;cursor:pointer" onclick="nav('workflows',document.querySelector('[onclick*=workflows]'))">
-        <div style="font-size:28px;margin-bottom:8px">⚡</div>
-        <div style="font-weight:600;font-size:14px">Manage Flows</div>
-        <div style="font-size:12px;color:var(--muted);margin-top:4px">Track ManyChat setups</div>
-      </div>
-      <div class="card" style="text-align:center;cursor:pointer" onclick="nav('todo',document.querySelector('[onclick*=todo]'))">
-        <div style="font-size:28px;margin-bottom:8px">✅</div>
-        <div style="font-weight:600;font-size:14px">To-Do List</div>
-        <div style="font-size:12px;color:var(--muted);margin-top:4px" id="dash-todo-count">Loading...</div>
-      </div>
-      <div class="card" style="text-align:center;cursor:pointer" onclick="nav('emails',document.querySelector('[onclick*=emails]'))">
-        <div style="font-size:28px;margin-bottom:8px">📧</div>
-        <div style="font-weight:600;font-size:14px">Emails</div>
-        <div style="font-size:12px;color:var(--muted);margin-top:4px" id="dash-email-count">Loading...</div>
+        <div class="card-title" style="margin-bottom:14px">🤖 Automation Status</div>
+        <div id="dash-automation"></div>
       </div>
     </div>
   </div>
@@ -406,6 +400,11 @@
         <button class="btn btn-ghost" onclick="testGasUrl()">Test Connection</button>
         <span id="gas-status" style="font-size:12px;color:var(--muted);"></span>
       </div>
+      <div style="margin-top:20px;padding:14px;background:rgba(255,77,106,0.06);border:1px solid rgba(255,77,106,0.2);border-radius:8px;">
+        <div style="font-size:12px;font-weight:700;color:var(--red);margin-bottom:8px;">Reset To-Do List</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:10px;">Resets your task list to the current defaults. Your customer and revenue data is not affected.</div>
+        <button class="btn btn-sm" style="background:var(--red);color:white" onclick="if(confirm('Reset to-do list to defaults?')){localStorage.removeItem('pa_todos');localStorage.removeItem('pa_todos_v');location.reload();}">Reset Tasks</button>
+      </div>
       <div style="margin-top:24px;background:var(--surface2);border-radius:8px;padding:16px;">
         <div style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;">Setup guide</div>
         <ol style="font-size:13px;color:var(--muted);line-height:2;padding-left:20px;">
@@ -427,26 +426,34 @@
 let customers = JSON.parse(localStorage.getItem('pa_customers')||'[]');
 let workflows = JSON.parse(localStorage.getItem('pa_workflows')||'[]');
 let deletedEmails = JSON.parse(localStorage.getItem('pa_deleted_emails')||'[]');
+let outreach = JSON.parse(localStorage.getItem('pa_outreach')||'{}');
+
+// Version-controlled to-do list — bump TODOS_V to reset everyone to new defaults
+const TODOS_V = '3';
+if(localStorage.getItem('pa_todos_v') !== TODOS_V){ localStorage.removeItem('pa_todos'); localStorage.setItem('pa_todos_v', TODOS_V); }
 let todos = JSON.parse(localStorage.getItem('pa_todos')||'null') || [
-  {id:1,  text:'Sign up to ManyChat (manychat.com) — start 14 day Pro trial', cat:'Setup', done:false},
-  {id:2,  text:'Sign up to Stripe (stripe.com) and verify your account', cat:'Setup', done:true},
-  {id:3,  text:'Set up ManyChat booking flow — bot collects name + number, notifies business owner', cat:'ManyChat', done:false},
-  {id:4,  text:'Sign up to n8n (n8n.io) — free trial', cat:'Setup', done:false},
-  {id:5,  text:'Get Claude API key from console.anthropic.com', cat:'Setup', done:false},
-  {id:6,  text:'Sales page live on GitHub Pages', cat:'Setup', done:true},
-  {id:7,  text:'Stripe payment link added to sales page', cat:'Setup', done:true},
-  {id:8,  text:'Connect YOUR Instagram to ManyChat as a demo', cat:'ManyChat', done:true},
-  {id:9,  text:'Build demo welcome message flow in ManyChat', cat:'ManyChat', done:false},
-  {id:10, text:'Add booking, pricing and hours quick reply buttons', cat:'ManyChat', done:false},
-  {id:11, text:'Test demo bot — message your own Instagram', cat:'ManyChat', done:false},
-  {id:12, text:'Record screen video showing the bot replying (Win+G)', cat:'Setup', done:false},
-  {id:13, text:'Add video URL to sales page and push to GitHub', cat:'Setup', done:false},
-  {id:14, text:'Import n8n lead scraper workflow and activate', cat:'Outreach', done:false},
-  {id:15, text:'Create Google Sheet using leads-template.csv', cat:'Outreach', done:false},
-  {id:16, text:'Get free Google Places API key (console.cloud.google.com)', cat:'Outreach', done:false},
-  {id:17, text:'Test Stripe payment link works on live sales page', cat:'Setup', done:false},
+  // ── ONE-TIME SETUP ──
+  {id:1,  text:'Sign up to ManyChat — manychat.com (free trial)', cat:'Setup', done:false},
+  {id:2,  text:'Sign up to Stripe and verify your account — stripe.com', cat:'Setup', done:true},
+  {id:3,  text:'Sales page live on GitHub Pages', cat:'Setup', done:true},
+  {id:4,  text:'Stripe payment link updated to £27/mo', cat:'Setup', done:true},
+  {id:5,  text:'Connect Google Sheet to dashboard — paste URL in Settings', cat:'Setup', done:false},
+  {id:6,  text:'Test Stripe payment link end-to-end — make a test purchase', cat:'Setup', done:false},
+  // ── DEMO BOT (build once — use for sales proof) ──
+  {id:7,  text:'Build demo bot in ManyChat — welcome, pricing, hours, booking, speak to someone', cat:'ManyChat', done:false},
+  {id:8,  text:'Connect your own Instagram to the demo bot', cat:'ManyChat', done:true},
+  {id:9,  text:'Add real services, prices and opening hours to demo bot', cat:'ManyChat', done:false},
+  {id:10, text:'Test demo bot — DM your Instagram from a second account', cat:'ManyChat', done:false},
+  {id:11, text:'Record 60-second demo video showing the bot replying (Win+G)', cat:'Setup', done:false},
+  {id:12, text:'Add demo video URL to sales page and push to GitHub', cat:'Setup', done:false},
+  // ── OUTREACH ──
+  {id:13, text:'Update email templates from £47 to £27 (assets/email-templates.txt)', cat:'Outreach', done:false},
+  {id:14, text:'Sign up to Instantly.ai — automates Day 3, Day 7, Day 14 follow-ups', cat:'Outreach', done:false},
+  {id:15, text:'Build a list of 50 target UK businesses (see assets/first-50-leads.txt)', cat:'Outreach', done:false},
+  {id:16, text:'Send your first 10 cold emails today', cat:'Outreach', done:false},
+  {id:17, text:'Load email templates into Instantly.ai follow-up sequences', cat:'Outreach', done:false},
 ];
-let todoId = todos.length + 1;
+let todoId = todos.reduce((m,t)=>Math.max(m,t.id),0)+1;
 
 function nav(name, el) {
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -465,28 +472,111 @@ document.querySelectorAll('.nav-item').forEach(item=>{
   item.addEventListener('click',function(){document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));this.classList.add('active');});
 });
 
+function todayKey(){ return new Date().toISOString().split('T')[0]; }
+function weeklyOutreach(){let t=0;for(let i=0;i<7;i++){const d=new Date();d.setDate(d.getDate()-i);t+=outreach[d.toISOString().split('T')[0]]||0;}return t;}
+function incrementOutreach(){const k=todayKey();outreach[k]=(outreach[k]||0)+1;localStorage.setItem('pa_outreach',JSON.stringify(outreach));renderDash();}
+function resetOutreachToday(){const k=todayKey();outreach[k]=0;localStorage.setItem('pa_outreach',JSON.stringify(outreach));renderDash();}
+
 function renderDash() {
   document.getElementById('dash-date').textContent = new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+
+  // Stats
   const active = customers.filter(c=>c.status==='active');
   const revenue = active.reduce((s,c)=>s+(parseFloat(c.fee)||27),0);
-  const cost = active.length*12;
+  const profit = Math.max(0,revenue-active.length*12-25);
+  const emailActions = customers.filter(c=>c.status!=='inactive'&&(emailStage(c)==='new'||emailStage(c)==='setup')).length;
   document.getElementById('s-active').textContent = active.length;
   document.getElementById('s-revenue').textContent = '£'+revenue;
-  document.getElementById('s-cost').textContent = '£'+cost;
-  document.getElementById('s-profit').textContent = '£'+Math.max(0,revenue-cost-25);
+  document.getElementById('s-profit').textContent = '£'+profit;
+  document.getElementById('s-email-action').textContent = emailActions;
+  document.getElementById('s-email-sub').textContent = emailActions?(emailActions===1?'1 email to send':'emails to send'):'all up to date ✓';
+  document.getElementById('s-email-action').style.color = emailActions?'var(--warn)':'var(--green)';
+
+  // ── DO THIS NOW ──
+  const actEl = document.getElementById('dash-actions');
+  if(!actEl) return;
+  const actions = [];
+  function actionRow(dot,text,btn,onclick){
+    return `<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--surface2);border-radius:8px;margin-bottom:7px;">
+      <div style="display:flex;align-items:center;gap:10px;min-width:0">
+        <div style="width:8px;height:8px;border-radius:50%;background:${dot};flex-shrink:0"></div>
+        <div style="font-size:12px;line-height:1.4">${text}</div>
+      </div>
+      ${btn?`<button class="btn btn-sm btn-primary" style="white-space:nowrap;margin-left:10px;flex-shrink:0" onclick="${onclick}">${btn}</button>`:''}
+    </div>`;
+  }
+  customers.filter(c=>c.status!=='inactive'&&emailStage(c)==='new').forEach(c=>{
+    actions.push(actionRow('var(--red)',`<strong>${c.biz}</strong> — send welcome email`,'📧 Send',`sendWelcomeEmail('${c.id}')`));
+  });
+  customers.filter(c=>c.status!=='inactive'&&emailStage(c)==='setup').forEach(c=>{
+    actions.push(actionRow('var(--red)',`<strong>${c.biz}</strong> — setup done, build ManyChat then send live email`,'🚀 Go Live',`sendLiveEmail('${c.id}')`));
+  });
+  customers.filter(c=>c.status!=='inactive'&&emailStage(c)==='welcomed').forEach(c=>{
+    if(c.emailWelcome&&!c.emailNudge&&(Date.now()-new Date(c.emailWelcome).getTime())>86400000)
+      actions.push(actionRow('var(--warn)',`<strong>${c.biz}</strong> — no reply in 24hrs`,'🔔 Nudge',`sendNudgeEmail('${c.id}')`));
+  });
+  const incompleteFl=workflows.filter(w=>w.steps.filter(Boolean).length<8);
+  if(incompleteFl.length) actions.push(actionRow('var(--warn)',`${incompleteFl.length} ManyChat flow${incompleteFl.length>1?'s':''} not fully built`,'View →',`nav('workflows',document.querySelector('[onclick*=workflows]'))`));
+  const todayC=outreach[todayKey()]||0;
+  actions.push(actionRow(todayC>=10?'var(--green)':todayC>=5?'var(--warn)':'var(--muted)',`Cold emails today: <strong>${todayC} / 10</strong> sent`,'+ 1',`incrementOutreach()`));
+  actEl.innerHTML = actions.length ? actions.join('') : '<div style="text-align:center;padding:20px;color:var(--green);font-size:13px">All clear — great work! 🎉</div>';
+
+  // ── OUTREACH TRACKER ──
+  const orEl = document.getElementById('dash-outreach');
+  if(orEl){
+    const wkC=weeklyOutreach(); const pct=Math.min(100,Math.round((todayC/10)*100));
+    orEl.innerHTML=`<div style="text-align:center;margin-bottom:14px">
+      <div style="font-size:48px;font-weight:800;color:${todayC>=10?'var(--green)':'var(--text)'};line-height:1">${todayC}</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">emails sent today &nbsp;·&nbsp; target: 10</div>
+    </div>
+    <div style="background:var(--bg);border-radius:6px;height:8px;margin-bottom:14px;overflow:hidden">
+      <div style="height:100%;width:${pct}%;background:${todayC>=10?'var(--green)':'var(--accent)'};border-radius:6px;transition:width 0.3s"></div>
+    </div>
+    <div style="display:flex;gap:8px;margin-bottom:14px">
+      <button class="btn btn-primary" style="flex:1;padding:12px;font-size:14px;font-weight:700" onclick="incrementOutreach()">+ 1 Email Sent</button>
+      <button class="btn btn-ghost btn-sm" onclick="resetOutreachToday()" title="Reset today to 0">↺</button>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+      <div style="background:var(--surface2);border-radius:7px;padding:10px;text-align:center">
+        <div style="font-size:20px;font-weight:700;color:var(--accent)">${wkC}</div>
+        <div style="font-size:10px;color:var(--muted)">this week</div>
+      </div>
+      <div style="background:var(--surface2);border-radius:7px;padding:10px;text-align:center">
+        <div style="font-size:20px;font-weight:700;color:var(--green)">${Math.round(wkC/70*100)||0}%</div>
+        <div style="font-size:10px;color:var(--muted)">of weekly goal</div>
+      </div>
+    </div>
+    <div style="font-size:11px;color:var(--muted);text-align:center;line-height:1.7">10/day = 200/month · est. 4 new clients</div>`;
+  }
+
+  // ── RECENT CLIENTS ──
   const dc = document.getElementById('dash-customers');
-  if(!customers.length){dc.innerHTML='<div class="empty">No customers yet</div>';}
-  else{dc.innerHTML=customers.slice(-5).reverse().map(c=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:10px;background:var(--surface2);border-radius:7px;margin-bottom:7px"><div><div style="font-size:13px;font-weight:600">${c.biz}${c.isNew?'<span style="margin-left:6px;background:rgba(0,212,170,0.15);color:var(--green);font-size:9px;font-weight:700;padding:2px 5px;border-radius:8px">NEW</span>':''}</div><div style="font-size:11px;color:var(--muted)">${c.channels||c.type||'No channels set'} · ${c.name||''}</div></div><span class="badge badge-${c.status}">${c.status}</span></div>`).join('');}
-  const pending = todos.filter(t=>!t.done);
-  document.getElementById('dash-todo-count').textContent = pending.length?`${pending.length} tasks remaining`:'All done! 🎉';
-  const emailActions=customers.filter(c=>c.status!=='inactive'&&(emailStage(c)==='new'||emailStage(c)==='setup')).length;
-  const emailEl=document.getElementById('dash-email-count');
-  if(emailEl) emailEl.textContent=emailActions?`${emailActions} action${emailActions===1?'':'s'} needed`:'All up to date ✓';
-  if(emailEl) emailEl.style.color=emailActions?'var(--warn)':'var(--muted)';
-  const dt = document.getElementById('dash-todos');
-  const next = pending.slice(0,4);
-  if(!next.length){dt.innerHTML='<div class="empty" style="padding:16px">All tasks complete! 🎉</div>';}
-  else{dt.innerHTML=next.map(t=>`<div style="display:flex;align-items:center;gap:8px;padding:8px;background:var(--surface2);border-radius:7px;margin-bottom:6px"><div style="width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0"></div><div style="font-size:12px">${t.text}</div></div>`).join('');}
+  if(dc){
+    if(!customers.length){dc.innerHTML='<div class="empty">No customers yet — start sending cold emails!</div>';}
+    else{dc.innerHTML=customers.slice(-5).reverse().map(c=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:10px;background:var(--surface2);border-radius:7px;margin-bottom:7px">
+      <div><div style="font-size:13px;font-weight:600">${c.biz}${c.isNew?'<span style="margin-left:6px;background:rgba(0,212,170,0.15);color:var(--green);font-size:9px;font-weight:700;padding:2px 5px;border-radius:8px">NEW</span>':''}</div>
+      <div style="font-size:11px;color:var(--muted)">${c.channels||c.type||'No channels'} · ${c.name||''}</div></div>
+      <span class="badge badge-${c.status}">${c.status}</span></div>`).join('');}
+  }
+
+  // ── AUTOMATION STATUS ──
+  const autoEl = document.getElementById('dash-automation');
+  if(autoEl){
+    const gasUrl=localStorage.getItem('pa_gas_url');
+    const activeFlows=workflows.filter(w=>w.steps.filter(Boolean).length===8).length;
+    const onboarding=customers.filter(c=>emailStage(c)!=='live'&&c.status!=='inactive').length;
+    function sRow(icon,label,val,ok){return `<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:var(--surface2);border-radius:7px;margin-bottom:6px">
+      <div style="font-size:12px">${icon} ${label}</div>
+      <span style="font-size:11px;font-weight:600;color:${ok?'var(--green)':'var(--warn)'}">${val}</span></div>`;}
+    autoEl.innerHTML=[
+      sRow('🌐','Sales page → Sheet',gasUrl?'Connected ✓':'Not connected — go to Settings',!!gasUrl),
+      sRow('🔄','Customer auto-import',gasUrl?'Running ✓':'Set up URL in Settings',!!gasUrl),
+      sRow('💳','Stripe billing','Automatic ✓',true),
+      sRow('🤖','ManyChat bots',activeFlows+' fully live',activeFlows>0),
+      sRow('📧','Clients being onboarded',onboarding?onboarding+' in progress':'None — keep selling!',true),
+      sRow('📊','Monthly recurring','£'+revenue+' / £'+profit+' profit',revenue>0),
+    ].join('');
+  }
 }
 
 function openCustomerForm(){document.getElementById('customer-form').style.display='block';document.getElementById('customer-form').scrollIntoView({behavior:'smooth'});}
