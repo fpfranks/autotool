@@ -736,10 +736,9 @@
     <div id="confirm-panel" style="display:none;background:rgba(0,212,170,0.06);border:1px solid rgba(0,212,170,0.3);border-radius:20px;padding:40px 32px;text-align:center;margin-top:24px;">
       <div style="font-size:3rem;margin-bottom:16px;">🎉</div>
       <h3 style="font-size:1.4rem;margin-bottom:10px;color:#00d4aa;">Payment opening — you're almost there!</h3>
-      <p style="color:var(--text-muted);margin-bottom:24px;font-size:0.9rem;">Complete your payment in the tab that just opened. Once done, email us your setup details below so we can get your bot live within 24 hours.</p>
-      <div id="confirm-summary" style="background:rgba(0,0,0,0.3);border-radius:10px;padding:18px;text-align:left;font-size:0.82rem;line-height:1.8;color:#ccc;margin-bottom:20px;white-space:pre-wrap;font-family:monospace;"></div>
-      <a id="confirm-mailto" href="#" style="display:inline-block;background:linear-gradient(135deg,#6c63ff,#9b6bff);color:#fff;padding:13px 28px;border-radius:10px;text-decoration:none;font-weight:700;font-size:0.9rem;margin-bottom:12px;">📧 Send us your setup details</a>
-      <p style="font-size:0.78rem;color:var(--text-muted);">Or email phillipsautomates@gmail.com with the details above.</p>
+      <p style="color:var(--text-muted);margin-bottom:24px;font-size:0.9rem;">Complete your payment in the tab that just opened. Once done, click the button below to send us your setup details — we'll have your bot live within 24 hours.</p>
+      <a id="confirm-mailto" href="#" style="display:inline-block;background:linear-gradient(135deg,#6c63ff,#9b6bff);color:#fff;padding:16px 32px;border-radius:12px;text-decoration:none;font-weight:700;font-size:1rem;margin-bottom:16px;">📧 Send us your setup details</a>
+      <p style="font-size:0.78rem;color:var(--text-muted);">This opens an email pre-filled with everything we need. Just hit send.</p>
     </div>
 
     <script>
@@ -840,10 +839,10 @@
       checked.forEach(ch => {
         if(channelData[ch]) summary += `${CH[ch].name}: ${channelData[ch]}\n`;
       });
-      summary += `\n--- Dashboard Import ---\ndashboard.html?import=${encoded}`;
+      const importUrl = `https://fpfranks.github.io/autotool/dashboard.html?import=${encoded}`;
+      summary += `\n--- Click to add to dashboard ---\n${importUrl}`;
 
       // show confirmation panel
-      document.getElementById('confirm-summary').textContent = summary;
       const mailSubject = encodeURIComponent(`New Bot Setup — ${biz}`);
       const mailBody    = encodeURIComponent(summary);
       document.getElementById('confirm-mailto').href = `mailto:phillipsautomates@gmail.com?subject=${mailSubject}&body=${mailBody}`;
