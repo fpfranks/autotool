@@ -581,12 +581,36 @@ function renderDash() {
 
 function openCustomerForm(){document.getElementById('customer-form').style.display='block';document.getElementById('customer-form').scrollIntoView({behavior:'smooth'});}
 function closeCustomerForm(){document.getElementById('customer-form').style.display='none';['c-biz','c-name','c-email','c-social','c-type','c-city','c-website','c-booking','c-notes'].forEach(id=>document.getElementById(id).value='');document.getElementById('c-fee').value='27';}
+function autoCreateWorkflow(c){
+  const wfExists=workflows.find(w=>w.biz===c.biz);
+  if(wfExists) return;
+  workflows.push({
+    id: Date.now(),
+    biz:     c.biz||'',
+    ig:      c.ig||c.social||'',
+    fb:      c.fb||'',
+    wa:      c.wa||'',
+    tt:      c.tt||'',
+    email:   c.emailBot||c.email||'',
+    tg:      c.tg||'',
+    cal:     c.phone||'',
+    website: c.website||'',
+    booking: c.booking||'',
+    notes:   'Auto-created from customer',
+    steps:   [false,false,false,false,false,false,false,false],
+    date:    new Date().toLocaleDateString('en-GB')
+  });
+  localStorage.setItem('pa_workflows',JSON.stringify(workflows));
+}
+
 function saveCustomer(){
   const biz=document.getElementById('c-biz').value.trim();
   if(!biz){notify('Business name required');return;}
-  customers.push({id:Date.now(),biz,name:document.getElementById('c-name').value,email:document.getElementById('c-email').value,social:document.getElementById('c-social').value,type:document.getElementById('c-type').value,city:document.getElementById('c-city').value,website:document.getElementById('c-website').value,booking:document.getElementById('c-booking').value,status:document.getElementById('c-status').value,fee:document.getElementById('c-fee').value,notes:document.getElementById('c-notes').value,date:new Date().toLocaleDateString('en-GB')});
+  const c={id:Date.now(),biz,name:document.getElementById('c-name').value,email:document.getElementById('c-email').value,social:document.getElementById('c-social').value,type:document.getElementById('c-type').value,city:document.getElementById('c-city').value,website:document.getElementById('c-website').value,booking:document.getElementById('c-booking').value,status:document.getElementById('c-status').value,fee:document.getElementById('c-fee').value,notes:document.getElementById('c-notes').value,date:new Date().toLocaleDateString('en-GB')};
+  customers.push(c);
   localStorage.setItem('pa_customers',JSON.stringify(customers));
-  closeCustomerForm();renderAll();notify('Customer saved!');
+  autoCreateWorkflow(c);
+  closeCustomerForm();renderAll();notify('Customer saved — workflow created!');
 }
 function deleteCustomer(id){const c=customers.find(x=>String(x.id)===String(id));if(!c)return;if(!confirm('Delete '+c.biz+'?\n\nThis removes them from your dashboard. It does not cancel their Stripe subscription.'))return;if(c.email&&!deletedEmails.includes(c.email)){deletedEmails.push(c.email);localStorage.setItem('pa_deleted_emails',JSON.stringify(deletedEmails));}customers=customers.filter(x=>String(x.id)!==String(id));localStorage.setItem('pa_customers',JSON.stringify(customers));renderAll();notify('Customer deleted');}
 function updateCustomerStatus(id,v){const c=customers.find(x=>String(x.id)===String(id));if(c){c.status=v;localStorage.setItem('pa_customers',JSON.stringify(customers));renderAll();}}
@@ -885,7 +909,7 @@ function fetchFromSheet(url){
         const exists=customers.find(c=>c.email&&c.email===sc.email);
         const wasDeleted=sc.email&&deletedEmails.includes(sc.email);
         if(!exists&&!wasDeleted){
-          customers.push({
+          const newC={
             id: Number(sc.id)||Date.now(),
             biz: sc.biz||'',
             name: sc.name||'',
@@ -909,20 +933,9 @@ function fetchFromSheet(url){
             notes: buildNotes(sc),
             date: sc.date||new Date().toLocaleDateString('en-GB'),
             isNew: true
-          });
-          // also add workflow entry if not exists
-          const wfExists=workflows.find(w=>w.biz===sc.biz);
-          if(!wfExists){
-            workflows.push({
-              id: Date.now()+added,
-              biz: sc.biz||'',
-              ig: sc.ig||'', fb: sc.fb||'', wa: sc.wa||'',
-              tt: sc.tt||'', email: sc.emailBot||'', tg: sc.tg||'',
-              cal: sc.phone||'', notes:'Auto-imported from sales page',
-              steps:[false,false,false,false,false,false,false,false],
-              date: sc.date||new Date().toLocaleDateString('en-GB')
-            });
-          }
+          };
+          customers.push(newC);
+          autoCreateWorkflow(newC);
           added++;
         }
       });
