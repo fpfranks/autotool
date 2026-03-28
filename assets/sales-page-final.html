@@ -3,471 +3,146 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Reply Bot for Facebook &amp; Instagram — Phillips Automates</title>
+  <title>AI Phone Receptionist for UK Small Businesses — Phillips Automates</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg:           #0d0d14;
-      --bg2:          #12121c;
-      --bg3:          #1a1a28;
-      --accent:       #6c63ff;
-      --accent-light: #8b85ff;
-      --green:        #00d4aa;
-      --green-dark:   #00a888;
-      --text:         #e8e8f0;
-      --text-muted:   #8888aa;
-      --border:       rgba(108,99,255,0.18);
-      --card:         rgba(255,255,255,0.04);
-      --radius:       16px;
+      --bg: #0d0d14; --bg2: #12121c; --bg3: #1a1a28;
+      --accent: #6c63ff; --accent-light: #8b85ff;
+      --green: #00d4aa; --green-dark: #00a888;
+      --text: #e8e8f0; --text-muted: #8888aa;
+      --border: rgba(108,99,255,0.18);
+      --card: rgba(255,255,255,0.04);
+      --radius: 16px;
     }
-
     html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.65; font-size: 17px; overflow-x: hidden; }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.65;
-      font-size: 17px;
-      overflow-x: hidden;
-    }
+    .topbar { background: linear-gradient(90deg, var(--accent), var(--green)); text-align: center; padding: 11px 20px; font-size: 14px; font-weight: 600; color: #fff; letter-spacing: 0.3px; }
 
-    /* ── TOPBAR ── */
-    .topbar {
-      background: linear-gradient(90deg, var(--accent), var(--green));
-      text-align: center;
-      padding: 11px 20px;
-      font-size: 14px;
-      font-weight: 600;
-      color: #fff;
-      letter-spacing: 0.3px;
-    }
-
-    /* ── NAV ── */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(13,13,20,0.93);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-      padding: 14px 40px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .nav-logo {
-      font-weight: 800;
-      font-size: 19px;
-      color: var(--accent-light);
-      text-decoration: none;
-      letter-spacing: -0.3px;
-    }
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(13,13,20,0.93); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); padding: 14px 40px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { font-weight: 800; font-size: 19px; color: var(--accent-light); text-decoration: none; letter-spacing: -0.3px; }
     .nav-logo span { color: var(--green); }
-    .nav-cta {
-      background: linear-gradient(135deg, var(--accent), #9b6bff);
-      color: #fff;
-      padding: 10px 22px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 14px;
-      transition: opacity 0.2s, transform 0.15s;
-      white-space: nowrap;
-    }
+    .nav-cta { background: linear-gradient(135deg, var(--accent), #9b6bff); color: #fff; padding: 10px 22px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 14px; transition: opacity 0.2s, transform 0.15s; white-space: nowrap; }
     .nav-cta:hover { opacity: 0.88; transform: translateY(-1px); }
 
-    /* ── SECTION WRAPPER ── */
     .section { padding: 90px 20px; }
     .section.alt { background: var(--bg2); }
     .container { max-width: 900px; margin: 0 auto; }
-    .container.wide { max-width: 1080px; }
 
-    /* ── HEADINGS ── */
     h1 { font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 900; line-height: 1.15; letter-spacing: -1px; }
     h2 { font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 800; letter-spacing: -0.5px; line-height: 1.2; }
     h3 { font-size: 1.15rem; font-weight: 700; }
     .accent-text { color: var(--accent-light); }
-    .green-text  { color: var(--green); }
-    .muted       { color: var(--text-muted); }
+    .green-text { color: var(--green); }
+    .muted { color: var(--text-muted); }
 
-    /* ── BUTTONS ── */
-    .btn-primary {
-      display: inline-block;
-      background: linear-gradient(135deg, var(--accent), #9b6bff);
-      color: #fff;
-      padding: 18px 38px;
-      border-radius: 12px;
-      text-decoration: none;
-      font-weight: 800;
-      font-size: 1.05rem;
-      transition: opacity 0.2s, transform 0.15s;
-      box-shadow: 0 8px 30px rgba(108,99,255,0.35);
-    }
+    .btn-primary { display: inline-block; background: linear-gradient(135deg, var(--accent), #9b6bff); color: #fff; padding: 18px 38px; border-radius: 12px; text-decoration: none; font-weight: 800; font-size: 1.05rem; transition: opacity 0.2s, transform 0.15s; box-shadow: 0 8px 30px rgba(108,99,255,0.35); }
     .btn-primary:hover { opacity: 0.88; transform: translateY(-2px); }
-    .btn-secondary {
-      display: inline-block;
-      border: 2px solid var(--accent);
-      color: var(--accent-light);
-      padding: 14px 30px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 0.95rem;
-      transition: background 0.2s, color 0.2s;
-    }
-    .btn-secondary:hover { background: var(--accent); color: #fff; }
 
-    /* ── TRUST BADGES ── */
-    .badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 28px;
-    }
-    .badge {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 8px 18px;
-      font-size: 13.5px;
-      font-weight: 600;
-      color: var(--text);
-    }
+    .badges { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; justify-content: center; }
+    .badge { display: flex; align-items: center; gap: 8px; background: var(--card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 18px; font-size: 13.5px; font-weight: 600; color: var(--text); }
 
-    /* ── HERO ── */
-    #hero {
-      padding: 100px 20px 90px;
-      text-align: center;
-    }
+    #hero { padding: 100px 20px 90px; text-align: center; }
     #hero h1 { max-width: 760px; margin: 0 auto 22px; }
-    #hero p.sub {
-      max-width: 580px;
-      margin: 0 auto 36px;
-      font-size: 1.15rem;
-      color: var(--text-muted);
-      line-height: 1.7;
-    }
-    .hero-price-note {
-      margin-top: 18px;
-      font-size: 13.5px;
-      color: var(--text-muted);
-    }
-    .badges { justify-content: center; }
+    #hero p.sub { max-width: 580px; margin: 0 auto 36px; font-size: 1.15rem; color: var(--text-muted); line-height: 1.7; }
+    .hero-price-note { margin-top: 18px; font-size: 13.5px; color: var(--text-muted); }
 
-    /* ── PROBLEM ── */
-    .problem-box {
-      background: linear-gradient(135deg, rgba(108,99,255,0.08), rgba(0,212,170,0.06));
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 40px 44px;
-      font-size: 1.2rem;
-      line-height: 1.75;
-      color: var(--text);
-    }
+    .problem-box { background: linear-gradient(135deg, rgba(108,99,255,0.08), rgba(0,212,170,0.06)); border: 1px solid var(--border); border-radius: var(--radius); padding: 40px 44px; font-size: 1.2rem; line-height: 1.75; color: var(--text); }
     .problem-box strong { color: var(--accent-light); }
-    .problem-box em {
-      display: block;
-      margin-top: 18px;
-      font-style: normal;
-      font-size: 1rem;
-      color: var(--text-muted);
-      border-left: 3px solid var(--accent);
-      padding-left: 16px;
-    }
+    .problem-box em { display: block; margin-top: 18px; font-style: normal; font-size: 1rem; color: var(--text-muted); border-left: 3px solid var(--accent); padding-left: 16px; }
 
-    /* ── CHANNELS ── */
-    .channels-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
-      margin-top: 48px;
-    }
-    .channel-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 36px 28px;
-      text-align: center;
-      transition: border-color 0.2s, transform 0.2s;
-    }
-    .channel-card:hover { border-color: var(--accent); transform: translateY(-4px); }
-    .channel-icon {
-      font-size: 2.6rem;
-      margin-bottom: 14px;
-      display: block;
-    }
-    .channel-card h3 { margin-bottom: 10px; font-size: 1.1rem; }
-    .channel-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+    .handles-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; margin-top: 40px; }
+    .handle-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 36px 28px; transition: border-color 0.2s, transform 0.2s; }
+    .handle-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+    .handle-icon { font-size: 2.6rem; margin-bottom: 14px; display: block; }
+    .handle-card h3 { margin-bottom: 10px; }
+    .handle-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
 
-    /* ── HOW IT WORKS ── */
-    .steps-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      margin-top: 48px;
-      position: relative;
-    }
-    .step-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 36px 28px;
-      position: relative;
-    }
-    .step-number {
-      width: 44px;
-      height: 44px;
-      background: linear-gradient(135deg, var(--accent), #9b6bff);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 900;
-      font-size: 1rem;
-      color: #fff;
-      margin-bottom: 18px;
-    }
+    .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
+    .step-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 36px 28px; }
+    .step-number { width: 44px; height: 44px; background: linear-gradient(135deg, var(--accent), #9b6bff); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1rem; color: #fff; margin-bottom: 18px; }
     .step-card h3 { margin-bottom: 10px; }
     .step-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.65; }
 
-    /* ── WHO IT'S FOR ── */
-    .who-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 14px;
-      margin-top: 40px;
-    }
-    .who-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px 16px;
-      text-align: center;
-      font-size: 0.88rem;
-      font-weight: 600;
-      color: var(--text);
-      transition: border-color 0.2s;
-    }
+    .who-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; margin-top: 40px; }
+    .who-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 16px; text-align: center; font-size: 0.88rem; font-weight: 600; color: var(--text); transition: border-color 0.2s; }
     .who-card:hover { border-color: var(--green); }
     .who-card .emoji { font-size: 1.9rem; display: block; margin-bottom: 9px; }
 
-    /* ── MOCK CHAT ── */
-    .chat-wrap {
-      background: #1c1c27;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      max-width: 520px;
-      margin: 48px auto 0;
-    }
-    .chat-header {
-      background: #4267B2;
-      padding: 14px 20px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .chat-avatar {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), var(--green));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      font-weight: 800;
-      color: #fff;
-    }
-    .chat-header-info .name { font-weight: 700; font-size: 0.95rem; color: #fff; }
-    .chat-header-info .status { font-size: 0.78rem; color: rgba(255,255,255,0.7); }
-    .chat-messages { padding: 22px 18px; display: flex; flex-direction: column; gap: 14px; }
-    .msg {
-      max-width: 80%;
-      padding: 12px 16px;
-      border-radius: 18px;
-      font-size: 0.92rem;
-      line-height: 1.55;
-    }
-    .msg.customer {
-      background: #2a2a3a;
-      color: var(--text);
-      border-bottom-left-radius: 4px;
-      align-self: flex-start;
-    }
-    .msg.bot {
-      background: #4267B2;
-      color: #fff;
-      border-bottom-right-radius: 4px;
-      align-self: flex-end;
-    }
-    .msg-time {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-    .msg-time.right { text-align: right; }
-    .chat-note {
-      text-align: center;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      padding: 12px 18px 18px;
-      border-top: 1px solid var(--border);
-    }
+    /* Phone call demo */
+    .call-wrap { background: #1a1a28; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; max-width: 540px; margin: 48px auto 0; }
+    .call-header { background: linear-gradient(135deg, #1c1c2e, #2a2a3d); padding: 18px 22px; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid var(--border); }
+    .call-icon { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--green), #00a888); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+    .call-info .biz-name { font-weight: 700; font-size: 0.95rem; color: var(--text); }
+    .call-info .call-status { font-size: 0.75rem; color: var(--green); font-weight: 600; margin-top: 2px; }
+    .call-ai-tag { margin-left: auto; font-size: 0.75rem; color: var(--text-muted); background: rgba(108,99,255,0.15); border: 1px solid rgba(108,99,255,0.25); padding: 4px 10px; border-radius: 999px; }
+    .call-transcript { padding: 22px 18px; display: flex; flex-direction: column; gap: 14px; }
+    .call-line { display: flex; gap: 10px; align-items: flex-start; }
+    .call-line.caller { flex-direction: row-reverse; }
+    .speaker-tag { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; flex-shrink: 0; padding-top: 10px; min-width: 42px; }
+    .call-line.ai .speaker-tag { color: var(--green); }
+    .call-line.caller .speaker-tag { color: var(--text-muted); text-align: right; }
+    .speech-bubble { padding: 11px 15px; border-radius: 14px; font-size: 0.88rem; line-height: 1.55; max-width: 85%; }
+    .call-line.ai .speech-bubble { background: rgba(0,212,170,0.08); border: 1px solid rgba(0,212,170,0.18); color: var(--text); }
+    .call-line.caller .speech-bubble { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text); }
+    .call-note { text-align: center; font-size: 0.78rem; color: var(--text-muted); padding: 12px 18px 18px; border-top: 1px solid var(--border); line-height: 1.6; }
 
-    /* ── PRICING ── */
-    .pricing-card {
-      background: var(--bg3);
-      border: 2px solid var(--accent);
-      border-radius: 20px;
-      padding: 52px 48px;
-      max-width: 480px;
-      margin: 48px auto 0;
-      text-align: center;
-      box-shadow: 0 0 60px rgba(108,99,255,0.18);
-      position: relative;
-    }
-    .pricing-badge {
-      position: absolute;
-      top: -16px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: linear-gradient(135deg, var(--accent), var(--green));
-      color: #fff;
-      padding: 6px 22px;
-      border-radius: 999px;
-      font-size: 12.5px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      white-space: nowrap;
-    }
-    .pricing-removed {
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--green);
-      letter-spacing: 0.3px;
-      margin-bottom: 6px;
-    }
-    .pricing-main {
-      font-size: clamp(2.8rem, 8vw, 4rem);
-      font-weight: 900;
-      color: #fff;
-      line-height: 1;
-      letter-spacing: -2px;
-    }
+    /* Pricing */
+    .pricing-card { background: var(--bg3); border: 2px solid var(--accent); border-radius: 20px; padding: 52px 48px; max-width: 520px; margin: 48px auto 0; text-align: center; box-shadow: 0 0 60px rgba(108,99,255,0.18); position: relative; }
+    .pricing-badge { position: absolute; top: -16px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--accent), var(--green)); color: #fff; padding: 6px 22px; border-radius: 999px; font-size: 12.5px; font-weight: 700; letter-spacing: 0.5px; white-space: nowrap; }
+    .pricing-main { font-size: clamp(2.8rem, 8vw, 4rem); font-weight: 900; color: #fff; line-height: 1; letter-spacing: -2px; }
     .pricing-main span { font-size: 1.4rem; font-weight: 600; letter-spacing: 0; vertical-align: top; padding-top: 10px; display: inline-block; color: var(--text-muted); }
     .pricing-period { font-size: 0.9rem; color: var(--text-muted); margin-top: 6px; margin-bottom: 28px; }
     .pricing-features { list-style: none; margin-bottom: 36px; display: flex; flex-direction: column; gap: 12px; text-align: left; }
     .pricing-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.95rem; }
     .pricing-features li::before { content: '✓'; color: var(--green); font-weight: 800; flex-shrink: 0; margin-top: 1px; }
-    .pricing-cta {
-      display: block;
-      background: linear-gradient(135deg, var(--accent), #9b6bff);
-      color: #fff;
-      padding: 18px 28px;
-      border-radius: 12px;
-      text-decoration: none;
-      font-weight: 800;
-      font-size: 1.05rem;
-      transition: opacity 0.2s, transform 0.15s;
-      box-shadow: 0 8px 30px rgba(108,99,255,0.35);
-    }
+    .pricing-cta { display: block; background: linear-gradient(135deg, var(--accent), #9b6bff); color: #fff; padding: 18px 28px; border-radius: 12px; font-weight: 800; font-size: 1.05rem; transition: opacity 0.2s, transform 0.15s; box-shadow: 0 8px 30px rgba(108,99,255,0.35); cursor: pointer; border: none; width: 100%; font-family: inherit; }
     .pricing-cta:hover { opacity: 0.88; transform: translateY(-2px); }
     .pricing-sub { margin-top: 16px; font-size: 0.82rem; color: var(--text-muted); }
 
-    /* ── GUARANTEE ── */
-    .guarantee-box {
-      background: linear-gradient(135deg, rgba(0,212,170,0.08), rgba(0,212,170,0.03));
-      border: 1px solid rgba(0,212,170,0.25);
-      border-radius: var(--radius);
-      padding: 40px 44px;
-      text-align: center;
-      max-width: 600px;
-      margin: 0 auto;
-    }
+    /* Form inside pricing */
+    .sf-form { text-align: left; border: 1px solid rgba(108,99,255,0.3); border-radius: 12px; padding: 20px; background: rgba(108,99,255,0.05); margin-bottom: 24px; }
+    .sf-form-label { font-size: 0.8rem; font-weight: 700; color: #8b85ff; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px; }
+    .sf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .sf-field { margin-bottom: 12px; }
+    .sf-field label { display: block; font-size: 0.76rem; color: var(--text-muted); margin-bottom: 4px; font-weight: 500; }
+    .sf-field input, .sf-field textarea { width: 100%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 9px 12px; color: #e8e8f0; font-size: 0.85rem; outline: none; font-family: inherit; transition: border-color 0.15s; }
+    .sf-field input:focus, .sf-field textarea:focus { border-color: var(--accent); }
+    .sf-warning { display: none; margin-top: 10px; padding: 9px 13px; background: rgba(255,179,71,0.1); border: 1px solid rgba(255,179,71,0.3); border-radius: 8px; font-size: 0.8rem; color: #ffb347; }
+
+    .guarantee-box { background: linear-gradient(135deg, rgba(0,212,170,0.08), rgba(0,212,170,0.03)); border: 1px solid rgba(0,212,170,0.25); border-radius: var(--radius); padding: 40px 44px; text-align: center; max-width: 600px; margin: 0 auto; }
     .guarantee-icon { font-size: 3rem; margin-bottom: 16px; }
     .guarantee-box h2 { font-size: 1.5rem; margin-bottom: 12px; color: var(--green); }
     .guarantee-box p { color: var(--text-muted); line-height: 1.7; font-size: 0.95rem; }
 
-    /* ── FAQ ── */
     .faq-list { display: flex; flex-direction: column; gap: 16px; margin-top: 48px; }
-    .faq-item {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-    }
-    .faq-q {
-      padding: 20px 24px;
-      font-weight: 700;
-      font-size: 0.98rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      user-select: none;
-    }
+    .faq-item { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .faq-q { padding: 20px 24px; font-weight: 700; font-size: 0.98rem; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; user-select: none; }
     .faq-q:hover { color: var(--accent-light); }
     .faq-icon { font-size: 1.3rem; color: var(--accent); flex-shrink: 0; transition: transform 0.2s; }
-    .faq-a {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.35s ease, padding 0.35s ease;
-      font-size: 0.93rem;
-      color: var(--text-muted);
-      line-height: 1.7;
-      padding: 0 24px;
-    }
-    .faq-item.open .faq-a { max-height: 300px; padding: 0 24px 22px; }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.35s ease; font-size: 0.93rem; color: var(--text-muted); line-height: 1.7; padding: 0 24px; }
+    .faq-item.open .faq-a { max-height: 400px; padding: 0 24px 22px; }
     .faq-item.open .faq-icon { transform: rotate(45deg); }
 
-    /* ── SECTION LABEL ── */
-    .section-label {
-      display: inline-block;
-      background: rgba(108,99,255,0.12);
-      border: 1px solid rgba(108,99,255,0.3);
-      color: var(--accent-light);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      padding: 6px 16px;
-      border-radius: 999px;
-      margin-bottom: 20px;
-    }
+    .section-label { display: inline-block; background: rgba(108,99,255,0.12); border: 1px solid rgba(108,99,255,0.3); color: var(--accent-light); font-size: 12px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; padding: 6px 16px; border-radius: 999px; margin-bottom: 20px; }
 
-    /* ── FOOTER ── */
-    footer {
-      background: var(--bg);
-      border-top: 1px solid var(--border);
-      padding: 36px 20px;
-      text-align: center;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
+    footer { background: var(--bg); border-top: 1px solid var(--border); padding: 36px 20px; text-align: center; font-size: 0.85rem; color: var(--text-muted); }
     footer a { color: var(--accent-light); text-decoration: none; }
     footer a:hover { text-decoration: underline; }
 
-    /* ── RESPONSIVE ── */
     @media (max-width: 700px) {
       nav { padding: 12px 20px; }
-      .channels-grid,
-      .steps-grid { grid-template-columns: 1fr; }
+      .handles-grid, .steps-grid { grid-template-columns: 1fr; }
       .who-grid { grid-template-columns: repeat(2, 1fr); }
-      .pricing-card { padding: 44px 26px; }
+      .pricing-card { padding: 44px 22px; }
       .problem-box { padding: 28px 24px; font-size: 1.05rem; }
       .guarantee-box { padding: 32px 24px; }
       .section { padding: 64px 20px; }
+      .sf-row { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -475,13 +150,13 @@
 
 <!-- TOPBAR -->
 <div class="topbar">
-  🇬🇧 UK-based &nbsp;|&nbsp; Cancel anytime &nbsp;|&nbsp; Live within 24 hours
+  🔒 No login details ever needed &nbsp;|&nbsp; Live in 24 hours &nbsp;|&nbsp; Cancel anytime
 </div>
 
 <!-- NAV -->
 <nav>
   <a href="#" class="nav-logo">Phillips <span>Automates</span></a>
-  <a href="#pricing" class="nav-cta">Get Started — £27/mo</a>
+  <a href="#pricing" class="nav-cta">Get Started — £197/mo</a>
 </nav>
 
 <!-- ═══════════════════════════════════════════
@@ -489,15 +164,16 @@
 ════════════════════════════════════════════ -->
 <section id="hero">
   <div class="container">
-    <div class="section-label">Auto-Reply Bot for Small UK Businesses</div>
-    <h1>The 4 things customers always ask —<br><span class="accent-text">answered instantly, 24/7.</span></h1>
-    <p class="sub">Services, prices, opening hours, how to book — your bot replies with all of it the moment someone messages you. No more missed enquiries while you're busy, on the tools, or asleep.</p>
-    <a href="#pricing" class="btn-primary">Get Started — £27/mo ›</a>
-    <p class="hero-price-note">£27/month &nbsp;·&nbsp; Cancel anytime &nbsp;·&nbsp; No contracts</p>
+    <div class="section-label">AI Phone Receptionist for UK Small Businesses</div>
+    <h1>Every missed call is<br><span class="accent-text">a missed customer.</span></h1>
+    <p class="sub">An AI receptionist that answers your phone 24/7 — handles pricing, opening hours, and bookings — even when you're with someone, driving, or asleep. No login details ever needed. Just forward your calls.</p>
+    <a href="#pricing" class="btn-primary">Get Started — £197/mo ›</a>
+    <p class="hero-price-note">£197/month &nbsp;·&nbsp; Cancel anytime &nbsp;·&nbsp; No contracts</p>
     <div class="badges">
-      <div class="badge">🇬🇧 UK-based support</div>
-      <div class="badge">⭐ Cancel anytime — no contracts</div>
+      <div class="badge">🔒 No login details needed</div>
       <div class="badge">⚡ Live in 24 hours</div>
+      <div class="badge">📞 24/7 call answering</div>
+      <div class="badge">🇬🇧 UK-based</div>
     </div>
   </div>
 </section>
@@ -508,94 +184,44 @@
 <section class="section alt">
   <div class="container">
     <div class="section-label">The Problem</div>
-    <h2>Right now, messages are coming in while you're busy.</h2>
+    <h2>Small businesses miss more calls than they realise.</h2>
     <div class="problem-box" style="margin-top:32px;">
-      Every day customers message your Facebook page, Instagram, WhatsApp and more asking the same four things: <em>what do you offer, how much is it, are you open, and how do I book?</em> But you're serving a customer, under a car, mid-cut, or fast asleep. <strong>Most go unanswered for hours.</strong> And when someone doesn't hear back quickly, they don't wait — they just message someone else.
-      <em>It's not your fault. You can't be in two places at once. But that doesn't mean you have to lose the business.</em>
+      You're mid-job, with a customer, or it's Sunday evening. Your phone rings. You miss it. <strong>That caller doesn't leave a voicemail — they just ring someone else.</strong> UK research shows small businesses miss up to 62% of inbound calls during working hours alone. After hours? Nearly all of them.
+      <em>It's not your fault — you can't always stop what you're doing to answer. But that doesn't mean you have to lose the business every time your phone goes unanswered.</em>
     </div>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════════
-     SOLUTION — WHAT THE BOT REPLIES WITH
+     SOLUTION — WHAT THE AI HANDLES
 ════════════════════════════════════════════ -->
 <section class="section">
   <div class="container">
     <div class="section-label">The Solution</div>
-    <h2>We set up a reply bot that handles the 4 things customers always ask.</h2>
+    <h2>An AI that answers your calls and handles the 4 things every caller wants to know.</h2>
     <p class="muted" style="margin-top:14px; max-width:580px;">
-      It's not magic — it's better. A simple, reliable bot built around what your customers actually need to know. Set up once, works 24/7, across every channel you use.
+      Not a robotic phone menu. Not a voicemail. A real conversational AI that talks to your callers, answers their questions, and takes their details — in a friendly, professional voice.
     </p>
-    <div class="channels-grid" style="grid-template-columns:repeat(2,1fr);margin-top:32px;">
-      <div class="channel-card">
-        <span class="channel-icon">📋</span>
-        <h3>Services &amp; Pricing</h3>
-        <p>Customer asks what you charge? The bot replies with your full price list instantly — no more chasing the same questions all day.</p>
+    <div class="handles-grid">
+      <div class="handle-card">
+        <span class="handle-icon">💷</span>
+        <h3>"How much does it cost?"</h3>
+        <p>The AI knows your full price list. It gives callers your exact prices — every service, every package — the moment they ask. No hold music, no callbacks just for pricing.</p>
       </div>
-      <div class="channel-card">
-        <span class="channel-icon">🕐</span>
-        <h3>Opening Hours</h3>
-        <p>No more "are you open Saturday?" messages at midnight left on read. The bot knows your hours and tells them straight away.</p>
+      <div class="handle-card">
+        <span class="handle-icon">🕐</span>
+        <h3>"When are you open?"</h3>
+        <p>Your AI knows your hours and tells callers straight away. Late night calls, Sundays, bank holidays — it's always there with the right answer while you're off the clock.</p>
       </div>
-      <div class="channel-card">
-        <span class="channel-icon">📅</span>
-        <h3>Book or Enquire</h3>
-        <p>Sends customers straight to your booking link, or captures their details so you can follow up — no enquiry gets missed.</p>
+      <div class="handle-card">
+        <span class="handle-icon">📅</span>
+        <h3>"Can I book an appointment?"</h3>
+        <p>Collects the caller's name and number and lets them know you'll call back to confirm — or sends them straight to your booking link if you have one. No enquiry goes missing.</p>
       </div>
-      <div class="channel-card">
-        <span class="channel-icon">👤</span>
-        <h3>Speak to Someone</h3>
-        <p>If a customer needs a real person, the bot flags it to you so nothing slips through the net. You stay in control.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════
-     CHANNELS
-════════════════════════════════════════════ -->
-<section class="section alt">
-  <div class="container">
-    <div class="section-label">Where It Works</div>
-    <h2>One bot. Seven channels. You pick the ones you use.</h2>
-    <p class="muted" style="margin-top:14px; max-width:560px;">
-      Most businesses just need Instagram and Facebook Messenger — but if you use WhatsApp, TikTok, SMS, Email or Telegram too, we can cover those as well. All included in one price.
-    </p>
-    <div class="channels-grid" style="grid-template-columns:repeat(4,1fr);margin-top:32px;">
-      <div class="channel-card">
-        <span class="channel-icon">📸</span>
-        <h3>Instagram</h3>
-        <p>Every DM and story reply — answered instantly.</p>
-      </div>
-      <div class="channel-card">
-        <span class="channel-icon">💬</span>
-        <h3>Facebook Messenger</h3>
-        <p>Every message to your Facebook Page — day or night.</p>
-      </div>
-      <div class="channel-card">
-        <span class="channel-icon">🟢</span>
-        <h3>WhatsApp</h3>
-        <p>Replies on WhatsApp so customers on their preferred app aren't left waiting.</p>
-      </div>
-      <div class="channel-card">
-        <span class="channel-icon">🎵</span>
-        <h3>TikTok</h3>
-        <p>Handles DMs on TikTok so your growing audience always gets a response.</p>
-      </div>
-      <div class="channel-card">
-        <span class="channel-icon">📱</span>
-        <h3>SMS / Text</h3>
-        <p>Responds to texts automatically — for customers who prefer to call or text.</p>
-      </div>
-      <div class="channel-card">
-        <span class="channel-icon">📧</span>
-        <h3>Email</h3>
-        <p>Handles inbound emails to your business address with instant replies.</p>
-      </div>
-      <div class="channel-card" style="grid-column:span 2;">
-        <span class="channel-icon">✈️</span>
-        <h3>Telegram</h3>
-        <p>Manages your Telegram messages so every enquiry gets answered straight away.</p>
+      <div class="handle-card">
+        <span class="handle-icon">💬</span>
+        <h3>"I need to speak to someone"</h3>
+        <p>If a caller needs a real person, the AI takes a message and texts you straight away — name, number, and what it's about. You call them back when you're free. Nothing urgent slips through.</p>
       </div>
     </div>
   </div>
@@ -611,19 +237,72 @@
     <div class="steps-grid">
       <div class="step-card">
         <div class="step-number">1</div>
-        <h3>Sign up and follow our simple setup guide</h3>
-        <p>After payment we email you a short setup guide. No phone calls, no technical knowledge needed. Most people are done in under 10 minutes — just follow the steps and reply to let us know.</p>
+        <h3>Tell us about your business</h3>
+        <p>After you sign up, we email you asking for three things: your opening hours, your services and prices, and your booking link if you have one. Just reply to the email. Takes about 5 minutes — no technical knowledge needed.</p>
       </div>
       <div class="step-card">
         <div class="step-number">2</div>
-        <h3>We build your AI bot in 24 hours</h3>
-        <p>We set everything up — your welcome message, services, prices, opening hours, booking link — all written in your voice. You don't touch a thing.</p>
+        <h3>We build your AI receptionist</h3>
+        <p>We configure the AI with everything you've told us, scripted in a professional, friendly voice that fits your business. We provision a phone number, run test calls, and make sure it sounds right before going live. Takes us about 24 hours.</p>
       </div>
       <div class="step-card">
         <div class="step-number">3</div>
-        <h3>It replies to every message. You check in when you want.</h3>
-        <p>From that moment, every DM, text, email and message across your chosen channels gets an instant reply, 24/7. You can still see every conversation and jump in anytime — nothing is hidden from you.</p>
+        <h3>Forward your calls — you're live</h3>
+        <p>We send you a 30-second guide to set up conditional call forwarding on your phone — it only activates when you can't answer. That's the only technical step you ever do. No logins, no passwords, nothing else from you.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     DEMO — PHONE CALL TRANSCRIPT
+════════════════════════════════════════════ -->
+<section class="section">
+  <div class="container" style="text-align:center;">
+    <div class="section-label">See It In Action</div>
+    <h2>Here's what your callers actually experience.</h2>
+    <p class="muted" style="margin-top:14px; max-width:520px; margin-left:auto; margin-right:auto;">A real example. Saturday afternoon — the plumber is under someone's sink. Phone rings. AI answers instantly.</p>
+
+    <div class="call-wrap">
+      <div class="call-header">
+        <div class="call-icon">🔧</div>
+        <div class="call-info">
+          <div class="biz-name">Pete's Plumbing</div>
+          <div class="call-status">● AI Receptionist — Connected</div>
+        </div>
+        <div class="call-ai-tag">AI Answering</div>
+      </div>
+      <div class="call-transcript">
+        <div class="call-line ai">
+          <span class="speaker-tag">AI</span>
+          <div class="speech-bubble">Hello, thanks for calling Pete's Plumbing! How can I help you today?</div>
+        </div>
+        <div class="call-line caller">
+          <span class="speaker-tag">Caller</span>
+          <div class="speech-bubble">Hi — I've got a leaking tap. How much would that be to sort?</div>
+        </div>
+        <div class="call-line ai">
+          <span class="speaker-tag">AI</span>
+          <div class="speech-bubble">A tap repair is usually £65 including parts. If it needs a full replacement it's from £85. Would you like to get booked in?</div>
+        </div>
+        <div class="call-line caller">
+          <span class="speaker-tag">Caller</span>
+          <div class="speech-bubble">Yes please — are you free this week?</div>
+        </div>
+        <div class="call-line ai">
+          <span class="speaker-tag">AI</span>
+          <div class="speech-bubble">We have availability Monday through Friday. Let me take your name and number and Pete will call you back to confirm a time — what's your name?</div>
+        </div>
+        <div class="call-line caller">
+          <span class="speaker-tag">Caller</span>
+          <div class="speech-bubble">It's Sarah — 07700 900 123</div>
+        </div>
+        <div class="call-line ai">
+          <span class="speaker-tag">AI</span>
+          <div class="speech-bubble">Perfect, Sarah — got that noted. Pete will give you a call back shortly to confirm. Is there anything else I can help with today?</div>
+        </div>
+      </div>
+      <div class="call-note">Pete was under a sink and couldn't answer. The AI handled it — gave the price, took Sarah's details, and texted Pete instantly. Zero missed revenue.</div>
     </div>
   </div>
 </section>
@@ -631,295 +310,127 @@
 <!-- ═══════════════════════════════════════════
      WHO IT'S FOR
 ════════════════════════════════════════════ -->
-<section class="section">
+<section class="section alt">
   <div class="container">
     <div class="section-label">Who It's For</div>
-    <h2>Built for sole traders and micro businesses across the UK.</h2>
-    <p class="muted" style="margin-top:14px;">If customers message you on Facebook or Instagram, this is for you.</p>
+    <h2>Built for sole traders and small businesses across the UK.</h2>
+    <p class="muted" style="margin-top:14px;">If your phone rings and you can't always answer — this is for you.</p>
     <div class="who-grid">
-      <div class="who-card"><span class="emoji">🍕</span>Takeaways &amp; Restaurants</div>
+      <div class="who-card"><span class="emoji">🔧</span>Plumbers &amp; Boiler Engineers</div>
+      <div class="who-card"><span class="emoji">⚡</span>Electricians</div>
       <div class="who-card"><span class="emoji">💇</span>Hair Salons &amp; Barbers</div>
-      <div class="who-card"><span class="emoji">🚗</span>Car Garages &amp; MOT Centres</div>
-      <div class="who-card"><span class="emoji">🔧</span>Plumbers &amp; Electricians</div>
-      <div class="who-card"><span class="emoji">💅</span>Nail Salons &amp; Beauty</div>
+      <div class="who-card"><span class="emoji">🚗</span>Car Garages &amp; MOT</div>
+      <div class="who-card"><span class="emoji">💅</span>Beauty &amp; Nail Salons</div>
       <div class="who-card"><span class="emoji">🏋️</span>Personal Trainers</div>
-      <div class="who-card"><span class="emoji">🛒</span>Small Local Shops</div>
-      <div class="who-card"><span class="emoji">🏡</span>Tradespeople &amp; More</div>
+      <div class="who-card"><span class="emoji">🦷</span>Dentists &amp; Physios</div>
+      <div class="who-card"><span class="emoji">🏡</span>Cleaners &amp; Landscapers</div>
+      <div class="who-card"><span class="emoji">🍕</span>Takeaways &amp; Cafés</div>
+      <div class="who-card"><span class="emoji">🔨</span>Builders &amp; Tradespeople</div>
     </div>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════════
-     MOCK CHAT
-════════════════════════════════════════════ -->
-<section class="section alt">
-  <div class="container" style="text-align:center;">
-    <div class="section-label">See It In Action</div>
-    <h2>Here's what your customers actually see.</h2>
-    <p class="muted" style="margin-top:14px; max-width:520px; margin-left:auto; margin-right:auto;">A real example. Customer messages at 11pm on a Saturday asking about prices and opening hours. Here's what they get — instantly.</p>
-
-    <div class="chat-wrap">
-      <div class="chat-header">
-        <div class="chat-avatar">B</div>
-        <div class="chat-header-info">
-          <div class="name">Bella's Hair Studio</div>
-          <div class="status">Typically replies instantly</div>
-        </div>
-      </div>
-      <div class="chat-messages">
-        <div>
-          <div class="msg customer">Hi! Are you open on Saturdays and how much is a trim and blow-dry? 😊</div>
-          <div class="msg-time">11:07 pm</div>
-        </div>
-        <div style="align-self:flex-end; max-width:80%;">
-          <div class="msg bot">Hi! Thanks for getting in touch 😊 Yes, we're open Saturdays 9am–5pm. A trim is £15 and a trim &amp; blow-dry is £25. You can book straight online here 👉 bellashair.co.uk/book — or tap below if you'd like us to call you back!</div>
-          <div class="msg-time right">11:07 pm · Sent instantly</div>
-        </div>
-        <div style="align-self:flex-end; max-width:80%;">
-          <div class="msg bot" style="background:rgba(108,99,255,0.15);border:1px solid rgba(108,99,255,0.3);font-size:0.85rem;display:flex;gap:8px;align-items:center;">📅 <strong>Book Online</strong></div>
-          <div class="msg bot" style="background:rgba(108,99,255,0.15);border:1px solid rgba(108,99,255,0.3);font-size:0.85rem;display:flex;gap:8px;align-items:center;margin-top:6px;">👤 <strong>Speak to Someone</strong></div>
-        </div>
-        <div>
-          <div class="msg customer">Amazing, I'll book online now — thanks! 🙌</div>
-          <div class="msg-time">11:08 pm</div>
-        </div>
-      </div>
-      <div class="chat-note">11pm on a Saturday. The bot replied in seconds with hours, prices, and a booking link. Without it, she'd have seen silence and booked elsewhere.</div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════
-     PRICING
+     PRICING + SIGN-UP FORM
 ════════════════════════════════════════════ -->
 <section class="section" id="pricing">
   <div class="container" style="text-align:center;">
     <div class="section-label">Pricing</div>
     <h2>One plan. No surprises.</h2>
     <p class="muted" style="margin-top:14px; max-width:480px; margin-left:auto; margin-right:auto;">
-      We kept it simple. One price, everything included.
+      Everything included. No setup fee. No contracts.
     </p>
 
     <div class="pricing-card">
-      <div class="pricing-badge">ONE PLAN — ALL CHANNELS</div>
-      <div class="pricing-main"><span>£</span>27</div>
+      <div class="pricing-badge">AI PHONE RECEPTIONIST — 24/7</div>
+      <div class="pricing-main"><span>£</span>197</div>
       <div class="pricing-period">per month &nbsp;·&nbsp; cancel anytime</div>
 
-      <!-- Channel picker -->
-      <div style="margin-bottom:20px;">
-        <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:14px;">Pick the channels you want covered — tick all that apply:</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;text-align:left;">
-          <label style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:11px 14px;cursor:pointer;transition:all 0.15s" onmouseover="this.style.borderColor='#6c63ff'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='rgba(255,255,255,0.08)'">
-            <input type="checkbox" name="channels" value="instagram" style="accent-color:#6c63ff;width:16px;height:16px" onchange="updateChannel(this)">
-            <span style="font-size:0.9rem;">📸 Instagram</span>
-          </label>
-          <label style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:11px 14px;cursor:pointer;transition:all 0.15s" onmouseover="this.style.borderColor='#6c63ff'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='rgba(255,255,255,0.08)'">
-            <input type="checkbox" name="channels" value="messenger" style="accent-color:#6c63ff;width:16px;height:16px" onchange="updateChannel(this)">
-            <span style="font-size:0.9rem;">💬 Facebook Messenger</span>
-          </label>
-          <label style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:11px 14px;cursor:pointer;transition:all 0.15s" onmouseover="this.style.borderColor='#6c63ff'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='rgba(255,255,255,0.08)'">
-            <input type="checkbox" name="channels" value="whatsapp" style="accent-color:#6c63ff;width:16px;height:16px" onchange="updateChannel(this)">
-            <span style="font-size:0.9rem;">🟢 WhatsApp</span>
-          </label>
-          <label style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:11px 14px;cursor:pointer;transition:all 0.15s" onmouseover="this.style.borderColor='#6c63ff'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='rgba(255,255,255,0.08)'">
-            <input type="checkbox" name="channels" value="tiktok" style="accent-color:#6c63ff;width:16px;height:16px" onchange="updateChannel(this)">
-            <span style="font-size:0.9rem;">🎵 TikTok</span>
-          </label>
-          <label style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:11px 14px;cursor:pointer;transition:all 0.15s" onmouseover="this.style.borderColor='#6c63ff'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='rgba(255,255,255,0.08)'">
-            <input type="checkbox" name="channels" value="sms" style="accent-color:#6c63ff;width:16px;height:16px" onchange="updateChannel(this)">
-            <span style="font-size:0.9rem;">📱 SMS / Text</span>
-          </label>
-          <label style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:11px 14px;cursor:pointer;transition:all 0.15s" onmouseover="this.style.borderColor='#6c63ff'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='rgba(255,255,255,0.08)'">
-            <input type="checkbox" name="channels" value="email" style="accent-color:#6c63ff;width:16px;height:16px" onchange="updateChannel(this)">
-            <span style="font-size:0.9rem;">📧 Email</span>
-          </label>
-          <label style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:11px 14px;cursor:pointer;transition:all 0.15s;grid-column:span 2" onmouseover="this.style.borderColor='#6c63ff'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='rgba(255,255,255,0.08)'">
-            <input type="checkbox" name="channels" value="telegram" style="accent-color:#6c63ff;width:16px;height:16px" onchange="updateChannel(this)">
-            <span style="font-size:0.9rem;">✈️ Telegram</span>
-          </label>
-        </div>
-        <div id="channel-warning" style="display:none;margin-top:12px;padding:10px 14px;background:rgba(255,179,71,0.1);border:1px solid rgba(255,179,71,0.3);border-radius:8px;font-size:0.82rem;color:#ffb347;">
-          Please select at least one channel to continue.
-        </div>
-      </div>
-
-      <!-- Dynamic requirements cards (appear as channels are ticked) -->
-      <div id="req-panel" style="display:none;margin-bottom:20px;text-align:left;background:rgba(0,212,170,0.05);border:1px solid rgba(0,212,170,0.2);border-radius:12px;padding:18px;">
-        <div style="font-size:0.8rem;font-weight:700;color:#00d4aa;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:14px;">What we'll need from you for each channel:</div>
-        <div id="req-cards" style="display:grid;gap:10px;"></div>
-      </div>
-
-      <!-- Setup details form (appears when a channel is ticked) -->
-      <div id="setup-form" style="display:none;margin-bottom:24px;text-align:left;border:1px solid rgba(108,99,255,0.3);border-radius:12px;padding:20px;background:rgba(108,99,255,0.05);">
-        <div style="font-size:0.8rem;font-weight:700;color:#8b85ff;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:16px;">Your details — we'll get everything set up for you:</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
-          <div>
-            <label style="display:block;font-size:0.78rem;color:var(--text-muted);margin-bottom:5px;">Business Name *</label>
-            <input id="sf-biz" type="text" placeholder="e.g. Dave's Garage" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:9px 12px;color:#e8e8f0;font-size:0.85rem;outline:none;font-family:inherit;" onfocus="this.style.borderColor='#6c63ff'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
+      <!-- Sign-up form -->
+      <div class="sf-form">
+        <div class="sf-form-label">Your details — we'll have everything set up in 24 hours:</div>
+        <div class="sf-row">
+          <div class="sf-field">
+            <label>Business Name *</label>
+            <input id="sf-biz" type="text" placeholder="e.g. Pete's Plumbing">
           </div>
-          <div>
-            <label style="display:block;font-size:0.78rem;color:var(--text-muted);margin-bottom:5px;">Your Name *</label>
-            <input id="sf-name" type="text" placeholder="e.g. Dave Smith" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:9px 12px;color:#e8e8f0;font-size:0.85rem;outline:none;font-family:inherit;" onfocus="this.style.borderColor='#6c63ff'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
+          <div class="sf-field">
+            <label>Your Name *</label>
+            <input id="sf-name" type="text" placeholder="e.g. Pete Smith">
           </div>
-          <div>
-            <label style="display:block;font-size:0.78rem;color:var(--text-muted);margin-bottom:5px;">Your Email *</label>
-            <input id="sf-email" type="email" placeholder="dave@davesgarage.co.uk" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:9px 12px;color:#e8e8f0;font-size:0.85rem;outline:none;font-family:inherit;" onfocus="this.style.borderColor='#6c63ff'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
+          <div class="sf-field">
+            <label>Your Email *</label>
+            <input id="sf-email" type="email" placeholder="pete@petes-plumbing.co.uk">
           </div>
-          <div>
-            <label style="display:block;font-size:0.78rem;color:var(--text-muted);margin-bottom:5px;">Your Phone Number *</label>
-            <input id="sf-phone" type="tel" placeholder="+44 7700 900000" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:9px 12px;color:#e8e8f0;font-size:0.85rem;outline:none;font-family:inherit;" onfocus="this.style.borderColor='#6c63ff'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
+          <div class="sf-field">
+            <label>Your Mobile * <span style="font-size:0.7rem;color:var(--text-muted);">(for booking alerts)</span></label>
+            <input id="sf-phone" type="tel" placeholder="07700 900000">
           </div>
         </div>
-        <!-- Website + Booking URLs -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
-          <div>
-            <label style="display:block;font-size:0.78rem;color:var(--text-muted);margin-bottom:5px;">🌐 Website URL <span style="color:var(--text-muted);font-size:0.7rem;">(optional)</span></label>
-            <input id="sf-website" type="url" placeholder="https://yourbusiness.co.uk" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:9px 12px;color:#e8e8f0;font-size:0.85rem;outline:none;font-family:inherit;" onfocus="this.style.borderColor='#6c63ff'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
-          </div>
-          <div>
-            <label style="display:block;font-size:0.78rem;color:var(--text-muted);margin-bottom:5px;">📅 Booking System URL <span style="color:var(--text-muted);font-size:0.7rem;">(optional)</span></label>
-            <input id="sf-booking" type="url" placeholder="e.g. Fresha, Booksy, Calendly link" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:9px 12px;color:#e8e8f0;font-size:0.85rem;outline:none;font-family:inherit;" onfocus="this.style.borderColor='#6c63ff'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
-          </div>
+        <div class="sf-field">
+          <label>What does your business do? * <span style="font-size:0.7rem;color:var(--text-muted);">(e.g. plumber in Manchester, hair salon in Leeds)</span></label>
+          <input id="sf-type" type="text" placeholder="e.g. Plumbing and boiler engineer based in Manchester">
         </div>
-        <!-- Dynamic channel-specific fields injected here -->
-        <div id="channel-fields" style="display:grid;gap:10px;"></div>
-        <div id="form-warning" style="display:none;margin-top:12px;padding:10px 14px;background:rgba(255,179,71,0.1);border:1px solid rgba(255,179,71,0.3);border-radius:8px;font-size:0.82rem;color:#ffb347;"></div>
+        <div class="sf-field" style="margin-bottom:0;">
+          <label>Booking / Calendar link <span style="font-size:0.7rem;color:var(--text-muted);">(optional — Fresha, Booksy, Calendly, etc.)</span></label>
+          <input id="sf-booking" type="url" placeholder="https://...">
+        </div>
+        <div id="sf-warning" class="sf-warning"></div>
       </div>
 
       <ul class="pricing-features">
-        <li>AI bot set up on every channel you selected</li>
-        <li>Replies in under 60 seconds, 24/7</li>
-        <li>Set up in 24 hours — you don't do anything</li>
-        <li>We write all the messages in your voice</li>
-        <li>You can still see and reply to all conversations yourself</li>
-        <li>No contracts — cancel anytime, no fuss</li>
+        <li>AI answers your calls 24/7 — evenings, weekends, bank holidays</li>
+        <li>Gives callers your exact prices and opening hours</li>
+        <li>Collects booking requests and texts you the details instantly</li>
+        <li>Live in 24 hours — no technical work from you</li>
+        <li>No login details or account access ever required</li>
+        <li>Updates to prices or hours done within 24 hours — just email us</li>
+        <li>Cancel anytime with one email — no fuss</li>
       </ul>
-      <a href="https://buy.stripe.com/eVq4gy6kigpxcLn3vfa3u01" class="pricing-cta" id="main-cta" onclick="return handleGetStarted(event)">Get Started — £27/mo ›</a>
-      <p class="pricing-sub">All channels included in the same price</p>
+
+      <button class="pricing-cta" onclick="handleGetStarted()">Get Started — £197/mo ›</button>
+      <p class="pricing-sub">No setup fee &nbsp;·&nbsp; No contract &nbsp;·&nbsp; Cancel anytime</p>
     </div>
 
-    <!-- Confirmation panel (shown after clicking Get Started) -->
-    <div id="confirm-panel" style="display:none;background:rgba(0,212,170,0.06);border:1px solid rgba(0,212,170,0.3);border-radius:20px;padding:40px 32px;text-align:center;margin-top:24px;">
+    <!-- Confirmation panel -->
+    <div id="confirm-panel" style="display:none;background:rgba(0,212,170,0.06);border:1px solid rgba(0,212,170,0.3);border-radius:20px;padding:40px 32px;text-align:center;margin-top:24px;max-width:520px;margin-left:auto;margin-right:auto;">
       <div style="font-size:3rem;margin-bottom:16px;">🎉</div>
       <h3 style="font-size:1.4rem;margin-bottom:10px;color:#00d4aa;">You're almost there!</h3>
       <p style="color:var(--text-muted);margin-bottom:10px;font-size:0.9rem;">Complete your payment in the tab that just opened.</p>
-      <p style="color:var(--text-muted);font-size:0.9rem;">We've received your setup details and will have your bot live within <strong style="color:var(--text);">24 hours</strong>. We'll email you when it's ready.</p>
+      <p style="color:var(--text-muted);font-size:0.9rem;">We'll email you within the hour to ask for your opening hours and price list. Just reply and your AI receptionist will be live within <strong style="color:var(--text);">24 hours</strong>.</p>
     </div>
 
     <script>
-    // Paste your Google Apps Script URL here after deploying
+    // ⚠️ UPDATE: Replace with your £197/mo Stripe payment link from stripe.com/links
+    const STRIPE_URL = 'https://buy.stripe.com/eVq4gy6kigpxcLn3vfa3u01';
     const GAS_URL = 'https://script.google.com/macros/s/AKfycby3ui4qv3H1GnehW6zBsUz0uyXPowG8XZWEub0Lcs7mIRSbeioLWKlWkdBnvhvwK_gN/exec';
 
-    const CH = {
-      instagram: { icon:'📸', name:'Instagram',       hint:'Their @username — must be a Professional/Creator account (not personal)',   fieldLabel:'Instagram @username',      fieldId:'sf-ig',  placeholder:'@yourbusiness' },
-      messenger: { icon:'💬', name:'Facebook Messenger', hint:'Their Facebook Page name or URL — must be a Page, not a personal profile', fieldLabel:'Facebook Page Name',       fieldId:'sf-fb',  placeholder:"Dave's Garage Manchester" },
-      whatsapp:  { icon:'🟢', name:'WhatsApp',         hint:'Their WhatsApp Business number — must be a WhatsApp Business account',      fieldLabel:'WhatsApp Business Number', fieldId:'sf-wa',  placeholder:'+44 7700 900000' },
-      tiktok:    { icon:'🎵', name:'TikTok',           hint:'Their @TikTok username — we\'ll help switch to a Business account',         fieldLabel:'TikTok @username',         fieldId:'sf-tt',  placeholder:'@yourbusiness' },
-      sms:       { icon:'📱', name:'SMS / Text',       hint:'Their mobile number — we set up a Twilio number, texts route to the bot',   fieldLabel:'Your Mobile Number',       fieldId:'sf-sms', placeholder:'+44 7700 900000' },
-      email:     { icon:'📧', name:'Email',            hint:'Their business email — the bot will reply from this address',               fieldLabel:'Business Email',           fieldId:'sf-email2', placeholder:'hello@yourbusiness.co.uk' },
-      telegram:  { icon:'✈️', name:'Telegram',         hint:'Their Telegram @username or channel handle',                               fieldLabel:'Telegram @username',       fieldId:'sf-tg',  placeholder:'@yourbusiness' }
-    };
-
-    function updateChannel(input) {
-      // update checkbox border
-      const label = input.closest('label');
-      label.style.borderColor = input.checked ? '#6c63ff' : 'rgba(255,255,255,0.08)';
-      label.style.background  = input.checked ? 'rgba(108,99,255,0.1)' : 'rgba(255,255,255,0.04)';
-      // rebuild panels
-      renderReqPanel();
-      renderChannelFields();
-    }
-
-    function renderReqPanel() {
-      const checked = [...document.querySelectorAll('input[name="channels"]:checked')].map(i=>i.value);
-      const panel = document.getElementById('req-panel');
-      if(!checked.length){ panel.style.display='none'; return; }
-      panel.style.display='block';
-      document.getElementById('req-cards').innerHTML = checked.map(ch=>{
-        const c = CH[ch];
-        return `<div style="display:flex;align-items:flex-start;gap:12px;background:rgba(0,0,0,0.2);border-radius:8px;padding:12px;">
-          <span style="font-size:1.3rem;flex-shrink:0;">${c.icon}</span>
-          <div>
-            <div style="font-size:0.85rem;font-weight:600;margin-bottom:3px;">${c.name}</div>
-            <div style="font-size:0.78rem;color:var(--text-muted);">${c.hint}</div>
-          </div>
-        </div>`;
-      }).join('');
-    }
-
-    function renderChannelFields() {
-      const checked = [...document.querySelectorAll('input[name="channels"]:checked')].map(i=>i.value);
-      const form = document.getElementById('setup-form');
-      if(!checked.length){ form.style.display='none'; return; }
-      form.style.display='block';
-      document.getElementById('channel-fields').innerHTML = checked.map(ch=>{
-        const c = CH[ch];
-        return `<div>
-          <label style="display:block;font-size:0.78rem;color:var(--text-muted);margin-bottom:5px;">${c.icon} ${c.fieldLabel}</label>
-          <input id="${c.fieldId}" type="text" placeholder="${c.placeholder}" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:9px 12px;color:#e8e8f0;font-size:0.85rem;outline:none;font-family:inherit;" onfocus="this.style.borderColor='#6c63ff'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
-        </div>`;
-      }).join('');
-    }
-
-    function handleGetStarted(e) {
-      e.preventDefault();
-      document.getElementById('channel-warning').style.display='none';
-      document.getElementById('form-warning').style.display='none';
-
-      const checked = [...document.querySelectorAll('input[name="channels"]:checked')].map(i=>i.value);
-      if(!checked.length){
-        document.getElementById('channel-warning').style.display='block';
-        return false;
-      }
-
-      // validate core fields
+    function handleGetStarted() {
+      document.getElementById('sf-warning').style.display = 'none';
       const biz   = document.getElementById('sf-biz').value.trim();
       const name  = document.getElementById('sf-name').value.trim();
       const email = document.getElementById('sf-email').value.trim();
       const phone = document.getElementById('sf-phone').value.trim();
-      if(!biz || !name || !email || !phone){
-        document.getElementById('form-warning').textContent = 'Please fill in your business name, name, email and phone number.';
-        document.getElementById('form-warning').style.display='block';
-        document.getElementById('setup-form').scrollIntoView({behavior:'smooth', block:'center'});
-        return false;
+      const type  = document.getElementById('sf-type').value.trim();
+      if (!biz || !name || !email || !phone || !type) {
+        const w = document.getElementById('sf-warning');
+        w.textContent = 'Please fill in all required fields (marked *).';
+        w.style.display = 'block';
+        document.querySelector('.pricing-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
       }
-
-      // collect channel handles
-      const channelData = {};
-      checked.forEach(ch => {
-        const el = document.getElementById(CH[ch].fieldId);
-        channelData[ch] = el ? el.value.trim() : '';
-      });
-
       const customer = {
-        biz, name, email, phone,
-        website: document.getElementById('sf-website').value.trim(),
+        biz, name, email, phone, type,
         booking: document.getElementById('sf-booking').value.trim(),
-        channels: checked,
-        channelData,
-        status: 'pending',
-        fee: 27,
+        fee: 197,
         date: new Date().toLocaleDateString('en-GB')
       };
-
-      // open Stripe immediately
-      window.open('https://buy.stripe.com/eVq4gy6kigpxcLn3vfa3u01','_blank');
-
-      // show confirmation
-      document.getElementById('confirm-panel').style.display='block';
-      document.getElementById('confirm-panel').scrollIntoView({behavior:'smooth', block:'center'});
-
-      // send data to Google Sheet (if configured)
-      if(GAS_URL) {
-        fetch(GAS_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'text/plain' },
-          body: JSON.stringify(customer)
-        }).catch(()=>{});
+      window.open(STRIPE_URL, '_blank');
+      document.getElementById('confirm-panel').style.display = 'block';
+      document.getElementById('confirm-panel').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (GAS_URL) {
+        fetch(GAS_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(customer) }).catch(() => {});
       }
-
-      return false;
     }
     </script>
   </div>
@@ -934,7 +445,7 @@
     <div class="guarantee-box">
       <div class="guarantee-icon">🛡️</div>
       <h2>Cancel Anytime</h2>
-      <p>Not happy? Cancel anytime with one email. No contracts, no lock-in, no awkward phone calls.</p>
+      <p>Not happy? Cancel anytime with one email to phillipsautomates@gmail.com. No contracts, no lock-in, no awkward calls. We'll cancel the same day.</p>
     </div>
   </div>
 </section>
@@ -949,53 +460,38 @@
     <div class="faq-list">
 
       <div class="faq-item">
-        <div class="faq-q">
-          How does the bot actually reply — is it one of those robotic auto-replies?
-          <span class="faq-icon">+</span>
-        </div>
-        <div class="faq-a">
-          No — it uses real AI to write proper, conversational replies that sound like a friendly member of your team. It's not "Thanks for your message, we'll be in touch." It actually answers questions, handles booking requests, and sends your contact details — in plain, natural English. We write all the responses in your voice before we go live.
-        </div>
+        <div class="faq-q">Do I need to give you any passwords or account access?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Never. We don't need access to any of your accounts. The AI is built on our end. You just set up conditional call forwarding on your phone — it's a 30-second setting, and we send you the exact steps. That's the only thing we ever ask you to do.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">
-          What happens to my messages — can I still see them?
-          <span class="faq-icon">+</span>
-        </div>
-        <div class="faq-a">
-          Yes, completely. Every conversation still shows up in your Facebook and Instagram inbox exactly as it always did. The bot replies first, but you can jump in at any point and take over the conversation yourself. Nothing is hidden from you.
-        </div>
+        <div class="faq-q">How does the call forwarding actually work?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Conditional call forwarding is a standard feature on every UK phone. You set it up so that if you don't answer after a few rings (or your line is engaged), the call routes to your AI receptionist instead of going to voicemail. You can turn it on or off at any time. We send you the exact code to enter — takes about 30 seconds.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">
-          Do I need to do anything technical to set it up?
-          <span class="faq-icon">+</span>
-        </div>
-        <div class="faq-a">
-          The only thing you need to do is click one link to connect your Facebook Page — it takes about 2 minutes. After that, we build everything for you. You don't need to understand how it works, log into any new platform, or install anything. We handle the whole setup and you'll be live within 24 hours.
-        </div>
+        <div class="faq-q">What if I want to answer the call myself?<span class="faq-icon">+</span></div>
+        <div class="faq-a">If you pick up, you get the call as normal — the AI only activates if you don't answer. You're always first. The AI is purely a backup so no call goes unanswered when you're busy. Think of it as an always-available receptionist, not a replacement for you.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">
-          Can I still reply to customers myself if I want to?
-          <span class="faq-icon">+</span>
-        </div>
-        <div class="faq-a">
-          Absolutely. The bot handles the first reply so customers don't wait, but you can jump in and continue any conversation yourself at any time — just like you would normally. Think of it as the bot buying you time, not replacing you.
-        </div>
+        <div class="faq-q">How do I know when the AI has taken a booking or message?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Every time the AI takes a caller's details, you get a text message straight away — name, number, and what they were calling about. You call them back when it suits you. Nothing gets lost or buried in a voicemail.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">
-          What if I want to cancel?
-          <span class="faq-icon">+</span>
-        </div>
-        <div class="faq-a">
-          Just email us at phillipsautomates@gmail.com and we'll cancel your subscription the same day. No notice period, no cancellation fee, no being put on hold. 
-        </div>
+        <div class="faq-q">Does it sound robotic or like an obvious AI?<span class="faq-icon">+</span></div>
+        <div class="faq-a">No — we use a natural-sounding AI voice and write the script specifically for your business. It's professional and friendly, not a robotic phone menu. We test every setup before going live to make sure it sounds right. Most callers won't know they're talking to AI.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What if my prices or hours change?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Just email us at phillipsautomates@gmail.com and we'll update your AI receptionist within 24 hours. No extra charge — updates are included in your monthly plan.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What if I want to cancel?<span class="faq-icon">+</span></div>
+        <div class="faq-a">One email to phillipsautomates@gmail.com and we'll cancel the same day. No notice period, no cancellation fee, no being put on hold. Done.</div>
       </div>
 
     </div>
@@ -1007,12 +503,12 @@
 ════════════════════════════════════════════ -->
 <section class="section alt" style="text-align:center;">
   <div class="container">
-    <h2>Stop losing customers to unanswered messages.</h2>
+    <h2>Stop losing customers to missed calls.</h2>
     <p class="muted" style="margin-top:14px; margin-bottom:36px; max-width:480px; margin-left:auto; margin-right:auto;">
-      We set everything up in 24 hours. You just check your messages as normal — except now they're all answered.
+      We set everything up in 24 hours. You forward your calls. Every caller gets answered — even when you can't.
     </p>
-    <a href="#pricing" class="btn-primary">Get Started — £27/mo ›</a>
-    <p style="margin-top:16px; font-size:0.82rem; color:var(--text-muted);">£27/month &nbsp;·&nbsp; Cancel anytime &nbsp;·&nbsp; No contracts</p>
+    <a href="#pricing" class="btn-primary">Get Started — £197/mo ›</a>
+    <p style="margin-top:16px; font-size:0.82rem; color:var(--text-muted);">£197/month &nbsp;·&nbsp; Cancel anytime &nbsp;·&nbsp; No contracts</p>
   </div>
 </section>
 
@@ -1023,7 +519,6 @@
 </footer>
 
 <script>
-  // FAQ accordion
   document.querySelectorAll('.faq-q').forEach(function(q) {
     q.addEventListener('click', function() {
       var item = this.closest('.faq-item');

@@ -2,7 +2,7 @@
 // Paste this into script.google.com → Deploy as Web App
 // Execute as: Me  |  Who has access: Anyone
 
-const SHEET_NAME = 'Customers';
+const SHEET_NAME = 'Voice Customers';
 
 function getSheet() {
   const props = PropertiesService.getScriptProperties();
@@ -14,7 +14,7 @@ function getSheet() {
   }
 
   if (!ssId) {
-    ss = SpreadsheetApp.create('Phillips Automates — Customers');
+    ss = SpreadsheetApp.create('Phillips Automates — Voice Customers');
     props.setProperty('SS_ID', ss.getId());
   }
 
@@ -22,9 +22,9 @@ function getSheet() {
   if (!sheet) {
     sheet = ss.insertSheet(SHEET_NAME);
     sheet.appendRow([
-      'ID','Business','Owner','Email','Phone','Channels',
-      'Instagram','Messenger','WhatsApp','TikTok','SMS','Email Bot','Telegram',
-      'Website','Booking URL','Status','Fee','Date'
+      'ID','Business','Owner','Email','Phone','Type','City',
+      'Biz Phone','Booking URL','Hours','Services',
+      'Website','Status','Fee','Date'
     ]);
     sheet.setFrozenRows(1);
   }
@@ -35,25 +35,21 @@ function doPost(e) {
   try {
     const data = JSON.parse(e.postData.contents);
     const sheet = getSheet();
-    const ch = data.channelData || {};
     sheet.appendRow([
       String(Date.now()),
-      data.biz    || '',
-      data.name   || '',
-      data.email  || '',
-      data.phone  || '',
-      (data.channels || []).join(', '),
-      ch.instagram || '',
-      ch.messenger || '',
-      ch.whatsapp  || '',
-      ch.tiktok    || '',
-      ch.sms       || '',
-      ch.email     || '',
-      ch.telegram  || '',
-      data.website || '',
-      data.booking || '',
+      data.biz      || '',
+      data.name     || '',
+      data.email    || '',
+      data.phone    || '',
+      data.type     || '',
+      data.city     || '',
+      data.bizPhone || '',
+      data.booking  || '',
+      data.hours    || '',
+      data.services || '',
+      data.website  || '',
       'pending',
-      '27',
+      data.fee      || 197,
       new Date().toLocaleDateString('en-GB')
     ]);
     return ContentService
@@ -81,24 +77,20 @@ function doGet(e) {
       headers.forEach((h, i) => { r[h] = row[i]; });
       return {
         id:       String(r['ID']),
-        biz:      r['Business']  || '',
-        name:     r['Owner']     || '',
-        email:    r['Email']     || '',
-        phone:    r['Phone']     || '',
-        channels: r['Channels']  || '',
-        social:   r['Instagram'] || '',
-        ig:       r['Instagram'] || '',
-        fb:       r['Messenger'] || '',
-        wa:       r['WhatsApp']  || '',
-        tt:       r['TikTok']    || '',
-        smsNum:   r['SMS']       || '',
-        emailBot: r['Email Bot'] || '',
-        tg:       r['Telegram']  || '',
-        website:  r['Website']     || '',
+        biz:      r['Business']    || '',
+        name:     r['Owner']       || '',
+        email:    r['Email']       || '',
+        phone:    r['Phone']       || '',
+        type:     r['Type']        || '',
+        city:     r['City']        || '',
+        bizPhone: r['Biz Phone']   || '',
         booking:  r['Booking URL'] || '',
-        status:   r['Status']    || 'pending',
-        fee:      r['Fee']       || 27,
-        date:     r['Date']      || '',
+        hours:    r['Hours']       || '',
+        services: r['Services']    || '',
+        website:  r['Website']     || '',
+        status:   r['Status']      || 'pending',
+        fee:      r['Fee']         || 197,
+        date:     r['Date']        || '',
         fromSheet: true
       };
     });

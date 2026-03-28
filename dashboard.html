@@ -29,7 +29,6 @@
   .card-title { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 14px; }
   .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 20px; }
   .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-  .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
   .stat { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
   .stat-label { font-size: 11px; color: var(--muted); margin-bottom: 6px; }
   .stat-value { font-size: 28px; font-weight: 700; }
@@ -92,7 +91,7 @@
   </div>
   <div class="nav-item active" onclick="nav('dashboard',this)">📊 Dashboard</div>
   <div class="nav-item" onclick="nav('customers',this)">👥 Customers</div>
-  <div class="nav-item" onclick="nav('workflows',this)">⚡ ManyChat Flows</div>
+  <div class="nav-item" onclick="nav('workflows',this)">📞 Voice Setup</div>
   <div class="nav-item" onclick="nav('todo',this)">✅ To-Do List</div>
   <div class="nav-item" onclick="nav('emails',this)">📧 Emails</div>
   <div class="nav-item" onclick="nav('revenue',this)">💰 Revenue</div>
@@ -107,16 +106,12 @@
       <div><h1>Command Centre</h1><p id="dash-date"></p></div>
       <button class="btn btn-ghost btn-sm" onclick="fetchFromSheet(localStorage.getItem('pa_gas_url'))" title="Sync customers from sales page">🔄 Sync</button>
     </div>
-
-    <!-- Stats -->
     <div class="grid-4">
-      <div class="stat"><div class="stat-label">Active Clients</div><div class="stat-value green" id="s-active">0</div><div class="stat-sub">paying £27/mo</div></div>
+      <div class="stat"><div class="stat-label">Active Clients</div><div class="stat-value green" id="s-active">0</div><div class="stat-sub">paying £197/mo</div></div>
       <div class="stat"><div class="stat-label">Monthly Revenue</div><div class="stat-value purple" id="s-revenue">£0</div><div class="stat-sub">recurring</div></div>
-      <div class="stat"><div class="stat-label">Monthly Profit</div><div class="stat-value green" id="s-profit">£0</div><div class="stat-sub">after costs</div></div>
+      <div class="stat"><div class="stat-label">Monthly Profit</div><div class="stat-value green" id="s-profit">£0</div><div class="stat-sub">after VAPI costs</div></div>
       <div class="stat"><div class="stat-label">Emails to Action</div><div class="stat-value orange" id="s-email-action">0</div><div class="stat-sub" id="s-email-sub">all up to date</div></div>
     </div>
-
-    <!-- Do This Now + Outreach -->
     <div class="grid-2" style="margin-top:14px">
       <div class="card">
         <div class="card-title" style="margin-bottom:14px">⚡ Do This Now</div>
@@ -127,8 +122,6 @@
         <div id="dash-outreach"></div>
       </div>
     </div>
-
-    <!-- Recent Clients + Automation Status -->
     <div class="grid-2" style="margin-top:14px">
       <div class="card">
         <div class="card-title" style="margin-bottom:14px">👥 Recent Clients</div>
@@ -157,34 +150,28 @@
         <button class="btn btn-ghost btn-sm" onclick="closeCustomerForm()">Cancel</button>
       </div>
       <div class="form-row">
-        <div class="form-group"><label class="form-label">Business Name *</label><input class="form-input" id="c-biz" placeholder="Dave's Garage"/></div>
-        <div class="form-group"><label class="form-label">Owner Name</label><input class="form-input" id="c-name" placeholder="Dave Smith"/></div>
+        <div class="form-group"><label class="form-label">Business Name *</label><input class="form-input" id="c-biz" placeholder="Pete's Plumbing"/></div>
+        <div class="form-group"><label class="form-label">Owner Name</label><input class="form-input" id="c-name" placeholder="Pete Smith"/></div>
       </div>
       <div class="form-row">
-        <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="c-email" placeholder="dave@davesgarage.co.uk" type="email"/></div>
-        <div class="form-group"><label class="form-label">Phone (for booking alerts)</label><input class="form-input" id="c-phone" placeholder="07700 900000"/></div>
+        <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="c-email" placeholder="pete@petes-plumbing.co.uk" type="email"/></div>
+        <div class="form-group"><label class="form-label">Owner Mobile (for booking alert texts)</label><input class="form-input" id="c-phone" placeholder="07700 900000"/></div>
       </div>
       <div class="form-row">
-        <div class="form-group"><label class="form-label">Business Type</label><input class="form-input" id="c-type" placeholder="Car Garage"/></div>
+        <div class="form-group"><label class="form-label">Business Type / Industry</label><input class="form-input" id="c-type" placeholder="Plumbing &amp; heating engineer"/></div>
         <div class="form-group"><label class="form-label">City</label><input class="form-input" id="c-city" placeholder="Manchester"/></div>
       </div>
-      <div style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.5px;margin:14px 0 10px;">Channel Details</div>
+      <div style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.5px;margin:14px 0 10px;">Voice Receptionist Details</div>
       <div class="form-row">
-        <div class="form-group"><label class="form-label">📸 Instagram @username</label><input class="form-input" id="c-ig" placeholder="@davesgarage"/></div>
-        <div class="form-group"><label class="form-label">💬 Facebook Page</label><input class="form-input" id="c-fb" placeholder="facebook.com/davesgarage"/></div>
+        <div class="form-group"><label class="form-label">📞 Business Phone Number (AI answers this)</label><input class="form-input" id="c-bizphone" placeholder="01234 567890"/></div>
+        <div class="form-group"><label class="form-label">📅 Booking / Calendar URL</label><input class="form-input" id="c-booking" placeholder="Fresha, Booksy, Calendly link" type="url"/></div>
       </div>
-      <div class="form-row">
-        <div class="form-group"><label class="form-label">🟢 WhatsApp Number</label><input class="form-input" id="c-wa" placeholder="07700 900000"/></div>
-        <div class="form-group"><label class="form-label">🎵 TikTok @username</label><input class="form-input" id="c-tt" placeholder="@davesgarage"/></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label class="form-label">📧 Email Bot Address</label><input class="form-input" id="c-emailbot" placeholder="hello@davesgarage.co.uk"/></div>
-        <div class="form-group"><label class="form-label">✈️ Telegram @username</label><input class="form-input" id="c-tg" placeholder="@davesgarage"/></div>
-      </div>
+      <div class="form-group"><label class="form-label">🕐 Opening Hours</label><textarea class="form-textarea" id="c-hours" placeholder="e.g. Mon-Fri 8am-6pm, Sat 9am-1pm, Sunday Closed" style="min-height:60px;"></textarea></div>
+      <div class="form-group"><label class="form-label">💷 Services &amp; Pricing</label><textarea class="form-textarea" id="c-services" placeholder="List all services and prices — e.g. Tap repair £65, Boiler service £85, Emergency call-out from £120"></textarea></div>
       <div style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.5px;margin:14px 0 10px;">Other Details</div>
       <div class="form-row">
         <div class="form-group"><label class="form-label">🌐 Website URL</label><input class="form-input" id="c-website" placeholder="https://yourbusiness.co.uk" type="url"/></div>
-        <div class="form-group"><label class="form-label">📅 Booking System URL</label><input class="form-input" id="c-booking" placeholder="Fresha, Booksy, Calendly link" type="url"/></div>
+        <div class="form-group"><label class="form-label">📝 Special Instructions</label><input class="form-input" id="c-notes" placeholder="Anything the AI should know — parking, FAQs, etc."/></div>
       </div>
       <div class="form-row">
         <div class="form-group">
@@ -195,9 +182,8 @@
             <option value="inactive">Inactive ❌</option>
           </select>
         </div>
-        <div class="form-group"><label class="form-label">Monthly Fee (£)</label><input class="form-input" id="c-fee" value="27" type="number"/></div>
+        <div class="form-group"><label class="form-label">Monthly Fee (£)</label><input class="form-input" id="c-fee" value="197" type="number"/></div>
       </div>
-      <div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="c-notes" placeholder="Any notes..."></textarea></div>
       <button class="btn btn-green" id="c-save-btn" onclick="saveCustomer()">Save Customer</button>
     </div>
     <div class="card">
@@ -206,96 +192,76 @@
         <input class="form-input" id="c-search" placeholder="Search..." style="width:180px;padding:6px 10px" oninput="renderCustomers()"/>
       </div>
       <table class="table">
-        <thead><tr><th>Business</th><th>Owner</th><th>Channels</th><th>City</th><th>Status</th><th>Fee</th><th>Since</th><th style="width:120px"></th></tr></thead>
+        <thead><tr><th>Business</th><th>Owner</th><th>Type</th><th>City</th><th>Status</th><th>Fee</th><th>Since</th><th style="width:120px"></th></tr></thead>
         <tbody id="customers-tbody"><tr><td colspan="8" class="empty">No customers yet.</td></tr></tbody>
       </table>
     </div>
   </div>
 
-  <!-- MANYCHAT WORKFLOWS -->
+  <!-- VOICE SETUP -->
   <div id="page-workflows" class="page">
     <div class="page-header flex-between">
-      <div><h1>ManyChat Flows</h1><p>Track setup progress for each client</p></div>
-      <button class="btn btn-primary" onclick="openWfForm()">+ Add Client Flow</button>
+      <div><h1>Voice Setup</h1><p>Track setup progress for each client's AI receptionist</p></div>
+      <button class="btn btn-primary" onclick="openWfForm()">+ Add Client Setup</button>
     </div>
 
-    <!-- What you need info box -->
+    <!-- What you need from every client -->
     <div style="background:rgba(108,99,255,0.08);border:1px solid rgba(108,99,255,0.25);border-radius:10px;padding:16px;margin-bottom:20px;">
-      <div style="font-size:12px;font-weight:700;color:var(--accent);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.5px;">What to ask every new client</div>
+      <div style="font-size:12px;font-weight:700;color:var(--accent);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.5px;">What to collect from every new client (via welcome email reply)</div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
         <div style="background:var(--surface2);border-radius:8px;padding:12px;">
-          <div style="font-size:16px;margin-bottom:6px;">📸</div>
-          <div style="font-size:12px;font-weight:600;margin-bottom:4px;">Instagram</div>
-          <div style="font-size:11px;color:var(--muted);line-height:1.6;">Their @username<br>Must be a Professional or Creator account (not personal)</div>
+          <div style="font-size:16px;margin-bottom:6px;">🕐</div>
+          <div style="font-size:12px;font-weight:600;margin-bottom:4px;">Opening Hours</div>
+          <div style="font-size:11px;color:var(--muted);line-height:1.6;">Mon–Sun hours + any bank holiday closures. Ask them to type it out or copy from their website.</div>
         </div>
         <div style="background:var(--surface2);border-radius:8px;padding:12px;">
-          <div style="font-size:16px;margin-bottom:6px;">💬</div>
-          <div style="font-size:12px;font-weight:600;margin-bottom:4px;">Facebook Messenger</div>
-          <div style="font-size:11px;color:var(--muted);line-height:1.6;">Their Facebook Page name/URL<br>Must have a Page — not a personal profile</div>
+          <div style="font-size:16px;margin-bottom:6px;">💷</div>
+          <div style="font-size:12px;font-weight:600;margin-bottom:4px;">Services &amp; Pricing</div>
+          <div style="font-size:11px;color:var(--muted);line-height:1.6;">Full price list for every service. A photo of a menu board or website screenshot is fine — no need to type it all out.</div>
         </div>
         <div style="background:var(--surface2);border-radius:8px;padding:12px;">
-          <div style="font-size:16px;margin-bottom:6px;">🟢</div>
-          <div style="font-size:12px;font-weight:600;margin-bottom:4px;">WhatsApp</div>
-          <div style="font-size:11px;color:var(--muted);line-height:1.6;">Their WhatsApp Business number<br>Must be a WhatsApp Business account</div>
+          <div style="font-size:16px;margin-bottom:6px;">📅</div>
+          <div style="font-size:12px;font-weight:600;margin-bottom:4px;">Booking Link</div>
+          <div style="font-size:11px;color:var(--muted);line-height:1.6;">Fresha, Booksy, Calendly, or any booking page. If they don't have one the AI just takes a name and number instead.</div>
         </div>
         <div style="background:var(--surface2);border-radius:8px;padding:12px;">
-          <div style="font-size:16px;margin-bottom:6px;">🎵</div>
-          <div style="font-size:12px;font-weight:600;margin-bottom:4px;">TikTok</div>
-          <div style="font-size:11px;color:var(--muted);line-height:1.6;">Their @TikTok username<br>Must switch to a TikTok Business account</div>
+          <div style="font-size:16px;margin-bottom:6px;">📞</div>
+          <div style="font-size:12px;font-weight:600;margin-bottom:4px;">Business Phone Number</div>
+          <div style="font-size:11px;color:var(--muted);line-height:1.6;">The number their customers call — this is the one that gets forwarded to the AI. Their existing number, nothing new needed.</div>
         </div>
         <div style="background:var(--surface2);border-radius:8px;padding:12px;">
           <div style="font-size:16px;margin-bottom:6px;">📱</div>
-          <div style="font-size:12px;font-weight:600;margin-bottom:4px;">SMS</div>
-          <div style="font-size:11px;color:var(--muted);line-height:1.6;">Their mobile number<br>You set up a Twilio number — they forward to it</div>
+          <div style="font-size:12px;font-weight:600;margin-bottom:4px;">Owner Mobile</div>
+          <div style="font-size:11px;color:var(--muted);line-height:1.6;">Where booking alert texts get sent. Usually their personal number. Must be able to receive standard UK texts.</div>
         </div>
         <div style="background:var(--surface2);border-radius:8px;padding:12px;">
-          <div style="font-size:16px;margin-bottom:6px;">📧</div>
-          <div style="font-size:12px;font-weight:600;margin-bottom:4px;">Email</div>
-          <div style="font-size:11px;color:var(--muted);line-height:1.6;">Their business email address<br>Gmail preferred — easier to connect</div>
-        </div>
-        <div style="background:var(--surface2);border-radius:8px;padding:12px;">
-          <div style="font-size:16px;margin-bottom:6px;">✈️</div>
-          <div style="font-size:12px;font-weight:600;margin-bottom:4px;">Telegram</div>
-          <div style="font-size:11px;color:var(--muted);line-height:1.6;">Their Telegram @username or channel name<br>Must have Telegram app installed</div>
-        </div>
-        <div style="background:var(--surface2);border-radius:8px;padding:12px;grid-column:span 2;">
-          <div style="font-size:16px;margin-bottom:6px;">📞</div>
-          <div style="font-size:12px;font-weight:600;margin-bottom:4px;">Booking Notifications (all channels)</div>
-          <div style="font-size:11px;color:var(--muted);line-height:1.6;">Their mobile number — so you can forward booking requests collected by the bot</div>
+          <div style="font-size:16px;margin-bottom:6px;">📝</div>
+          <div style="font-size:12px;font-weight:600;margin-bottom:4px;">Special Info (optional)</div>
+          <div style="font-size:11px;color:var(--muted);line-height:1.6;">Anything extra — parking info, address, common FAQs, areas they cover, anything a caller might ask about.</div>
         </div>
       </div>
     </div>
 
     <div id="wf-form" class="card mb-4" style="display:none">
       <div class="flex-between mb-4">
-        <div class="card-title">New Client Setup</div>
+        <div class="card-title">New Client Voice Setup</div>
         <button class="btn btn-ghost btn-sm" onclick="closeWfForm()">Cancel</button>
       </div>
       <div class="form-row">
-        <div class="form-group"><label class="form-label">Client Business *</label><input class="form-input" id="wf-biz" placeholder="Dave's Garage"/></div>
-        <div class="form-group"><label class="form-label">Contact Number (for booking alerts)</label><input class="form-input" id="wf-cal" placeholder="07700 900000"/></div>
-      </div>
-      <div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Channel Details</div>
-      <div class="form-row">
-        <div class="form-group"><label class="form-label">📸 Instagram @username</label><input class="form-input" id="wf-ig" placeholder="@davesgarage"/></div>
-        <div class="form-group"><label class="form-label">💬 Facebook Page URL</label><input class="form-input" id="wf-fb" placeholder="facebook.com/davesgarage"/></div>
+        <div class="form-group"><label class="form-label">Client Business *</label><input class="form-input" id="wf-biz" placeholder="Pete's Plumbing"/></div>
+        <div class="form-group"><label class="form-label">📞 Business Phone (AI answers this)</label><input class="form-input" id="wf-phone" placeholder="01234 567890"/></div>
       </div>
       <div class="form-row">
-        <div class="form-group"><label class="form-label">🟢 WhatsApp Business Number</label><input class="form-input" id="wf-wa" placeholder="07700 900000"/></div>
-        <div class="form-group"><label class="form-label">🎵 TikTok @username</label><input class="form-input" id="wf-tt" placeholder="@davesgarage"/></div>
+        <div class="form-group"><label class="form-label">📱 Owner Mobile (alert texts go here)</label><input class="form-input" id="wf-owner-phone" placeholder="07700 900000"/></div>
+        <div class="form-group"><label class="form-label">📅 Booking URL</label><input class="form-input" id="wf-booking" placeholder="Fresha, Booksy, Calendly link" type="url"/></div>
       </div>
       <div class="form-row">
-        <div class="form-group"><label class="form-label">📧 Business Email</label><input class="form-input" id="wf-email" placeholder="dave@davesgarage.co.uk"/></div>
-        <div class="form-group"><label class="form-label">✈️ Telegram @username</label><input class="form-input" id="wf-tg" placeholder="@davesgarage"/></div>
+        <div class="form-group"><label class="form-label">🌐 Website</label><input class="form-input" id="wf-website" placeholder="https://yourbusiness.co.uk" type="url"/></div>
+        <div class="form-group"><label class="form-label">Notes</label><input class="form-input" id="wf-notes" placeholder="Any setup notes..."/></div>
       </div>
-      <div class="form-row">
-        <div class="form-group"><label class="form-label">🌐 Website URL</label><input class="form-input" id="wf-website" placeholder="https://yourbusiness.co.uk" type="url"/></div>
-        <div class="form-group"><label class="form-label">📅 Booking System URL</label><input class="form-input" id="wf-booking" placeholder="Fresha, Booksy, Calendly link" type="url"/></div>
-      </div>
-      <div class="form-group"><label class="form-label">Notes</label><input class="form-input" id="wf-notes" placeholder="Any setup notes..."/></div>
-      <button class="btn btn-green" onclick="saveWorkflow()">Save Client</button>
+      <button class="btn btn-green" onclick="saveWorkflow()">Save Client Setup</button>
     </div>
-    <div id="workflows-list"><div class="empty">No workflows yet. Add your first client setup above.</div></div>
+    <div id="workflows-list"><div class="empty">No setups yet. They are created automatically when customers are added.</div></div>
   </div>
 
   <!-- TO-DO LIST -->
@@ -307,7 +273,7 @@
         <select class="form-select" id="todo-cat" style="width:150px">
           <option value="Setup">Setup</option>
           <option value="Client">Client</option>
-          <option value="ManyChat">ManyChat</option>
+          <option value="VAPI">VAPI</option>
           <option value="Outreach">Outreach</option>
           <option value="General">General</option>
         </select>
@@ -315,7 +281,7 @@
       </div>
     </div>
     <div class="section-title">Setup</div><div id="todo-Setup"></div>
-    <div class="section-title">ManyChat</div><div id="todo-ManyChat"></div>
+    <div class="section-title">VAPI</div><div id="todo-VAPI"></div>
     <div class="section-title">Outreach</div><div id="todo-Outreach"></div>
     <div class="section-title">Client</div><div id="todo-Client"></div>
     <div class="section-title">General</div><div id="todo-General"></div>
@@ -326,22 +292,22 @@
     <div class="page-header"><h1>Revenue</h1><p>Your monthly income breakdown</p></div>
     <div class="grid-4 mb-4">
       <div class="stat"><div class="stat-label">Gross Revenue</div><div class="stat-value purple" id="r-gross">£0</div><div class="stat-sub">from all clients</div></div>
-      <div class="stat"><div class="stat-label">ManyChat Costs</div><div class="stat-value orange" id="r-cost">£0</div><div class="stat-sub">£12 per client</div></div>
-      <div class="stat"><div class="stat-label">Other Costs</div><div class="stat-value orange">~£25</div><div class="stat-sub">n8n + Claude API</div></div>
+      <div class="stat"><div class="stat-label">VAPI Costs</div><div class="stat-value orange" id="r-cost">£0</div><div class="stat-sub">~£35 per client</div></div>
+      <div class="stat"><div class="stat-label">Other Costs</div><div class="stat-value orange">~£15</div><div class="stat-sub">Twilio numbers + misc</div></div>
       <div class="stat"><div class="stat-label">Net Profit</div><div class="stat-value green" id="r-profit">£0</div><div class="stat-sub">in your pocket</div></div>
     </div>
     <div class="card">
       <div class="card-title">Client Breakdown</div>
       <table class="table">
-        <thead><tr><th>Business</th><th>Monthly Fee</th><th>ManyChat Cost</th><th>Your Profit</th><th>Status</th></tr></thead>
+        <thead><tr><th>Business</th><th>Monthly Fee</th><th>VAPI Cost</th><th>Your Profit</th><th>Status</th></tr></thead>
         <tbody id="revenue-tbody"><tr><td colspan="5" class="empty">No active clients yet.</td></tr></tbody>
       </table>
       <div style="margin-top:16px;padding:14px;background:var(--surface2);border-radius:8px;font-size:13px;line-height:1.8;">
         <strong>Scale targets:</strong><br>
-        5 clients → <span style="color:var(--green)">£150/mo profit</span> &nbsp;·&nbsp;
-        10 clients → <span style="color:var(--green)">£325/mo profit</span> &nbsp;·&nbsp;
-        20 clients → <span style="color:var(--green)">£675/mo profit</span> &nbsp;·&nbsp;
-        50 clients → <span style="color:var(--green)">£1,725/mo profit</span>
+        5 clients → <span style="color:var(--green)">£795/mo profit</span> &nbsp;·&nbsp;
+        10 clients → <span style="color:var(--green)">£1,605/mo profit</span> &nbsp;·&nbsp;
+        20 clients → <span style="color:var(--green)">£3,225/mo profit</span> &nbsp;·&nbsp;
+        30 clients → <span style="color:var(--green)">£4,845/mo profit</span>
       </div>
     </div>
   </div>
@@ -352,8 +318,6 @@
       <div><h1>Emails</h1><p>Client onboarding pipeline — one click opens Gmail with the email ready to send</p></div>
       <div id="emails-need-action" style="background:rgba(255,179,71,0.15);color:var(--warn);padding:6px 14px;border-radius:8px;font-size:12px;font-weight:700;display:none"></div>
     </div>
-
-    <!-- Pipeline -->
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;">
       <div class="card">
         <div class="card-title" style="color:var(--warn);margin-bottom:14px;">⚡ New — Send Welcome</div>
@@ -364,34 +328,32 @@
         <div id="email-col-welcomed"><div class="empty" style="padding:16px 0;font-size:12px">None here</div></div>
       </div>
       <div class="card">
-        <div class="card-title" style="color:var(--green);margin-bottom:14px;">✅ Setup Done — Send Live</div>
+        <div class="card-title" style="color:var(--green);margin-bottom:14px;">✅ Info Received — Build &amp; Go Live</div>
         <div id="email-col-setup"><div class="empty" style="padding:16px 0;font-size:12px">None here</div></div>
       </div>
       <div class="card">
-        <div class="card-title" style="color:var(--green);margin-bottom:14px;">🚀 Bot Live</div>
+        <div class="card-title" style="color:var(--green);margin-bottom:14px;">🚀 Live</div>
         <div id="email-col-live"><div class="empty" style="padding:16px 0;font-size:12px">None yet</div></div>
       </div>
     </div>
-
-    <!-- How it works -->
     <div class="card" style="max-width:100%">
       <div class="card-title">How this works</div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:4px;">
         <div style="background:var(--surface2);border-radius:8px;padding:12px;">
           <div style="font-size:11px;font-weight:700;color:var(--warn);margin-bottom:6px;">1 — NEW</div>
-          <div style="font-size:12px;color:var(--muted);line-height:1.6;">Customer pays on Stripe. Click <strong style="color:var(--text)">Send Welcome Email</strong> — Gmail opens pre-filled. Hit send.</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.6;">Customer pays on Stripe. Click <strong style="color:var(--text)">Send Welcome Email</strong> — Gmail opens pre-filled asking for their hours, pricing, and booking link. Hit send.</div>
         </div>
         <div style="background:var(--surface2);border-radius:8px;padding:12px;">
           <div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:6px;">2 — WELCOME SENT</div>
-          <div style="font-size:12px;color:var(--muted);line-height:1.6;">Waiting for their ✅ Done reply. If no reply in 24hrs click <strong style="color:var(--text)">Send Nudge</strong>. When they reply, click <strong style="color:var(--text)">Mark Setup Done</strong>.</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.6;">Waiting for their reply with hours/pricing. If no reply in 24hrs click <strong style="color:var(--text)">Send Nudge</strong>. When they reply, click <strong style="color:var(--text)">Mark Info Received</strong>.</div>
         </div>
         <div style="background:var(--surface2);border-radius:8px;padding:12px;">
-          <div style="font-size:11px;font-weight:700;color:var(--green);margin-bottom:6px;">3 — SETUP DONE</div>
-          <div style="font-size:12px;color:var(--muted);line-height:1.6;">Their access is ready. Build their ManyChat flows (~20 mins). Then click <strong style="color:var(--text)">Send Live Email</strong>.</div>
+          <div style="font-size:11px;font-weight:700;color:var(--green);margin-bottom:6px;">3 — INFO RECEIVED</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.6;">Build their AI script in VAPI (~30 mins). Tick off Voice Setup steps. When all done, click <strong style="color:var(--text)">Send Live Email</strong>.</div>
         </div>
         <div style="background:var(--surface2);border-radius:8px;padding:12px;">
-          <div style="font-size:11px;font-weight:700;color:var(--green);margin-bottom:6px;">4 — BOT LIVE</div>
-          <div style="font-size:12px;color:var(--muted);line-height:1.6;">All done. Client is active, bot is running 24/7. Nothing more needed unless they want updates.</div>
+          <div style="font-size:11px;font-weight:700;color:var(--green);margin-bottom:6px;">4 — LIVE</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.6;">All done. Client sets up call forwarding (30 seconds). AI answers their calls 24/7. Nothing more needed unless they want updates.</div>
         </div>
       </div>
     </div>
@@ -403,7 +365,7 @@
     <div class="card" style="max-width:600px;">
       <div class="card-title">Google Apps Script URL</div>
       <p style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.7;">
-        Paste your deployed Apps Script URL below. Once saved, every customer who fills in the sales page will appear in your dashboard automatically — no action needed from you.
+        Paste your deployed Apps Script URL below. Every customer who fills in the sales page will appear in your dashboard automatically.
       </p>
       <div class="form-group">
         <label class="form-label">Script URL</label>
@@ -416,7 +378,7 @@
       </div>
       <div style="margin-top:20px;padding:14px;background:rgba(255,77,106,0.06);border:1px solid rgba(255,77,106,0.2);border-radius:8px;">
         <div style="font-size:12px;font-weight:700;color:var(--red);margin-bottom:8px;">Reset To-Do List</div>
-        <div style="font-size:12px;color:var(--muted);margin-bottom:10px;">Resets your task list to the current defaults. Your customer and revenue data is not affected.</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:10px;">Resets your task list to the current defaults. Customer and revenue data is not affected.</div>
         <button class="btn btn-sm" style="background:var(--red);color:white" onclick="if(confirm('Reset to-do list to defaults?')){localStorage.removeItem('pa_todos');localStorage.removeItem('pa_todos_v');location.reload();}">Reset Tasks</button>
       </div>
       <div style="margin-top:24px;background:var(--surface2);border-radius:8px;padding:16px;">
@@ -438,37 +400,34 @@
 
 <script>
 let customers = JSON.parse(localStorage.getItem('pa_customers')||'[]');
-let workflows = JSON.parse(localStorage.getItem('pa_workflows')||'[]');
-// Migrate existing 8-step workflows to 9-step (adds "Speak to Someone" step at index 6)
-workflows = workflows.map(wf=>{if(wf.steps&&wf.steps.length===8){wf.steps.splice(6,0,false);}return wf;});
-localStorage.setItem('pa_workflows',JSON.stringify(workflows));
+let workflows  = JSON.parse(localStorage.getItem('pa_workflows')||'[]');
 let deletedEmails = JSON.parse(localStorage.getItem('pa_deleted_emails')||'[]');
 let outreach = JSON.parse(localStorage.getItem('pa_outreach')||'{}');
 
-// Version-controlled to-do list — bump TODOS_V to reset everyone to new defaults
-const TODOS_V = '3';
+// Version-controlled to-do list — bump TODOS_V to reset to new defaults
+const TODOS_V = '4';
 if(localStorage.getItem('pa_todos_v') !== TODOS_V){ localStorage.removeItem('pa_todos'); localStorage.setItem('pa_todos_v', TODOS_V); }
 let todos = JSON.parse(localStorage.getItem('pa_todos')||'null') || [
   // ── ONE-TIME SETUP ──
-  {id:1,  text:'Sign up to ManyChat — manychat.com (free trial)', cat:'Setup', done:false},
-  {id:2,  text:'Sign up to Stripe and verify your account — stripe.com', cat:'Setup', done:true},
-  {id:3,  text:'Sales page live on GitHub Pages', cat:'Setup', done:true},
-  {id:4,  text:'Stripe payment link updated to £27/mo', cat:'Setup', done:true},
-  {id:5,  text:'Connect Google Sheet to dashboard — paste URL in Settings', cat:'Setup', done:false},
-  {id:6,  text:'Test Stripe payment link end-to-end — make a test purchase', cat:'Setup', done:false},
-  // ── DEMO BOT (build once — use for sales proof) ──
-  {id:7,  text:'Build demo bot in ManyChat — welcome, pricing, hours, booking, speak to someone', cat:'ManyChat', done:false},
-  {id:8,  text:'Connect your own Instagram to the demo bot', cat:'ManyChat', done:true},
-  {id:9,  text:'Add real services, prices and opening hours to demo bot', cat:'ManyChat', done:false},
-  {id:10, text:'Test demo bot — DM your Instagram from a second account', cat:'ManyChat', done:false},
-  {id:11, text:'Record 60-second demo video showing the bot replying (Win+G)', cat:'Setup', done:false},
-  {id:12, text:'Add demo video URL to sales page and push to GitHub', cat:'Setup', done:false},
+  {id:1,  text:'Sign up to VAPI.ai (vapi.ai) — free trial, this is where you build the AI voice scripts', cat:'Setup', done:false},
+  {id:2,  text:'Sign up to Twilio (twilio.com) — buy UK phone numbers for each client (~£1/month each)', cat:'Setup', done:false},
+  {id:3,  text:'Sign up to Stripe and verify your account — stripe.com', cat:'Setup', done:false},
+  {id:4,  text:'Create a new Stripe payment link at £197/month (Products → Payment Links)', cat:'Setup', done:false},
+  {id:5,  text:'Sales page live on GitHub Pages with new voice copy', cat:'Setup', done:false},
+  {id:6,  text:'Update STRIPE_URL in sales-page-final.html with your new £197 link', cat:'Setup', done:false},
+  {id:7,  text:'Connect Google Sheet to dashboard — paste URL in Settings', cat:'Setup', done:false},
+  {id:8,  text:'Test Stripe payment link end-to-end — make a test purchase', cat:'Setup', done:false},
+  // ── VAPI DEMO (build once — use as sales proof) ──
+  {id:9,  text:'Build a demo AI receptionist in VAPI using a fake "Demo Plumbing Co" business', cat:'VAPI', done:false},
+  {id:10, text:'Provision a test Twilio UK number and connect it to your VAPI demo', cat:'VAPI', done:false},
+  {id:11, text:'Test the demo: call the number and confirm the AI answers correctly', cat:'VAPI', done:false},
+  {id:12, text:'Record a demo call (any screen recorder or just a phone recording)', cat:'VAPI', done:false},
+  {id:13, text:'Add demo recording or transcript to sales page as proof — push to GitHub', cat:'VAPI', done:false},
   // ── OUTREACH ──
-  {id:13, text:'Update email templates from £47 to £27 (assets/email-templates.txt)', cat:'Outreach', done:false},
-  {id:14, text:'Sign up to Instantly.ai — automates Day 3, Day 7, Day 14 follow-ups', cat:'Outreach', done:false},
-  {id:15, text:'Build a list of 50 target UK businesses (see assets/first-50-leads.txt)', cat:'Outreach', done:false},
-  {id:16, text:'Send your first 10 cold emails today', cat:'Outreach', done:false},
-  {id:17, text:'Load email templates into Instantly.ai follow-up sequences', cat:'Outreach', done:false},
+  {id:14, text:'Build a list of 50 UK businesses where the owner answers their own phone (plumbers, salons, garages)', cat:'Outreach', done:false},
+  {id:15, text:'Write cold email / DM script — lead with the missed calls angle', cat:'Outreach', done:false},
+  {id:16, text:'Send your first 10 cold emails or DMs today', cat:'Outreach', done:false},
+  {id:17, text:'Set up follow-up sequence in Instantly.ai — Day 3, Day 7, Day 14', cat:'Outreach', done:false},
 ];
 let todoId = todos.reduce((m,t)=>Math.max(m,t.id),0)+1;
 
@@ -497,10 +456,9 @@ function resetOutreachToday(){const k=todayKey();outreach[k]=0;localStorage.setI
 function renderDash() {
   document.getElementById('dash-date').textContent = new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 
-  // Stats
   const active = customers.filter(c=>c.status==='active');
-  const revenue = active.reduce((s,c)=>s+(parseFloat(c.fee)||27),0);
-  const profit = Math.max(0,revenue-active.length*12-25);
+  const revenue = active.reduce((s,c)=>s+(parseFloat(c.fee)||197),0);
+  const profit = Math.max(0, revenue - active.length*35 - 15);
   const emailActions = customers.filter(c=>c.status!=='inactive'&&(emailStage(c)==='new'||emailStage(c)==='setup')).length;
   document.getElementById('s-active').textContent = active.length;
   document.getElementById('s-revenue').textContent = '£'+revenue;
@@ -523,19 +481,19 @@ function renderDash() {
     </div>`;
   }
   customers.filter(c=>c.status!=='inactive'&&emailStage(c)==='new').forEach(c=>{
-    actions.push(actionRow('var(--red)',`<strong>${c.biz}</strong> — send welcome email`,'📧 Send',`sendWelcomeEmail('${c.id}')`));
+    actions.push(actionRow('var(--red)',`<strong>${c.biz}</strong> — send welcome &amp; info request email`,'📧 Send',`sendWelcomeEmail('${c.id}')`));
   });
   customers.filter(c=>c.status!=='inactive'&&emailStage(c)==='setup').forEach(c=>{
-    actions.push(actionRow('var(--red)',`<strong>${c.biz}</strong> — setup done, build ManyChat then send live email`,'🚀 Go Live',`sendLiveEmail('${c.id}')`));
+    actions.push(actionRow('var(--red)',`<strong>${c.biz}</strong> — info received, build VAPI script then send live email`,'🚀 Go Live',`sendLiveEmail('${c.id}')`));
   });
   customers.filter(c=>c.status!=='inactive'&&emailStage(c)==='welcomed').forEach(c=>{
     if(c.emailWelcome&&!c.emailNudge&&(Date.now()-new Date(c.emailWelcome).getTime())>86400000)
       actions.push(actionRow('var(--warn)',`<strong>${c.biz}</strong> — no reply in 24hrs`,'🔔 Nudge',`sendNudgeEmail('${c.id}')`));
   });
-  const incompleteFl=workflows.filter(w=>w.steps.filter(Boolean).length<8);
-  if(incompleteFl.length) actions.push(actionRow('var(--warn)',`${incompleteFl.length} ManyChat flow${incompleteFl.length>1?'s':''} not fully built`,'View →',`nav('workflows',document.querySelector('[onclick*=workflows]'))`));
+  const incompleteFl=workflows.filter(w=>w.steps.filter(Boolean).length<WF_STEPS.length);
+  if(incompleteFl.length) actions.push(actionRow('var(--warn)',`${incompleteFl.length} voice setup${incompleteFl.length>1?'s':''} not fully complete`,'View →',`nav('workflows',document.querySelector('[onclick*=workflows]'))`));
   const todayC=outreach[todayKey()]||0;
-  actions.push(actionRow(todayC>=10?'var(--green)':todayC>=5?'var(--warn)':'var(--muted)',`Cold emails today: <strong>${todayC} / 10</strong> sent`,'+ 1',`incrementOutreach()`));
+  actions.push(actionRow(todayC>=10?'var(--green)':todayC>=5?'var(--warn)':'var(--muted)',`Cold outreach today: <strong>${todayC} / 10</strong> sent`,'+ 1',`incrementOutreach()`));
   actEl.innerHTML = actions.length ? actions.join('') : '<div style="text-align:center;padding:20px;color:var(--green);font-size:13px">All clear — great work! 🎉</div>';
 
   // ── OUTREACH TRACKER ──
@@ -544,13 +502,13 @@ function renderDash() {
     const wkC=weeklyOutreach(); const pct=Math.min(100,Math.round((todayC/10)*100));
     orEl.innerHTML=`<div style="text-align:center;margin-bottom:14px">
       <div style="font-size:48px;font-weight:800;color:${todayC>=10?'var(--green)':'var(--text)'};line-height:1">${todayC}</div>
-      <div style="font-size:12px;color:var(--muted);margin-top:4px">emails sent today &nbsp;·&nbsp; target: 10</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">sent today &nbsp;·&nbsp; target: 10</div>
     </div>
     <div style="background:var(--bg);border-radius:6px;height:8px;margin-bottom:14px;overflow:hidden">
       <div style="height:100%;width:${pct}%;background:${todayC>=10?'var(--green)':'var(--accent)'};border-radius:6px;transition:width 0.3s"></div>
     </div>
     <div style="display:flex;gap:8px;margin-bottom:14px">
-      <button class="btn btn-primary" style="flex:1;padding:12px;font-size:14px;font-weight:700" onclick="incrementOutreach()">+ 1 Email Sent</button>
+      <button class="btn btn-primary" style="flex:1;padding:12px;font-size:14px;font-weight:700" onclick="incrementOutreach()">+ 1 Sent</button>
       <button class="btn btn-ghost btn-sm" onclick="resetOutreachToday()" title="Reset today to 0">↺</button>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
@@ -569,10 +527,10 @@ function renderDash() {
   // ── RECENT CLIENTS ──
   const dc = document.getElementById('dash-customers');
   if(dc){
-    if(!customers.length){dc.innerHTML='<div class="empty">No customers yet — start sending cold emails!</div>';}
+    if(!customers.length){dc.innerHTML='<div class="empty">No customers yet — start sending outreach!</div>';}
     else{dc.innerHTML=customers.slice(-5).reverse().map(c=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:10px;background:var(--surface2);border-radius:7px;margin-bottom:7px">
       <div><div style="font-size:13px;font-weight:600">${c.biz}${c.isNew?'<span style="margin-left:6px;background:rgba(0,212,170,0.15);color:var(--green);font-size:9px;font-weight:700;padding:2px 5px;border-radius:8px">NEW</span>':''}</div>
-      <div style="font-size:11px;color:var(--muted)">${c.channels||c.type||'No channels'} · ${c.name||''}</div></div>
+      <div style="font-size:11px;color:var(--muted)">${c.type||'—'} · ${c.name||''}</div></div>
       <span class="badge badge-${c.status}">${c.status}</span></div>`).join('');}
   }
 
@@ -580,7 +538,7 @@ function renderDash() {
   const autoEl = document.getElementById('dash-automation');
   if(autoEl){
     const gasUrl=localStorage.getItem('pa_gas_url');
-    const activeFlows=workflows.filter(w=>w.steps.filter(Boolean).length===8).length;
+    const liveVoice=workflows.filter(w=>w.steps.every(Boolean)).length;
     const onboarding=customers.filter(c=>emailStage(c)!=='live'&&c.status!=='inactive').length;
     function sRow(icon,label,val,ok){return `<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:var(--surface2);border-radius:7px;margin-bottom:6px">
       <div style="font-size:12px">${icon} ${label}</div>
@@ -589,14 +547,14 @@ function renderDash() {
       sRow('🌐','Sales page → Sheet',gasUrl?'Connected ✓':'Not connected — go to Settings',!!gasUrl),
       sRow('🔄','Customer auto-import',gasUrl?'Running ✓':'Set up URL in Settings',!!gasUrl),
       sRow('💳','Stripe billing','Automatic ✓',true),
-      sRow('🤖','ManyChat bots',activeFlows+' fully live',activeFlows>0),
+      sRow('📞','AI receptionists live',liveVoice+' fully live',liveVoice>0),
       sRow('📧','Clients being onboarded',onboarding?onboarding+' in progress':'None — keep selling!',true),
       sRow('📊','Monthly recurring','£'+revenue+' / £'+profit+' profit',revenue>0),
     ].join('');
   }
 }
 
-let editingCustomerId=null;
+let editingCustomerId = null;
 function openCustomerForm(){
   editingCustomerId=null;
   document.getElementById('c-form-title').textContent='New Customer';
@@ -607,19 +565,29 @@ function openCustomerForm(){
 function closeCustomerForm(){
   editingCustomerId=null;
   document.getElementById('customer-form').style.display='none';
-  ['c-biz','c-name','c-email','c-phone','c-type','c-city','c-ig','c-fb','c-wa','c-tt','c-emailbot','c-tg','c-website','c-booking','c-notes'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  document.getElementById('c-fee').value='27';
+  ['c-biz','c-name','c-email','c-phone','c-type','c-city','c-bizphone','c-booking','c-hours','c-services','c-website','c-notes'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('c-fee').value='197';
   document.getElementById('c-status').value='pending';
 }
 function getFormData(existingId){
-  const ig=document.getElementById('c-ig').value.trim();
-  const fb=document.getElementById('c-fb').value.trim();
-  const wa=document.getElementById('c-wa').value.trim();
-  const tt=document.getElementById('c-tt').value.trim();
-  const eb=document.getElementById('c-emailbot').value.trim();
-  const tg=document.getElementById('c-tg').value.trim();
-  const channels=[ig&&'instagram',fb&&'messenger',wa&&'whatsapp',tt&&'tiktok',eb&&'email',tg&&'telegram'].filter(Boolean).join(', ');
-  return {id:existingId||Date.now(),biz:document.getElementById('c-biz').value.trim(),name:document.getElementById('c-name').value,email:document.getElementById('c-email').value,phone:document.getElementById('c-phone').value,type:document.getElementById('c-type').value,city:document.getElementById('c-city').value,ig,fb,wa,tt,emailBot:eb,tg,social:ig,channels,website:document.getElementById('c-website').value,booking:document.getElementById('c-booking').value,status:document.getElementById('c-status').value,fee:document.getElementById('c-fee').value,notes:document.getElementById('c-notes').value,date:new Date().toLocaleDateString('en-GB')};
+  return {
+    id: existingId||Date.now(),
+    biz:      document.getElementById('c-biz').value.trim(),
+    name:     document.getElementById('c-name').value,
+    email:    document.getElementById('c-email').value,
+    phone:    document.getElementById('c-phone').value,
+    type:     document.getElementById('c-type').value,
+    city:     document.getElementById('c-city').value,
+    bizPhone: document.getElementById('c-bizphone').value,
+    booking:  document.getElementById('c-booking').value,
+    hours:    document.getElementById('c-hours').value,
+    services: document.getElementById('c-services').value,
+    website:  document.getElementById('c-website').value,
+    notes:    document.getElementById('c-notes').value,
+    status:   document.getElementById('c-status').value,
+    fee:      document.getElementById('c-fee').value,
+    date:     new Date().toLocaleDateString('en-GB')
+  };
 }
 function editCustomer(id){
   const c=customers.find(x=>String(x.id)===String(id));
@@ -633,17 +601,14 @@ function editCustomer(id){
   document.getElementById('c-phone').value=c.phone||'';
   document.getElementById('c-type').value=c.type||'';
   document.getElementById('c-city').value=c.city||'';
-  document.getElementById('c-ig').value=c.ig||c.social||'';
-  document.getElementById('c-fb').value=c.fb||'';
-  document.getElementById('c-wa').value=c.wa||'';
-  document.getElementById('c-tt').value=c.tt||'';
-  document.getElementById('c-emailbot').value=c.emailBot||'';
-  document.getElementById('c-tg').value=c.tg||'';
-  document.getElementById('c-website').value=c.website||'';
+  document.getElementById('c-bizphone').value=c.bizPhone||'';
   document.getElementById('c-booking').value=c.booking||'';
-  document.getElementById('c-status').value=c.status||'pending';
-  document.getElementById('c-fee').value=c.fee||27;
+  document.getElementById('c-hours').value=c.hours||'';
+  document.getElementById('c-services').value=c.services||'';
+  document.getElementById('c-website').value=c.website||'';
   document.getElementById('c-notes').value=c.notes||'';
+  document.getElementById('c-status').value=c.status||'pending';
+  document.getElementById('c-fee').value=c.fee||197;
   document.getElementById('customer-form').style.display='block';
   document.getElementById('customer-form').scrollIntoView({behavior:'smooth'});
 }
@@ -656,52 +621,49 @@ function saveCustomer(){
       const updated={...customers[idx],...getFormData(customers[idx].id)};
       customers[idx]=updated;
       const wf=workflows.find(w=>w.biz===updated.biz);
-      if(wf){wf.ig=updated.ig||'';wf.fb=updated.fb||'';wf.wa=updated.wa||'';wf.tt=updated.tt||'';wf.email=updated.emailBot||'';wf.tg=updated.tg||'';wf.cal=updated.phone||'';wf.website=updated.website||'';wf.booking=updated.booking||'';localStorage.setItem('pa_workflows',JSON.stringify(workflows));}
+      if(wf){wf.phone=updated.bizPhone||'';wf.ownerPhone=updated.phone||'';wf.booking=updated.booking||'';wf.website=updated.website||'';localStorage.setItem('pa_workflows',JSON.stringify(workflows));}
     }
     localStorage.setItem('pa_customers',JSON.stringify(customers));
-    closeCustomerForm();renderAll();notify('Customer updated — workflow synced!');
+    closeCustomerForm();renderAll();notify('Customer updated — voice setup synced!');
   } else {
     const c=getFormData(null);
     customers.push(c);
     localStorage.setItem('pa_customers',JSON.stringify(customers));
     autoCreateWorkflow(c);
-    closeCustomerForm();renderAll();notify('Customer saved — workflow created!');
+    closeCustomerForm();renderAll();notify('Customer saved — voice setup created!');
   }
 }
 function deleteCustomer(id){
   const c=customers.find(x=>String(x.id)===String(id));
   if(!c)return;
-  if(!confirm('Delete '+c.biz+'?\n\nThis also removes their ManyChat workflow entry. It does NOT cancel their Stripe subscription.'))return;
+  if(!confirm('Delete '+c.biz+'?\n\nThis also removes their voice setup entry. It does NOT cancel their Stripe subscription.'))return;
   if(c.email&&!deletedEmails.includes(c.email)){deletedEmails.push(c.email);localStorage.setItem('pa_deleted_emails',JSON.stringify(deletedEmails));}
   customers=customers.filter(x=>String(x.id)!==String(id));
   workflows=workflows.filter(w=>w.biz!==c.biz);
   localStorage.setItem('pa_customers',JSON.stringify(customers));
   localStorage.setItem('pa_workflows',JSON.stringify(workflows));
-  renderAll();notify('Customer and workflow deleted');
+  renderAll();notify('Customer and voice setup deleted');
 }
 function autoCreateWorkflow(c){
   const wfExists=workflows.find(w=>w.biz===c.biz);
   if(wfExists) return;
   workflows.push({
-    id: Date.now(),
-    biz:     c.biz||'',
-    ig:      c.ig||c.social||'',
-    fb:      c.fb||'',
-    wa:      c.wa||'',
-    tt:      c.tt||'',
-    email:   c.emailBot||c.email||'',
-    tg:      c.tg||'',
-    cal:     c.phone||'',
-    website: c.website||'',
-    booking: c.booking||'',
-    notes:   'Auto-created from customer',
-    steps:   [false,false,false,false,false,false,false,false,false],
-    date:    new Date().toLocaleDateString('en-GB')
+    id:         Date.now(),
+    biz:        c.biz||'',
+    phone:      c.bizPhone||'',
+    ownerPhone: c.phone||'',
+    email:      c.email||'',
+    booking:    c.booking||'',
+    website:    c.website||'',
+    notes:      'Auto-created from customer',
+    steps:      [false,false,false,false,false,false],
+    date:       new Date().toLocaleDateString('en-GB')
   });
   localStorage.setItem('pa_workflows',JSON.stringify(workflows));
 }
 function updateCustomerStatus(id,v){const c=customers.find(x=>String(x.id)===String(id));if(c){c.status=v;localStorage.setItem('pa_customers',JSON.stringify(customers));renderAll();}}
 function renderAll(){renderDash();renderCustomers();renderRevenue();renderWorkflows();renderEmails();}
+
 function renderCustomers(){
   const q=(document.getElementById('c-search').value||'').toLowerCase();
   const f=customers.filter(c=>c.biz.toLowerCase().includes(q)||(c.city||'').toLowerCase().includes(q)||(c.type||'').toLowerCase().includes(q));
@@ -711,21 +673,20 @@ function renderCustomers(){
     <tr style="cursor:pointer" onclick="toggleCustomerDetail('${c.id}')">
       <td><strong>${c.biz}</strong>${c.isNew?'<span style="margin-left:6px;background:rgba(0,212,170,0.15);color:var(--green);font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px;text-transform:uppercase;">New</span>':''}</td>
       <td>${c.name||'—'}<br><span style="font-size:11px;color:var(--muted)">${c.email||''}</span></td>
-      <td>${c.channels||c.type||'—'}</td>
+      <td>${c.type||'—'}</td>
       <td>${c.city||'—'}</td>
       <td><select onchange="event.stopPropagation();updateCustomerStatus('${c.id}',this.value)" style="background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:3px 7px;border-radius:5px;font-size:11px">${['active','pending','inactive'].map(s=>`<option value="${s}"${c.status===s?' selected':''}>${s}</option>`).join('')}</select></td>
-      <td style="color:var(--green)">£${c.fee||27}/mo</td>
+      <td style="color:var(--green)">£${c.fee||197}/mo</td>
       <td style="font-size:11px;color:var(--muted)">${c.date}</td>
       <td onclick="event.stopPropagation()" style="display:flex;gap:5px;padding:8px 12px"><button class="btn btn-sm btn-ghost" onclick="editCustomer('${c.id}')">Edit</button><button class="btn btn-sm btn-red" onclick="deleteCustomer('${c.id}')">Delete</button></td>
     </tr>
     <tr id="detail-${c.id}" style="display:none">
       <td colspan="8" style="padding:0;border-bottom:2px solid var(--accent)">
         <div style="padding:16px 18px;background:rgba(108,99,255,0.05)">
-          <div style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;">Bot Setup Details</div>
-          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;">
-            ${renderChannelDetails(c)}
+          <div style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;">Voice Receptionist Details</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;">
+            ${renderVoiceDetails(c)}
           </div>
-          ${c.notes&&!c.channels?`<pre style="margin-top:12px;font-size:12px;color:var(--muted);white-space:pre-wrap;line-height:1.8">${c.notes}</pre>`:''}
         </div>
       </td>
     </tr>
@@ -737,43 +698,51 @@ function toggleCustomerDetail(id){
   if(row) row.style.display=row.style.display==='none'?'table-row':'none';
 }
 
-function renderChannelDetails(c){
-  const chMap={
-    instagram:{icon:'📸',label:'Instagram',key:'ig'},
-    messenger:{icon:'💬',label:'Facebook Messenger',key:'fb'},
-    whatsapp: {icon:'🟢',label:'WhatsApp',key:'wa'},
-    tiktok:   {icon:'🎵',label:'TikTok',key:'tt'},
-    sms:      {icon:'📱',label:'SMS Number',key:'smsNum'},
-    email:    {icon:'📧',label:'Email Bot',key:'emailBot'},
-    telegram: {icon:'✈️',label:'Telegram',key:'tg'}
-  };
-  const channels=(c.channels||'').split(',').map(s=>s.trim().toLowerCase()).filter(Boolean);
+function renderVoiceDetails(c){
   let html='';
-  channels.forEach(ch=>{
-    const info=chMap[ch];
-    if(!info) return;
-    const val=c[info.key]||'';
-    html+=`<div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px;">
-      <div style="font-size:10px;color:var(--muted);margin-bottom:4px;">${info.icon} ${info.label}</div>
-      <div style="font-size:13px;font-weight:600;color:${val?'var(--text)':'var(--muted)'}">${val||'—'}</div>
-    </div>`;
-  });
-  if(c.phone) html+=`<div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px;"><div style="font-size:10px;color:var(--muted);margin-bottom:4px;">📞 Phone</div><div style="font-size:13px;font-weight:600">${c.phone}</div></div>`;
-  if(c.email) html+=`<div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px;"><div style="font-size:10px;color:var(--muted);margin-bottom:4px;">✉️ Contact Email</div><div style="font-size:13px;font-weight:600">${c.email}</div></div>`;
-  if(c.website) html+=`<div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px;"><div style="font-size:10px;color:var(--muted);margin-bottom:4px;">🌐 Website</div><div style="font-size:13px;font-weight:600"><a href="${c.website}" target="_blank" style="color:var(--accent)">${c.website}</a></div></div>`;
-  if(c.booking) html+=`<div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px;"><div style="font-size:10px;color:var(--muted);margin-bottom:4px;">📅 Booking Link</div><div style="font-size:13px;font-weight:600"><a href="${c.booking}" target="_blank" style="color:var(--green)">${c.booking}</a></div></div>`;
-  return html||`<div style="color:var(--muted);font-size:13px;">No channel details recorded.</div>`;
+  const field=(icon,label,val,isLink)=>{
+    if(!val) return '';
+    const display=isLink?`<a href="${val}" target="_blank" style="color:var(--accent)">${val}</a>`:`<div style="font-size:13px;font-weight:600">${val}</div>`;
+    return `<div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px;">
+      <div style="font-size:10px;color:var(--muted);margin-bottom:4px;">${icon} ${label}</div>${display}</div>`;
+  };
+  html += field('📞','Business Phone (AI answers)' ,c.bizPhone||c.phone||'');
+  html += field('📱','Owner Mobile (alert texts)',c.phone||'');
+  html += field('✉️','Email',c.email||'');
+  if(c.hours) html+=`<div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px;grid-column:span 2"><div style="font-size:10px;color:var(--muted);margin-bottom:4px;">🕐 Opening Hours</div><div style="font-size:12px;white-space:pre-wrap;line-height:1.6">${c.hours}</div></div>`;
+  if(c.services) html+=`<div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px;grid-column:span 2"><div style="font-size:10px;color:var(--muted);margin-bottom:4px;">💷 Services &amp; Pricing</div><div style="font-size:12px;white-space:pre-wrap;line-height:1.6">${c.services}</div></div>`;
+  html += field('📅','Booking URL',c.booking||'',true);
+  html += field('🌐','Website',c.website||'',true);
+  return html||`<div style="color:var(--muted);font-size:13px;">No details recorded yet.</div>`;
 }
 
-const WF_STEPS=['ManyChat account created for client','Instagram/Facebook connected','Welcome message set up','Booking flow added (collects name + number)','Pricing info added','Opening hours added','"Speak to Someone" — Live Chat pause + owner email set up','Tested — bot replies correctly','Client notified — live!'];
+const WF_STEPS = [
+  'Business info received (hours, pricing, booking link)',
+  'VAPI account created &amp; AI script written',
+  'Twilio phone number provisioned',
+  'Test call passed — AI responds correctly',
+  'Forwarding guide sent to client',
+  'Client confirmed — call forwarding live!'
+];
+
 function openWfForm(){document.getElementById('wf-form').style.display='block';}
-function closeWfForm(){document.getElementById('wf-form').style.display='none';['wf-biz','wf-ig','wf-fb','wf-wa','wf-tt','wf-email','wf-tg','wf-cal','wf-website','wf-booking','wf-notes'].forEach(id=>document.getElementById(id).value='');}
+function closeWfForm(){document.getElementById('wf-form').style.display='none';['wf-biz','wf-phone','wf-owner-phone','wf-booking','wf-website','wf-notes'].forEach(id=>document.getElementById(id).value='');}
 function saveWorkflow(){
   const biz=document.getElementById('wf-biz').value.trim();
   if(!biz){notify('Business name required');return;}
-  workflows.push({id:Date.now(),biz,ig:document.getElementById('wf-ig').value,fb:document.getElementById('wf-fb').value,wa:document.getElementById('wf-wa').value,tt:document.getElementById('wf-tt').value,email:document.getElementById('wf-email').value,tg:document.getElementById('wf-tg').value,cal:document.getElementById('wf-cal').value,website:document.getElementById('wf-website').value,booking:document.getElementById('wf-booking').value,notes:document.getElementById('wf-notes').value,steps:[false,false,false,false,false,false,false,false,false],date:new Date().toLocaleDateString('en-GB')});
+  workflows.push({
+    id:         Date.now(),
+    biz,
+    phone:      document.getElementById('wf-phone').value,
+    ownerPhone: document.getElementById('wf-owner-phone').value,
+    booking:    document.getElementById('wf-booking').value,
+    website:    document.getElementById('wf-website').value,
+    notes:      document.getElementById('wf-notes').value,
+    steps:      [false,false,false,false,false,false],
+    date:       new Date().toLocaleDateString('en-GB')
+  });
   localStorage.setItem('pa_workflows',JSON.stringify(workflows));
-  closeWfForm();renderWorkflows();notify('Workflow added!');
+  closeWfForm();renderWorkflows();notify('Voice setup added!');
 }
 function toggleWfStep(wfId,stepIdx){
   const wf=workflows.find(w=>String(w.id)===String(wfId));
@@ -782,50 +751,41 @@ function toggleWfStep(wfId,stepIdx){
   localStorage.setItem('pa_workflows',JSON.stringify(workflows));
   if(wf.steps.every(Boolean)){
     const c=customers.find(x=>x.biz===wf.biz);
-    if(c&&!c.setupDone){
-      c.setupDone=true;
-      localStorage.setItem('pa_customers',JSON.stringify(customers));
-      notify('All steps done for '+wf.biz+' — go to Emails to send the live email!');
-    }
+    if(c&&!c.setupDone){c.setupDone=true;localStorage.setItem('pa_customers',JSON.stringify(customers));notify('All steps done for '+wf.biz+' — go to Emails to send the live email!');}
   }
   renderAll();
 }
 function deleteWf(id){
-  if(!confirm('Remove this workflow?'))return;
+  if(!confirm('Remove this voice setup?'))return;
   workflows=workflows.filter(w=>String(w.id)!==String(id));
   localStorage.setItem('pa_workflows',JSON.stringify(workflows));
   renderWorkflows();
 }
 function renderWorkflows(){
   const el=document.getElementById('workflows-list');
-  if(!workflows.length){el.innerHTML='<div class="empty">No workflows yet. They are created automatically when customers are added.</div>';return;}
+  if(!workflows.length){el.innerHTML='<div class="empty">No setups yet. They are created automatically when customers are added.</div>';return;}
   el.innerHTML=workflows.map(wf=>{
     const done=wf.steps.filter(Boolean).length;
     const pct=Math.round((done/WF_STEPS.length)*100);
     const c=customers.find(x=>x.biz===wf.biz);
     const isLive=c&&c.emailLive;
-    const liveBtn=pct===100&&!isLive?`<button class="btn btn-primary btn-sm" style="width:100%;margin-top:10px" onclick="sendLiveEmail('${c?c.id:''}')" >🚀 All done — Send Live Email</button>`:'';
+    const liveBtn=pct===100&&!isLive?`<button class="btn btn-primary btn-sm" style="width:100%;margin-top:10px" onclick="sendLiveEmail('${c?c.id:''}')">🚀 All done — Send Live Email</button>`:'';
     const liveTag=isLive?'<span style="background:rgba(0,212,170,0.15);color:var(--green);font-size:9px;font-weight:700;padding:2px 8px;border-radius:10px;margin-left:8px">LIVE</span>':'';
     return `<div class="wf-card">
 <div class="flex-between" style="margin-bottom:8px">
-  <div><div style="font-weight:600;font-size:13px">${wf.biz}${liveTag} ${wf.ig?'<span style="color:var(--muted);font-weight:400;font-size:12px">'+wf.ig+'</span>':''}</div>
+  <div><div style="font-weight:600;font-size:13px">${wf.biz}${liveTag}</div>
   <div style="font-size:11px;color:var(--muted);margin-top:2px">${done}/${WF_STEPS.length} steps · ${wf.date}</div></div>
   <div class="flex-gap"><span style="font-size:13px;font-weight:700;color:${pct===100?'var(--green)':'var(--accent)'}">${pct}%</span><button class="btn btn-sm btn-ghost" onclick="editCustomer('${c?c.id:''}')" title="Edit customer">✏️</button><button class="btn btn-sm btn-red" onclick="deleteWf('${wf.id}')">✕</button></div>
 </div>
 <div style="background:var(--bg);border-radius:4px;height:4px;margin-bottom:12px;overflow:hidden"><div style="height:100%;background:var(--green);width:${pct}%;transition:width 0.3s;border-radius:4px"></div></div>
 ${WF_STEPS.map((s,i)=>`<div class="wf-step ${wf.steps[i]?'done':''}" onclick="toggleWfStep('${wf.id}',${i})">${s}</div>`).join('')}
 <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:6px;">
-${wf.ig?`<span style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;">📸 ${wf.ig}</span>`:''}
-${wf.fb?`<span style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;">💬 ${wf.fb}</span>`:''}
-${wf.wa?`<span style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;">🟢 ${wf.wa}</span>`:''}
-${wf.tt?`<span style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;">🎵 ${wf.tt}</span>`:''}
-${wf.email?`<span style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;">📧 ${wf.email}</span>`:''}
-${wf.tg?`<span style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;">✈️ ${wf.tg}</span>`:''}
-${wf.cal?`<span style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;">📞 ${wf.cal}</span>`:''}
-${wf.website?`<a href="${wf.website}" target="_blank" style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;color:var(--accent);text-decoration:none;">🌐 Website</a>`:''}
+${wf.phone?`<span style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;">📞 ${wf.phone}</span>`:''}
+${wf.ownerPhone?`<span style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;">📱 ${wf.ownerPhone}</span>`:''}
 ${wf.booking?`<a href="${wf.booking}" target="_blank" style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;color:var(--green);text-decoration:none;">📅 Booking</a>`:''}
+${wf.website?`<a href="${wf.website}" target="_blank" style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;color:var(--accent);text-decoration:none;">🌐 Website</a>`:''}
 </div>
-${wf.notes?`<div style="margin-top:6px;font-size:11px;color:var(--muted)">📝 ${wf.notes}</div>`:''}
+${wf.notes&&wf.notes!=='Auto-created from customer'?`<div style="margin-top:6px;font-size:11px;color:var(--muted)">📝 ${wf.notes}</div>`:''}
 ${liveBtn}
 </div>`;
   }).join('');
@@ -843,7 +803,7 @@ function addTodo(){
 function toggleTodo(id){const t=todos.find(x=>x.id===id);if(t){t.done=!t.done;localStorage.setItem('pa_todos',JSON.stringify(todos));renderTodos();renderDash();}}
 function deleteTodo(id){todos=todos.filter(t=>t.id!==id);localStorage.setItem('pa_todos',JSON.stringify(todos));renderTodos();renderDash();}
 function renderTodos(){
-  ['Setup','ManyChat','Outreach','Client','General'].forEach(cat=>{
+  ['Setup','VAPI','Outreach','Client','General'].forEach(cat=>{
     const el=document.getElementById('todo-'+cat);
     if(!el)return;
     const items=todos.filter(t=>t.cat===cat);
@@ -854,15 +814,15 @@ function renderTodos(){
 
 function renderRevenue(){
   const active=customers.filter(c=>c.status==='active');
-  const gross=active.reduce((s,c)=>s+(parseFloat(c.fee)||27),0);
-  const mcCost=active.length*12;
-  const profit=Math.max(0,gross-mcCost-25);
+  const gross=active.reduce((s,c)=>s+(parseFloat(c.fee)||197),0);
+  const vapiCost=active.length*35;
+  const profit=Math.max(0,gross-vapiCost-15);
   document.getElementById('r-gross').textContent='£'+gross;
-  document.getElementById('r-cost').textContent='£'+mcCost;
+  document.getElementById('r-cost').textContent='£'+vapiCost;
   document.getElementById('r-profit').textContent='£'+profit;
   const tbody=document.getElementById('revenue-tbody');
   if(!active.length){tbody.innerHTML='<tr><td colspan="5" class="empty">No active clients yet.</td></tr>';return;}
-  tbody.innerHTML=active.map(c=>`<tr><td><strong>${c.biz}</strong></td><td style="color:var(--green)">£${c.fee||27}</td><td style="color:var(--warn)">£12</td><td style="color:var(--green)">£${(parseFloat(c.fee)||27)-12}</td><td><span class="badge badge-active">active</span></td></tr>`).join('');
+  tbody.innerHTML=active.map(c=>`<tr><td><strong>${c.biz}</strong></td><td style="color:var(--green)">£${c.fee||197}</td><td style="color:var(--warn)">£35</td><td style="color:var(--green)">£${(parseFloat(c.fee)||197)-35}</td><td><span class="badge badge-active">active</span></td></tr>`).join('');
 }
 
 // ── EMAILS / ONBOARDING PIPELINE ──
@@ -875,27 +835,76 @@ function emailStage(c){
 }
 
 function buildWelcomeBody(c){
-  const channels=(c.channels||'').split(',').map(s=>s.trim().toLowerCase()).filter(Boolean);
-  const chSteps={
-    instagram:`--- INSTAGRAM ---\n1. Open Instagram and go to your profile\n2. Tap the three lines → Settings → Account\n3. Tap Switch to Professional Account → choose Business\n4. Connect it to your Facebook Page when prompted\nDone — nothing else needed from you.\n`,
-    messenger:`--- FACEBOOK MESSENGER ---\nNothing extra needed. Once Step 1 is done we can connect Messenger automatically.\n`,
-    whatsapp:`--- WHATSAPP ---\n1. Download WhatsApp Business app (free) if you haven't already\n2. Set it up with your business phone number\n3. Reply to this email with your WhatsApp Business number\n`,
-    tiktok:`--- TIKTOK ---\n1. Open TikTok → Profile → three lines → Settings\n2. Manage Account → Switch to Business Account\n3. Reply to this email with your TikTok @username\n`,
-    sms:`--- SMS / TEXT ---\nReply to this email with the phone number you want to receive texts on. We'll handle the rest.\n`,
-    email:`--- EMAIL ---\nReply to this email with the address you want the bot to handle (e.g. hello@yourbusiness.co.uk). We'll send you a simple 2-minute forwarding rule.\n`,
-    telegram:`--- TELEGRAM ---\nReply to this email with your preferred Telegram @username or business name. We'll create the bot for you.\n`
-  };
-  const steps=channels.map(ch=>chSteps[ch]).filter(Boolean).join('\n');
-  return `Hi ${c.name||c.biz},\n\nWelcome aboard — really chuffed to have you with us!\n\nYour reply bot will be live within 24 hours. I just need you to follow a few quick steps below — no passwords needed, takes about 10 minutes.\n\n────────────────────────────\nSTEP 1 — REQUIRED (everyone)\n────────────────────────────\n\nAdd me as Admin on your Facebook Page:\n\n1. Go to your Facebook Page\n2. Click Manage → Page Access → Add New\n3. Search: phillipsautomates@gmail.com\n4. Set role to: Admin\n5. Click Confirm\n\nThis lets me connect everything without needing your login details.\n\n────────────────────────────\nSTEPS FOR YOUR CHANNELS\n────────────────────────────\n\n${steps||'No extra steps needed for your selected channels.'}\n────────────────────────────\nONCE YOU'VE DONE YOUR STEPS\n────────────────────────────\n\nJust reply to this email with ✅ Done and I'll take care of everything else. Your bot will be live within 24 hours and I'll email you when it's ready.\n\nYou can still see every conversation and reply yourself anytime — nothing is hidden from you.\n\nAny questions just reply to this email.\n\nFrankie\nPhillips Automates\nphillipsautomates@gmail.com`;
+  return `Hi ${c.name||c.biz},
+
+Welcome to Phillips Automates! Your AI phone receptionist will be live within 24 hours — your callers will never hit voicemail again.
+
+To get it set up I just need 3 quick things from you. No passwords, no logins — just hit reply and paste these in:
+
+────────────────────────────
+1. YOUR OPENING HOURS
+────────────────────────────
+
+e.g. Mon-Fri 8am-6pm, Saturday 9am-1pm, Sunday Closed
+
+────────────────────────────
+2. YOUR SERVICES & PRICING
+────────────────────────────
+
+List your main services and prices. A photo of a price list, menu board, or your website pricing page is perfect — no need to type it all out.
+
+────────────────────────────
+3. YOUR BOOKING LINK (if you have one)
+────────────────────────────
+
+e.g. a Fresha, Booksy, or Calendly link. If you don't have one, the AI will take a name and number and we'll let callers know you'll call them back — no problem at all.
+
+────────────────────────────
+
+That's genuinely it. Once you reply with those I'll build your AI receptionist, run test calls to make sure it sounds right, and send you back a simple 30-second guide to set up call forwarding on your phone.
+
+Any questions just reply to this email.
+
+Frankie
+Phillips Automates
+phillipsautomates@gmail.com`;
 }
 
 function buildNudgeBody(c){
-  return `Hi ${c.name||c.biz},\n\nJust checking in — did you get a chance to do the setup steps? It's the one thing holding me back from getting your bot live.\n\nIf you got stuck anywhere just reply and I'll help you through it.\n\nFrankie\nphillipsautomates@gmail.com`;
+  return `Hi ${c.name||c.biz},
+
+Just checking in — did you get a chance to send over your hours and pricing? It's the only thing holding me back from getting your AI receptionist live.
+
+If you got stuck anywhere just reply and I'll help.
+
+Frankie
+phillipsautomates@gmail.com`;
 }
 
 function buildLiveBody(c){
-  const channels=(c.channels||'').split(',').map(s=>s.trim()).filter(Boolean).join(', ');
-  return `Hi ${c.name||c.biz},\n\nGreat news — your reply bot is now live on ${channels||'your channels'}!\n\nFrom right now, every message you receive will get an instant reply, 24/7.\n\nTo see your conversations:\nManyChat → Inbox (manychat.com)\n\nIf you ever want to jump in and reply yourself you can do that directly from the ManyChat inbox.\n\nIf anything needs updating — prices, hours, services — just email me and I'll sort it within 24 hours.\n\nThanks for choosing Phillips Automates!\n\nFrankie\nphillipsautomates@gmail.com`;
+  return `Hi ${c.name||c.biz},
+
+Great news — your AI phone receptionist is ready!
+
+HOW TO ACTIVATE IT (takes 30 seconds):
+
+Dial this code on your phone to set up call forwarding when you don't answer:
+We'll include the exact forwarding number in a follow-up message.
+
+Once that's set up, any call you miss will be answered by your AI receptionist instead of going to voicemail. You still answer first when you're free — the AI is just your backup.
+
+HOW IT WORKS:
+- AI answers with your business name and handles their query
+- If they want to book, it takes their name and number and texts you straight away
+- You call them back when you're free
+
+HOW TO UPDATE ANYTHING:
+If your prices or hours change, just email me at phillipsautomates@gmail.com and I'll update the AI within 24 hours. Included in your plan — no extra charge.
+
+Thanks for choosing Phillips Automates!
+
+Frankie
+phillipsautomates@gmail.com`;
 }
 
 function openMailto(to, subject, body){
@@ -905,12 +914,11 @@ function openMailto(to, subject, body){
 function sendWelcomeEmail(id){
   const c=customers.find(x=>String(x.id)===String(id));
   if(!c||!c.email){notify('No email address for this customer');return;}
-  openMailto(c.email,'Welcome to Phillips Automates — here\'s what happens next 🎉',buildWelcomeBody(c));
+  openMailto(c.email,'Welcome to Phillips Automates — I just need 3 quick things',buildWelcomeBody(c));
   c.emailWelcome=new Date().toISOString();
   localStorage.setItem('pa_customers',JSON.stringify(customers));
   renderAll();notify('Welcome email opened — send it from Gmail!');
 }
-
 function sendNudgeEmail(id){
   const c=customers.find(x=>String(x.id)===String(id));
   if(!c||!c.email){notify('No email address for this customer');return;}
@@ -919,19 +927,17 @@ function sendNudgeEmail(id){
   localStorage.setItem('pa_customers',JSON.stringify(customers));
   renderAll();notify('Nudge email opened — send it from Gmail!');
 }
-
 function markSetupDone(id){
   const c=customers.find(x=>String(x.id)===String(id));
   if(!c)return;
   c.setupDone=true;
   localStorage.setItem('pa_customers',JSON.stringify(customers));
-  renderAll();notify(c.biz+' marked as setup done — now build their ManyChat flows!');
+  renderAll();notify(c.biz+' marked as info received — now build their VAPI script!');
 }
-
 function sendLiveEmail(id){
   const c=customers.find(x=>String(x.id)===String(id));
   if(!c||!c.email){notify('No email address for this customer');return;}
-  openMailto(c.email,'Your reply bot is live! 🚀',buildLiveBody(c));
+  openMailto(c.email,'Your AI receptionist is ready! 🚀',buildLiveBody(c));
   c.emailLive=new Date().toISOString();
   c.status='active';
   localStorage.setItem('pa_customers',JSON.stringify(customers));
@@ -944,48 +950,37 @@ function renderEmails(){
     const stage=emailStage(c);
     if(cols[stage]) cols[stage].push(c);
   });
-
   const needAction=cols.new.length+cols.setup.length;
   const badge=document.getElementById('emails-need-action');
   if(badge){badge.style.display=needAction?'block':'none';badge.textContent=needAction+' action'+(needAction===1?' needed':'s needed');}
-
   function fmtDate(iso){if(!iso)return'';const d=new Date(iso);return d.toLocaleDateString('en-GB',{day:'numeric',month:'short'})+' '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});}
-
   function card(c,actions){
     return `<div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:10px;">
       <div style="font-weight:600;font-size:13px;margin-bottom:2px;">${c.biz}</div>
       <div style="font-size:11px;color:var(--muted);margin-bottom:8px;">${c.name||''}${c.email?' · '+c.email:''}</div>
-      ${c.channels?`<div style="font-size:10px;color:var(--accent);margin-bottom:10px;">${c.channels}</div>`:''}
+      ${c.type?`<div style="font-size:10px;color:var(--accent);margin-bottom:10px;">${c.type}</div>`:''}
       <div style="display:flex;flex-direction:column;gap:6px;">${actions}</div>
     </div>`;
   }
-
-  // New — need welcome email
   const newEl=document.getElementById('email-col-new');
   if(newEl) newEl.innerHTML=cols.new.length
-    ?cols.new.map(c=>card(c,`<button class="btn btn-primary btn-sm" onclick="sendWelcomeEmail('${c.id}')" style="width:100%">📧 Send Welcome Email</button>`)).join('')
+    ?cols.new.map(c=>card(c,`<button class="btn btn-primary btn-sm" onclick="sendWelcomeEmail('${c.id}')" style="width:100%">📧 Send Welcome &amp; Info Request</button>`)).join('')
     :'<div class="empty" style="padding:16px 0;font-size:12px">All clear</div>';
-
-  // Welcomed — waiting for client setup done
   const welEl=document.getElementById('email-col-welcomed');
   if(welEl) welEl.innerHTML=cols.welcomed.length
     ?cols.welcomed.map(c=>card(c,`
       <div style="font-size:10px;color:var(--muted);margin-bottom:4px;">Welcome sent: ${fmtDate(c.emailWelcome)}</div>
       <button class="btn btn-ghost btn-sm" onclick="sendNudgeEmail('${c.id}')" style="width:100%">🔔 Send Nudge</button>
-      <button class="btn btn-green btn-sm" onclick="markSetupDone('${c.id}')" style="width:100%">✅ Mark Setup Done</button>
+      <button class="btn btn-green btn-sm" onclick="markSetupDone('${c.id}')" style="width:100%">✅ Mark Info Received</button>
     `)).join('')
     :'<div class="empty" style="padding:16px 0;font-size:12px">None here</div>';
-
-  // Setup done — need to build ManyChat then send live email
   const setupEl=document.getElementById('email-col-setup');
   if(setupEl) setupEl.innerHTML=cols.setup.length
     ?cols.setup.map(c=>card(c,`
-      <div style="font-size:10px;color:var(--muted);margin-bottom:4px;">Setup confirmed — build ManyChat flows now</div>
+      <div style="font-size:10px;color:var(--muted);margin-bottom:4px;">Build their VAPI script now (~30 mins)</div>
       <button class="btn btn-primary btn-sm" onclick="sendLiveEmail('${c.id}')" style="width:100%">🚀 Send Live Email</button>
     `)).join('')
     :'<div class="empty" style="padding:16px 0;font-size:12px">None here</div>';
-
-  // Live
   const liveEl=document.getElementById('email-col-live');
   if(liveEl) liveEl.innerHTML=cols.live.length
     ?cols.live.map(c=>card(c,`<div style="font-size:10px;color:var(--green);">Live since ${fmtDate(c.emailLive)}</div>`)).join('')
@@ -998,18 +993,18 @@ function saveGasUrl(){
   localStorage.setItem('pa_gas_url',url);
   document.getElementById('gas-status').textContent='Saved!';
   document.getElementById('gas-status').style.color='var(--green)';
-  setTimeout(()=>{ document.getElementById('gas-status').textContent=''; },2000);
+  setTimeout(()=>{document.getElementById('gas-status').textContent='';},2000);
   if(url) fetchFromSheet(url);
 }
 function testGasUrl(){
   const url=document.getElementById('gas-url-input').value.trim();
-  if(!url){ notify('Paste a URL first'); return; }
+  if(!url){notify('Paste a URL first');return;}
   document.getElementById('gas-status').textContent='Testing...';
   document.getElementById('gas-status').style.color='var(--muted)';
   fetch(url)
     .then(r=>r.json())
     .then(d=>{
-      document.getElementById('gas-status').textContent = d.customers !== undefined ? '✅ Connected!' : '⚠️ Connected but unexpected response';
+      document.getElementById('gas-status').textContent=d.customers!==undefined?'✅ Connected!':'⚠️ Connected but unexpected response';
       document.getElementById('gas-status').style.color='var(--green)';
     })
     .catch(()=>{
@@ -1031,29 +1026,23 @@ function fetchFromSheet(url){
         const wasDeleted=sc.email&&deletedEmails.includes(sc.email);
         if(!exists&&!wasDeleted){
           const newC={
-            id: Number(sc.id)||Date.now(),
-            biz: sc.biz||'',
-            name: sc.name||'',
-            email: sc.email||'',
-            social: sc.ig||'',
-            phone: sc.phone||'',
-            channels: sc.channels||'',
-            ig: sc.ig||'',
-            fb: sc.fb||'',
-            wa: sc.wa||'',
-            tt: sc.tt||'',
-            smsNum: sc.smsNum||'',
-            emailBot: sc.emailBot||'',
-            tg: sc.tg||'',
-            website: sc.website||'',
-            booking: sc.booking||'',
-            type: '',
-            city: '',
-            status: sc.status||'pending',
-            fee: sc.fee||27,
-            notes: buildNotes(sc),
-            date: sc.date||new Date().toLocaleDateString('en-GB'),
-            isNew: true
+            id:       Number(sc.id)||Date.now(),
+            biz:      sc.biz||'',
+            name:     sc.name||'',
+            email:    sc.email||'',
+            phone:    sc.phone||'',
+            type:     sc.type||'',
+            city:     '',
+            bizPhone: sc.bizPhone||'',
+            booking:  sc.booking||'',
+            hours:    sc.hours||'',
+            services: sc.services||'',
+            website:  sc.website||'',
+            notes:    '',
+            status:   sc.status||'pending',
+            fee:      sc.fee||197,
+            date:     sc.date||new Date().toLocaleDateString('en-GB'),
+            isNew:    true
           };
           customers.push(newC);
           autoCreateWorkflow(newC);
@@ -1070,108 +1059,15 @@ function fetchFromSheet(url){
     .catch(()=>{});
 }
 
-function buildNotes(sc){
-  const chMap={instagram:'Instagram',messenger:'Facebook Messenger',whatsapp:'WhatsApp',tiktok:'TikTok',sms:'SMS',email:'Email',telegram:'Telegram'};
-  let n='Channels: '+(sc.channels||'')+'\n';
-  if(sc.ig)       n+='Instagram: '+sc.ig+'\n';
-  if(sc.fb)       n+='Messenger: '+sc.fb+'\n';
-  if(sc.wa)       n+='WhatsApp: '+sc.wa+'\n';
-  if(sc.tt)       n+='TikTok: '+sc.tt+'\n';
-  if(sc.smsNum)   n+='SMS: '+sc.smsNum+'\n';
-  if(sc.emailBot) n+='Email bot: '+sc.emailBot+'\n';
-  if(sc.tg)       n+='Telegram: '+sc.tg+'\n';
-  if(sc.phone)    n+='Phone: '+sc.phone;
-  return n.trim();
-}
-
 function notify(msg){const n=document.getElementById('notif');n.textContent=msg;n.classList.add('show');setTimeout(()=>n.classList.remove('show'),2500);}
 
-// Auto-import customer from sales page URL param: dashboard.html?import=BASE64
+// ── INIT ──
 (function(){
-  try {
-    const params = new URLSearchParams(window.location.search);
-    const raw = params.get('import');
-    if(!raw) return;
-    const data = JSON.parse(decodeURIComponent(escape(atob(raw))));
-    if(!data || !data.biz) return;
-
-    // Build channel notes for customer record
-    const chNames = {instagram:'Instagram',messenger:'Facebook Messenger',whatsapp:'WhatsApp',tiktok:'TikTok',sms:'SMS',email:'Email',telegram:'Telegram'};
-    let notes = 'Channels: ' + (data.channels||[]).map(ch=>chNames[ch]||ch).join(', ') + '\n';
-    if(data.channelData){
-      Object.entries(data.channelData).forEach(([ch,val])=>{
-        if(val) notes += (chNames[ch]||ch) + ': ' + val + '\n';
-      });
-    }
-    if(data.phone) notes += 'Phone: ' + data.phone;
-
-    // Add to customers
-    const existing = customers.find(c=>c.biz===data.biz && c.email===data.email);
-    if(!existing){
-      const cd = data.channelData||{};
-      customers.push({
-        id: Date.now(),
-        biz: data.biz,
-        name: data.name||'',
-        email: data.email||'',
-        social: cd.instagram||'',
-        phone: data.phone||'',
-        channels: (data.channels||[]).join(', '),
-        ig: cd.instagram||'',
-        fb: cd.messenger||'',
-        wa: cd.whatsapp||'',
-        tt: cd.tiktok||'',
-        smsNum: cd.sms||'',
-        emailBot: cd.email||'',
-        tg: cd.telegram||'',
-        type: '',
-        city: '',
-        status: 'pending',
-        fee: data.fee||27,
-        notes: notes.trim(),
-        date: data.date||new Date().toLocaleDateString('en-GB')
-      });
-      localStorage.setItem('pa_customers',JSON.stringify(customers));
-
-      // Also auto-create workflow entry
-      const chData = data.channelData||{};
-      workflows.push({
-        id: Date.now()+1,
-        biz: data.biz,
-        ig:    chData.instagram||'',
-        fb:    chData.messenger||'',
-        wa:    chData.whatsapp||'',
-        tt:    chData.tiktok||'',
-        email: chData.email||'',
-        tg:    chData.telegram||'',
-        cal:   data.phone||'',
-        notes: 'Auto-imported from sales page',
-        steps: [false,false,false,false,false,false,false,false],
-        date:  data.date||new Date().toLocaleDateString('en-GB')
-      });
-      localStorage.setItem('pa_workflows',JSON.stringify(workflows));
-
-      // Navigate to customers page and show notification
-      setTimeout(()=>{
-        renderAll();
-        nav('customers', document.querySelector('[onclick*=customers]'));
-        notify('✅ New customer imported: ' + data.biz);
-      }, 300);
-
-      // Clean URL so refresh doesn't re-import
-      history.replaceState(null,'',window.location.pathname);
-    } else {
-      setTimeout(()=>notify('Already imported: ' + data.biz), 300);
-    }
-  } catch(err){ /* silent fail */ }
+  const gasUrl=localStorage.getItem('pa_gas_url');
+  if(gasUrl) fetchFromSheet(gasUrl);
+  renderDash();
+  document.getElementById('dash-date').textContent=new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 })();
-
-renderDash();
-renderTodos();
-
-// Auto-fetch from Google Sheet on load (if URL is saved)
-const _gasUrl = localStorage.getItem('pa_gas_url');
-if(_gasUrl) fetchFromSheet(_gasUrl);
 </script>
 </body>
 </html>
