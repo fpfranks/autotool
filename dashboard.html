@@ -196,18 +196,78 @@
       <div><h1>ManyChat Flows</h1><p>Track setup progress for each client</p></div>
       <button class="btn btn-primary" onclick="openWfForm()">+ Add Client Flow</button>
     </div>
+
+    <!-- What you need info box -->
+    <div style="background:rgba(108,99,255,0.08);border:1px solid rgba(108,99,255,0.25);border-radius:10px;padding:16px;margin-bottom:20px;">
+      <div style="font-size:12px;font-weight:700;color:var(--accent);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.5px;">What to ask every new client</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+        <div style="background:var(--surface2);border-radius:8px;padding:12px;">
+          <div style="font-size:16px;margin-bottom:6px;">📸</div>
+          <div style="font-size:12px;font-weight:600;margin-bottom:4px;">Instagram</div>
+          <div style="font-size:11px;color:var(--muted);line-height:1.6;">Their @username<br>Must be a Professional or Creator account (not personal)</div>
+        </div>
+        <div style="background:var(--surface2);border-radius:8px;padding:12px;">
+          <div style="font-size:16px;margin-bottom:6px;">💬</div>
+          <div style="font-size:12px;font-weight:600;margin-bottom:4px;">Facebook Messenger</div>
+          <div style="font-size:11px;color:var(--muted);line-height:1.6;">Their Facebook Page name/URL<br>Must have a Page — not a personal profile</div>
+        </div>
+        <div style="background:var(--surface2);border-radius:8px;padding:12px;">
+          <div style="font-size:16px;margin-bottom:6px;">🟢</div>
+          <div style="font-size:12px;font-weight:600;margin-bottom:4px;">WhatsApp</div>
+          <div style="font-size:11px;color:var(--muted);line-height:1.6;">Their WhatsApp Business number<br>Must be a WhatsApp Business account</div>
+        </div>
+        <div style="background:var(--surface2);border-radius:8px;padding:12px;">
+          <div style="font-size:16px;margin-bottom:6px;">🎵</div>
+          <div style="font-size:12px;font-weight:600;margin-bottom:4px;">TikTok</div>
+          <div style="font-size:11px;color:var(--muted);line-height:1.6;">Their @TikTok username<br>Must switch to a TikTok Business account</div>
+        </div>
+        <div style="background:var(--surface2);border-radius:8px;padding:12px;">
+          <div style="font-size:16px;margin-bottom:6px;">📱</div>
+          <div style="font-size:12px;font-weight:600;margin-bottom:4px;">SMS</div>
+          <div style="font-size:11px;color:var(--muted);line-height:1.6;">Their mobile number<br>You set up a Twilio number — they forward to it</div>
+        </div>
+        <div style="background:var(--surface2);border-radius:8px;padding:12px;">
+          <div style="font-size:16px;margin-bottom:6px;">📧</div>
+          <div style="font-size:12px;font-weight:600;margin-bottom:4px;">Email</div>
+          <div style="font-size:11px;color:var(--muted);line-height:1.6;">Their business email address<br>Gmail preferred — easier to connect</div>
+        </div>
+        <div style="background:var(--surface2);border-radius:8px;padding:12px;">
+          <div style="font-size:16px;margin-bottom:6px;">✈️</div>
+          <div style="font-size:12px;font-weight:600;margin-bottom:4px;">Telegram</div>
+          <div style="font-size:11px;color:var(--muted);line-height:1.6;">Their Telegram @username or channel name<br>Must have Telegram app installed</div>
+        </div>
+        <div style="background:var(--surface2);border-radius:8px;padding:12px;grid-column:span 2;">
+          <div style="font-size:16px;margin-bottom:6px;">📞</div>
+          <div style="font-size:12px;font-weight:600;margin-bottom:4px;">Booking Notifications (all channels)</div>
+          <div style="font-size:11px;color:var(--muted);line-height:1.6;">Their mobile number — so you can forward booking requests collected by the bot</div>
+        </div>
+      </div>
+    </div>
+
     <div id="wf-form" class="card mb-4" style="display:none">
       <div class="flex-between mb-4">
-        <div class="card-title">New ManyChat Setup</div>
+        <div class="card-title">New Client Setup</div>
         <button class="btn btn-ghost btn-sm" onclick="closeWfForm()">Cancel</button>
       </div>
       <div class="form-row">
         <div class="form-group"><label class="form-label">Client Business *</label><input class="form-input" id="wf-biz" placeholder="Dave's Garage"/></div>
-        <div class="form-group"><label class="form-label">Instagram Handle</label><input class="form-input" id="wf-ig" placeholder="@davesgarage"/></div>
+        <div class="form-group"><label class="form-label">Contact Number (for booking alerts)</label><input class="form-input" id="wf-cal" placeholder="07700 900000"/></div>
       </div>
-      <div class="form-group"><label class="form-label">Their Contact Number (for booking notifications)</label><input class="form-input" id="wf-cal" placeholder="07700 900000"/></div>
+      <div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Channel Details</div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">📸 Instagram @username</label><input class="form-input" id="wf-ig" placeholder="@davesgarage"/></div>
+        <div class="form-group"><label class="form-label">💬 Facebook Page URL</label><input class="form-input" id="wf-fb" placeholder="facebook.com/davesgarage"/></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">🟢 WhatsApp Business Number</label><input class="form-input" id="wf-wa" placeholder="07700 900000"/></div>
+        <div class="form-group"><label class="form-label">🎵 TikTok @username</label><input class="form-input" id="wf-tt" placeholder="@davesgarage"/></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">📧 Business Email</label><input class="form-input" id="wf-email" placeholder="dave@davesgarage.co.uk"/></div>
+        <div class="form-group"><label class="form-label">✈️ Telegram @username</label><input class="form-input" id="wf-tg" placeholder="@davesgarage"/></div>
+      </div>
       <div class="form-group"><label class="form-label">Notes</label><input class="form-input" id="wf-notes" placeholder="Any setup notes..."/></div>
-      <button class="btn btn-green" onclick="saveWorkflow()">Save</button>
+      <button class="btn btn-green" onclick="saveWorkflow()">Save Client</button>
     </div>
     <div id="workflows-list"><div class="empty">No workflows yet. Add your first client setup above.</div></div>
   </div>
@@ -344,11 +404,11 @@ function renderCustomers(){
 
 const WF_STEPS=['ManyChat account created for client','Instagram/Facebook connected','Welcome message set up','Booking flow added (collects name + number)','Pricing info added','Opening hours added','Tested — bot replies correctly','Client notified — live!'];
 function openWfForm(){document.getElementById('wf-form').style.display='block';}
-function closeWfForm(){document.getElementById('wf-form').style.display='none';['wf-biz','wf-ig','wf-cal','wf-notes'].forEach(id=>document.getElementById(id).value='');}
+function closeWfForm(){document.getElementById('wf-form').style.display='none';['wf-biz','wf-ig','wf-fb','wf-wa','wf-tt','wf-email','wf-tg','wf-cal','wf-notes'].forEach(id=>document.getElementById(id).value='');}
 function saveWorkflow(){
   const biz=document.getElementById('wf-biz').value.trim();
   if(!biz){notify('Business name required');return;}
-  workflows.push({id:Date.now(),biz,ig:document.getElementById('wf-ig').value,cal:document.getElementById('wf-cal').value,notes:document.getElementById('wf-notes').value,steps:[false,false,false,false,false,false,false,false],date:new Date().toLocaleDateString('en-GB')});
+  workflows.push({id:Date.now(),biz,ig:document.getElementById('wf-ig').value,fb:document.getElementById('wf-fb').value,wa:document.getElementById('wf-wa').value,tt:document.getElementById('wf-tt').value,email:document.getElementById('wf-email').value,tg:document.getElementById('wf-tg').value,cal:document.getElementById('wf-cal').value,notes:document.getElementById('wf-notes').value,steps:[false,false,false,false,false,false,false,false],date:new Date().toLocaleDateString('en-GB')});
   localStorage.setItem('pa_workflows',JSON.stringify(workflows));
   closeWfForm();renderWorkflows();notify('Workflow added!');
 }
@@ -360,7 +420,15 @@ function renderWorkflows(){
   el.innerHTML=workflows.map(wf=>{
     const done=wf.steps.filter(Boolean).length;
     const pct=Math.round((done/WF_STEPS.length)*100);
-    return `<div class="wf-card"><div class="flex-between" style="margin-bottom:8px"><div><div style="font-weight:600;font-size:13px">${wf.biz} ${wf.ig?'<span style="color:var(--muted);font-weight:400;font-size:12px">'+wf.ig+'</span>':''}</div><div style="font-size:11px;color:var(--muted);margin-top:2px">${done}/${WF_STEPS.length} steps · ${wf.date}</div></div><div class="flex-gap"><span style="font-size:13px;font-weight:700;color:${pct===100?'var(--green)':'var(--accent)'}">${pct}%</span><button class="btn btn-sm btn-red" onclick="deleteWf(${wf.id})">✕</button></div></div><div style="background:var(--bg);border-radius:4px;height:4px;margin-bottom:12px;overflow:hidden"><div style="height:100%;background:var(--green);width:${pct}%;transition:width 0.3s;border-radius:4px"></div></div>${WF_STEPS.map((s,i)=>`<div class="wf-step ${wf.steps[i]?'done':''}" onclick="toggleWfStep(${wf.id},${i})">${s}</div>`).join('')}${wf.cal?`<div style="margin-top:10px;font-size:11px;color:var(--muted)">📞 ${wf.cal}</div>`:''}${wf.notes?`<div style="margin-top:6px;font-size:11px;color:var(--muted)">📝 ${wf.notes}</div>`:''}</div>`;
+    return `<div class="wf-card"><div class="flex-between" style="margin-bottom:8px"><div><div style="font-weight:600;font-size:13px">${wf.biz} ${wf.ig?'<span style="color:var(--muted);font-weight:400;font-size:12px">'+wf.ig+'</span>':''}</div><div style="font-size:11px;color:var(--muted);margin-top:2px">${done}/${WF_STEPS.length} steps · ${wf.date}</div></div><div class="flex-gap"><span style="font-size:13px;font-weight:700;color:${pct===100?'var(--green)':'var(--accent)'}">${pct}%</span><button class="btn btn-sm btn-red" onclick="deleteWf(${wf.id})">✕</button></div></div><div style="background:var(--bg);border-radius:4px;height:4px;margin-bottom:12px;overflow:hidden"><div style="height:100%;background:var(--green);width:${pct}%;transition:width 0.3s;border-radius:4px"></div></div>${WF_STEPS.map((s,i)=>`<div class="wf-step ${wf.steps[i]?'done':''}" onclick="toggleWfStep(${wf.id},${i})">${s}</div>`).join('')}<div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:6px;">
+${wf.ig?`<span style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;">📸 ${wf.ig}</span>`:''}
+${wf.fb?`<span style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;">💬 ${wf.fb}</span>`:''}
+${wf.wa?`<span style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;">🟢 ${wf.wa}</span>`:''}
+${wf.tt?`<span style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;">🎵 ${wf.tt}</span>`:''}
+${wf.email?`<span style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;">📧 ${wf.email}</span>`:''}
+${wf.tg?`<span style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;">✈️ ${wf.tg}</span>`:''}
+${wf.cal?`<span style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;">📞 ${wf.cal}</span>`:''}
+</div>${wf.notes?`<div style="margin-top:6px;font-size:11px;color:var(--muted)">📝 ${wf.notes}</div>`:''}</div>`;
   }).join('');
 }
 
