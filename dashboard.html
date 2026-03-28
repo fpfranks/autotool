@@ -95,6 +95,7 @@
   <div class="nav-item" onclick="nav('workflows',this)">⚡ ManyChat Flows</div>
   <div class="nav-item" onclick="nav('todo',this)">✅ To-Do List</div>
   <div class="nav-item" onclick="nav('revenue',this)">💰 Revenue</div>
+  <div class="nav-item" onclick="nav('settings',this)" style="position:absolute;bottom:20px;width:100%;">⚙️ Settings</div>
 </aside>
 
 <main class="main">
@@ -145,7 +146,10 @@
   <div id="page-customers" class="page">
     <div class="page-header flex-between">
       <div><h1>Customers</h1><p>All paying clients</p></div>
-      <button class="btn btn-primary" onclick="openCustomerForm()">+ Add Customer</button>
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-ghost" onclick="fetchFromSheet(localStorage.getItem('pa_gas_url'))" title="Check for new customers from sales page">🔄 Refresh</button>
+        <button class="btn btn-primary" onclick="openCustomerForm()">+ Add Customer</button>
+      </div>
     </div>
     <div id="customer-form" class="card mb-4" style="display:none">
       <div class="flex-between mb-4">
@@ -320,6 +324,36 @@
     </div>
   </div>
 
+  <!-- SETTINGS -->
+  <div id="page-settings" class="page">
+    <div class="page-header"><h1>Settings</h1><p>Connect your Google Sheet for automatic customer imports</p></div>
+    <div class="card" style="max-width:600px;">
+      <div class="card-title">Google Apps Script URL</div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.7;">
+        Paste your deployed Apps Script URL below. Once saved, every customer who fills in the sales page will appear in your dashboard automatically — no action needed from you.
+      </p>
+      <div class="form-group">
+        <label class="form-label">Script URL</label>
+        <input class="form-input" id="gas-url-input" placeholder="https://script.google.com/macros/s/.../exec" type="url"/>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <button class="btn btn-green" onclick="saveGasUrl()">Save &amp; Connect</button>
+        <button class="btn btn-ghost" onclick="testGasUrl()">Test Connection</button>
+        <span id="gas-status" style="font-size:12px;color:var(--muted);"></span>
+      </div>
+      <div style="margin-top:24px;background:var(--surface2);border-radius:8px;padding:16px;">
+        <div style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;">Setup guide</div>
+        <ol style="font-size:13px;color:var(--muted);line-height:2;padding-left:20px;">
+          <li>Go to <strong style="color:var(--text)">script.google.com</strong> and click <strong style="color:var(--text)">New Project</strong></li>
+          <li>Delete the default code and paste the contents of <strong style="color:var(--text)">assets/apps-script.gs</strong></li>
+          <li>Click <strong style="color:var(--text)">Deploy → New deployment</strong></li>
+          <li>Type: <strong style="color:var(--text)">Web app</strong> — Execute as: <strong style="color:var(--text)">Me</strong> — Who has access: <strong style="color:var(--text)">Anyone</strong></li>
+          <li>Click <strong style="color:var(--text)">Deploy</strong>, copy the URL, paste it above</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
 </main>
 
 <div class="notif" id="notif"></div>
@@ -358,6 +392,7 @@ function nav(name, el) {
   if(name==='workflows') renderWorkflows();
   if(name==='todo') renderTodos();
   if(name==='revenue') renderRevenue();
+  if(name==='settings') { const u=localStorage.getItem('pa_gas_url')||''; document.getElementById('gas-url-input').value=u; }
 }
 document.querySelectorAll('.nav-item').forEach(item=>{
   item.addEventListener('click',function(){document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));this.classList.add('active');});
@@ -466,6 +501,100 @@ function renderRevenue(){
   tbody.innerHTML=active.map(c=>`<tr><td><strong>${c.biz}</strong></td><td style="color:var(--green)">£${c.fee||47}</td><td style="color:var(--warn)">£12</td><td style="color:var(--green)">£${(parseFloat(c.fee)||47)-12}</td><td><span class="badge badge-active">active</span></td></tr>`).join('');
 }
 
+// ── SETTINGS ──
+function saveGasUrl(){
+  const url=document.getElementById('gas-url-input').value.trim();
+  localStorage.setItem('pa_gas_url',url);
+  document.getElementById('gas-status').textContent='Saved!';
+  document.getElementById('gas-status').style.color='var(--green)';
+  setTimeout(()=>{ document.getElementById('gas-status').textContent=''; },2000);
+  if(url) fetchFromSheet(url);
+}
+function testGasUrl(){
+  const url=document.getElementById('gas-url-input').value.trim();
+  if(!url){ notify('Paste a URL first'); return; }
+  document.getElementById('gas-status').textContent='Testing...';
+  document.getElementById('gas-status').style.color='var(--muted)';
+  fetch(url)
+    .then(r=>r.json())
+    .then(d=>{
+      document.getElementById('gas-status').textContent = d.customers !== undefined ? '✅ Connected!' : '⚠️ Connected but unexpected response';
+      document.getElementById('gas-status').style.color='var(--green)';
+    })
+    .catch(()=>{
+      document.getElementById('gas-status').textContent='❌ Could not connect — check the URL';
+      document.getElementById('gas-status').style.color='var(--red)';
+    });
+}
+
+// ── SHEET SYNC ──
+function fetchFromSheet(url){
+  if(!url) return;
+  fetch(url)
+    .then(r=>r.json())
+    .then(data=>{
+      if(!data.customers||!data.customers.length) return;
+      let added=0;
+      data.customers.forEach(sc=>{
+        const exists=customers.find(c=>c.email&&c.email===sc.email);
+        if(!exists){
+          customers.push({
+            id: sc.id||Date.now()+Math.random(),
+            biz: sc.biz||'',
+            name: sc.name||'',
+            email: sc.email||'',
+            social: sc.ig||'',
+            phone: sc.phone||'',
+            channels: sc.channels||'',
+            type: '',
+            city: '',
+            status: sc.status||'pending',
+            fee: sc.fee||47,
+            notes: buildNotes(sc),
+            date: sc.date||new Date().toLocaleDateString('en-GB'),
+            isNew: true
+          });
+          // also add workflow entry if not exists
+          const wfExists=workflows.find(w=>w.biz===sc.biz);
+          if(!wfExists){
+            workflows.push({
+              id: Date.now()+Math.random(),
+              biz: sc.biz||'',
+              ig: sc.ig||'', fb: sc.fb||'', wa: sc.wa||'',
+              tt: sc.tt||'', email: sc.emailBot||'', tg: sc.tg||'',
+              cal: sc.phone||'', notes:'Auto-imported from sales page',
+              steps:[false,false,false,false,false,false,false,false],
+              date: sc.date||new Date().toLocaleDateString('en-GB')
+            });
+          }
+          added++;
+        }
+      });
+      if(added>0){
+        localStorage.setItem('pa_customers',JSON.stringify(customers));
+        localStorage.setItem('pa_workflows',JSON.stringify(workflows));
+        renderDash();
+        renderCustomers();
+        notify(`${added} new customer${added>1?'s':''} added from sales page!`);
+      }
+    })
+    .catch(()=>{});
+}
+
+function buildNotes(sc){
+  const chMap={instagram:'Instagram',messenger:'Facebook Messenger',whatsapp:'WhatsApp',tiktok:'TikTok',sms:'SMS',email:'Email',telegram:'Telegram'};
+  let n='Channels: '+(sc.channels||'')+'\n';
+  if(sc.ig)       n+='Instagram: '+sc.ig+'\n';
+  if(sc.fb)       n+='Messenger: '+sc.fb+'\n';
+  if(sc.wa)       n+='WhatsApp: '+sc.wa+'\n';
+  if(sc.tt)       n+='TikTok: '+sc.tt+'\n';
+  if(sc.smsNum)   n+='SMS: '+sc.smsNum+'\n';
+  if(sc.emailBot) n+='Email bot: '+sc.emailBot+'\n';
+  if(sc.tg)       n+='Telegram: '+sc.tg+'\n';
+  if(sc.phone)    n+='Phone: '+sc.phone;
+  return n.trim();
+}
+
 function notify(msg){const n=document.getElementById('notif');n.textContent=msg;n.classList.add('show');setTimeout(()=>n.classList.remove('show'),2500);}
 
 // Auto-import customer from sales page URL param: dashboard.html?import=BASE64
@@ -539,6 +668,10 @@ function notify(msg){const n=document.getElementById('notif');n.textContent=msg;
 
 renderDash();
 renderTodos();
+
+// Auto-fetch from Google Sheet on load (if URL is saved)
+const _gasUrl = localStorage.getItem('pa_gas_url');
+if(_gasUrl) fetchFromSheet(_gasUrl);
 </script>
 </body>
 </html>
