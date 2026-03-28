@@ -468,6 +468,75 @@ function renderRevenue(){
 
 function notify(msg){const n=document.getElementById('notif');n.textContent=msg;n.classList.add('show');setTimeout(()=>n.classList.remove('show'),2500);}
 
+// Auto-import customer from sales page URL param: dashboard.html?import=BASE64
+(function(){
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const raw = params.get('import');
+    if(!raw) return;
+    const data = JSON.parse(decodeURIComponent(escape(atob(raw))));
+    if(!data || !data.biz) return;
+
+    // Build channel notes for customer record
+    const chNames = {instagram:'Instagram',messenger:'Facebook Messenger',whatsapp:'WhatsApp',tiktok:'TikTok',sms:'SMS',email:'Email',telegram:'Telegram'};
+    let notes = 'Channels: ' + (data.channels||[]).map(ch=>chNames[ch]||ch).join(', ') + '\n';
+    if(data.channelData){
+      Object.entries(data.channelData).forEach(([ch,val])=>{
+        if(val) notes += (chNames[ch]||ch) + ': ' + val + '\n';
+      });
+    }
+    if(data.phone) notes += 'Phone: ' + data.phone;
+
+    // Add to customers
+    const existing = customers.find(c=>c.biz===data.biz && c.email===data.email);
+    if(!existing){
+      customers.push({
+        id: Date.now(),
+        biz: data.biz,
+        name: data.name||'',
+        email: data.email||'',
+        social: (data.channelData&&data.channelData.instagram)||'',
+        type: '',
+        city: '',
+        status: 'pending',
+        fee: data.fee||47,
+        notes: notes.trim(),
+        date: data.date||new Date().toLocaleDateString('en-GB')
+      });
+      localStorage.setItem('pa_customers',JSON.stringify(customers));
+
+      // Also auto-create workflow entry
+      const chData = data.channelData||{};
+      workflows.push({
+        id: Date.now()+1,
+        biz: data.biz,
+        ig:    chData.instagram||'',
+        fb:    chData.messenger||'',
+        wa:    chData.whatsapp||'',
+        tt:    chData.tiktok||'',
+        email: chData.email||'',
+        tg:    chData.telegram||'',
+        cal:   data.phone||'',
+        notes: 'Auto-imported from sales page',
+        steps: [false,false,false,false,false,false,false,false],
+        date:  data.date||new Date().toLocaleDateString('en-GB')
+      });
+      localStorage.setItem('pa_workflows',JSON.stringify(workflows));
+
+      // Navigate to customers page and show notification
+      setTimeout(()=>{
+        nav('customers', document.querySelector('[onclick*=customers]'));
+        notify('✅ New customer imported: ' + data.biz);
+      }, 300);
+
+      // Clean URL so refresh doesn't re-import
+      history.replaceState(null,'',window.location.pathname);
+    } else {
+      setTimeout(()=>notify('Already imported: ' + data.biz), 300);
+    }
+  } catch(err){ /* silent fail */ }
+})();
+
 renderDash();
 renderTodos();
 </script>

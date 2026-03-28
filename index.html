@@ -651,41 +651,73 @@
       <div class="pricing-period">per month &nbsp;·&nbsp; cancel anytime</div>
 
       <!-- Channel picker -->
-      <div style="margin-bottom:28px;">
+      <div style="margin-bottom:20px;">
         <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:14px;">Pick the channels you want covered — tick all that apply:</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;text-align:left;">
-          <label style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:11px 14px;cursor:pointer;transition:border 0.15s" onmouseover="this.style.borderColor='#6c63ff'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='rgba(255,255,255,0.08)'">
-            <input type="checkbox" name="channels" value="instagram" style="accent-color:#6c63ff;width:16px;height:16px" onchange="updateChannelBorder(this)">
+          <label style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:11px 14px;cursor:pointer;transition:all 0.15s" onmouseover="this.style.borderColor='#6c63ff'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='rgba(255,255,255,0.08)'">
+            <input type="checkbox" name="channels" value="instagram" style="accent-color:#6c63ff;width:16px;height:16px" onchange="updateChannel(this)">
             <span style="font-size:0.9rem;">📸 Instagram</span>
           </label>
-          <label style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:11px 14px;cursor:pointer;transition:border 0.15s" onmouseover="this.style.borderColor='#6c63ff'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='rgba(255,255,255,0.08)'">
-            <input type="checkbox" name="channels" value="messenger" style="accent-color:#6c63ff;width:16px;height:16px" onchange="updateChannelBorder(this)">
+          <label style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:11px 14px;cursor:pointer;transition:all 0.15s" onmouseover="this.style.borderColor='#6c63ff'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='rgba(255,255,255,0.08)'">
+            <input type="checkbox" name="channels" value="messenger" style="accent-color:#6c63ff;width:16px;height:16px" onchange="updateChannel(this)">
             <span style="font-size:0.9rem;">💬 Facebook Messenger</span>
           </label>
-          <label style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:11px 14px;cursor:pointer;transition:border 0.15s" onmouseover="this.style.borderColor='#6c63ff'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='rgba(255,255,255,0.08)'">
-            <input type="checkbox" name="channels" value="whatsapp" style="accent-color:#6c63ff;width:16px;height:16px" onchange="updateChannelBorder(this)">
+          <label style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:11px 14px;cursor:pointer;transition:all 0.15s" onmouseover="this.style.borderColor='#6c63ff'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='rgba(255,255,255,0.08)'">
+            <input type="checkbox" name="channels" value="whatsapp" style="accent-color:#6c63ff;width:16px;height:16px" onchange="updateChannel(this)">
             <span style="font-size:0.9rem;">🟢 WhatsApp</span>
           </label>
-          <label style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:11px 14px;cursor:pointer;transition:border 0.15s" onmouseover="this.style.borderColor='#6c63ff'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='rgba(255,255,255,0.08)'">
-            <input type="checkbox" name="channels" value="tiktok" style="accent-color:#6c63ff;width:16px;height:16px" onchange="updateChannelBorder(this)">
+          <label style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:11px 14px;cursor:pointer;transition:all 0.15s" onmouseover="this.style.borderColor='#6c63ff'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='rgba(255,255,255,0.08)'">
+            <input type="checkbox" name="channels" value="tiktok" style="accent-color:#6c63ff;width:16px;height:16px" onchange="updateChannel(this)">
             <span style="font-size:0.9rem;">🎵 TikTok</span>
           </label>
-          <label style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:11px 14px;cursor:pointer;transition:border 0.15s" onmouseover="this.style.borderColor='#6c63ff'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='rgba(255,255,255,0.08)'">
-            <input type="checkbox" name="channels" value="sms" style="accent-color:#6c63ff;width:16px;height:16px" onchange="updateChannelBorder(this)">
+          <label style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:11px 14px;cursor:pointer;transition:all 0.15s" onmouseover="this.style.borderColor='#6c63ff'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='rgba(255,255,255,0.08)'">
+            <input type="checkbox" name="channels" value="sms" style="accent-color:#6c63ff;width:16px;height:16px" onchange="updateChannel(this)">
             <span style="font-size:0.9rem;">📱 SMS / Text</span>
           </label>
-          <label style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:11px 14px;cursor:pointer;transition:border 0.15s" onmouseover="this.style.borderColor='#6c63ff'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='rgba(255,255,255,0.08)'">
-            <input type="checkbox" name="channels" value="email" style="accent-color:#6c63ff;width:16px;height:16px" onchange="updateChannelBorder(this)">
+          <label style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:11px 14px;cursor:pointer;transition:all 0.15s" onmouseover="this.style.borderColor='#6c63ff'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='rgba(255,255,255,0.08)'">
+            <input type="checkbox" name="channels" value="email" style="accent-color:#6c63ff;width:16px;height:16px" onchange="updateChannel(this)">
             <span style="font-size:0.9rem;">📧 Email</span>
           </label>
-          <label style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:11px 14px;cursor:pointer;transition:border 0.15s;grid-column:span 2" onmouseover="this.style.borderColor='#6c63ff'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='rgba(255,255,255,0.08)'">
-            <input type="checkbox" name="channels" value="telegram" style="accent-color:#6c63ff;width:16px;height:16px" onchange="updateChannelBorder(this)">
+          <label style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:11px 14px;cursor:pointer;transition:all 0.15s;grid-column:span 2" onmouseover="this.style.borderColor='#6c63ff'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='rgba(255,255,255,0.08)'">
+            <input type="checkbox" name="channels" value="telegram" style="accent-color:#6c63ff;width:16px;height:16px" onchange="updateChannel(this)">
             <span style="font-size:0.9rem;">✈️ Telegram</span>
           </label>
         </div>
         <div id="channel-warning" style="display:none;margin-top:12px;padding:10px 14px;background:rgba(255,179,71,0.1);border:1px solid rgba(255,179,71,0.3);border-radius:8px;font-size:0.82rem;color:#ffb347;">
           Please select at least one channel to continue.
         </div>
+      </div>
+
+      <!-- Dynamic requirements cards (appear as channels are ticked) -->
+      <div id="req-panel" style="display:none;margin-bottom:20px;text-align:left;background:rgba(0,212,170,0.05);border:1px solid rgba(0,212,170,0.2);border-radius:12px;padding:18px;">
+        <div style="font-size:0.8rem;font-weight:700;color:#00d4aa;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:14px;">What we'll need from you for each channel:</div>
+        <div id="req-cards" style="display:grid;gap:10px;"></div>
+      </div>
+
+      <!-- Setup details form (appears when a channel is ticked) -->
+      <div id="setup-form" style="display:none;margin-bottom:24px;text-align:left;border:1px solid rgba(108,99,255,0.3);border-radius:12px;padding:20px;background:rgba(108,99,255,0.05);">
+        <div style="font-size:0.8rem;font-weight:700;color:#8b85ff;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:16px;">Your details — we'll get everything set up for you:</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+          <div>
+            <label style="display:block;font-size:0.78rem;color:var(--text-muted);margin-bottom:5px;">Business Name *</label>
+            <input id="sf-biz" type="text" placeholder="e.g. Dave's Garage" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:9px 12px;color:#e8e8f0;font-size:0.85rem;outline:none;font-family:inherit;" onfocus="this.style.borderColor='#6c63ff'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
+          </div>
+          <div>
+            <label style="display:block;font-size:0.78rem;color:var(--text-muted);margin-bottom:5px;">Your Name *</label>
+            <input id="sf-name" type="text" placeholder="e.g. Dave Smith" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:9px 12px;color:#e8e8f0;font-size:0.85rem;outline:none;font-family:inherit;" onfocus="this.style.borderColor='#6c63ff'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
+          </div>
+          <div>
+            <label style="display:block;font-size:0.78rem;color:var(--text-muted);margin-bottom:5px;">Your Email *</label>
+            <input id="sf-email" type="email" placeholder="dave@davesgarage.co.uk" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:9px 12px;color:#e8e8f0;font-size:0.85rem;outline:none;font-family:inherit;" onfocus="this.style.borderColor='#6c63ff'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
+          </div>
+          <div>
+            <label style="display:block;font-size:0.78rem;color:var(--text-muted);margin-bottom:5px;">Your Phone Number *</label>
+            <input id="sf-phone" type="tel" placeholder="+44 7700 900000" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:9px 12px;color:#e8e8f0;font-size:0.85rem;outline:none;font-family:inherit;" onfocus="this.style.borderColor='#6c63ff'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
+          </div>
+        </div>
+        <!-- Dynamic channel-specific fields injected here -->
+        <div id="channel-fields" style="display:grid;gap:10px;"></div>
+        <div id="form-warning" style="display:none;margin-top:12px;padding:10px 14px;background:rgba(255,179,71,0.1);border:1px solid rgba(255,179,71,0.3);border-radius:8px;font-size:0.82rem;color:#ffb347;"></div>
       </div>
 
       <ul class="pricing-features">
@@ -696,24 +728,131 @@
         <li>You can still see and reply to all conversations yourself</li>
         <li>No contracts — cancel anytime, no fuss</li>
       </ul>
-      <a href="https://buy.stripe.com/8x200i242b5dcLn3vfa3u00" class="pricing-cta" id="main-cta" onclick="return validateChannels()">Get Started — £47/mo ›</a>
+      <a href="https://buy.stripe.com/8x200i242b5dcLn3vfa3u00" class="pricing-cta" id="main-cta" onclick="return handleGetStarted(event)">Get Started — £47/mo ›</a>
       <p class="pricing-sub">All channels included in the same price</p>
     </div>
 
+    <!-- Confirmation panel (shown after clicking Get Started) -->
+    <div id="confirm-panel" style="display:none;background:rgba(0,212,170,0.06);border:1px solid rgba(0,212,170,0.3);border-radius:20px;padding:40px 32px;text-align:center;margin-top:24px;">
+      <div style="font-size:3rem;margin-bottom:16px;">🎉</div>
+      <h3 style="font-size:1.4rem;margin-bottom:10px;color:#00d4aa;">Payment opening — you're almost there!</h3>
+      <p style="color:var(--text-muted);margin-bottom:24px;font-size:0.9rem;">Complete your payment in the tab that just opened. Once done, email us your setup details below so we can get your bot live within 24 hours.</p>
+      <div id="confirm-summary" style="background:rgba(0,0,0,0.3);border-radius:10px;padding:18px;text-align:left;font-size:0.82rem;line-height:1.8;color:#ccc;margin-bottom:20px;white-space:pre-wrap;font-family:monospace;"></div>
+      <a id="confirm-mailto" href="#" style="display:inline-block;background:linear-gradient(135deg,#6c63ff,#9b6bff);color:#fff;padding:13px 28px;border-radius:10px;text-decoration:none;font-weight:700;font-size:0.9rem;margin-bottom:12px;">📧 Send us your setup details</a>
+      <p style="font-size:0.78rem;color:var(--text-muted);">Or email phillipsautomates@gmail.com with the details above.</p>
+    </div>
+
     <script>
-    function updateChannelBorder(input) {
+    const CH = {
+      instagram: { icon:'📸', name:'Instagram',       hint:'Their @username — must be a Professional/Creator account (not personal)',   fieldLabel:'Instagram @username',      fieldId:'sf-ig',  placeholder:'@yourbusiness' },
+      messenger: { icon:'💬', name:'Facebook Messenger', hint:'Their Facebook Page name or URL — must be a Page, not a personal profile', fieldLabel:'Facebook Page Name',       fieldId:'sf-fb',  placeholder:"Dave's Garage Manchester" },
+      whatsapp:  { icon:'🟢', name:'WhatsApp',         hint:'Their WhatsApp Business number — must be a WhatsApp Business account',      fieldLabel:'WhatsApp Business Number', fieldId:'sf-wa',  placeholder:'+44 7700 900000' },
+      tiktok:    { icon:'🎵', name:'TikTok',           hint:'Their @TikTok username — we\'ll help switch to a Business account',         fieldLabel:'TikTok @username',         fieldId:'sf-tt',  placeholder:'@yourbusiness' },
+      sms:       { icon:'📱', name:'SMS / Text',       hint:'Their mobile number — we set up a Twilio number, texts route to the bot',   fieldLabel:'Your Mobile Number',       fieldId:'sf-sms', placeholder:'+44 7700 900000' },
+      email:     { icon:'📧', name:'Email',            hint:'Their business email — the bot will reply from this address',               fieldLabel:'Business Email',           fieldId:'sf-email2', placeholder:'hello@yourbusiness.co.uk' },
+      telegram:  { icon:'✈️', name:'Telegram',         hint:'Their Telegram @username or channel handle',                               fieldLabel:'Telegram @username',       fieldId:'sf-tg',  placeholder:'@yourbusiness' }
+    };
+
+    function updateChannel(input) {
+      // update checkbox border
       const label = input.closest('label');
       label.style.borderColor = input.checked ? '#6c63ff' : 'rgba(255,255,255,0.08)';
-      label.style.background = input.checked ? 'rgba(108,99,255,0.1)' : 'rgba(255,255,255,0.04)';
+      label.style.background  = input.checked ? 'rgba(108,99,255,0.1)' : 'rgba(255,255,255,0.04)';
+      // rebuild panels
+      renderReqPanel();
+      renderChannelFields();
     }
-    function validateChannels() {
-      const checked = document.querySelectorAll('input[name="channels"]:checked');
-      if(checked.length === 0) {
-        document.getElementById('channel-warning').style.display = 'block';
+
+    function renderReqPanel() {
+      const checked = [...document.querySelectorAll('input[name="channels"]:checked')].map(i=>i.value);
+      const panel = document.getElementById('req-panel');
+      if(!checked.length){ panel.style.display='none'; return; }
+      panel.style.display='block';
+      document.getElementById('req-cards').innerHTML = checked.map(ch=>{
+        const c = CH[ch];
+        return `<div style="display:flex;align-items:flex-start;gap:12px;background:rgba(0,0,0,0.2);border-radius:8px;padding:12px;">
+          <span style="font-size:1.3rem;flex-shrink:0;">${c.icon}</span>
+          <div>
+            <div style="font-size:0.85rem;font-weight:600;margin-bottom:3px;">${c.name}</div>
+            <div style="font-size:0.78rem;color:var(--text-muted);">${c.hint}</div>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    function renderChannelFields() {
+      const checked = [...document.querySelectorAll('input[name="channels"]:checked')].map(i=>i.value);
+      const form = document.getElementById('setup-form');
+      if(!checked.length){ form.style.display='none'; return; }
+      form.style.display='block';
+      document.getElementById('channel-fields').innerHTML = checked.map(ch=>{
+        const c = CH[ch];
+        return `<div>
+          <label style="display:block;font-size:0.78rem;color:var(--text-muted);margin-bottom:5px;">${c.icon} ${c.fieldLabel}</label>
+          <input id="${c.fieldId}" type="text" placeholder="${c.placeholder}" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:9px 12px;color:#e8e8f0;font-size:0.85rem;outline:none;font-family:inherit;" onfocus="this.style.borderColor='#6c63ff'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
+        </div>`;
+      }).join('');
+    }
+
+    function handleGetStarted(e) {
+      e.preventDefault();
+      document.getElementById('channel-warning').style.display='none';
+      document.getElementById('form-warning').style.display='none';
+
+      const checked = [...document.querySelectorAll('input[name="channels"]:checked')].map(i=>i.value);
+      if(!checked.length){
+        document.getElementById('channel-warning').style.display='block';
         return false;
       }
-      document.getElementById('channel-warning').style.display = 'none';
-      return true;
+
+      // validate core fields
+      const biz   = document.getElementById('sf-biz').value.trim();
+      const name  = document.getElementById('sf-name').value.trim();
+      const email = document.getElementById('sf-email').value.trim();
+      const phone = document.getElementById('sf-phone').value.trim();
+      if(!biz || !name || !email || !phone){
+        document.getElementById('form-warning').textContent = 'Please fill in your business name, name, email and phone number.';
+        document.getElementById('form-warning').style.display='block';
+        document.getElementById('setup-form').scrollIntoView({behavior:'smooth', block:'center'});
+        return false;
+      }
+
+      // collect channel handles
+      const channelData = {};
+      checked.forEach(ch => {
+        const el = document.getElementById(CH[ch].fieldId);
+        channelData[ch] = el ? el.value.trim() : '';
+      });
+
+      // build customer object for dashboard import
+      const customer = {
+        biz, name, email, phone,
+        channels: checked,
+        channelData,
+        status: 'pending',
+        fee: 47,
+        date: new Date().toLocaleDateString('en-GB')
+      };
+      const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(customer))));
+
+      // build email summary
+      let summary = `Business: ${biz}\nOwner: ${name}\nEmail: ${email}\nPhone: ${phone}\nChannels: ${checked.map(ch=>CH[ch].name).join(', ')}\n`;
+      checked.forEach(ch => {
+        if(channelData[ch]) summary += `${CH[ch].name}: ${channelData[ch]}\n`;
+      });
+      summary += `\n--- Dashboard Import ---\ndashboard.html?import=${encoded}`;
+
+      // show confirmation panel
+      document.getElementById('confirm-summary').textContent = summary;
+      const mailSubject = encodeURIComponent(`New Bot Setup — ${biz}`);
+      const mailBody    = encodeURIComponent(summary);
+      document.getElementById('confirm-mailto').href = `mailto:phillipsautomates@gmail.com?subject=${mailSubject}&body=${mailBody}`;
+      document.getElementById('confirm-panel').style.display='block';
+      document.getElementById('confirm-panel').scrollIntoView({behavior:'smooth', block:'center'});
+
+      // open Stripe in new tab
+      window.open('https://buy.stripe.com/8x200i242b5dcLn3vfa3u00','_blank');
+      return false;
     }
     </script>
   </div>
