@@ -715,6 +715,17 @@
             <input id="sf-phone" type="tel" placeholder="+44 7700 900000" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:9px 12px;color:#e8e8f0;font-size:0.85rem;outline:none;font-family:inherit;" onfocus="this.style.borderColor='#6c63ff'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
           </div>
         </div>
+        <!-- Website + Booking URLs -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+          <div>
+            <label style="display:block;font-size:0.78rem;color:var(--text-muted);margin-bottom:5px;">🌐 Website URL <span style="color:var(--text-muted);font-size:0.7rem;">(optional)</span></label>
+            <input id="sf-website" type="url" placeholder="https://yourbusiness.co.uk" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:9px 12px;color:#e8e8f0;font-size:0.85rem;outline:none;font-family:inherit;" onfocus="this.style.borderColor='#6c63ff'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
+          </div>
+          <div>
+            <label style="display:block;font-size:0.78rem;color:var(--text-muted);margin-bottom:5px;">📅 Booking System URL <span style="color:var(--text-muted);font-size:0.7rem;">(optional)</span></label>
+            <input id="sf-booking" type="url" placeholder="e.g. Fresha, Booksy, Calendly link" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:9px 12px;color:#e8e8f0;font-size:0.85rem;outline:none;font-family:inherit;" onfocus="this.style.borderColor='#6c63ff'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
+          </div>
+        </div>
         <!-- Dynamic channel-specific fields injected here -->
         <div id="channel-fields" style="display:grid;gap:10px;"></div>
         <div id="form-warning" style="display:none;margin-top:12px;padding:10px 14px;background:rgba(255,179,71,0.1);border:1px solid rgba(255,179,71,0.3);border-radius:8px;font-size:0.82rem;color:#ffb347;"></div>
@@ -827,6 +838,8 @@
 
       const customer = {
         biz, name, email, phone,
+        website: document.getElementById('sf-website').value.trim(),
+        booking: document.getElementById('sf-booking').value.trim(),
         channels: checked,
         channelData,
         status: 'pending',

@@ -24,7 +24,7 @@ function getSheet() {
     sheet.appendRow([
       'ID','Business','Owner','Email','Phone','Channels',
       'Instagram','Messenger','WhatsApp','TikTok','SMS','Email Bot','Telegram',
-      'Status','Fee','Date'
+      'Website','Booking URL','Status','Fee','Date'
     ]);
     sheet.setFrozenRows(1);
   }
@@ -50,6 +50,8 @@ function doPost(e) {
       ch.sms       || '',
       ch.email     || '',
       ch.telegram  || '',
+      data.website || '',
+      data.booking || '',
       'pending',
       '47',
       new Date().toLocaleDateString('en-GB')
@@ -92,6 +94,8 @@ function doGet(e) {
         smsNum:   r['SMS']       || '',
         emailBot: r['Email Bot'] || '',
         tg:       r['Telegram']  || '',
+        website:  r['Website']     || '',
+        booking:  r['Booking URL'] || '',
         status:   r['Status']    || 'pending',
         fee:      r['Fee']       || 47,
         date:     r['Date']      || '',
