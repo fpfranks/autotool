@@ -205,7 +205,7 @@
         <div class="form-group"><label class="form-label">Client Business *</label><input class="form-input" id="wf-biz" placeholder="Dave's Garage"/></div>
         <div class="form-group"><label class="form-label">Instagram Handle</label><input class="form-input" id="wf-ig" placeholder="@davesgarage"/></div>
       </div>
-      <div class="form-group"><label class="form-label">Their Calendly Link</label><input class="form-input" id="wf-cal" placeholder="calendly.com/davesgarage"/></div>
+      <div class="form-group"><label class="form-label">Their Contact Number (for booking notifications)</label><input class="form-input" id="wf-cal" placeholder="07700 900000"/></div>
       <div class="form-group"><label class="form-label">Notes</label><input class="form-input" id="wf-notes" placeholder="Any setup notes..."/></div>
       <button class="btn btn-green" onclick="saveWorkflow()">Save</button>
     </div>
@@ -270,7 +270,7 @@ let workflows = JSON.parse(localStorage.getItem('pa_workflows')||'[]');
 let todos = JSON.parse(localStorage.getItem('pa_todos')||'null') || [
   {id:1,  text:'Sign up to ManyChat (manychat.com) — start 14 day Pro trial', cat:'Setup', done:false},
   {id:2,  text:'Sign up to Stripe (stripe.com) and verify your account', cat:'Setup', done:true},
-  {id:3,  text:'Sign up to Calendly (calendly.com) — create a free booking page', cat:'Setup', done:false},
+  {id:3,  text:'Set up ManyChat booking flow — bot collects name + number, notifies business owner', cat:'ManyChat', done:false},
   {id:4,  text:'Sign up to n8n (n8n.io) — free trial', cat:'Setup', done:false},
   {id:5,  text:'Get Claude API key from console.anthropic.com', cat:'Setup', done:false},
   {id:6,  text:'Sales page live on GitHub Pages', cat:'Setup', done:true},
@@ -342,7 +342,7 @@ function renderCustomers(){
   tbody.innerHTML=f.map(c=>`<tr><td><strong>${c.biz}</strong></td><td>${c.name||'—'}<br><span style="font-size:11px;color:var(--muted)">${c.email||''}</span></td><td>${c.type||'—'}</td><td>${c.city||'—'}</td><td><select onchange="updateCustomerStatus(${c.id},this.value)" style="background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:3px 7px;border-radius:5px;font-size:11px">${['active','pending','inactive'].map(s=>`<option value="${s}"${c.status===s?' selected':''}>${s}</option>`).join('')}</select></td><td style="color:var(--green)">£${c.fee||47}/mo</td><td style="font-size:11px;color:var(--muted)">${c.date}</td><td><button class="btn btn-sm btn-red" onclick="deleteCustomer(${c.id})">✕</button></td></tr>`).join('');
 }
 
-const WF_STEPS=['ManyChat account created for client','Instagram/Facebook connected','Welcome message set up','Booking button added + Calendly link','Pricing info added','Opening hours added','Tested — bot replies correctly','Client notified — live!'];
+const WF_STEPS=['ManyChat account created for client','Instagram/Facebook connected','Welcome message set up','Booking flow added (collects name + number)','Pricing info added','Opening hours added','Tested — bot replies correctly','Client notified — live!'];
 function openWfForm(){document.getElementById('wf-form').style.display='block';}
 function closeWfForm(){document.getElementById('wf-form').style.display='none';['wf-biz','wf-ig','wf-cal','wf-notes'].forEach(id=>document.getElementById(id).value='');}
 function saveWorkflow(){
@@ -360,7 +360,7 @@ function renderWorkflows(){
   el.innerHTML=workflows.map(wf=>{
     const done=wf.steps.filter(Boolean).length;
     const pct=Math.round((done/WF_STEPS.length)*100);
-    return `<div class="wf-card"><div class="flex-between" style="margin-bottom:8px"><div><div style="font-weight:600;font-size:13px">${wf.biz} ${wf.ig?'<span style="color:var(--muted);font-weight:400;font-size:12px">'+wf.ig+'</span>':''}</div><div style="font-size:11px;color:var(--muted);margin-top:2px">${done}/${WF_STEPS.length} steps · ${wf.date}</div></div><div class="flex-gap"><span style="font-size:13px;font-weight:700;color:${pct===100?'var(--green)':'var(--accent)'}">${pct}%</span><button class="btn btn-sm btn-red" onclick="deleteWf(${wf.id})">✕</button></div></div><div style="background:var(--bg);border-radius:4px;height:4px;margin-bottom:12px;overflow:hidden"><div style="height:100%;background:var(--green);width:${pct}%;transition:width 0.3s;border-radius:4px"></div></div>${WF_STEPS.map((s,i)=>`<div class="wf-step ${wf.steps[i]?'done':''}" onclick="toggleWfStep(${wf.id},${i})">${s}</div>`).join('')}${wf.cal?`<div style="margin-top:10px;font-size:11px;color:var(--muted)">📅 ${wf.cal}</div>`:''}${wf.notes?`<div style="margin-top:6px;font-size:11px;color:var(--muted)">📝 ${wf.notes}</div>`:''}</div>`;
+    return `<div class="wf-card"><div class="flex-between" style="margin-bottom:8px"><div><div style="font-weight:600;font-size:13px">${wf.biz} ${wf.ig?'<span style="color:var(--muted);font-weight:400;font-size:12px">'+wf.ig+'</span>':''}</div><div style="font-size:11px;color:var(--muted);margin-top:2px">${done}/${WF_STEPS.length} steps · ${wf.date}</div></div><div class="flex-gap"><span style="font-size:13px;font-weight:700;color:${pct===100?'var(--green)':'var(--accent)'}">${pct}%</span><button class="btn btn-sm btn-red" onclick="deleteWf(${wf.id})">✕</button></div></div><div style="background:var(--bg);border-radius:4px;height:4px;margin-bottom:12px;overflow:hidden"><div style="height:100%;background:var(--green);width:${pct}%;transition:width 0.3s;border-radius:4px"></div></div>${WF_STEPS.map((s,i)=>`<div class="wf-step ${wf.steps[i]?'done':''}" onclick="toggleWfStep(${wf.id},${i})">${s}</div>`).join('')}${wf.cal?`<div style="margin-top:10px;font-size:11px;color:var(--muted)">📞 ${wf.cal}</div>`:''}${wf.notes?`<div style="margin-top:6px;font-size:11px;color:var(--muted)">📝 ${wf.notes}</div>`:''}</div>`;
   }).join('');
 }
 
