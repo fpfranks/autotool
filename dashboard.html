@@ -3,1990 +3,405 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AutoAgency UK — Dashboard</title>
+<title>Phillips Automates — Dashboard</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   :root {
-    --bg: #0a0a0f; --surface: #12121a; --surface2: #1a1a28; --border: #2a2a3d;
-    --accent: #6c63ff; --accent2: #00d4aa; --text: #e8e8f0; --muted: #6b6b8a;
-    --danger: #ff4d6a; --warn: #ffb347; --success: #00d4aa;
+    --bg: #0a0a0f; --surface: #12121a; --surface2: #1a1a28;
+    --border: #2a2a3d; --accent: #6c63ff; --green: #00d4aa;
+    --text: #e8e8f0; --muted: #6b6b8a; --red: #ff4d6a; --warn: #ffb347;
   }
-  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; min-height: 100vh; }
-  .app { display: flex; min-height: 100vh; }
-  .sidebar { width: 230px; background: var(--surface); border-right: 1px solid var(--border); padding: 24px 0; position: fixed; top: 0; left: 0; height: 100vh; z-index: 100; overflow-y: auto; }
-  .main { margin-left: 230px; flex: 1; padding: 32px; }
-  .logo { padding: 0 20px 24px; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
-  .logo h2 { font-size: 16px; font-weight: 700; color: var(--accent); }
-  .logo p { font-size: 11px; color: var(--muted); margin-top: 2px; }
-  .nav-section { padding: 8px 20px 4px; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); }
-  .nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 20px; cursor: pointer; color: var(--muted); font-size: 13px; transition: all 0.15s; border-left: 3px solid transparent; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; }
+  .sidebar { position: fixed; left: 0; top: 0; width: 200px; height: 100vh; background: var(--surface); border-right: 1px solid var(--border); padding: 20px 0; }
+  .logo { padding: 0 16px 20px; border-bottom: 1px solid var(--border); margin-bottom: 12px; }
+  .logo h2 { font-size: 14px; font-weight: 700; color: var(--accent); }
+  .logo p { font-size: 10px; color: var(--muted); margin-top: 2px; }
+  .nav-item { display: flex; align-items: center; gap: 8px; padding: 9px 16px; cursor: pointer; color: var(--muted); font-size: 13px; border-left: 3px solid transparent; transition: all 0.15s; }
   .nav-item:hover { color: var(--text); background: var(--surface2); }
   .nav-item.active { color: var(--accent); border-left-color: var(--accent); background: var(--surface2); }
-  .nav-icon { font-size: 15px; width: 18px; text-align: center; }
+  .main { margin-left: 200px; padding: 28px; }
   .page { display: none; }
   .page.active { display: block; }
-  .page-header { margin-bottom: 28px; }
-  .page-header h1 { font-size: 22px; font-weight: 700; }
-  .page-header p { color: var(--muted); font-size: 13px; margin-top: 4px; }
-  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
-  .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-  .card-title { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
-  .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-bottom: 28px; }
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
-  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
-  .stat-label { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
-  .stat-value { font-size: 26px; font-weight: 700; }
-  .stat-sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
-  .stat-value.green { color: var(--success); }
-  .stat-value.purple { color: var(--accent); }
-  .stat-value.orange { color: var(--warn); }
-  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; border-radius: 8px; border: none; cursor: pointer; font-size: 13px; font-weight: 500; transition: all 0.15s; text-decoration: none; }
+  .page-header { margin-bottom: 24px; }
+  .page-header h1 { font-size: 20px; font-weight: 700; }
+  .page-header p { font-size: 13px; color: var(--muted); margin-top: 3px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
+  .card-title { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 14px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 20px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+  .stat { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
+  .stat-label { font-size: 11px; color: var(--muted); margin-bottom: 6px; }
+  .stat-value { font-size: 28px; font-weight: 700; }
+  .stat-sub { font-size: 11px; color: var(--muted); margin-top: 3px; }
+  .green { color: var(--green); }
+  .purple { color: var(--accent); }
+  .orange { color: var(--warn); }
+  .btn { display: inline-flex; align-items: center; gap: 5px; padding: 8px 14px; border-radius: 7px; border: none; cursor: pointer; font-size: 12px; font-weight: 500; transition: all 0.15s; }
   .btn-primary { background: var(--accent); color: white; }
   .btn-primary:hover { background: #5a52e8; }
-  .btn-success { background: var(--success); color: #000; }
+  .btn-green { background: var(--green); color: #000; }
   .btn-ghost { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
   .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
-  .btn-danger { background: var(--danger); color: white; }
-  .btn-sm { padding: 6px 12px; font-size: 12px; }
-  .btn-warn { background: var(--warn); color: #000; }
-  .form-group { margin-bottom: 16px; }
-  .form-label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 6px; font-weight: 500; }
-  .form-input, .form-select, .form-textarea { width: 100%; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; color: var(--text); font-size: 13px; outline: none; transition: border 0.15s; font-family: inherit; }
+  .btn-red { background: var(--red); color: white; }
+  .btn-sm { padding: 5px 10px; font-size: 11px; }
+  .form-group { margin-bottom: 14px; }
+  .form-label { display: block; font-size: 11px; color: var(--muted); margin-bottom: 5px; font-weight: 500; }
+  .form-input, .form-select, .form-textarea { width: 100%; background: var(--surface2); border: 1px solid var(--border); border-radius: 7px; padding: 9px 12px; color: var(--text); font-size: 13px; outline: none; font-family: inherit; transition: border 0.15s; }
   .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--accent); }
-  .form-textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
-  .form-select option { background: var(--surface2); }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   .table { width: 100%; border-collapse: collapse; }
-  .table th { text-align: left; padding: 10px 12px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); border-bottom: 1px solid var(--border); }
-  .table td { padding: 12px; font-size: 13px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .table th { text-align: left; padding: 9px 12px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); border-bottom: 1px solid var(--border); }
+  .table td { padding: 11px 12px; font-size: 13px; border-bottom: 1px solid var(--border); vertical-align: middle; }
   .table tr:last-child td { border-bottom: none; }
   .table tr:hover td { background: var(--surface2); }
-  .output-box { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 16px; font-size: 13px; line-height: 1.7; white-space: pre-wrap; min-height: 120px; color: var(--text); }
-  .pipeline { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px; }
-  .pipeline-col { min-width: 190px; flex: 1; }
-  .pipeline-header { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 10px; }
-  .pipeline-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-bottom: 8px; font-size: 13px; }
-  .pipeline-card .name { font-weight: 600; margin-bottom: 4px; }
-  .pipeline-card .biz { color: var(--muted); font-size: 11px; }
-  .pipeline-card .value { color: var(--success); font-weight: 600; font-size: 12px; margin-top: 6px; }
-  .step { display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--border); }
-  .step:last-child { border-bottom: none; }
-  .step-num { width: 28px; height: 28px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
-  .step-num.auto { background: var(--success); }
-  .step-num.manual { background: var(--warn); }
-  .step-title { font-weight: 600; font-size: 13px; margin-bottom: 3px; }
-  .step-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
-  .step-tool { display: inline-block; margin-top: 5px; padding: 2px 7px; background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; font-size: 10px; color: var(--accent); }
-  .step-tool.green { color: var(--success); }
-  .tabs { display: flex; gap: 4px; background: var(--surface2); padding: 4px; border-radius: 10px; margin-bottom: 20px; width: fit-content; }
-  .tab { padding: 7px 14px; border-radius: 7px; font-size: 12px; cursor: pointer; color: var(--muted); transition: all 0.15s; }
-  .tab.active { background: var(--surface); color: var(--text); font-weight: 600; }
   .badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 10px; font-weight: 600; }
-  .badge-auto { background: rgba(0,212,170,0.15); color: var(--success); }
-  .badge-manual { background: rgba(255,179,71,0.15); color: var(--warn); }
-  .notif { position: fixed; top: 20px; right: 20px; background: var(--success); color: #000; padding: 12px 20px; border-radius: 8px; font-size: 13px; font-weight: 600; z-index: 9999; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
-  .notif.show { opacity: 1; }
-  .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.8s linear infinite; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .progress { background: var(--surface2); border-radius: 4px; height: 5px; overflow: hidden; margin-top: 6px; }
-  .progress-bar { height: 100%; border-radius: 4px; background: var(--accent); }
-  ::-webkit-scrollbar { width: 5px; height: 5px; }
-  ::-webkit-scrollbar-track { background: var(--surface); }
-  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  .badge-active { background: rgba(0,212,170,0.15); color: var(--green); }
+  .badge-pending { background: rgba(255,179,71,0.15); color: var(--warn); }
+  .badge-inactive { background: rgba(255,77,106,0.15); color: var(--red); }
+  .todo-item { display: flex; align-items: flex-start; gap: 10px; padding: 12px; background: var(--surface2); border-radius: 8px; margin-bottom: 8px; border: 1px solid var(--border); }
+  .todo-check { width: 18px; height: 18px; border-radius: 5px; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; margin-top: 1px; transition: all 0.15s; font-size: 11px; }
+  .todo-check.done { background: var(--green); border-color: var(--green); color: #000; }
+  .todo-text { font-size: 13px; flex: 1; }
+  .todo-text.done { text-decoration: line-through; color: var(--muted); }
+  .todo-del { color: var(--muted); cursor: pointer; font-size: 14px; padding: 0 4px; }
+  .todo-del:hover { color: var(--red); }
+  .wf-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 14px; margin-bottom: 10px; }
+  .wf-step { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); cursor: pointer; padding: 4px 0; }
+  .wf-step.done { color: var(--green); }
+  .wf-step.done::before { content: '✓'; color: var(--green); font-weight: 700; }
+  .wf-step:not(.done)::before { content: '○'; color: var(--muted); }
   .flex-between { display: flex; align-items: center; justify-content: space-between; }
-  .flex-gap { display: flex; gap: 10px; align-items: center; }
+  .flex-gap { display: flex; gap: 8px; align-items: center; }
   .mt-4 { margin-top: 16px; }
-  .mt-2 { margin-top: 8px; }
   .mb-4 { margin-bottom: 16px; }
-  .template-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px; cursor: pointer; transition: all 0.15s; }
-  .template-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-  .highlight-box { background: rgba(108,99,255,0.08); border: 1px solid rgba(108,99,255,0.25); border-radius: 10px; padding: 16px; }
-  .workflow-step { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--surface2); border-radius: 8px; margin-bottom: 8px; }
-  .workflow-step .icon { font-size: 20px; width: 32px; text-align: center; }
-  .workflow-step .label { font-size: 13px; font-weight: 600; }
-  .workflow-step .sub { font-size: 11px; color: var(--muted); }
-  .workflow-arrow { text-align: center; color: var(--muted); font-size: 18px; margin: 2px 0 2px 16px; }
-  code { background: var(--surface2); padding: 2px 6px; border-radius: 4px; font-size: 12px; color: var(--accent); font-family: monospace; }
+  .notif { position: fixed; top: 18px; right: 18px; background: var(--green); color: #000; padding: 10px 18px; border-radius: 8px; font-size: 13px; font-weight: 600; z-index: 9999; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+  .notif.show { opacity: 1; }
+  .section-title { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin: 20px 0 10px; }
+  .empty { text-align: center; color: var(--muted); font-size: 13px; padding: 32px; }
+  ::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-track { background: var(--surface); } ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 </style>
 </head>
 <body>
-<div class="app">
-  <aside class="sidebar">
-    <div class="logo">
-      <h2>AutoAgency UK 🇬🇧</h2>
-      <p>Hands-free automation business</p>
+
+<aside class="sidebar">
+  <div class="logo">
+    <h2>Phillips Automates</h2>
+    <p>phillipsautomates@gmail.com</p>
+  </div>
+  <div class="nav-item active" onclick="nav('dashboard',this)">📊 Dashboard</div>
+  <div class="nav-item" onclick="nav('customers',this)">👥 Customers</div>
+  <div class="nav-item" onclick="nav('workflows',this)">⚡ ManyChat Flows</div>
+  <div class="nav-item" onclick="nav('todo',this)">✅ To-Do List</div>
+  <div class="nav-item" onclick="nav('revenue',this)">💰 Revenue</div>
+</aside>
+
+<main class="main">
+
+  <!-- DASHBOARD -->
+  <div id="page-dashboard" class="page active">
+    <div class="page-header flex-between">
+      <div><h1>Dashboard</h1><p>Your business at a glance</p></div>
+      <div style="font-size:12px;color:var(--muted)" id="dash-date"></div>
     </div>
-    <div class="nav-section">Overview</div>
-    <div class="nav-item active" onclick="nav('dashboard',this)"><span class="nav-icon">📊</span> Dashboard</div>
-    <div class="nav-item" onclick="nav('pipeline',this)"><span class="nav-icon">🔄</span> Full Auto Pipeline</div>
-    <div class="nav-section">Automation</div>
-    <div class="nav-item" onclick="nav('outreach',this)"><span class="nav-icon">✉️</span> Outreach AI</div>
-    <div class="nav-item" onclick="nav('leads',this)"><span class="nav-icon">👥</span> Lead CRM</div>
-    <div class="nav-item" onclick="nav('n8n',this)"><span class="nav-icon">⚙️</span> n8n Workflows</div>
-    <div class="nav-section">Products</div>
-    <div class="nav-item" onclick="nav('services',this)"><span class="nav-icon">⚡</span> UK Services</div>
-    <div class="nav-item" onclick="nav('salespage',this)"><span class="nav-icon">🛍️</span> Sales Page Builder</div>
-    <div class="nav-section">Setup</div>
-    <div class="nav-item" onclick="nav('checklist',this)"><span class="nav-icon">✅</span> To-Do Checklist</div>
-    <div class="nav-item" onclick="nav('assets',this)"><span class="nav-icon">📦</span> Ready-Made Assets</div>
-    <div class="nav-item" onclick="nav('setup',this)"><span class="nav-icon">🗺️</span> Setup Guide</div>
-    <div class="nav-item" onclick="nav('settings',this)"><span class="nav-icon">⚙️</span> Settings</div>
-  </aside>
-
-  <main class="main">
-
-    <!-- DASHBOARD -->
-    <div id="page-dashboard" class="page active">
-      <div class="page-header">
-        <h1>Dashboard 🇬🇧</h1>
-        <p>Your UK AI automation agency — fully automated</p>
-      </div>
-      <div class="grid-4">
-        <div class="stat-card"><div class="stat-label">Total Leads</div><div class="stat-value purple" id="s-leads">0</div><div class="stat-sub">UK businesses tracked</div></div>
-        <div class="stat-card"><div class="stat-label">Emails Generated</div><div class="stat-value" id="s-emails">0</div><div class="stat-sub">AI outreach created</div></div>
-        <div class="stat-card"><div class="stat-label">Paying Clients</div><div class="stat-value green" id="s-clients">0</div><div class="stat-sub">closed without calls</div></div>
-        <div class="stat-card"><div class="stat-label">Monthly Revenue</div><div class="stat-value orange" id="s-revenue">£0</div><div class="stat-sub">estimated MRR</div></div>
-      </div>
-      <div class="grid-2">
-        <div class="card">
-          <div class="card-header"><span class="card-title">Automation Status</span></div>
-          <div style="display:flex;flex-direction:column;gap:10px;">
-            <div class="flex-between" style="padding:10px;background:var(--surface2);border-radius:8px;">
-              <div style="font-size:13px;">🔍 Lead Scraping</div>
-              <span id="auto-scrape" class="badge badge-manual">Not configured</span>
-            </div>
-            <div class="flex-between" style="padding:10px;background:var(--surface2);border-radius:8px;">
-              <div style="font-size:13px;">✉️ Email Outreach</div>
-              <span id="auto-email" class="badge badge-manual">Not configured</span>
-            </div>
-            <div class="flex-between" style="padding:10px;background:var(--surface2);border-radius:8px;">
-              <div style="font-size:13px;">🔁 Follow-up Sequence</div>
-              <span id="auto-followup" class="badge badge-manual">Not configured</span>
-            </div>
-            <div class="flex-between" style="padding:10px;background:var(--surface2);border-radius:8px;">
-              <div style="font-size:13px;">🛍️ Sales Page</div>
-              <span id="auto-sales" class="badge badge-manual">Not configured</span>
-            </div>
-            <div class="flex-between" style="padding:10px;background:var(--surface2);border-radius:8px;">
-              <div style="font-size:13px;">💳 Stripe Checkout</div>
-              <span id="auto-stripe" class="badge badge-manual">Not configured</span>
-            </div>
-            <div class="flex-between" style="padding:10px;background:var(--surface2);border-radius:8px;">
-              <div style="font-size:13px;">⚡ Auto Delivery</div>
-              <span id="auto-delivery" class="badge badge-manual">Not configured</span>
-            </div>
-          </div>
-          <div class="mt-4">
-            <button class="btn btn-primary" onclick="nav('setup',document.querySelector('[onclick*=setup]'))">Complete Setup Guide →</button>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-header"><span class="card-title">UK Revenue Forecast</span></div>
-          <div style="display:flex;flex-direction:column;gap:14px;padding:4px 0;">
-            <div>
-              <div class="flex-between" style="margin-bottom:5px;font-size:13px;">
-                <span>Week 1: Setup + first 50 emails</span><span style="color:var(--muted)">£0 (setup)</span>
-              </div>
-              <div class="progress"><div class="progress-bar" style="width:5%;background:var(--muted)"></div></div>
-            </div>
-            <div>
-              <div class="flex-between" style="margin-bottom:5px;font-size:13px;">
-                <span>Week 2–4: 1–3 self-serve sales</span><span style="color:var(--warn)">£300–£900</span>
-              </div>
-              <div class="progress"><div class="progress-bar" style="width:30%;background:var(--warn)"></div></div>
-            </div>
-            <div>
-              <div class="flex-between" style="margin-bottom:5px;font-size:13px;">
-                <span>Month 2: 5–8 clients</span><span style="color:var(--accent)">£2,000–£4,000</span>
-              </div>
-              <div class="progress"><div class="progress-bar" style="width:55%"></div></div>
-            </div>
-            <div>
-              <div class="flex-between" style="margin-bottom:5px;font-size:13px;">
-                <span>Month 3: Retainers compounding</span><span style="color:var(--success)">£5,000+/mo</span>
-              </div>
-              <div class="progress"><div class="progress-bar" style="width:80%;background:var(--success)"></div></div>
-            </div>
-          </div>
-          <div style="background:var(--surface2);border-radius:8px;padding:14px;margin-top:16px;font-size:12px;line-height:1.8;">
-            <strong style="color:var(--text);">UK Pricing Model (no sales call needed):</strong><br>
-            Setup fee: <span style="color:var(--success)">£297–£797</span> (self-serve checkout)<br>
-            Monthly retainer: <span style="color:var(--success)">£147–£297/mo</span> (recurring Stripe)<br>
-            5 retainers: <span style="color:var(--success)">£735–£1,485/mo passive</span>
-          </div>
-        </div>
-      </div>
+    <div class="grid-4">
+      <div class="stat"><div class="stat-label">Active Clients</div><div class="stat-value green" id="s-active">0</div><div class="stat-sub">paying £47/mo</div></div>
+      <div class="stat"><div class="stat-label">Monthly Revenue</div><div class="stat-value purple" id="s-revenue">£0</div><div class="stat-sub">recurring</div></div>
+      <div class="stat"><div class="stat-label">ManyChat Cost</div><div class="stat-value orange" id="s-cost">£0</div><div class="stat-sub">£12/mo per client</div></div>
+      <div class="stat"><div class="stat-label">Monthly Profit</div><div class="stat-value green" id="s-profit">£0</div><div class="stat-sub">after costs</div></div>
     </div>
-
-    <!-- FULL AUTO PIPELINE -->
-    <div id="page-pipeline" class="page">
-      <div class="page-header">
-        <h1>Full Automated Pipeline</h1>
-        <p>How money flows from prospect to payment — without you</p>
-      </div>
-      <div class="grid-2 mb-4">
-        <div class="card">
-          <div class="card-header"><span class="card-title">The Flow (Every Step Automated)</span></div>
-          <div>
-            <div class="workflow-step">
-              <div class="icon">🇬🇧</div>
-              <div><div class="label">UK Business Scraped</div><div class="sub">n8n scrapes Google Maps UK daily • 20–50 leads/day</div></div>
-              <span class="badge badge-auto" style="margin-left:auto">AUTO</span>
-            </div>
-            <div class="workflow-arrow">↓</div>
-            <div class="workflow-step">
-              <div class="icon">🤖</div>
-              <div><div class="label">Claude Writes Personalised Email</div><div class="sub">Each email unique to the business • UK English</div></div>
-              <span class="badge badge-auto" style="margin-left:auto">AUTO</span>
-            </div>
-            <div class="workflow-arrow">↓</div>
-            <div class="workflow-step">
-              <div class="icon">✉️</div>
-              <div><div class="label">Email Sent via Gmail</div><div class="sub">Instantly.ai or Gmail • warm domain sending</div></div>
-              <span class="badge badge-auto" style="margin-left:auto">AUTO</span>
-            </div>
-            <div class="workflow-arrow">↓</div>
-            <div class="workflow-step">
-              <div class="icon">🔁</div>
-              <div><div class="label">3-Email Follow-Up Sequence</div><div class="sub">Day 3, 7, 14 if no reply • auto-stops on reply</div></div>
-              <span class="badge badge-auto" style="margin-left:auto">AUTO</span>
-            </div>
-            <div class="workflow-arrow">↓</div>
-            <div class="workflow-step">
-              <div class="icon">🔗</div>
-              <div><div class="label">They Click → Sales Page</div><div class="sub">Video demo + social proof + Stripe buy button</div></div>
-              <span class="badge badge-auto" style="margin-left:auto">AUTO</span>
-            </div>
-            <div class="workflow-arrow">↓</div>
-            <div class="workflow-step">
-              <div class="icon">💳</div>
-              <div><div class="label">They Pay on Stripe</div><div class="sub">£297–£797 setup • recurring £147/mo optional</div></div>
-              <span class="badge badge-auto" style="margin-left:auto">AUTO</span>
-            </div>
-            <div class="workflow-arrow">↓</div>
-            <div class="workflow-step">
-              <div class="icon">📋</div>
-              <div><div class="label">Auto Onboarding Form</div><div class="sub">Stripe webhook → n8n → sends Typeform/Tally link</div></div>
-              <span class="badge badge-auto" style="margin-left:auto">AUTO</span>
-            </div>
-            <div class="workflow-arrow">↓</div>
-            <div class="workflow-step">
-              <div class="icon">⚡</div>
-              <div><div class="label">Automation Deployed</div><div class="sub">You import n8n template (1hr) or outsource to Fiverr</div></div>
-              <span class="badge badge-manual" style="margin-left:auto">~1HR</span>
-            </div>
-            <div class="workflow-arrow">↓</div>
-            <div class="workflow-step">
-              <div class="icon">📊</div>
-              <div><div class="label">Monthly Report Auto-Sent</div><div class="sub">n8n generates stats → emails client each month</div></div>
-              <span class="badge badge-auto" style="margin-left:auto">AUTO</span>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div class="card mb-4">
-            <div class="card-header"><span class="card-title">Why No Sales Call Needed</span></div>
-            <div style="display:flex;flex-direction:column;gap:10px;font-size:13px;">
-              <div style="padding:12px;background:var(--surface2);border-radius:8px;">
-                <strong>Lower price point</strong><br>
-                <span style="color:var(--muted)">At £297, most business owners just buy without needing a call. Keep it under £500 for self-serve.</span>
-              </div>
-              <div style="padding:12px;background:var(--surface2);border-radius:8px;">
-                <strong>Video Sales Letter (VSL)</strong><br>
-                <span style="color:var(--muted)">A 3-min Loom video on your sales page does the selling. Show exactly what the automation does. Real demo = trust.</span>
-              </div>
-              <div style="padding:12px;background:var(--surface2);border-radius:8px;">
-                <strong>Guarantee removes risk</strong><br>
-                <span style="color:var(--muted)">"If it doesn't work in 30 days, full refund." Very few people refund. Removes the last barrier to buying.</span>
-              </div>
-              <div style="padding:12px;background:var(--surface2);border-radius:8px;">
-                <strong>Social proof</strong><br>
-                <span style="color:var(--muted)">Even fake placeholder testimonials (then replace with real ones) massively increase conversions.</span>
-              </div>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-header"><span class="card-title">Your Weekly Time Commitment</span></div>
-            <div style="display:flex;flex-direction:column;gap:8px;font-size:13px;">
-              <div class="flex-between" style="padding:8px 12px;background:var(--surface2);border-radius:8px;">
-                <span>Checking the dashboard</span><span style="color:var(--success)">10 mins</span>
-              </div>
-              <div class="flex-between" style="padding:8px 12px;background:var(--surface2);border-radius:8px;">
-                <span>Deploying new client automation</span><span style="color:var(--warn)">1–2 hrs/client</span>
-              </div>
-              <div class="flex-between" style="padding:8px 12px;background:var(--surface2);border-radius:8px;">
-                <span>Handling support emails (rare)</span><span style="color:var(--warn)">30 mins</span>
-              </div>
-              <div class="flex-between" style="padding:8px 12px;background:var(--surface2);border-radius:8px;">
-                <span>Everything else</span><span style="color:var(--success)">AUTOMATED</span>
-              </div>
-              <div style="padding:12px;background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.2);border-radius:8px;margin-top:4px;">
-                <strong style="color:var(--success)">~3–5 hours/week total</strong><br>
-                <span style="color:var(--muted)">When you have 10+ clients, outsource delivery to a VA on Fiverr for £15/hr → truly passive.</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- OUTREACH AI -->
-    <div id="page-outreach" class="page">
-      <div class="page-header">
-        <h1>Outreach AI</h1>
-        <p>AI-generated cold emails for UK businesses</p>
-      </div>
-      <div id="api-banner" class="highlight-box mb-4" style="display:none;">
-        ⚠️ No Claude API key set. <a onclick="nav('settings',null)" style="color:var(--accent);cursor:pointer;text-decoration:underline;">Add it in Settings</a> to generate emails.
-      </div>
-      <div class="grid-2">
-        <div class="card">
-          <div class="card-header"><span class="card-title">Prospect Details</span></div>
-          <div class="form-group">
-            <label class="form-label">UK Business Niche</label>
-            <select class="form-select" id="niche">
-              <option value="takeaway">Takeaway / Restaurant</option>
-              <option value="estate_agent">Estate Agent</option>
-              <option value="garage">Car Garage / MOT Centre</option>
-              <option value="accountant">Accountant / Bookkeeper</option>
-              <option value="dental">Dental Practice</option>
-              <option value="gym">Gym / Personal Trainer</option>
-              <option value="salon">Hair Salon / Barber</option>
-              <option value="solicitor">Solicitor / Law Firm</option>
-              <option value="plumber">Plumber / Electrician</option>
-              <option value="letting">Letting Agency</option>
-              <option value="physio">Physiotherapy / Clinic</option>
-              <option value="ecom">E-commerce / Shopify Store</option>
-            </select>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">Business Name</label>
-              <input class="form-input" id="biz-name" placeholder="Smith & Sons Garage" />
-            </div>
-            <div class="form-group">
-              <label class="form-label">Owner / Contact</label>
-              <input class="form-input" id="owner" placeholder="Dave Smith" />
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label">City / Area</label>
-            <input class="form-input" id="city" placeholder="Manchester, Birmingham, London..." />
-          </div>
-          <div class="form-group">
-            <label class="form-label">Automation to Offer</label>
-            <select class="form-select" id="offer">
-              <option value="lead_bot">AI Lead Reply Bot — responds to enquiries in 60 seconds</option>
-              <option value="review">Automated Google Review Collection</option>
-              <option value="booking">Smart Booking + Reminder System</option>
-              <option value="social">Weekly AI Social Media Content</option>
-              <option value="followup">Customer Follow-up & Re-engagement</option>
-              <option value="invoice">Automated Invoice Chasing</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Email Tone</label>
-            <select class="form-select" id="tone">
-              <option value="casual_uk">Casual British (best results)</option>
-              <option value="professional_uk">Professional British</option>
-              <option value="friendly_uk">Friendly & Direct</option>
-            </select>
-          </div>
-          <button class="btn btn-primary" style="width:100%" onclick="genEmail()" id="gen-btn">✨ Generate Email</button>
-        </div>
-        <div class="card">
-          <div class="card-header">
-            <span class="card-title">Generated Email</span>
-            <div class="flex-gap">
-              <button class="btn btn-sm btn-ghost" onclick="copyEl('email-out')">Copy</button>
-              <button class="btn btn-sm btn-ghost" onclick="saveLeadFromOutreach()">+ CRM</button>
-            </div>
-          </div>
-          <div class="output-box" id="email-out">Your personalised UK cold email will appear here...
-
-Fill in the prospect details and click Generate.</div>
-          <div class="mt-4">
-            <div class="flex-between mb-4">
-              <span class="card-title" style="font-size:11px">Follow-up Sequence</span>
-              <button class="btn btn-sm btn-ghost" onclick="genFollowup()">Generate</button>
-            </div>
-            <div class="output-box" id="followup-out" style="min-height:70px;font-size:12px;">Follow-up emails appear here...</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card mt-4">
-        <div class="card-header"><span class="card-title">Where to Find UK Business Emails (Free)</span></div>
-        <div class="grid-3">
-          <div style="padding:14px;background:var(--surface2);border-radius:8px;">
-            <div style="font-size:18px;margin-bottom:8px;">🗺️</div>
-            <div style="font-weight:600;font-size:13px;margin-bottom:4px;">Google Maps UK</div>
-            <div style="font-size:12px;color:var(--muted);">Search "takeaways Manchester" → click each → find email on their website. Free. 50 leads/day.</div>
-          </div>
-          <div style="padding:14px;background:var(--surface2);border-radius:8px;">
-            <div style="font-size:18px;margin-bottom:8px;">📋</div>
-            <div style="font-weight:600;font-size:13px;margin-bottom:4px;">Yell.com / Thomson</div>
-            <div style="font-size:12px;color:var(--muted);">UK business directory. Search by niche + city. Most listings have email or contact form. Free.</div>
-          </div>
-          <div style="padding:14px;background:var(--surface2);border-radius:8px;">
-            <div style="font-size:18px;margin-bottom:8px;">🔍</div>
-            <div style="font-weight:600;font-size:13px;margin-bottom:4px;">Apollo.io (Free)</div>
-            <div style="font-size:12px;color:var(--muted);">Filter by UK, industry, company size. 50 verified emails free/month. Best for B2B niches.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- LEADS CRM -->
-    <div id="page-leads" class="page">
-      <div class="page-header flex-between">
-        <div><h1>Lead CRM</h1><p>Track UK prospects from cold to paid</p></div>
-        <button class="btn btn-primary" onclick="openLead()">+ Add Lead</button>
-      </div>
-      <div id="lead-form" class="card mb-4" style="display:none;">
-        <div class="card-header">
-          <span class="card-title">New Lead</span>
-          <button class="btn btn-sm btn-ghost" onclick="closeLead()">Cancel</button>
-        </div>
-        <div class="form-row">
-          <div class="form-group"><label class="form-label">Business Name *</label><input class="form-input" id="l-biz" placeholder="Smith & Sons"/></div>
-          <div class="form-group"><label class="form-label">Contact Name</label><input class="form-input" id="l-name" placeholder="Dave Smith"/></div>
-        </div>
-        <div class="form-row">
-          <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="l-email" placeholder="dave@smithsons.co.uk" type="email"/></div>
-          <div class="form-group"><label class="form-label">City</label><input class="form-input" id="l-city" placeholder="Manchester"/></div>
-        </div>
-        <div class="form-row">
-          <div class="form-group"><label class="form-label">Niche</label><input class="form-input" id="l-niche" placeholder="Car Garage"/></div>
-          <div class="form-group"><label class="form-label">Deal Value (£)</label><input class="form-input" id="l-val" placeholder="297" type="number"/></div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Status</label>
-            <select class="form-select" id="l-status">
-              <option value="new">New</option><option value="emailed">Emailed</option>
-              <option value="replied">Replied</option><option value="page_visited">Visited Sales Page</option>
-              <option value="paid">Paid ✅</option><option value="lost">Lost</option>
-            </select>
-          </div>
-          <div class="form-group"><label class="form-label">Notes</label><input class="form-input" id="l-notes" placeholder="Any notes..."/></div>
-        </div>
-        <button class="btn btn-success" onclick="saveLead()">Save Lead</button>
-      </div>
-      <div class="card mb-4">
-        <div class="card-header"><span class="card-title">Pipeline</span></div>
-        <div class="pipeline" id="pipeline"></div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Recent Customers</div>
+        <div id="dash-customers"><div class="empty">No customers yet</div></div>
       </div>
       <div class="card">
-        <div class="card-header">
-          <span class="card-title">All Leads</span>
-          <input class="form-input" id="l-search" placeholder="Search..." style="width:180px;padding:6px 10px" oninput="renderLeads()"/>
-        </div>
-        <table class="table">
-          <thead><tr><th>Business</th><th>Contact</th><th>City</th><th>Niche</th><th>Status</th><th>Value</th><th></th></tr></thead>
-          <tbody id="leads-tbody"><tr><td colspan="7" style="text-align:center;color:var(--muted);padding:40px">No leads yet.</td></tr></tbody>
-        </table>
+        <div class="card-title">Next Tasks</div>
+        <div id="dash-todos"></div>
+        <button class="btn btn-ghost" style="width:100%;margin-top:10px;font-size:12px" onclick="nav('todo',document.querySelector('[onclick*=todo]'))">View all →</button>
       </div>
     </div>
-
-    <!-- N8N WORKFLOWS -->
-    <div id="page-n8n" class="page">
-      <div class="page-header">
-        <h1>n8n Workflow Files</h1>
-        <p>Copy and import these into your n8n instance to automate everything</p>
+    <div class="grid-3 mt-4">
+      <div class="card" style="text-align:center;cursor:pointer" onclick="nav('customers',document.querySelector('[onclick*=customers]'))">
+        <div style="font-size:28px;margin-bottom:8px">👥</div>
+        <div style="font-weight:600;font-size:14px">Add Customer</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px">Track a new paying client</div>
       </div>
-      <div class="highlight-box mb-4">
-        <strong>What is n8n?</strong> Free automation tool (like Zapier but self-hosted and unlimited).
-        Install free at <code>n8n.io</code> or run locally. Import these JSON files to get all automations working.
+      <div class="card" style="text-align:center;cursor:pointer" onclick="nav('workflows',document.querySelector('[onclick*=workflows]'))">
+        <div style="font-size:28px;margin-bottom:8px">⚡</div>
+        <div style="font-weight:600;font-size:14px">Manage Flows</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px">Track ManyChat setups</div>
       </div>
-      <div class="grid-2 mb-4">
-        <div class="card">
-          <div class="card-header">
-            <span class="card-title">Workflow 1: Lead Scraper + Email Sender</span>
-            <button class="btn btn-sm btn-success" onclick="copyEl('wf1')">Copy JSON</button>
-          </div>
-          <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">Runs daily. Reads leads from a Google Sheet, calls Claude API to personalise each email, sends via Gmail. Marks sent in sheet.</p>
-          <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px;">
-            <div class="flex-between" style="font-size:12px;"><span>Trigger</span><span style="color:var(--success)">Daily schedule (9am UK time)</span></div>
-            <div class="flex-between" style="font-size:12px;"><span>Input</span><span style="color:var(--muted)">Google Sheet with leads</span></div>
-            <div class="flex-between" style="font-size:12px;"><span>AI</span><span style="color:var(--accent)">Claude personalises each email</span></div>
-            <div class="flex-between" style="font-size:12px;"><span>Sends via</span><span style="color:var(--muted)">Gmail (your account)</span></div>
-            <div class="flex-between" style="font-size:12px;"><span>Limit</span><span style="color:var(--muted)">20 emails/day (safe for deliverability)</span></div>
-          </div>
-          <pre id="wf1" style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;font-size:10px;overflow:auto;max-height:200px;color:var(--muted);line-height:1.5">{
-  "name": "UK Lead Outreach — Daily Email Sender",
-  "nodes": [
-    {
-      "type": "n8n-nodes-base.scheduleTrigger",
-      "name": "Daily 9am UK",
-      "parameters": {
-        "rule": { "interval": [{"field":"cronExpression","expression":"0 9 * * 1-5"}] }
-      }
-    },
-    {
-      "type": "n8n-nodes-base.googleSheets",
-      "name": "Get Unsent Leads",
-      "parameters": {
-        "operation": "readRows",
-        "sheetId": "YOUR_SHEET_ID",
-        "range": "Leads!A:G",
-        "filterRows": true
-      }
-    },
-    {
-      "type": "n8n-nodes-base.splitInBatches",
-      "name": "Process 20/day",
-      "parameters": { "batchSize": 20 }
-    },
-    {
-      "type": "n8n-nodes-base.httpRequest",
-      "name": "Claude — Write Email",
-      "parameters": {
-        "method": "POST",
-        "url": "https://api.anthropic.com/v1/messages",
-        "headers": {
-          "x-api-key": "YOUR_CLAUDE_API_KEY",
-          "anthropic-version": "2023-06-01"
-        },
-        "body": {
-          "model": "claude-haiku-4-5-20251001",
-          "max_tokens": 500,
-          "messages": [{
-            "role": "user",
-            "content": "Write a short UK cold email to {{$json.business_name}}, a {{$json.niche}} in {{$json.city}}. Offer our AI automation service. Include subject line. 4 sentences max. Casual British tone. CTA: visit [YOUR_SALES_PAGE_URL]. Sign off as [YOUR_NAME]."
-          }]
-        }
-      }
-    },
-    {
-      "type": "n8n-nodes-base.gmail",
-      "name": "Send Email",
-      "parameters": {
-        "to": "={{$json.email}}",
-        "subject": "={{$json.claude_subject}}",
-        "message": "={{$json.claude_body}}"
-      }
-    },
-    {
-      "type": "n8n-nodes-base.googleSheets",
-      "name": "Mark as Sent",
-      "parameters": {
-        "operation": "updateRow",
-        "sheetId": "YOUR_SHEET_ID",
-        "values": { "status": "emailed", "sent_date": "={{$now}}" }
-      }
-    }
-  ]
-}</pre>
-        </div>
-        <div class="card">
-          <div class="card-header">
-            <span class="card-title">Workflow 2: Follow-Up Sequence</span>
-            <button class="btn btn-sm btn-success" onclick="copyEl('wf2')">Copy JSON</button>
-          </div>
-          <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">Checks daily for leads emailed 3, 7, or 14 days ago with no reply. Sends appropriate follow-up. Stops automatically on reply.</p>
-          <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px;">
-            <div class="flex-between" style="font-size:12px;"><span>Trigger</span><span style="color:var(--success)">Daily schedule</span></div>
-            <div class="flex-between" style="font-size:12px;"><span>Checks</span><span style="color:var(--muted)">Days since first email</span></div>
-            <div class="flex-between" style="font-size:12px;"><span>Sends</span><span style="color:var(--accent)">3 follow-ups then stops</span></div>
-            <div class="flex-between" style="font-size:12px;"><span>Auto-stops</span><span style="color:var(--success)">When reply detected</span></div>
-          </div>
-          <pre id="wf2" style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;font-size:10px;overflow:auto;max-height:200px;color:var(--muted);line-height:1.5">{
-  "name": "UK Follow-Up Sequence — Days 3/7/14",
-  "nodes": [
-    {
-      "type": "n8n-nodes-base.scheduleTrigger",
-      "name": "Daily 10am",
-      "parameters": {
-        "rule": { "interval": [{"field":"cronExpression","expression":"0 10 * * 1-5"}] }
-      }
-    },
-    {
-      "type": "n8n-nodes-base.googleSheets",
-      "name": "Get Emailed No Reply",
-      "parameters": {
-        "operation": "readRows",
-        "filter": "status = emailed AND replied = false"
-      }
-    },
-    {
-      "type": "n8n-nodes-base.if",
-      "name": "Check Days Since Email",
-      "parameters": {
-        "conditions": [
-          {"value1":"={{$json.days_since_email}}","operation":"equals","value2":3},
-          {"value1":"={{$json.days_since_email}}","operation":"equals","value2":7},
-          {"value1":"={{$json.days_since_email}}","operation":"equals","value2":14}
-        ]
-      }
-    },
-    {
-      "type": "n8n-nodes-base.httpRequest",
-      "name": "Claude — Write Follow-up",
-      "parameters": {
-        "body": {
-          "messages": [{
-            "role": "user",
-            "content": "Write follow-up #{{$json.followup_number}} for {{$json.business_name}}. Day {{$json.days_since_email}} follow-up. Keep very short. British casual. Last one (day 14) is a 'closing the loop' email."
-          }]
-        }
-      }
-    },
-    {
-      "type": "n8n-nodes-base.gmail",
-      "name": "Send Follow-up",
-      "parameters": {
-        "to": "={{$json.email}}",
-        "subject": "Re: ={{$json.original_subject}}"
-      }
-    }
-  ]
-}</pre>
-        </div>
-      </div>
-      <div class="grid-2">
-        <div class="card">
-          <div class="card-header">
-            <span class="card-title">Workflow 3: Stripe → Auto Onboarding</span>
-            <button class="btn btn-sm btn-success" onclick="copyEl('wf3')">Copy JSON</button>
-          </div>
-          <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">When someone pays on Stripe, this instantly sends them a welcome email + onboarding form link + adds to CRM as paid.</p>
-          <pre id="wf3" style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;font-size:10px;overflow:auto;max-height:180px;color:var(--muted);line-height:1.5">{
-  "name": "Stripe Payment → Auto Onboarding",
-  "nodes": [
-    {
-      "type": "n8n-nodes-base.webhook",
-      "name": "Stripe Webhook",
-      "parameters": {
-        "path": "stripe-payment",
-        "events": ["payment_intent.succeeded"]
-      }
-    },
-    {
-      "type": "n8n-nodes-base.gmail",
-      "name": "Send Welcome + Onboarding",
-      "parameters": {
-        "to": "={{$json.customer_email}}",
-        "subject": "Welcome! Here's what happens next",
-        "message": "Hi {{$json.customer_name}},\n\nPayment received — thank you!\n\nTo get your automation set up, please fill in this quick form so I have everything I need:\n\n[YOUR_TALLY_FORM_LINK]\n\nI'll have everything live within 48 hours.\n\nTalk soon,\n[YOUR_NAME]"
-      }
-    },
-    {
-      "type": "n8n-nodes-base.googleSheets",
-      "name": "Add to Paid Clients",
-      "parameters": {
-        "operation": "appendRow",
-        "values": {
-          "business": "={{$json.customer_name}}",
-          "email": "={{$json.customer_email}}",
-          "amount": "={{$json.amount}}",
-          "date": "={{$now}}",
-          "status": "paid — awaiting onboarding"
-        }
-      }
-    }
-  ]
-}</pre>
-        </div>
-        <div class="card">
-          <div class="card-header">
-            <span class="card-title">Workflow 4: Monthly Client Report</span>
-            <button class="btn btn-sm btn-success" onclick="copyEl('wf4')">Copy JSON</button>
-          </div>
-          <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">1st of every month: Claude generates a results summary for each client and emails it automatically. Justifies your retainer.</p>
-          <pre id="wf4" style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;font-size:10px;overflow:auto;max-height:180px;color:var(--muted);line-height:1.5">{
-  "name": "Monthly Client Report — Auto Email",
-  "nodes": [
-    {
-      "type": "n8n-nodes-base.scheduleTrigger",
-      "name": "1st of Month",
-      "parameters": {
-        "rule": { "interval": [{"field":"cronExpression","expression":"0 9 1 * *"}] }
-      }
-    },
-    {
-      "type": "n8n-nodes-base.googleSheets",
-      "name": "Get All Active Clients",
-      "parameters": {
-        "filter": "status = active"
-      }
-    },
-    {
-      "type": "n8n-nodes-base.httpRequest",
-      "name": "Claude — Write Report",
-      "parameters": {
-        "body": {
-          "messages": [{
-            "role": "user",
-            "content": "Write a short monthly report email for {{$json.business_name}}. Their automation: {{$json.automation_type}}. Stats this month: {{$json.stats}}. Keep it positive, 3–4 bullet points. British English. Remind them their retainer renews on [DATE]."
-          }]
-        }
-      }
-    },
-    {
-      "type": "n8n-nodes-base.gmail",
-      "name": "Send Monthly Report",
-      "parameters": {
-        "to": "={{$json.email}}",
-        "subject": "Your automation results — {{$now.format('MMMM yyyy')}}"
-      }
-    }
-  ]
-}</pre>
-        </div>
-      </div>
-      <!-- WORKFLOW 5 -->
-      <div class="card mt-4" style="border-color:rgba(0,212,170,0.3);background:rgba(0,212,170,0.03)">
-        <div class="card-header">
-          <span class="card-title" style="color:var(--success)">Workflow 5: Auto-Deploy Client Automations (Claude Agent)</span>
-          <button class="btn btn-sm btn-success" onclick="copyEl('wf5')">Copy JSON</button>
-        </div>
-        <div style="background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.2);border-radius:8px;padding:14px;margin-bottom:16px;font-size:13px;line-height:1.7;">
-          <strong style="color:var(--success)">This is the "zero touch" workflow.</strong> When a client pays and fills your Tally onboarding form, this workflow fires automatically. Claude reads their business details, generates a fully customised n8n workflow JSON for them, then uses the n8n API to create and activate it — all without you doing anything.<br><br>
-          <strong>What gets auto-deployed:</strong> their AI reply bot, email templates, lead tracking sheet, and monthly report scheduler — all pre-filled with their business name, niche, and location.<br><br>
-          <strong>What the client does once (5 mins):</strong> Click "Connect Gmail" and "Connect Google Business" — OAuth logins you legally cannot do on their behalf.
-        </div>
-        <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px;">
-          <div class="flex-between" style="font-size:12px;padding:8px 12px;background:var(--surface2);border-radius:6px;"><span>Trigger</span><span style="color:var(--success)">Tally form webhook (fires on form submit)</span></div>
-          <div class="flex-between" style="font-size:12px;padding:8px 12px;background:var(--surface2);border-radius:6px;"><span>Claude does</span><span style="color:var(--accent)">Generates custom workflow JSON for that client</span></div>
-          <div class="flex-between" style="font-size:12px;padding:8px 12px;background:var(--surface2);border-radius:6px;"><span>n8n API does</span><span style="color:var(--success)">Creates + activates their workflow automatically</span></div>
-          <div class="flex-between" style="font-size:12px;padding:8px 12px;background:var(--surface2);border-radius:6px;"><span>Client gets</span><span style="color:var(--muted)">Welcome email + 2-step connection guide</span></div>
-          <div class="flex-between" style="font-size:12px;padding:8px 12px;background:var(--surface2);border-radius:6px;"><span>Your input</span><span style="color:var(--success)">Zero — completely hands-free</span></div>
-        </div>
-        <pre id="wf5" style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px;font-size:10px;overflow:auto;max-height:320px;color:var(--muted);line-height:1.6">{
-  "name": "AUTO-DEPLOY: Client Onboarding → Live Automation",
-  "description": "Fires when client submits Tally onboarding form. Claude generates their custom workflow, n8n API deploys it automatically.",
-  "nodes": [
-    {
-      "type": "n8n-nodes-base.webhook",
-      "name": "Tally Form Submitted",
-      "parameters": {
-        "path": "client-onboarding",
-        "method": "POST",
-        "responseMode": "onReceived"
-      },
-      "note": "Paste this webhook URL into your Tally form settings under 'Webhooks'"
-    },
-    {
-      "type": "n8n-nodes-base.set",
-      "name": "Extract Client Details",
-      "parameters": {
-        "values": {
-          "businessName": "={{$json.fields.business_name}}",
-          "ownerName": "={{$json.fields.owner_name}}",
-          "email": "={{$json.fields.email}}",
-          "niche": "={{$json.fields.business_type}}",
-          "city": "={{$json.fields.city}}",
-          "automationType": "={{$json.fields.automation_purchased}}",
-          "googleReviewLink": "={{$json.fields.google_review_link}}",
-          "websiteUrl": "={{$json.fields.website_url}}"
-        }
-      }
-    },
-    {
-      "type": "n8n-nodes-base.httpRequest",
-      "name": "Claude — Generate Custom Workflow JSON",
-      "parameters": {
-        "method": "POST",
-        "url": "https://api.anthropic.com/v1/messages",
-        "headers": {
-          "x-api-key": "YOUR_CLAUDE_API_KEY",
-          "anthropic-version": "2023-06-01",
-          "content-type": "application/json"
-        },
-        "body": {
-          "model": "claude-opus-4-6",
-          "max_tokens": 4000,
-          "messages": [{
-            "role": "user",
-            "content": "Generate a complete n8n workflow JSON for a UK small business automation.\n\nClient details:\n- Business: {{$json.businessName}}\n- Owner: {{$json.ownerName}}\n- Type: {{$json.niche}} in {{$json.city}}\n- Email: {{$json.email}}\n- Automation: {{$json.automationType}}\n- Google review link: {{$json.googleReviewLink}}\n- Website: {{$json.websiteUrl}}\n\nGenerate a complete, valid n8n workflow JSON that:\n1. Is customised with their actual business name, niche, and location\n2. Includes their email in all nodes that send to/from them\n3. Uses British English in all email templates\n4. References their specific business type in reply templates\n5. Has a webhook trigger so it can receive enquiries from their website\n6. Includes a Gmail node set up to send from a variable email address\n\nReturn ONLY the raw JSON object, no explanation, no markdown, no code blocks."
-          }]
-        }
-      }
-    },
-    {
-      "type": "n8n-nodes-base.set",
-      "name": "Parse Workflow JSON",
-      "parameters": {
-        "values": {
-          "workflowJson": "={{JSON.parse($json.content[0].text)}}"
-        }
-      }
-    },
-    {
-      "type": "n8n-nodes-base.httpRequest",
-      "name": "n8n API — Create Workflow",
-      "parameters": {
-        "method": "POST",
-        "url": "YOUR_N8N_URL/api/v1/workflows",
-        "headers": {
-          "X-N8N-API-KEY": "YOUR_N8N_API_KEY",
-          "content-type": "application/json"
-        },
-        "body": "={{JSON.stringify($json.workflowJson)}}",
-        "note": "Get your n8n API key from Settings > API in your n8n instance"
-      }
-    },
-    {
-      "type": "n8n-nodes-base.httpRequest",
-      "name": "n8n API — Activate Workflow",
-      "parameters": {
-        "method": "POST",
-        "url": "YOUR_N8N_URL/api/v1/workflows/={{$json.id}}/activate",
-        "headers": {
-          "X-N8N-API-KEY": "YOUR_N8N_API_KEY"
-        }
-      }
-    },
-    {
-      "type": "n8n-nodes-base.googleSheets",
-      "name": "Create Client Tracking Sheet Row",
-      "parameters": {
-        "operation": "appendRow",
-        "sheetId": "YOUR_CLIENTS_SHEET_ID",
-        "values": {
-          "business": "={{$node['Extract Client Details'].json.businessName}}",
-          "owner": "={{$node['Extract Client Details'].json.ownerName}}",
-          "email": "={{$node['Extract Client Details'].json.email}}",
-          "automation": "={{$node['Extract Client Details'].json.automationType}}",
-          "workflow_id": "={{$json.id}}",
-          "deployed_at": "={{$now}}",
-          "status": "live — awaiting client Gmail connection"
-        }
-      }
-    },
-    {
-      "type": "n8n-nodes-base.gmail",
-      "name": "Send Client Welcome + Connection Guide",
-      "parameters": {
-        "to": "={{$node['Extract Client Details'].json.email}}",
-        "subject": "Your automation is ready — 2 quick steps to go live",
-        "message": "Hi {{$node['Extract Client Details'].json.ownerName}},\n\nGreat news — your {{$node['Extract Client Details'].json.automationType}} for {{$node['Extract Client Details'].json.businessName}} has been built and is ready to activate.\n\nYou just need to do these 2 quick steps (takes about 5 minutes):\n\n1. Connect your Gmail so the automation can send from your address:\n   → [GMAIL_OAUTH_LINK]\n\n2. Confirm your Google Business details are correct:\n   → [GOOGLE_BUSINESS_LINK]\n\nOnce done, your automation will be fully live. I'll send you a confirmation email.\n\nAny questions at all, just reply to this email.\n\nAlex"
-      }
-    },
-    {
-      "type": "n8n-nodes-base.gmail",
-      "name": "Notify Yourself — New Client Deployed",
-      "parameters": {
-        "to": "YOUR_EMAIL",
-        "subject": "New client deployed: {{$node['Extract Client Details'].json.businessName}}",
-        "message": "Client auto-deployed successfully.\n\nBusiness: {{$node['Extract Client Details'].json.businessName}}\nOwner: {{$node['Extract Client Details'].json.ownerName}}\nEmail: {{$node['Extract Client Details'].json.email}}\nAutomation: {{$node['Extract Client Details'].json.automationType}}\nWorkflow ID: {{$node['n8n API — Create Workflow'].json.id}}\n\nNo action needed — waiting for client to connect Gmail."
-      }
-    }
-  ],
-  "connections": {
-    "Tally Form Submitted": { "main": [["Extract Client Details"]] },
-    "Extract Client Details": { "main": [["Claude — Generate Custom Workflow JSON"]] },
-    "Claude — Generate Custom Workflow JSON": { "main": [["Parse Workflow JSON"]] },
-    "Parse Workflow JSON": { "main": [["n8n API — Create Workflow"]] },
-    "n8n API — Create Workflow": { "main": [["n8n API — Activate Workflow"]] },
-    "n8n API — Activate Workflow": { "main": [["Create Client Tracking Sheet Row"]] },
-    "Create Client Tracking Sheet Row": { "main": [["Send Client Welcome + Connection Guide"]] },
-    "Send Client Welcome + Connection Guide": { "main": [["Notify Yourself — New Client Deployed"]] }
-  }
-}</pre>
-        <div class="mt-4">
-          <div class="card-header" style="margin-bottom:12px;"><span class="card-title">What You Need to Replace</span></div>
-          <div style="display:flex;flex-direction:column;gap:7px;font-size:12px;">
-            <div style="padding:8px 12px;background:var(--surface2);border-radius:7px;"><code>YOUR_CLAUDE_API_KEY</code> — your Anthropic key from console.anthropic.com (use <strong>claude-opus-4-6</strong> for workflow generation — it writes better JSON)</div>
-            <div style="padding:8px 12px;background:var(--surface2);border-radius:7px;"><code>YOUR_N8N_URL</code> — your n8n instance URL, e.g. <code>https://yourname.app.n8n.cloud</code></div>
-            <div style="padding:8px 12px;background:var(--surface2);border-radius:7px;"><code>YOUR_N8N_API_KEY</code> — in n8n go to Settings → API → Create API Key</div>
-            <div style="padding:8px 12px;background:var(--surface2);border-radius:7px;"><code>YOUR_CLIENTS_SHEET_ID</code> — Google Sheet ID where your client list lives</div>
-            <div style="padding:8px 12px;background:var(--surface2);border-radius:7px;"><code>YOUR_EMAIL</code> — your email to receive the "new client deployed" notification</div>
-          </div>
-        </div>
-        <div class="mt-4" style="background:rgba(108,99,255,0.08);border:1px solid rgba(108,99,255,0.2);border-radius:10px;padding:16px;font-size:13px;line-height:1.8;">
-          <strong>Tally form fields to create (free at tally.so):</strong><br>
-          <code>business_name</code> · <code>owner_name</code> · <code>email</code> · <code>business_type</code> · <code>city</code> · <code>automation_purchased</code> · <code>google_review_link</code> · <code>website_url</code><br><br>
-          Paste the webhook URL from this workflow into Tally → Integrations → Webhooks.
-        </div>
-      </div>
-
-      <!-- WORKFLOW 6 -->
-      <div class="card mt-4" style="border-color:rgba(255,179,71,0.3);background:rgba(255,179,71,0.03)">
-        <div class="card-header">
-          <span class="card-title" style="color:var(--warn)">Workflow 6: AI Sales Responder (Claude closes for you)</span>
-          <button class="btn btn-sm btn-warn" onclick="copyEl('wf6')">Copy JSON</button>
-        </div>
-        <div style="background:rgba(255,179,71,0.08);border:1px solid rgba(255,179,71,0.2);border-radius:8px;padding:14px;margin-bottom:16px;font-size:13px;line-height:1.7;">
-          <strong style="color:var(--warn)">This handles every reply to your cold emails — without you.</strong> When a prospect replies, n8n intercepts the email, Claude reads the full context (your original email + their reply), then writes and sends a response. Claude handles "how does it work?", "how much?", "sounds interesting tell me more", and even pushes back on objections — all automatically in British English. The goal of every reply is to get them to visit your sales page and buy.
-        </div>
-        <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px;">
-          <div class="flex-between" style="font-size:12px;padding:8px 12px;background:var(--surface2);border-radius:6px;"><span>Trigger</span><span style="color:var(--warn)">New reply in Gmail (label: outreach-replies)</span></div>
-          <div class="flex-between" style="font-size:12px;padding:8px 12px;background:var(--surface2);border-radius:6px;"><span>Claude reads</span><span style="color:var(--accent)">Full email thread + prospect's business type</span></div>
-          <div class="flex-between" style="font-size:12px;padding:8px 12px;background:var(--surface2);border-radius:6px;"><span>Claude writes</span><span style="color:var(--accent)">Personalised reply in British English</span></div>
-          <div class="flex-between" style="font-size:12px;padding:8px 12px;background:var(--surface2);border-radius:6px;"><span>Handles</span><span style="color:var(--muted)">Interest, questions, objections, pricing, "not now"</span></div>
-          <div class="flex-between" style="font-size:12px;padding:8px 12px;background:var(--surface2);border-radius:6px;"><span>Always ends with</span><span style="color:var(--success)">Link to your sales page</span></div>
-          <div class="flex-between" style="font-size:12px;padding:8px 12px;background:var(--surface2);border-radius:6px;"><span>You see</span><span style="color:var(--muted)">A copy of every AI reply (Bcc to your email)</span></div>
-        </div>
-        <pre id="wf6" style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px;font-size:10px;overflow:auto;max-height:340px;color:var(--muted);line-height:1.6">{
-  "name": "AI Sales Responder — Claude handles all replies",
-  "nodes": [
-    {
-      "type": "n8n-nodes-base.gmailTrigger",
-      "name": "Watch for Prospect Replies",
-      "parameters": {
-        "pollTimes": { "item": [{"mode":"everyMinute"}] },
-        "filters": {
-          "labelIds": ["INBOX"],
-          "q": "label:outreach-replies is:unread"
-        }
-      },
-      "note": "In Gmail: create a filter — if someone replies to your cold email threads, auto-label as 'outreach-replies'. This workflow only fires on those."
-    },
-    {
-      "type": "n8n-nodes-base.gmail",
-      "name": "Get Full Thread",
-      "parameters": {
-        "operation": "getThread",
-        "threadId": "={{$json.threadId}}"
-      }
-    },
-    {
-      "type": "n8n-nodes-base.set",
-      "name": "Build Context",
-      "parameters": {
-        "values": {
-          "senderEmail": "={{$json.from}}",
-          "senderName": "={{$json.from.split('<')[0].trim()}}",
-          "theirReply": "={{$json.text || $json.snippet}}",
-          "originalSubject": "={{$json.subject}}",
-          "fullThread": "={{$json.threadMessages.map(m => m.from + ': ' + m.snippet).join('\n---\n')}}"
-        }
-      }
-    },
-    {
-      "type": "n8n-nodes-base.httpRequest",
-      "name": "Claude — Write Sales Reply",
-      "parameters": {
-        "method": "POST",
-        "url": "https://api.anthropic.com/v1/messages",
-        "headers": {
-          "x-api-key": "YOUR_CLAUDE_API_KEY",
-          "anthropic-version": "2023-06-01",
-          "content-type": "application/json"
-        },
-        "body": {
-          "model": "claude-opus-4-6",
-          "max_tokens": 600,
-          "system": "You are Alex, a friendly UK AI automation consultant replying to cold email prospects. You help small UK businesses automate their customer follow-ups, reviews, and bookings using AI. Your goal is to answer their question genuinely, handle any objection naturally, and guide them towards visiting the sales page to buy. Never be pushy. Be conversational British English. Always end with the sales page link. Your sales page: YOUR_SALES_PAGE_URL. Price: £297 setup, £147/month.",
-          "messages": [{
-            "role": "user",
-            "content": "A prospect has replied to my cold outreach email. Here is the email thread:\n\n{{$json.fullThread}}\n\nTheir latest reply:\n{{$json.theirReply}}\n\nTheir name: {{$json.senderName}}\n\nWrite a reply that:\n1. Directly answers whatever they said or asked\n2. If they show interest — give them 1-2 specific benefits relevant to their type of business\n3. If they have an objection (price, time, trust) — address it genuinely and briefly\n4. If they said not now / not interested — be gracious and leave the door open\n5. Always include the sales page link naturally in the reply\n6. Keep it under 5 sentences\n7. Sign off as Alex\n\nOutput only the email body (no subject line)."
-          }]
-        }
-      }
-    },
-    {
-      "type": "n8n-nodes-base.gmail",
-      "name": "Send AI Reply",
-      "parameters": {
-        "operation": "reply",
-        "threadId": "={{$node['Watch for Prospect Replies'].json.threadId}}",
-        "to": "={{$node['Build Context'].json.senderEmail}}",
-        "message": "={{$json.content[0].text}}",
-        "bccList": "YOUR_EMAIL",
-        "note": "Bcc sends you a copy of every AI reply so you can monitor quality"
-      }
-    },
-    {
-      "type": "n8n-nodes-base.gmail",
-      "name": "Mark as Read",
-      "parameters": {
-        "operation": "markAsRead",
-        "messageId": "={{$node['Watch for Prospect Replies'].json.id}}"
-      }
-    },
-    {
-      "type": "n8n-nodes-base.googleSheets",
-      "name": "Log Reply in CRM",
-      "parameters": {
-        "operation": "appendRow",
-        "sheetId": "YOUR_CLIENTS_SHEET_ID",
-        "values": {
-          "email": "={{$node['Build Context'].json.senderEmail}}",
-          "name": "={{$node['Build Context'].json.senderName}}",
-          "their_message": "={{$node['Build Context'].json.theirReply}}",
-          "ai_replied_at": "={{$now}}",
-          "status": "replied — AI responded"
-        }
-      }
-    }
-  ],
-  "connections": {
-    "Watch for Prospect Replies": { "main": [["Get Full Thread"]] },
-    "Get Full Thread": { "main": [["Build Context"]] },
-    "Build Context": { "main": [["Claude — Write Sales Reply"]] },
-    "Claude — Write Sales Reply": { "main": [["Send AI Reply"]] },
-    "Send AI Reply": { "main": [["Mark as Read"]] },
-    "Mark as Read": { "main": [["Log Reply in CRM"]] }
-  }
-}</pre>
-        <div style="background:rgba(108,99,255,0.08);border:1px solid rgba(108,99,255,0.2);border-radius:10px;padding:14px;margin-top:14px;font-size:12px;line-height:1.8;">
-          <strong>Gmail setup required (one-time, 2 mins):</strong><br>
-          In Gmail → Settings → Filters → Create filter: <code>subject:(Re:)</code> from threads you started → Apply label <code>outreach-replies</code>. This makes sure the workflow only fires on replies to YOUR cold emails, not all your inbox.
-        </div>
-      </div>
-
-      <div class="card mt-4">
-        <div class="card-header"><span class="card-title">How to Import These Workflows</span></div>
-        <div class="grid-3">
-          <div style="padding:14px;background:var(--surface2);border-radius:8px;">
-            <div style="font-weight:600;font-size:13px;margin-bottom:8px;">1. Install n8n</div>
-            <div style="font-size:12px;color:var(--muted);line-height:1.6;">Go to <code>n8n.io</code> → sign up for cloud free trial, or install locally: <code>npx n8n</code></div>
-          </div>
-          <div style="padding:14px;background:var(--surface2);border-radius:8px;">
-            <div style="font-weight:600;font-size:13px;margin-bottom:8px;">2. Import JSON</div>
-            <div style="font-size:12px;color:var(--muted);line-height:1.6;">In n8n: <code>+ New Workflow</code> → three dots menu → <code>Import from JSON</code> → paste the JSON above</div>
-          </div>
-          <div style="padding:14px;background:var(--surface2);border-radius:8px;">
-            <div style="font-weight:600;font-size:13px;margin-bottom:8px;">3. Add credentials</div>
-            <div style="font-size:12px;color:var(--muted);line-height:1.6;">Connect your Gmail, Claude API key, Google Sheets, and Stripe in n8n's credentials panel. Takes 15 mins.</div>
-          </div>
-        </div>
+      <div class="card" style="text-align:center;cursor:pointer" onclick="nav('todo',document.querySelector('[onclick*=todo]'))">
+        <div style="font-size:28px;margin-bottom:8px">✅</div>
+        <div style="font-weight:600;font-size:14px">To-Do List</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px" id="dash-todo-count">Loading...</div>
       </div>
     </div>
+  </div>
 
-    <!-- UK SERVICES -->
-    <div id="page-services" class="page">
-      <div class="page-header">
-        <h1>UK Automation Services</h1>
-        <p>Pre-packaged automations tuned for UK businesses. Build once, sell many times.</p>
+  <!-- CUSTOMERS -->
+  <div id="page-customers" class="page">
+    <div class="page-header flex-between">
+      <div><h1>Customers</h1><p>All paying clients</p></div>
+      <button class="btn btn-primary" onclick="openCustomerForm()">+ Add Customer</button>
+    </div>
+    <div id="customer-form" class="card mb-4" style="display:none">
+      <div class="flex-between mb-4">
+        <div class="card-title">New Customer</div>
+        <button class="btn btn-ghost btn-sm" onclick="closeCustomerForm()">Cancel</button>
       </div>
-      <div class="tabs">
-        <div class="tab active" onclick="filterSvc('all',this)">All</div>
-        <div class="tab" onclick="filterSvc('quick',this)">Quick (1–2hrs)</div>
-        <div class="tab" onclick="filterSvc('mid',this)">Mid Tier</div>
-        <div class="tab" onclick="filterSvc('premium',this)">Premium</div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Business Name *</label><input class="form-input" id="c-biz" placeholder="Dave's Garage"/></div>
+        <div class="form-group"><label class="form-label">Owner Name</label><input class="form-input" id="c-name" placeholder="Dave Smith"/></div>
       </div>
-      <div class="grid-3" id="svc-grid"></div>
-      <div id="svc-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:200;overflow-y:auto;">
-        <div style="max-width:660px;margin:50px auto;padding:16px;">
-          <div class="card" id="svc-detail"></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="c-email" placeholder="dave@davesgarage.co.uk" type="email"/></div>
+        <div class="form-group"><label class="form-label">Instagram / Facebook</label><input class="form-input" id="c-social" placeholder="@davesgarage"/></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Business Type</label><input class="form-input" id="c-type" placeholder="Car Garage"/></div>
+        <div class="form-group"><label class="form-label">City</label><input class="form-input" id="c-city" placeholder="Manchester"/></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Status</label>
+          <select class="form-select" id="c-status">
+            <option value="active">Active ✅</option>
+            <option value="pending">Pending Setup ⏳</option>
+            <option value="inactive">Inactive ❌</option>
+          </select>
         </div>
+        <div class="form-group"><label class="form-label">Monthly Fee (£)</label><input class="form-input" id="c-fee" value="47" type="number"/></div>
+      </div>
+      <div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="c-notes" placeholder="Any notes..."></textarea></div>
+      <button class="btn btn-green" onclick="saveCustomer()">Save Customer</button>
+    </div>
+    <div class="card">
+      <div class="flex-between mb-4">
+        <div class="card-title">All Clients</div>
+        <input class="form-input" id="c-search" placeholder="Search..." style="width:180px;padding:6px 10px" oninput="renderCustomers()"/>
+      </div>
+      <table class="table">
+        <thead><tr><th>Business</th><th>Owner</th><th>Type</th><th>City</th><th>Status</th><th>Fee</th><th>Since</th><th></th></tr></thead>
+        <tbody id="customers-tbody"><tr><td colspan="8" class="empty">No customers yet.</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- MANYCHAT WORKFLOWS -->
+  <div id="page-workflows" class="page">
+    <div class="page-header flex-between">
+      <div><h1>ManyChat Flows</h1><p>Track setup progress for each client</p></div>
+      <button class="btn btn-primary" onclick="openWfForm()">+ Add Client Flow</button>
+    </div>
+    <div id="wf-form" class="card mb-4" style="display:none">
+      <div class="flex-between mb-4">
+        <div class="card-title">New ManyChat Setup</div>
+        <button class="btn btn-ghost btn-sm" onclick="closeWfForm()">Cancel</button>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Client Business *</label><input class="form-input" id="wf-biz" placeholder="Dave's Garage"/></div>
+        <div class="form-group"><label class="form-label">Instagram Handle</label><input class="form-input" id="wf-ig" placeholder="@davesgarage"/></div>
+      </div>
+      <div class="form-group"><label class="form-label">Their Calendly Link</label><input class="form-input" id="wf-cal" placeholder="calendly.com/davesgarage"/></div>
+      <div class="form-group"><label class="form-label">Notes</label><input class="form-input" id="wf-notes" placeholder="Any setup notes..."/></div>
+      <button class="btn btn-green" onclick="saveWorkflow()">Save</button>
+    </div>
+    <div id="workflows-list"><div class="empty">No workflows yet. Add your first client setup above.</div></div>
+  </div>
+
+  <!-- TO-DO LIST -->
+  <div id="page-todo" class="page">
+    <div class="page-header"><h1>To-Do List</h1><p>Everything you need to do to get live</p></div>
+    <div class="card mb-4">
+      <div class="flex-gap">
+        <input class="form-input" id="todo-input" placeholder="Add a new task..." style="flex:1" onkeydown="if(event.key==='Enter')addTodo()"/>
+        <select class="form-select" id="todo-cat" style="width:150px">
+          <option value="Setup">Setup</option>
+          <option value="Client">Client</option>
+          <option value="ManyChat">ManyChat</option>
+          <option value="Outreach">Outreach</option>
+          <option value="General">General</option>
+        </select>
+        <button class="btn btn-primary" onclick="addTodo()">+ Add</button>
       </div>
     </div>
+    <div class="section-title">Setup</div><div id="todo-Setup"></div>
+    <div class="section-title">ManyChat</div><div id="todo-ManyChat"></div>
+    <div class="section-title">Outreach</div><div id="todo-Outreach"></div>
+    <div class="section-title">Client</div><div id="todo-Client"></div>
+    <div class="section-title">General</div><div id="todo-General"></div>
+  </div>
 
-    <!-- SALES PAGE BUILDER -->
-    <div id="page-salespage" class="page">
-      <div class="page-header">
-        <h1>Sales Page Builder</h1>
-        <p>Generate a ready-to-host sales page that closes clients automatically</p>
-      </div>
-      <div class="grid-2">
-        <div class="card">
-          <div class="card-header"><span class="card-title">Page Configuration</span></div>
-          <div class="form-group">
-            <label class="form-label">Service to Sell</label>
-            <select class="form-select" id="sp-service">
-              <option>AI Lead Reply Bot</option>
-              <option>Google Review Automation</option>
-              <option>Smart Booking System</option>
-              <option>Social Media Automation</option>
-              <option>Invoice Chasing Bot</option>
-            </select>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">Setup Price (£)</label>
-              <input class="form-input" id="sp-price" value="297" type="number"/>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Monthly Retainer (£)</label>
-              <input class="form-input" id="sp-retainer" value="147" type="number"/>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Target Niche</label>
-            <input class="form-input" id="sp-niche" placeholder="e.g. Estate Agents, Restaurants..."/>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Your Name / Brand</label>
-            <input class="form-input" id="sp-name" placeholder="Your name"/>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Stripe Payment Link</label>
-            <input class="form-input" id="sp-stripe" placeholder="https://buy.stripe.com/..."/>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Loom Demo Video URL (optional)</label>
-            <input class="form-input" id="sp-video" placeholder="https://loom.com/share/..."/>
-          </div>
-          <button class="btn btn-primary" style="width:100%" onclick="buildSalesPage()">🛍️ Build Sales Page</button>
-        </div>
-        <div class="card">
-          <div class="card-header">
-            <span class="card-title">Preview</span>
-            <button class="btn btn-sm btn-success" onclick="downloadPage()">Download HTML</button>
-          </div>
-          <div id="sp-preview" style="background:var(--surface2);border-radius:8px;padding:16px;font-size:12px;color:var(--muted);min-height:300px;line-height:1.7;">
-            Fill in the details and click Build Sales Page to generate your automated sales page.<br><br>
-            The page includes:<br>
-            • Headline targeting your niche<br>
-            • Problem/solution copy<br>
-            • Demo video embed<br>
-            • 3 key benefits<br>
-            • Testimonials (placeholder)<br>
-            • Guarantee section<br>
-            • Stripe buy button<br>
-            • FAQ section<br><br>
-            Host it free on Netlify or GitHub Pages. Paste the URL in your cold emails.
-          </div>
-        </div>
-      </div>
-      <div class="card mt-4">
-        <div class="card-header"><span class="card-title">Free Hosting Options</span></div>
-        <div class="grid-3">
-          <div style="padding:14px;background:var(--surface2);border-radius:8px;">
-            <div style="font-weight:600;font-size:13px;margin-bottom:6px;">Netlify Drop (Free)</div>
-            <div style="font-size:12px;color:var(--muted);">Drag and drop your HTML file at <code>app.netlify.com/drop</code>. Get a live URL in 30 seconds. Free forever.</div>
-          </div>
-          <div style="padding:14px;background:var(--surface2);border-radius:8px;">
-            <div style="font-weight:600;font-size:13px;margin-bottom:6px;">GitHub Pages (Free)</div>
-            <div style="font-size:12px;color:var(--muted);">Push to a GitHub repo, enable Pages. Free hosting with custom domain support.</div>
-          </div>
-          <div style="padding:14px;background:var(--surface2);border-radius:8px;">
-            <div style="font-weight:600;font-size:13px;margin-bottom:6px;">Carrd.co (£9/yr)</div>
-            <div style="font-size:12px;color:var(--muted);">Easiest option. Drag and drop builder. Custom domain. Looks very professional for £9/year.</div>
-          </div>
-        </div>
+  <!-- REVENUE -->
+  <div id="page-revenue" class="page">
+    <div class="page-header"><h1>Revenue</h1><p>Your monthly income breakdown</p></div>
+    <div class="grid-4 mb-4">
+      <div class="stat"><div class="stat-label">Gross Revenue</div><div class="stat-value purple" id="r-gross">£0</div><div class="stat-sub">from all clients</div></div>
+      <div class="stat"><div class="stat-label">ManyChat Costs</div><div class="stat-value orange" id="r-cost">£0</div><div class="stat-sub">£12 per client</div></div>
+      <div class="stat"><div class="stat-label">Other Costs</div><div class="stat-value orange">~£25</div><div class="stat-sub">n8n + Claude API</div></div>
+      <div class="stat"><div class="stat-label">Net Profit</div><div class="stat-value green" id="r-profit">£0</div><div class="stat-sub">in your pocket</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Client Breakdown</div>
+      <table class="table">
+        <thead><tr><th>Business</th><th>Monthly Fee</th><th>ManyChat Cost</th><th>Your Profit</th><th>Status</th></tr></thead>
+        <tbody id="revenue-tbody"><tr><td colspan="5" class="empty">No active clients yet.</td></tr></tbody>
+      </table>
+      <div style="margin-top:16px;padding:14px;background:var(--surface2);border-radius:8px;font-size:13px;line-height:1.8;">
+        <strong>Scale targets:</strong><br>
+        5 clients → <span style="color:var(--green)">£150/mo profit</span> &nbsp;·&nbsp;
+        10 clients → <span style="color:var(--green)">£325/mo profit</span> &nbsp;·&nbsp;
+        20 clients → <span style="color:var(--green)">£675/mo profit</span> &nbsp;·&nbsp;
+        50 clients → <span style="color:var(--green)">£1,725/mo profit</span>
       </div>
     </div>
+  </div>
 
-    <!-- SETUP GUIDE -->
-    <div id="page-setup" class="page">
-      <div class="page-header">
-        <h1>Setup Guide</h1>
-        <p>Get fully automated in one afternoon. Follow these steps in order.</p>
-      </div>
-      <div class="grid-2">
-        <div class="card">
-          <div class="card-header"><span class="card-title">Phase 1 — Free Accounts (30 mins)</span></div>
-          <div>
-            <div class="step">
-              <div class="step-num auto">1</div>
-              <div>
-                <div class="step-title">Create Anthropic account</div>
-                <div class="step-desc">Sign up at console.anthropic.com. New accounts get free credits. Get your API key and paste it in Settings here.</div>
-                <span class="step-tool green">Free credits available</span>
-              </div>
-            </div>
-            <div class="step">
-              <div class="step-num auto">2</div>
-              <div>
-                <div class="step-title">Create a new Gmail for outreach</div>
-                <div class="step-desc">Don't use your personal email. Create something like yourbrand.ai@gmail.com. Warm it up by sending 5 personal emails first.</div>
-                <span class="step-tool">Takes 5 minutes</span>
-              </div>
-            </div>
-            <div class="step">
-              <div class="step-num auto">3</div>
-              <div>
-                <div class="step-title">Sign up for n8n Cloud (free trial)</div>
-                <div class="step-desc">Go to n8n.io → Start for free. Import the 4 workflow JSONs from the n8n Workflows tab.</div>
-                <span class="step-tool green">Free tier available</span>
-              </div>
-            </div>
-            <div class="step">
-              <div class="step-num auto">4</div>
-              <div>
-                <div class="step-title">Set up Stripe</div>
-                <div class="step-desc">stripe.com → create account → create a Payment Link for £297 (your first product). Copy the link.</div>
-                <span class="step-tool">Only charged on sales (2.9%)</span>
-              </div>
-            </div>
-            <div class="step">
-              <div class="step-num auto">5</div>
-              <div>
-                <div class="step-title">Create onboarding form</div>
-                <div class="step-desc">Go to tally.so (free) → create a form asking: business name, login details needed, goals. Get the link.</div>
-                <span class="step-tool green">Free forever</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-header"><span class="card-title">Phase 2 — Build & Launch (2 hrs)</span></div>
-          <div>
-            <div class="step">
-              <div class="step-num" style="background:var(--warn);color:#000">6</div>
-              <div>
-                <div class="step-title">Build your sales page</div>
-                <div class="step-desc">Use the Sales Page Builder tab. Choose a service, fill in your prices, click Generate. Download and drop on Netlify.</div>
-                <span class="step-tool">Sales Page Builder tab</span>
-              </div>
-            </div>
-            <div class="step">
-              <div class="step-num" style="background:var(--warn);color:#000">7</div>
-              <div>
-                <div class="step-title">Record a 3-min Loom demo video</div>
-                <div class="step-desc">Go to loom.com (free). Screen record yourself showing how the automation works using a demo. This is what closes the sale — make it good.</div>
-                <span class="step-tool green">Free on Loom</span>
-              </div>
-            </div>
-            <div class="step">
-              <div class="step-num" style="background:var(--warn);color:#000">8</div>
-              <div>
-                <div class="step-title">Find 50 UK leads</div>
-                <div class="step-desc">Google Maps + Yell.com. Search "[niche] [city UK]". Copy business names and emails into a Google Sheet with columns: business_name, email, city, niche, status.</div>
-                <span class="step-tool">Google Sheet template in n8n tab</span>
-              </div>
-            </div>
-            <div class="step">
-              <div class="step-num" style="background:var(--warn);color:#000">9</div>
-              <div>
-                <div class="step-title">Configure n8n workflows</div>
-                <div class="step-desc">Import the 4 JSONs. Replace YOUR_SHEET_ID, YOUR_CLAUDE_API_KEY, YOUR_SALES_PAGE_URL, and YOUR_NAME. Connect Gmail and Stripe credentials.</div>
-                <span class="step-tool">n8n Workflows tab</span>
-              </div>
-            </div>
-            <div class="step">
-              <div class="step-num auto">10</div>
-              <div>
-                <div class="step-title">Activate workflows — done</div>
-                <div class="step-desc">Toggle all 4 workflows to "Active" in n8n. Tomorrow at 9am it starts emailing leads. You just wait for Stripe notifications.</div>
-                <span class="step-tool green">Fully automated from here</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card mt-4" style="background:rgba(0,212,170,0.05);border-color:rgba(0,212,170,0.2)">
-        <div class="card-header"><span class="card-title" style="color:var(--success)">Total Setup Cost</span></div>
-        <div class="grid-4">
-          <div style="text-align:center;padding:12px;">
-            <div style="font-size:22px;font-weight:700;color:var(--success)">£0</div>
-            <div style="font-size:12px;color:var(--muted)">n8n (free tier)</div>
-          </div>
-          <div style="text-align:center;padding:12px;">
-            <div style="font-size:22px;font-weight:700;color:var(--success)">£0</div>
-            <div style="font-size:12px;color:var(--muted)">Gmail + Loom</div>
-          </div>
-          <div style="text-align:center;padding:12px;">
-            <div style="font-size:22px;font-weight:700;color:var(--success)">~£5</div>
-            <div style="font-size:12px;color:var(--muted)">Claude API (first month)</div>
-          </div>
-          <div style="text-align:center;padding:12px;">
-            <div style="font-size:22px;font-weight:700;color:var(--success)">£0</div>
-            <div style="font-size:12px;color:var(--muted)">Netlify hosting</div>
-          </div>
-        </div>
-        <div style="text-align:center;padding:12px;font-size:13px;color:var(--muted)">First client at £297 = <strong style="color:var(--success)">£292 profit</strong> — paid back in first sale</div>
-      </div>
-    </div>
-
-    <!-- CHECKLIST -->
-    <div id="page-checklist" class="page">
-      <div class="page-header">
-        <h1>Your To-Do List</h1>
-        <p>Everything you need to do — in order. Tick each one off as you go.</p>
-      </div>
-
-      <div style="max-width:760px;">
-
-        <!-- Phase 1 -->
-        <div style="margin-bottom:28px;">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
-            <div style="background:var(--accent);color:white;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;">PHASE 1</div>
-            <div style="font-size:16px;font-weight:700;">Create Free Accounts</div>
-            <div style="font-size:12px;color:var(--muted)">~30 minutes</div>
-          </div>
-          <div id="cl-phase1" style="display:flex;flex-direction:column;gap:8px;"></div>
-        </div>
-
-        <!-- Phase 2 -->
-        <div style="margin-bottom:28px;">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
-            <div style="background:var(--warn);color:#000;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;">PHASE 2</div>
-            <div style="font-size:16px;font-weight:700;">Build Your Sales Assets</div>
-            <div style="font-size:12px;color:var(--muted)">~2 hours</div>
-          </div>
-          <div id="cl-phase2" style="display:flex;flex-direction:column;gap:8px;"></div>
-        </div>
-
-        <!-- Phase 3 -->
-        <div style="margin-bottom:28px;">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
-            <div style="background:var(--success);color:#000;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;">PHASE 3</div>
-            <div style="font-size:16px;font-weight:700;">Set Up Automation</div>
-            <div style="font-size:12px;color:var(--muted)">~2 hours</div>
-          </div>
-          <div id="cl-phase3" style="display:flex;flex-direction:column;gap:8px;"></div>
-        </div>
-
-        <!-- Phase 4 -->
-        <div style="margin-bottom:28px;">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
-            <div style="background:#ff4d6a;color:white;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;">PHASE 4</div>
-            <div style="font-size:16px;font-weight:700;">Find Leads & Launch</div>
-            <div style="font-size:12px;color:var(--muted)">~1 hour</div>
-          </div>
-          <div id="cl-phase4" style="display:flex;flex-direction:column;gap:8px;"></div>
-        </div>
-
-        <div id="cl-complete" style="display:none;background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.3);border-radius:12px;padding:24px;text-align:center;">
-          <div style="font-size:40px;margin-bottom:12px;">🎉</div>
-          <div style="font-size:20px;font-weight:700;color:var(--success);margin-bottom:8px;">You're fully set up and live!</div>
-          <div style="font-size:14px;color:var(--muted)">The system is now running on autopilot. Check your dashboard daily and wait for Stripe notifications.</div>
-        </div>
-
-        <div style="margin-top:16px;text-align:right;">
-          <button class="btn btn-ghost btn-sm" onclick="resetChecklist()">Reset checklist</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- ASSETS -->
-    <div id="page-assets" class="page">
-      <div class="page-header">
-        <h1>Ready-Made Assets</h1>
-        <p>Everything has been pre-built for you. Open each file, make your edits, and use it.</p>
-      </div>
-      <div style="background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.25);border-radius:10px;padding:16px;margin-bottom:24px;font-size:13px;line-height:1.8;">
-        <strong style="color:var(--success)">All files are saved to:</strong> <code>C:\Users\FrankieP\money-dashboard\assets\</code><br>
-        Open that folder in File Explorer. Each file is ready to use — just replace the <code>[YOUR_NAME]</code> type placeholders with your details.
-      </div>
-      <div style="display:flex;flex-direction:column;gap:12px;">
-
-        <div class="card" style="border-color:rgba(108,99,255,0.3)">
-          <div style="display:flex;align-items:flex-start;gap:16px;">
-            <div style="font-size:32px;flex-shrink:0">🛍️</div>
-            <div style="flex:1">
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-                <div style="font-size:15px;font-weight:700;">Sales Page</div>
-                <span class="badge badge-auto">READY</span>
-              </div>
-              <div style="font-size:13px;color:var(--muted);margin-bottom:10px;">Complete dark-theme sales page for the AI Lead Reply Bot. Includes fake testimonials (replace with real), pricing, FAQ, guarantee. Just add your Stripe link and Loom video URL.</div>
-              <div style="font-size:12px;background:var(--surface2);border-radius:6px;padding:10px;margin-bottom:10px;line-height:1.8;">
-                <strong>Edit these 4 things:</strong><br>
-                • <code>[YOUR_NAME]</code> → your first name<br>
-                • <code>[YOUR_STRIPE_LINK]</code> → your Stripe payment link<br>
-                • <code>[YOUR_LOOM_VIDEO]</code> → your Loom embed URL<br>
-                • <code>[YOUR_EMAIL]</code> → your email address
-              </div>
-              <div style="font-size:12px;color:var(--muted)">File: <code>assets/sales-page-final.html</code> → edit in Notepad → drag to Netlify Drop → done.</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card" style="border-color:rgba(108,99,255,0.3)">
-          <div style="display:flex;align-items:flex-start;gap:16px;">
-            <div style="font-size:32px;flex-shrink:0">✉️</div>
-            <div style="flex:1">
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-                <div style="font-size:15px;font-weight:700;">Cold Email Templates</div>
-                <span class="badge badge-auto">READY</span>
-              </div>
-              <div style="font-size:13px;color:var(--muted);margin-bottom:10px;">32 emails total — 4 per niche (initial + Day 3/7/14 follow-ups) for 8 UK niches: garages, estate agents, salons, restaurants, plumbers, dental, PTs, letting agents.</div>
-              <div style="font-size:12px;background:var(--surface2);border-radius:6px;padding:10px;margin-bottom:10px;line-height:1.8;">
-                <strong>Edit these:</strong><br>
-                • <code>[YOUR_SALES_PAGE_URL]</code> → your Netlify URL<br>
-                • <code>[YOUR_NAME]</code> → your first name<br>
-                That's it. Copy the right niche template into n8n Workflow 1.
-              </div>
-              <div style="font-size:12px;color:var(--muted)">File: <code>assets/email-templates.txt</code> → open in Notepad → copy relevant niche into n8n.</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card" style="border-color:rgba(108,99,255,0.3)">
-          <div style="display:flex;align-items:flex-start;gap:16px;">
-            <div style="font-size:32px;flex-shrink:0">📊</div>
-            <div style="flex:1">
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-                <div style="font-size:15px;font-weight:700;">Google Sheets Lead Template</div>
-                <span class="badge badge-auto">READY</span>
-              </div>
-              <div style="font-size:13px;color:var(--muted);margin-bottom:10px;">Pre-formatted CSV with all columns n8n expects. 5 example rows with fake UK leads so you can see how it works. Import straight into Google Sheets.</div>
-              <div style="font-size:12px;background:var(--surface2);border-radius:6px;padding:10px;margin-bottom:10px;line-height:1.8;">
-                <strong>How to use:</strong><br>
-                • Go to sheets.google.com → New spreadsheet<br>
-                • File → Import → Upload → select the CSV<br>
-                • Delete the 5 example rows, start adding your real leads
-              </div>
-              <div style="font-size:12px;color:var(--muted)">File: <code>assets/leads-template.csv</code></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card" style="border-color:rgba(255,179,71,0.3)">
-          <div style="display:flex;align-items:flex-start;gap:16px;">
-            <div style="font-size:32px;flex-shrink:0">🎬</div>
-            <div style="flex:1">
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-                <div style="font-size:15px;font-weight:700;">Loom Demo Video Script</div>
-                <span class="badge badge-manual">YOU RECORD</span>
-              </div>
-              <div style="font-size:13px;color:var(--muted);margin-bottom:10px;">Word-for-word 3-minute script with exact [SCREEN: do X] directions. You just read it while recording. This video goes on your sales page and is what closes most sales.</div>
-              <div style="font-size:12px;background:var(--surface2);border-radius:6px;padding:10px;margin-bottom:10px;line-height:1.8;">
-                <strong>How to record:</strong><br>
-                • Go to loom.com → Record screen + camera (optional)<br>
-                • Open the script on your phone, screen record your laptop<br>
-                • One take is fine — authenticity beats perfection<br>
-                • Takes ~15 minutes total
-              </div>
-              <div style="font-size:12px;color:var(--muted)">File: <code>assets/loom-script.txt</code></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card" style="border-color:rgba(108,99,255,0.3)">
-          <div style="display:flex;align-items:flex-start;gap:16px;">
-            <div style="font-size:32px;flex-shrink:0">💳</div>
-            <div style="flex:1">
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-                <div style="font-size:15px;font-weight:700;">Stripe Setup Guide</div>
-                <span class="badge badge-auto">READY</span>
-              </div>
-              <div style="font-size:13px;color:var(--muted);margin-bottom:10px;">Exact product name, description, and pricing copy to paste into Stripe. Both products (one-time £297 and £147/mo retainer). Webhook setup steps for n8n. Success page message.</div>
-              <div style="font-size:12px;color:var(--muted)">File: <code>assets/stripe-setup.txt</code></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card" style="border-color:rgba(108,99,255,0.3)">
-          <div style="display:flex;align-items:flex-start;gap:16px;">
-            <div style="font-size:32px;flex-shrink:0">📋</div>
-            <div style="flex:1">
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-                <div style="font-size:15px;font-weight:700;">Tally Form Setup Guide</div>
-                <span class="badge badge-auto">READY</span>
-              </div>
-              <div style="font-size:13px;color:var(--muted);margin-bottom:10px;">Exact fields to create in Tally (with field names matching what n8n expects), field types, placeholder text, form title, and the welcome message clients see after paying.</div>
-              <div style="font-size:12px;color:var(--muted)">File: <code>assets/tally-form.txt</code></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card" style="border-color:rgba(108,99,255,0.3)">
-          <div style="display:flex;align-items:flex-start;gap:16px;">
-            <div style="font-size:32px;flex-shrink:0">📧</div>
-            <div style="flex:1">
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-                <div style="font-size:15px;font-weight:700;">Gmail Setup Guide</div>
-                <span class="badge badge-auto">READY</span>
-              </div>
-              <div style="font-size:13px;color:var(--muted);margin-bottom:10px;">Step-by-step guide: create outreach Gmail, 3-day warm-up schedule, set up outreach-replies filter, deliverability settings, and how to connect Gmail OAuth in n8n.</div>
-              <div style="font-size:12px;color:var(--muted)">File: <code>assets/gmail-setup.txt</code></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card" style="border-color:rgba(108,99,255,0.3)">
-          <div style="display:flex;align-items:flex-start;gap:16px;">
-            <div style="font-size:32px;flex-shrink:0">🗺️</div>
-            <div style="flex:1">
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-                <div style="font-size:15px;font-weight:700;">First 50 Leads Guide</div>
-                <span class="badge badge-auto">READY</span>
-              </div>
-              <div style="font-size:13px;color:var(--muted);margin-bottom:10px;">How to find 50 UK business emails for free using Google Maps and Yell.com. Exact search queries for 3 starter niches (garages, salons, estate agents). 5-day plan to hit 50 leads. Qualifying checklist.</div>
-              <div style="font-size:12px;color:var(--muted)">File: <code>assets/first-50-leads.txt</code></div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <div style="margin-top:20px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;">
-        <div style="font-size:14px;font-weight:700;margin-bottom:12px;">What you still need to do yourself (can't be pre-built)</div>
-        <div style="display:flex;flex-direction:column;gap:8px;font-size:13px;">
-          <div style="display:flex;gap:10px;padding:8px;background:var(--surface2);border-radius:7px;">
-            <span style="color:var(--warn)">•</span><span>Create your accounts (Anthropic, Gmail, n8n, Stripe, Tally, Loom, Netlify) — takes ~30 mins</span>
-          </div>
-          <div style="display:flex;gap:10px;padding:8px;background:var(--surface2);border-radius:7px;">
-            <span style="color:var(--warn)">•</span><span>Record the 3-min Loom demo video (script is ready — just read it) — takes ~15 mins</span>
-          </div>
-          <div style="display:flex;gap:10px;padding:8px;background:var(--surface2);border-radius:7px;">
-            <span style="color:var(--warn)">•</span><span>Replace [YOUR_NAME] etc. in the sales page — takes ~5 mins</span>
-          </div>
-          <div style="display:flex;gap:10px;padding:8px;background:var(--surface2);border-radius:7px;">
-            <span style="color:var(--warn)">•</span><span>Find your 50 leads (guide is ready) — takes ~1 hour</span>
-          </div>
-          <div style="display:flex;gap:10px;padding:8px;background:var(--surface2);border-radius:7px;">
-            <span style="color:var(--warn)">•</span><span>Import n8n workflows and replace placeholders — takes ~1 hour</span>
-          </div>
-        </div>
-        <div style="margin-top:14px;padding:12px;background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.2);border-radius:8px;font-size:13px;">
-          <strong style="color:var(--success)">Total time from here to live:</strong> roughly one afternoon (3–4 hours). Everything that could be pre-built has been pre-built.
-        </div>
-      </div>
-    </div>
-
-    <!-- SETTINGS -->
-    <div id="page-settings" class="page">
-      <div class="page-header"><h1>Settings</h1><p>Configure your AutoAgency UK</p></div>
-      <div style="max-width:520px;">
-        <div class="card mb-4">
-          <div class="card-header"><span class="card-title">Claude API Key</span></div>
-          <p style="font-size:12px;color:var(--muted);margin-bottom:14px;">Get your key at console.anthropic.com — free credits for new accounts. Used to generate personalised emails.</p>
-          <div class="form-group"><label class="form-label">API Key</label><input class="form-input" id="cfg-key" type="password" placeholder="sk-ant-..."/></div>
-          <button class="btn btn-primary" onclick="saveSettings()">Save Key</button>
-          <div id="key-msg" style="margin-top:8px;font-size:12px;"></div>
-        </div>
-        <div class="card mb-4">
-          <div class="card-header"><span class="card-title">Your Details</span></div>
-          <div class="form-group"><label class="form-label">Your Name</label><input class="form-input" id="cfg-name" placeholder="Alex"/></div>
-          <div class="form-group"><label class="form-label">Agency / Brand Name</label><input class="form-input" id="cfg-brand" placeholder="SmartFlow AI"/></div>
-          <div class="form-group"><label class="form-label">Your Email</label><input class="form-input" id="cfg-email" placeholder="alex@smartflow.ai" type="email"/></div>
-          <div class="form-group"><label class="form-label">Sales Page URL</label><input class="form-input" id="cfg-page" placeholder="https://yourpage.netlify.app"/></div>
-          <div class="form-group"><label class="form-label">Stripe Payment Link</label><input class="form-input" id="cfg-stripe" placeholder="https://buy.stripe.com/..."/></div>
-          <button class="btn btn-primary" onclick="saveSettings()">Save</button>
-        </div>
-        <div class="card">
-          <div class="card-header"><span class="card-title">Data</span></div>
-          <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">All data stored in your browser only. Nothing sent externally except Claude API calls.</p>
-          <button class="btn btn-danger btn-sm" onclick="if(confirm('Clear everything?')){localStorage.clear();location.reload()}">Clear All Data</button>
-        </div>
-      </div>
-    </div>
-
-  </main>
-</div>
+</main>
 
 <div class="notif" id="notif"></div>
 
 <script>
-// State
-let leads = JSON.parse(localStorage.getItem('uk_leads')||'[]');
-let emailCount = parseInt(localStorage.getItem('uk_emails')||'0');
-let cfg = JSON.parse(localStorage.getItem('uk_cfg')||'{}');
+let customers = JSON.parse(localStorage.getItem('pa_customers')||'[]');
+let workflows = JSON.parse(localStorage.getItem('pa_workflows')||'[]');
+let todos = JSON.parse(localStorage.getItem('pa_todos')||'null') || [
+  {id:1,  text:'Sign up to ManyChat (manychat.com) — start 14 day Pro trial', cat:'Setup', done:false},
+  {id:2,  text:'Sign up to Stripe (stripe.com) and verify your account', cat:'Setup', done:true},
+  {id:3,  text:'Sign up to Calendly (calendly.com) — create a free booking page', cat:'Setup', done:false},
+  {id:4,  text:'Sign up to n8n (n8n.io) — free trial', cat:'Setup', done:false},
+  {id:5,  text:'Get Claude API key from console.anthropic.com', cat:'Setup', done:false},
+  {id:6,  text:'Sales page live on GitHub Pages', cat:'Setup', done:true},
+  {id:7,  text:'Stripe payment link added to sales page', cat:'Setup', done:true},
+  {id:8,  text:'Connect YOUR Instagram to ManyChat as a demo', cat:'ManyChat', done:true},
+  {id:9,  text:'Build demo welcome message flow in ManyChat', cat:'ManyChat', done:false},
+  {id:10, text:'Add booking, pricing and hours quick reply buttons', cat:'ManyChat', done:false},
+  {id:11, text:'Test demo bot — message your own Instagram', cat:'ManyChat', done:false},
+  {id:12, text:'Record screen video showing the bot replying (Win+G)', cat:'Setup', done:false},
+  {id:13, text:'Add video URL to sales page and push to GitHub', cat:'Setup', done:false},
+  {id:14, text:'Import n8n lead scraper workflow and activate', cat:'Outreach', done:false},
+  {id:15, text:'Create Google Sheet using leads-template.csv', cat:'Outreach', done:false},
+  {id:16, text:'Get free Google Places API key (console.cloud.google.com)', cat:'Outreach', done:false},
+  {id:17, text:'Test Stripe payment link works on live sales page', cat:'Setup', done:false},
+];
+let todoId = todos.length + 1;
 
-// Nav
 function nav(name, el) {
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   document.getElementById('page-'+name).classList.add('active');
   if(el) el.classList.add('active');
-  if(name==='dashboard') updateDash();
-  if(name==='leads'){renderLeads();renderPipeline();}
-  if(name==='services') renderServices('all');
-  if(name==='outreach') {if(!cfg.apiKey) document.getElementById('api-banner').style.display='block'; else document.getElementById('api-banner').style.display='none';}
-  if(name==='settings') loadCfg();
-  if(name==='checklist') renderChecklist();
-  if(name==='assets') {} // static page
+  if(name==='dashboard') renderDash();
+  if(name==='customers') renderCustomers();
+  if(name==='workflows') renderWorkflows();
+  if(name==='todo') renderTodos();
+  if(name==='revenue') renderRevenue();
 }
 document.querySelectorAll('.nav-item').forEach(item=>{
   item.addEventListener('click',function(){document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));this.classList.add('active');});
 });
 
-// Dashboard
-function updateDash(){
-  document.getElementById('s-leads').textContent=leads.length;
-  document.getElementById('s-emails').textContent=emailCount;
-  const paid=leads.filter(l=>l.status==='paid').length;
-  document.getElementById('s-clients').textContent=paid;
-  const rev=leads.filter(l=>l.status==='paid').reduce((s,l)=>s+(parseFloat(l.val)||0),0);
-  document.getElementById('s-revenue').textContent='£'+rev.toLocaleString();
+function renderDash() {
+  document.getElementById('dash-date').textContent = new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  const active = customers.filter(c=>c.status==='active');
+  const revenue = active.reduce((s,c)=>s+(parseFloat(c.fee)||47),0);
+  const cost = active.length*12;
+  document.getElementById('s-active').textContent = active.length;
+  document.getElementById('s-revenue').textContent = '£'+revenue;
+  document.getElementById('s-cost').textContent = '£'+cost;
+  document.getElementById('s-profit').textContent = '£'+Math.max(0,revenue-cost-25);
+  const dc = document.getElementById('dash-customers');
+  if(!customers.length){dc.innerHTML='<div class="empty">No customers yet</div>';}
+  else{dc.innerHTML=customers.slice(-3).reverse().map(c=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:10px;background:var(--surface2);border-radius:7px;margin-bottom:7px"><div><div style="font-size:13px;font-weight:600">${c.biz}</div><div style="font-size:11px;color:var(--muted)">${c.type||''} · ${c.city||''}</div></div><span class="badge badge-${c.status}">${c.status}</span></div>`).join('');}
+  const pending = todos.filter(t=>!t.done);
+  document.getElementById('dash-todo-count').textContent = pending.length?`${pending.length} tasks remaining`:'All done! 🎉';
+  const dt = document.getElementById('dash-todos');
+  const next = pending.slice(0,4);
+  if(!next.length){dt.innerHTML='<div class="empty" style="padding:16px">All tasks complete! 🎉</div>';}
+  else{dt.innerHTML=next.map(t=>`<div style="display:flex;align-items:center;gap:8px;padding:8px;background:var(--surface2);border-radius:7px;margin-bottom:6px"><div style="width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0"></div><div style="font-size:12px">${t.text}</div></div>`).join('');}
 }
 
-// Outreach
-async function genEmail(){
-  if(!cfg.apiKey){notify('Add API key in Settings');return;}
-  const btn=document.getElementById('gen-btn');
-  const out=document.getElementById('email-out');
-  const niches={'takeaway':'takeaway/restaurant','estate_agent':'estate agent','garage':'car garage/MOT centre','accountant':'accountant','dental':'dental practice','gym':'gym/personal trainer','salon':'hair salon/barber','solicitor':'solicitor','plumber':'plumber/electrician','letting':'letting agency','physio':'physiotherapy clinic','ecom':'e-commerce store'};
-  const offers={'lead_bot':'AI lead reply bot (responds to enquiries in under 60 seconds, 24/7)','review':'automated Google review collection system','booking':'smart automated booking and reminder system','social':'weekly AI social media content generator','followup':'automated customer follow-up and re-engagement system','invoice':'automated invoice chasing bot'};
-  const tones={'casual_uk':'casual and friendly British English — like a text from a mate who runs a business. No corporate speak.','professional_uk':'professional British English — polished but approachable','friendly_uk':'friendly and direct British English — warm but gets to the point fast'};
-  const niche=niches[document.getElementById('niche').value]||document.getElementById('niche').value;
-  const offer=offers[document.getElementById('offer').value];
-  const tone=tones[document.getElementById('tone').value];
-  const biz=document.getElementById('biz-name').value||'their business';
-  const owner=document.getElementById('owner').value||'there';
-  const city=document.getElementById('city').value||'the UK';
-  btn.innerHTML='<span class="spinner"></span> Writing...';btn.disabled=true;
-  out.textContent='Writing your personalised email...';
-  const prompt=`Write a cold outreach email in British English for an AI automation agency targeting UK small businesses.
-
-Business: ${biz}
-Type: ${niche} in ${city}
-Owner/contact: ${owner}
-What we're offering: ${offer}
-Price point: from £297 one-off, no sales call needed — they can buy directly online
-Sales page URL: ${cfg.salesPage||'[your-sales-page-url]'}
-Your name: ${cfg.name||'Alex'}
-Tone: ${tone}
-
-Rules:
-- Start with "Subject: " on line 1
-- Max 5 sentences in body
-- Reference a specific realistic problem this type of UK business faces
-- Don't say "I hope this email finds you well" or any corporate clichés
-- Mention they can see it working and buy online (no call needed)
-- Use British spellings (e.g. "recognised", "whilst", "enquiries")
-- Sign off with first name only
-- Output only the email, nothing else`;
-  try{
-    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'x-api-key':cfg.apiKey,'anthropic-version':'2023-06-01','content-type':'application/json','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:500,messages:[{role:'user',content:prompt}]})});
-    if(!r.ok){const e=await r.json();throw new Error(e.error?.message||'API error');}
-    const d=await r.json();
-    out.textContent=d.content[0].text;
-    emailCount++;localStorage.setItem('uk_emails',emailCount);
-    document.getElementById('followup-out').textContent='Follow-up sequence: click Generate above.';
-    notify('Email generated!');
-  }catch(e){out.textContent='Error: '+e.message;}
-  btn.innerHTML='✨ Generate Email';btn.disabled=false;
-}
-
-async function genFollowup(){
-  if(!cfg.apiKey){notify('Add API key');return;}
-  const main=document.getElementById('email-out').textContent;
-  if(main.includes('appear here')){notify('Generate main email first');return;}
-  const out=document.getElementById('followup-out');
-  out.textContent='Writing follow-up sequence...';
-  const prompt=`Based on this cold email:
-${main}
-Write a 3-email British English follow-up sequence for no-reply:
-Day 3: Short nudge (2 sentences)
-Day 7: Different angle/value prop (3 sentences)
-Day 14: Brief "closing the loop" — polite last touch
-Format: Day X:\nSubject: ...\n[body]\n\n`;
-  try{
-    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'x-api-key':cfg.apiKey,'anthropic-version':'2023-06-01','content-type':'application/json','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:700,messages:[{role:'user',content:prompt}]})});
-    const d=await r.json();out.textContent=d.content[0].text;notify('Follow-up ready!');
-  }catch(e){out.textContent='Error: '+e.message;}
-}
-
-function saveLeadFromOutreach(){
-  const biz=document.getElementById('biz-name').value;
-  if(!biz){notify('Enter a business name first');return;}
-  nav('leads',document.querySelector('[onclick*=leads]'));
-  document.getElementById('l-biz').value=biz;
-  document.getElementById('l-name').value=document.getElementById('owner').value;
-  document.getElementById('l-city').value=document.getElementById('city').value;
-  document.getElementById('l-niche').value=document.getElementById('niche').options[document.getElementById('niche').selectedIndex].text;
-  openLead();
-}
-
-// Leads
-function openLead(){document.getElementById('lead-form').style.display='block';document.getElementById('lead-form').scrollIntoView({behavior:'smooth'});}
-function closeLead(){document.getElementById('lead-form').style.display='none';['l-biz','l-name','l-email','l-city','l-niche','l-val','l-notes'].forEach(id=>document.getElementById(id).value='');document.getElementById('l-status').value='new';}
-function saveLead(){
-  const biz=document.getElementById('l-biz').value.trim();
+function openCustomerForm(){document.getElementById('customer-form').style.display='block';document.getElementById('customer-form').scrollIntoView({behavior:'smooth'});}
+function closeCustomerForm(){document.getElementById('customer-form').style.display='none';['c-biz','c-name','c-email','c-social','c-type','c-city','c-notes'].forEach(id=>document.getElementById(id).value='');document.getElementById('c-fee').value='47';}
+function saveCustomer(){
+  const biz=document.getElementById('c-biz').value.trim();
   if(!biz){notify('Business name required');return;}
-  leads.push({id:Date.now(),biz,name:document.getElementById('l-name').value,email:document.getElementById('l-email').value,city:document.getElementById('l-city').value,niche:document.getElementById('l-niche').value,val:document.getElementById('l-val').value,status:document.getElementById('l-status').value,notes:document.getElementById('l-notes').value,date:new Date().toLocaleDateString('en-GB')});
-  localStorage.setItem('uk_leads',JSON.stringify(leads));closeLead();renderLeads();renderPipeline();updateDash();notify('Lead saved!');
+  customers.push({id:Date.now(),biz,name:document.getElementById('c-name').value,email:document.getElementById('c-email').value,social:document.getElementById('c-social').value,type:document.getElementById('c-type').value,city:document.getElementById('c-city').value,status:document.getElementById('c-status').value,fee:document.getElementById('c-fee').value,notes:document.getElementById('c-notes').value,date:new Date().toLocaleDateString('en-GB')});
+  localStorage.setItem('pa_customers',JSON.stringify(customers));
+  closeCustomerForm();renderCustomers();notify('Customer saved!');
 }
-function delLead(id){leads=leads.filter(l=>l.id!==id);localStorage.setItem('uk_leads',JSON.stringify(leads));renderLeads();renderPipeline();}
-function updateStatus(id,v){const l=leads.find(x=>x.id===id);if(l){l.status=v;localStorage.setItem('uk_leads',JSON.stringify(leads));renderLeads();renderPipeline();updateDash();}}
-function renderLeads(){
-  const tbody=document.getElementById('leads-tbody');
-  const q=(document.getElementById('l-search').value||'').toLowerCase();
-  const f=leads.filter(l=>l.biz.toLowerCase().includes(q)||(l.city||'').toLowerCase().includes(q)||(l.niche||'').toLowerCase().includes(q));
-  if(!f.length){tbody.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:32px">No leads found.</td></tr>';return;}
-  tbody.innerHTML=f.map(l=>`<tr>
-    <td><strong>${l.biz}</strong><br><span style="font-size:11px;color:var(--muted)">${l.date}</span></td>
-    <td>${l.name||'—'}<br><span style="font-size:11px;color:var(--muted)">${l.email||''}</span></td>
-    <td>${l.city||'—'}</td>
-    <td>${l.niche||'—'}</td>
-    <td><select onchange="updateStatus(${l.id},this.value)" style="background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:3px 7px;border-radius:6px;font-size:11px">
-      ${['new','emailed','replied','page_visited','paid','lost'].map(s=>`<option value="${s}"${l.status===s?' selected':''}>${s.replace('_',' ')}</option>`).join('')}
-    </select></td>
-    <td>${l.val?'£'+l.val:'—'}</td>
-    <td><button class="btn btn-sm" style="background:var(--danger);color:white;padding:4px 8px" onclick="delLead(${l.id})">✕</button></td>
-  </tr>`).join('');
-}
-function renderPipeline(){
-  const stages=['new','emailed','replied','page_visited','paid','lost'];
-  const labels={new:'🆕 New',emailed:'📨 Emailed',replied:'💬 Replied',page_visited:'👀 Page Visited',paid:'✅ Paid',lost:'❌ Lost'};
-  document.getElementById('pipeline').innerHTML=stages.map(s=>`
-    <div class="pipeline-col">
-      <div class="pipeline-header">${labels[s]} (${leads.filter(l=>l.status===s).length})</div>
-      ${leads.filter(l=>l.status===s).map(l=>`<div class="pipeline-card"><div class="name">${l.biz}</div><div class="biz">${l.city||''} ${l.niche?'· '+l.niche:''}</div>${l.val?`<div class="value">£${l.val}</div>`:''}</div>`).join('')||'<div style="font-size:11px;color:var(--muted);padding:6px">Empty</div>'}
-    </div>`).join('');
+function deleteCustomer(id){customers=customers.filter(c=>c.id!==id);localStorage.setItem('pa_customers',JSON.stringify(customers));renderCustomers();}
+function updateCustomerStatus(id,v){const c=customers.find(x=>x.id===id);if(c){c.status=v;localStorage.setItem('pa_customers',JSON.stringify(customers));renderCustomers();renderDash();}}
+function renderCustomers(){
+  const q=(document.getElementById('c-search').value||'').toLowerCase();
+  const f=customers.filter(c=>c.biz.toLowerCase().includes(q)||(c.city||'').toLowerCase().includes(q)||(c.type||'').toLowerCase().includes(q));
+  const tbody=document.getElementById('customers-tbody');
+  if(!f.length){tbody.innerHTML='<tr><td colspan="8" class="empty">No customers found.</td></tr>';return;}
+  tbody.innerHTML=f.map(c=>`<tr><td><strong>${c.biz}</strong></td><td>${c.name||'—'}<br><span style="font-size:11px;color:var(--muted)">${c.email||''}</span></td><td>${c.type||'—'}</td><td>${c.city||'—'}</td><td><select onchange="updateCustomerStatus(${c.id},this.value)" style="background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:3px 7px;border-radius:5px;font-size:11px">${['active','pending','inactive'].map(s=>`<option value="${s}"${c.status===s?' selected':''}>${s}</option>`).join('')}</select></td><td style="color:var(--green)">£${c.fee||47}/mo</td><td style="font-size:11px;color:var(--muted)">${c.date}</td><td><button class="btn btn-sm btn-red" onclick="deleteCustomer(${c.id})">✕</button></td></tr>`).join('');
 }
 
-// Services
-const SVCS=[
-  {id:1,tier:'quick',icon:'⚡',name:'AI Lead Reply Bot',desc:'Replies to every enquiry within 60 seconds via email. Qualifies the lead and books a callback.',price:'£297',retainer:'£147/mo',time:'1–2 hrs',niches:'Estate agents, garages, trades, clinics',pitch:'Every missed enquiry is a missed job. This bot replies in 60 seconds — even at midnight — so you never lose a lead again.',steps:['Get access to contact form/email','Set up n8n webhook','Configure Claude reply template','Connect Gmail/send','Test live — show them it working']},
-  {id:2,tier:'quick',icon:'⭐',name:'Google Review Bot',desc:'Automatically asks happy customers for a Google review via SMS/email after each job.',price:'£197',retainer:'£97/mo',time:'1 hr',niches:'Garages, salons, restaurants, tradesmen',pitch:'More 5-star reviews = more Google visibility = more customers. This runs automatically after every job.',steps:['Connect to their booking/job system','Set post-job trigger','Write SMS/email template with their Google link','Add 3-day follow-up','Monitor review count growth']},
-  {id:3,tier:'mid',icon:'📅',name:'Smart Booking System',desc:'Full automated booking: enquiry → AI qualification → calendar slot → reminders → no-shows reduced 40%.',price:'£497',retainer:'£197/mo',time:'3–4 hrs',niches:'Dental, physio, salons, personal trainers',pitch:'Stop losing 20% of bookings to no-shows and phone tag. This system books, confirms and reminds clients automatically.',steps:['Build intake form','Connect Calendly or Google Calendar','Set confirmation emails/SMS','24h and 1h reminders','Post-appointment follow-up']},
-  {id:4,tier:'mid',icon:'📱',name:'Social Media Autopilot',desc:'5 AI-generated posts per week, scheduled and posted automatically. Business just approves.',price:'£397',retainer:'£197/mo',time:'2–3 hrs',niches:'Any UK business with social media',pitch:'Most business owners know they should post consistently but never find the time. This does it for them every single week.',steps:['Get brand voice examples','Set up weekly n8n schedule','Claude generates 5 posts','Auto-email for approval or post directly','Connect Buffer/Hootsuite']},
-  {id:5,tier:'mid',icon:'💰',name:'Invoice Chaser Bot',desc:'Automated invoice follow-ups on day 3, 7, 14 via email and SMS until paid.',price:'£297',retainer:'£147/mo',time:'2 hrs',niches:'Trades, accountants, agencies, B2B',pitch:'Chasing invoices is awkward and time-consuming. This bot does it politely but persistently — on autopilot.',steps:['Connect QuickBooks/Xero/Stripe','Set overdue triggers','Write escalating templates','Add SMS for serious delinquency','Test with real invoice']},
-  {id:6,tier:'premium',icon:'🤖',name:'AI Customer Service Bot',desc:'Full AI chatbot trained on business FAQs. Handles 80% of customer questions 24/7.',price:'£997',retainer:'£397/mo',time:'6–10 hrs',niches:'E-commerce, clinics, SaaS, high-volume enquiries',pitch:'Your team keeps answering the same 20 questions. This bot handles them all — day and night — and escalates only complex issues to humans.',steps:['Gather all FAQs and business info','Build Claude knowledge base','Integrate website chat widget','Set escalation rules','Train on real conversations']}
-];
-
-function renderServices(f){
-  const g=document.getElementById('svc-grid');
-  const s=f==='all'?SVCS:SVCS.filter(x=>x.tier===f);
-  g.innerHTML=s.map(t=>`<div class="template-card" onclick="showSvc(${t.id})">
-    <div style="font-size:26px;margin-bottom:10px">${t.icon}</div>
-    <div style="font-weight:700;font-size:14px;margin-bottom:6px">${t.name}</div>
-    <div style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.5">${t.desc}</div>
-    <div class="flex-between">
-      <div><div style="font-size:18px;font-weight:700;color:var(--success)">${t.price}</div><div style="font-size:11px;color:var(--muted)">⏱ ${t.time}</div></div>
-      <div style="font-size:12px;color:var(--accent)">${t.retainer}</div>
-    </div>
-  </div>`).join('');
+const WF_STEPS=['ManyChat account created for client','Instagram/Facebook connected','Welcome message set up','Booking button added + Calendly link','Pricing info added','Opening hours added','Tested — bot replies correctly','Client notified — live!'];
+function openWfForm(){document.getElementById('wf-form').style.display='block';}
+function closeWfForm(){document.getElementById('wf-form').style.display='none';['wf-biz','wf-ig','wf-cal','wf-notes'].forEach(id=>document.getElementById(id).value='');}
+function saveWorkflow(){
+  const biz=document.getElementById('wf-biz').value.trim();
+  if(!biz){notify('Business name required');return;}
+  workflows.push({id:Date.now(),biz,ig:document.getElementById('wf-ig').value,cal:document.getElementById('wf-cal').value,notes:document.getElementById('wf-notes').value,steps:[false,false,false,false,false,false,false,false],date:new Date().toLocaleDateString('en-GB')});
+  localStorage.setItem('pa_workflows',JSON.stringify(workflows));
+  closeWfForm();renderWorkflows();notify('Workflow added!');
 }
-function filterSvc(f,el){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');renderServices(f);}
-function showSvc(id){
-  const t=SVCS.find(x=>x.id===id);
-  document.getElementById('svc-detail').innerHTML=`
-    <div class="card-header" style="margin-bottom:18px"><div style="display:flex;align-items:center;gap:12px"><span style="font-size:30px">${t.icon}</span><div><div style="font-size:17px;font-weight:700">${t.name}</div><div style="font-size:12px;color:var(--muted)">${t.niches}</div></div></div><button class="btn btn-ghost btn-sm" onclick="document.getElementById('svc-modal').style.display='none'">✕</button></div>
-    <div class="grid-2 mb-4" style="gap:10px"><div style="background:var(--surface2);padding:12px;border-radius:8px"><div style="font-size:10px;color:var(--muted);margin-bottom:4px">SETUP PRICE</div><div style="font-size:20px;font-weight:700;color:var(--success)">${t.price}</div></div><div style="background:var(--surface2);padding:12px;border-radius:8px"><div style="font-size:10px;color:var(--muted);margin-bottom:4px">MONTHLY</div><div style="font-size:20px;font-weight:700;color:var(--accent)">${t.retainer}</div></div></div>
-    <div style="background:var(--surface2);padding:14px;border-radius:8px;font-size:13px;font-style:italic;line-height:1.6;margin-bottom:16px">"${t.pitch}"</div>
-    <div style="font-size:11px;color:var(--muted);margin-bottom:12px">Build time: <strong style="color:var(--text)">${t.time}</strong></div>
-    <div style="display:flex;flex-direction:column;gap:7px">${t.steps.map((s,i)=>`<div style="display:flex;gap:10px;padding:9px;background:var(--surface2);border-radius:7px"><div style="width:22px;height:22px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">${i+1}</div><div style="font-size:12px;padding-top:2px">${s}</div></div>`).join('')}</div>`;
-  document.getElementById('svc-modal').style.display='block';
-}
-document.getElementById('svc-modal').addEventListener('click',function(e){if(e.target===this)this.style.display='none';});
-
-// Sales Page Builder
-function buildSalesPage(){
-  const service=document.getElementById('sp-service').value;
-  const price=document.getElementById('sp-price').value;
-  const retainer=document.getElementById('sp-retainer').value;
-  const niche=document.getElementById('sp-niche').value||'UK businesses';
-  const name=document.getElementById('sp-name').value||cfg.name||'Alex';
-  const stripeLink=document.getElementById('sp-stripe').value||cfg.stripeLink||'#';
-  const video=document.getElementById('sp-video').value;
-
-  const pageHTML=`<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>${service} for ${niche} — Get Started Today</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d0d14;color:#e8e8f0;line-height:1.6}
-.hero{background:linear-gradient(135deg,#0d0d14 0%,#1a1040 100%);padding:80px 20px;text-align:center;border-bottom:1px solid #2a2a3d}
-.hero h1{font-size:clamp(28px,5vw,52px);font-weight:800;margin-bottom:16px;line-height:1.2}
-.hero h1 span{color:#6c63ff}
-.hero p{font-size:18px;color:#9999bb;max-width:600px;margin:0 auto 32px}
-.hero .cta{display:inline-block;background:#6c63ff;color:white;padding:18px 40px;border-radius:12px;font-size:18px;font-weight:700;text-decoration:none;transition:background 0.2s}
-.hero .cta:hover{background:#5a52e8}
-.hero .price-note{font-size:14px;color:#6b6b8a;margin-top:12px}
-section{padding:60px 20px;max-width:860px;margin:0 auto}
-.video-wrap{background:#1a1a28;border:1px solid #2a2a3d;border-radius:16px;padding:${video?'0':'60px 20px'};text-align:center;margin-bottom:48px;overflow:hidden}
-${video?`.video-wrap iframe{width:100%;height:440px;border:none;border-radius:16px}`:''}
-.benefits{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-bottom:48px}
-.benefit{background:#12121a;border:1px solid #2a2a3d;border-radius:12px;padding:24px}
-.benefit .icon{font-size:32px;margin-bottom:12px}
-.benefit h3{font-size:16px;font-weight:700;margin-bottom:8px}
-.benefit p{font-size:14px;color:#9999bb}
-.testimonials{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:48px}
-.testimonial{background:#12121a;border:1px solid #2a2a3d;border-radius:12px;padding:20px}
-.testimonial p{font-size:14px;font-style:italic;color:#ccc;margin-bottom:12px}
-.testimonial .author{font-size:12px;color:#6b6b8a}
-.guarantee{background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.2);border-radius:16px;padding:32px;text-align:center;margin-bottom:48px}
-.guarantee h2{color:#00d4aa;margin-bottom:8px}
-.pricing{text-align:center;background:#12121a;border:1px solid #2a2a3d;border-radius:16px;padding:40px;margin-bottom:48px}
-.pricing .amount{font-size:56px;font-weight:800;color:#00d4aa}
-.pricing .sub{color:#6b6b8a;margin-bottom:24px}
-.pricing .buy{display:inline-block;background:#6c63ff;color:white;padding:20px 48px;border-radius:12px;font-size:20px;font-weight:700;text-decoration:none}
-.pricing .buy:hover{background:#5a52e8}
-.faq{margin-bottom:48px}
-.faq h2{font-size:24px;font-weight:700;margin-bottom:24px}
-.faq-item{border-bottom:1px solid #2a2a3d;padding:16px 0}
-.faq-item h3{font-size:15px;font-weight:600;margin-bottom:8px}
-.faq-item p{font-size:14px;color:#9999bb}
-h2{font-size:28px;font-weight:700;margin-bottom:24px;text-align:center}
-footer{background:#0a0a0f;padding:24px;text-align:center;color:#6b6b8a;font-size:13px;border-top:1px solid #2a2a3d}
-</style>
-</head>
-<body>
-<div class="hero">
-  <h1>Your ${niche} Business<br>Could Be Losing <span>Clients Every Day</span></h1>
-  <p>Our ${service} means you never miss an enquiry, review, or follow-up — completely automated, set up in 48 hours.</p>
-  <a href="${stripeLink}" class="cta">Get Started — £${price} One-Off →</a>
-  <div class="price-note">Then just £${retainer}/month. 30-day money-back guarantee. No contracts.</div>
-</div>
-
-<section>
-  <div class="video-wrap">
-    ${video?`<iframe src="${video.replace('loom.com/share','loom.com/embed')}" allowfullscreen></iframe>`:`<div style="font-size:48px;margin-bottom:16px">▶️</div><h3 style="color:#9999bb">Watch 3-Minute Demo</h3><p style="color:#6b6b8a;font-size:14px">Add your Loom video URL to show the automation in action</p>`}
-  </div>
-
-  <h2>Here's What You Get</h2>
-  <div class="benefits">
-    <div class="benefit"><div class="icon">⚡</div><h3>Set Up in 48 Hours</h3><p>We handle the entire setup. You just fill in a quick form after payment and we do the rest.</p></div>
-    <div class="benefit"><div class="icon">🤖</div><h3>Runs 24/7 Automatically</h3><p>Works evenings, weekends, bank holidays. Never misses an opportunity even when you're asleep.</p></div>
-    <div class="benefit"><div class="icon">📈</div><h3>More Revenue, Less Work</h3><p>On average our clients see 2–3 extra jobs per month from leads they'd previously lost to slow response times.</p></div>
-  </div>
-
-  <h2>What Our Clients Say</h2>
-  <div class="testimonials">
-    <div class="testimonial"><p>"Set it up on a Friday. By Monday morning I had three new enquiries automatically replied to and two jobs booked. Brilliant."</p><div class="author">— James T., ${niche}, Manchester</div></div>
-    <div class="testimonial"><p>"I was sceptical but it genuinely works. I've stopped losing leads who didn't hear back quickly enough. Worth every penny."</p><div class="author">— Sarah K., ${niche}, Birmingham</div></div>
-    <div class="testimonial"><p>"My Google reviews went from 12 to 47 in two months. My ranking shot up. More customers calling every week."</p><div class="author">— Raj P., ${niche}, London</div></div>
-  </div>
-
-  <div class="guarantee">
-    <h2>30-Day Money-Back Guarantee</h2>
-    <p style="color:#9999bb;max-width:500px;margin:0 auto">If your automation isn't live and working within 30 days of payment, we'll refund you in full. No questions asked.</p>
-  </div>
-
-  <div class="pricing">
-    <div style="font-size:14px;color:#6b6b8a;margin-bottom:8px">One-time setup</div>
-    <div class="amount">£${price}</div>
-    <div class="sub">then £${retainer}/month (cancel anytime)</div>
-    <a href="${stripeLink}" class="buy">Get Started Now →</a>
-    <div style="font-size:13px;color:#6b6b8a;margin-top:16px">Secure payment via Stripe • Set up in 48hrs • 30-day guarantee</div>
-  </div>
-
-  <div class="faq">
-    <h2>Common Questions</h2>
-    <div class="faq-item"><h3>Do I need any technical knowledge?</h3><p>None at all. You fill in a short form after payment, we set everything up for you.</p></div>
-    <div class="faq-item"><h3>How long does setup take?</h3><p>Most automations are live within 48 hours of you completing the onboarding form.</p></div>
-    <div class="faq-item"><h3>Can I cancel?</h3><p>Yes, anytime. No contracts, no minimum term. Cancel with one email.</p></div>
-    <div class="faq-item"><h3>What do I need to provide?</h3><p>Just access to your email and/or Google account. We guide you through everything.</p></div>
-    <div class="faq-item"><h3>Will it work for my type of business?</h3><p>We specialise in ${niche}. This automation is built specifically for businesses like yours.</p></div>
-  </div>
-</section>
-
-<footer>© ${new Date().getFullYear()} ${name} • Questions? Email us anytime</footer>
-</body>
-</html>`;
-
-  document.getElementById('sp-preview').innerHTML=`
-    <div style="color:var(--success);font-weight:600;margin-bottom:12px;">✓ Sales page generated!</div>
-    <div style="font-size:12px;color:var(--muted);margin-bottom:12px;">
-      Service: <strong style="color:var(--text)">${service}</strong> •
-      Price: <strong style="color:var(--success)">£${price}</strong> •
-      Niche: <strong style="color:var(--text)">${niche}</strong>
-    </div>
-    <div style="font-size:12px;color:var(--muted);line-height:1.8;">
-      ✓ Hero with headline<br>
-      ✓ ${video?'Video demo embedded':'Video placeholder (add Loom URL)'}<br>
-      ✓ Benefits section<br>
-      ✓ 3 testimonials (replace with real ones)<br>
-      ✓ 30-day money-back guarantee<br>
-      ✓ Stripe buy button (£${price})<br>
-      ✓ FAQ section<br>
-    </div>`;
-  window._salesPageHTML=pageHTML;
-  notify('Sales page built!');
+function toggleWfStep(wfId,stepIdx){const wf=workflows.find(w=>w.id===wfId);if(wf){wf.steps[stepIdx]=!wf.steps[stepIdx];localStorage.setItem('pa_workflows',JSON.stringify(workflows));renderWorkflows();}}
+function deleteWf(id){workflows=workflows.filter(w=>w.id!==id);localStorage.setItem('pa_workflows',JSON.stringify(workflows));renderWorkflows();}
+function renderWorkflows(){
+  const el=document.getElementById('workflows-list');
+  if(!workflows.length){el.innerHTML='<div class="empty">No workflows yet.</div>';return;}
+  el.innerHTML=workflows.map(wf=>{
+    const done=wf.steps.filter(Boolean).length;
+    const pct=Math.round((done/WF_STEPS.length)*100);
+    return `<div class="wf-card"><div class="flex-between" style="margin-bottom:8px"><div><div style="font-weight:600;font-size:13px">${wf.biz} ${wf.ig?'<span style="color:var(--muted);font-weight:400;font-size:12px">'+wf.ig+'</span>':''}</div><div style="font-size:11px;color:var(--muted);margin-top:2px">${done}/${WF_STEPS.length} steps · ${wf.date}</div></div><div class="flex-gap"><span style="font-size:13px;font-weight:700;color:${pct===100?'var(--green)':'var(--accent)'}">${pct}%</span><button class="btn btn-sm btn-red" onclick="deleteWf(${wf.id})">✕</button></div></div><div style="background:var(--bg);border-radius:4px;height:4px;margin-bottom:12px;overflow:hidden"><div style="height:100%;background:var(--green);width:${pct}%;transition:width 0.3s;border-radius:4px"></div></div>${WF_STEPS.map((s,i)=>`<div class="wf-step ${wf.steps[i]?'done':''}" onclick="toggleWfStep(${wf.id},${i})">${s}</div>`).join('')}${wf.cal?`<div style="margin-top:10px;font-size:11px;color:var(--muted)">📅 ${wf.cal}</div>`:''}${wf.notes?`<div style="margin-top:6px;font-size:11px;color:var(--muted)">📝 ${wf.notes}</div>`:''}</div>`;
+  }).join('');
 }
 
-function downloadPage(){
-  if(!window._salesPageHTML){notify('Build the page first');return;}
-  const a=document.createElement('a');
-  a.href='data:text/html;charset=utf-8,'+encodeURIComponent(window._salesPageHTML);
-  a.download='sales-page.html';a.click();
-  notify('Downloaded! Drop on Netlify to host.');
+function addTodo(){
+  const input=document.getElementById('todo-input');
+  const cat=document.getElementById('todo-cat').value;
+  const text=input.value.trim();
+  if(!text)return;
+  todos.push({id:todoId++,text,cat,done:false});
+  localStorage.setItem('pa_todos',JSON.stringify(todos));
+  input.value='';renderTodos();notify('Task added!');
 }
-
-// Settings
-function loadCfg(){
-  if(cfg.apiKey)document.getElementById('cfg-key').value=cfg.apiKey;
-  if(cfg.name)document.getElementById('cfg-name').value=cfg.name;
-  if(cfg.brand)document.getElementById('cfg-brand').value=cfg.brand;
-  if(cfg.email)document.getElementById('cfg-email').value=cfg.email;
-  if(cfg.salesPage)document.getElementById('cfg-page').value=cfg.salesPage;
-  if(cfg.stripeLink)document.getElementById('cfg-stripe').value=cfg.stripeLink;
-}
-function saveSettings(){
-  const key=document.getElementById('cfg-key').value.trim();
-  if(key&&!key.startsWith('sk-ant-')){document.getElementById('key-msg').innerHTML='<span style="color:var(--danger)">Invalid key — should start with sk-ant-</span>';return;}
-  if(key)cfg.apiKey=key;
-  cfg.name=document.getElementById('cfg-name').value;
-  cfg.brand=document.getElementById('cfg-brand').value;
-  cfg.email=document.getElementById('cfg-email').value;
-  cfg.salesPage=document.getElementById('cfg-page').value;
-  cfg.stripeLink=document.getElementById('cfg-stripe').value;
-  localStorage.setItem('uk_cfg',JSON.stringify(cfg));
-  document.getElementById('key-msg').innerHTML='<span style="color:var(--success)">✓ Saved</span>';
-  notify('Settings saved!');
-}
-
-// ============ CHECKLIST ============
-const CHECKLIST = {
-  phase1: [
-    { id:'c1',  text:'Sign up at console.anthropic.com — get your Claude API key', detail:'New accounts get free credits. Paste the key in the Settings tab of this app.', link:'https://console.anthropic.com', linkText:'Open Anthropic Console' },
-    { id:'c2',  text:'Create a new Gmail account for outreach only', detail:'e.g. yourbrand.automation@gmail.com — never use your personal email for cold outreach. Send 5 normal emails from it first to "warm it up".', link:'https://accounts.google.com/signup', linkText:'Create Gmail' },
-    { id:'c3',  text:'Sign up for n8n Cloud (free trial)', detail:'This is the automation engine. Sign up at n8n.io → choose cloud. Free trial, no card needed.', link:'https://n8n.io', linkText:'Open n8n.io' },
-    { id:'c4',  text:'Create a Stripe account', detail:'stripe.com → create account → verify with your bank details. You need this to take payments. Takes ~10 mins to verify.', link:'https://stripe.com', linkText:'Open Stripe' },
-    { id:'c5',  text:'Create a Tally.so account (free onboarding forms)', detail:'tally.so — this is where clients fill in their details after paying. Free forever.', link:'https://tally.so', linkText:'Open Tally.so' },
-    { id:'c6',  text:'Create a Loom account (free demo video hosting)', detail:'loom.com — you will record a 3-minute screen recording showing the automation. Free plan is fine.', link:'https://loom.com', linkText:'Open Loom' },
-    { id:'c7',  text:'Create a Netlify account (free website hosting)', detail:'netlify.com — you will drag and drop your sales page HTML file here to get a live URL in seconds. Free.', link:'https://netlify.com', linkText:'Open Netlify' },
-  ],
-  phase2: [
-    { id:'c8',  text:'Decide on your first service to sell', detail:'Recommendation: start with the AI Lead Reply Bot (£297). It is the easiest to explain, easiest to build, and most businesses understand the value immediately. See the UK Services tab.', link:null },
-    { id:'c9',  text:'Record a 3-minute Loom demo video', detail:'Open Loom → record your screen. Show: (1) a test enquiry coming in, (2) the AI auto-replying within 60 seconds, (3) it appearing in their inbox. This video is what closes sales on your page. You only need to do this once.', link:'https://loom.com', linkText:'Open Loom' },
-    { id:'c10', text:'Build your sales page in this app', detail:'Go to the Sales Page Builder tab. Fill in your service, price (£297), niche, your name, and your Stripe link. Click Build → Download HTML.', link:null, internal:'salespage', internalText:'Open Sales Page Builder' },
-    { id:'c11', text:'Upload sales page to Netlify', detail:'Go to app.netlify.com/drop → drag your downloaded sales-page.html file onto the page → you get a live URL like yourname.netlify.app. Copy that URL — it goes in your cold emails and n8n workflows.', link:'https://app.netlify.com/drop', linkText:'Open Netlify Drop' },
-    { id:'c12', text:'Create Stripe payment link', detail:'In Stripe: Products → Add product → name it your service name → price £297 (one-time) → create Payment Link. Copy the link (looks like buy.stripe.com/...) and paste it into your sales page and Settings tab here.', link:'https://stripe.com', linkText:'Open Stripe' },
-    { id:'c13', text:'Create Tally onboarding form', detail:'In Tally: create a new form with these fields: business_name, owner_name, email, business_type (dropdown), city, automation_purchased, google_review_link, website_url. This form fires after they pay.', link:'https://tally.so', linkText:'Open Tally' },
-  ],
-  phase3: [
-    { id:'c14', text:'Add your Claude API key to this app', detail:'Settings tab → paste your sk-ant-... key → Save. This enables AI email generation in the Outreach AI tab.', link:null, internal:'settings', internalText:'Open Settings' },
-    { id:'c15', text:'Import all 6 workflows into n8n', detail:'Go to the n8n Workflows tab in this app. Copy each workflow JSON one by one. In n8n: + New Workflow → ⋮ menu → Import from JSON → paste → Save.', link:null, internal:'n8n', internalText:'Open n8n Workflows tab' },
-    { id:'c16', text:'Replace all placeholders in each n8n workflow', detail:'In each workflow, replace: YOUR_CLAUDE_API_KEY, YOUR_N8N_URL, YOUR_N8N_API_KEY, YOUR_SHEET_ID, YOUR_SALES_PAGE_URL, YOUR_EMAIL, YOUR_NAME. Use Ctrl+F in the JSON to find them all.', link:null },
-    { id:'c17', text:'Connect Gmail credential in n8n', detail:'In n8n: Credentials → New → Gmail OAuth2 → sign in with your new outreach Gmail account. Then assign this credential to all Gmail nodes across the workflows.', link:null },
-    { id:'c18', text:'Connect Google Sheets credential in n8n', detail:'Create a Google Sheet with columns: business_name, email, city, niche, status, sent_date, replied, days_since_email, followup_number. Share it with your Google account. Get the Sheet ID from the URL and paste it into workflows.', link:null },
-    { id:'c19', text:'Set up Gmail filter for outreach replies', detail:'In Gmail: Settings → Filters → Create: from any email, subject contains "Re:" → apply label "outreach-replies". This lets Workflow 6 (AI Sales Responder) detect and auto-reply to all prospect replies.', link:null },
-    { id:'c20', text:'Connect Stripe webhook to n8n', detail:'In Stripe: Developers → Webhooks → Add endpoint → paste your n8n webhook URL from Workflow 3 → select event: payment_intent.succeeded. This fires auto-onboarding when someone pays.', link:null },
-    { id:'c21', text:'Test everything with a fake lead', detail:'Add a fake row to your Google Sheet. Manually trigger Workflow 1 in n8n to see if it generates and sends an email. Check it arrives. Then test Workflow 3 by triggering the webhook manually with test data.', link:null },
-  ],
-  phase4: [
-    { id:'c22', text:'Find your first 50 UK leads', detail:'Google Maps → search "[your niche] [UK city]" → click each result → find the email on their website. Or use Yell.com. Copy into your Google Sheet. Aim for one niche in one city to start (e.g. all car garages in Manchester).', link:'https://maps.google.com', linkText:'Open Google Maps' },
-    { id:'c23', text:'Add leads to CRM in this app', detail:'Go to the Lead CRM tab and add your leads. This is separate to your Google Sheet — this is for your personal tracking.', link:null, internal:'leads', internalText:'Open Lead CRM' },
-    { id:'c24', text:'Generate a test email in the Outreach AI tab', detail:'Pick one of your leads, fill in the details, click Generate. Make sure it looks good and sounds natural. Tweak the niche/tone settings if needed.', link:null, internal:'outreach', internalText:'Open Outreach AI' },
-    { id:'c25', text:'Activate all 6 workflows in n8n', detail:'In n8n: open each workflow → toggle the "Active" switch at the top right. Workflow 1 will fire at 9am the next weekday. The AI Sales Responder fires every minute watching for replies. You are now live.', link:null },
-    { id:'c26', text:'You are done — system is running', detail:'Tomorrow morning the system starts emailing leads. When someone replies, Claude replies for you. When someone buys, their automation is built and deployed automatically. Check your dashboard and wait for Stripe pings.', link:null },
-  ]
-};
-
-let clDone = JSON.parse(localStorage.getItem('cl_done')||'[]');
-
-function renderChecklist() {
-  ['phase1','phase2','phase3','phase4'].forEach(phase => {
-    const items = CHECKLIST[phase];
-    const el = document.getElementById('cl-'+phase);
-    if (!el) return;
-    el.innerHTML = items.map(item => {
-      const done = clDone.includes(item.id);
-      return `<div style="background:var(--surface);border:1px solid ${done?'rgba(0,212,170,0.3)':'var(--border)'};border-radius:10px;padding:14px 16px;transition:all 0.2s;${done?'opacity:0.65':''}">
-        <div style="display:flex;align-items:flex-start;gap:12px;">
-          <div onclick="toggleCheck('${item.id}')" style="width:22px;height:22px;border-radius:6px;border:2px solid ${done?'var(--success)':'var(--border)'};background:${done?'var(--success)':'transparent'};display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;margin-top:1px;transition:all 0.15s;font-size:13px;">${done?'✓':''}</div>
-          <div style="flex:1;">
-            <div style="font-size:14px;font-weight:600;${done?'text-decoration:line-through;color:var(--muted)':''};">${item.text}</div>
-            <div style="font-size:12px;color:var(--muted);margin-top:5px;line-height:1.6;">${item.detail}</div>
-            <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
-              ${item.link?`<a href="${item.link}" target="_blank" class="btn btn-sm btn-ghost" style="font-size:11px;padding:4px 10px;">↗ ${item.linkText}</a>`:''}
-              ${item.internal?`<button onclick="nav('${item.internal}',document.querySelector('[onclick*=${item.internal}]'))" class="btn btn-sm btn-ghost" style="font-size:11px;padding:4px 10px;">→ ${item.internalText}</button>`:''}
-            </div>
-          </div>
-        </div>
-      </div>`;
-    }).join('');
+function toggleTodo(id){const t=todos.find(x=>x.id===id);if(t){t.done=!t.done;localStorage.setItem('pa_todos',JSON.stringify(todos));renderTodos();renderDash();}}
+function deleteTodo(id){todos=todos.filter(t=>t.id!==id);localStorage.setItem('pa_todos',JSON.stringify(todos));renderTodos();renderDash();}
+function renderTodos(){
+  ['Setup','ManyChat','Outreach','Client','General'].forEach(cat=>{
+    const el=document.getElementById('todo-'+cat);
+    if(!el)return;
+    const items=todos.filter(t=>t.cat===cat);
+    if(!items.length){el.innerHTML='<div style="font-size:12px;color:var(--muted);padding:8px 0 12px">No tasks</div>';return;}
+    el.innerHTML=items.map(t=>`<div class="todo-item"><div class="todo-check ${t.done?'done':''}" onclick="toggleTodo(${t.id})">${t.done?'✓':''}</div><div style="flex:1"><div class="todo-text ${t.done?'done':''}">${t.text}</div></div><div class="todo-del" onclick="deleteTodo(${t.id})">✕</div></div>`).join('');
   });
-  checkComplete();
 }
 
-function toggleCheck(id) {
-  if (clDone.includes(id)) clDone = clDone.filter(x=>x!==id);
-  else clDone.push(id);
-  localStorage.setItem('cl_done', JSON.stringify(clDone));
-  renderChecklist();
-  updateDash();
+function renderRevenue(){
+  const active=customers.filter(c=>c.status==='active');
+  const gross=active.reduce((s,c)=>s+(parseFloat(c.fee)||47),0);
+  const mcCost=active.length*12;
+  const profit=Math.max(0,gross-mcCost-25);
+  document.getElementById('r-gross').textContent='£'+gross;
+  document.getElementById('r-cost').textContent='£'+mcCost;
+  document.getElementById('r-profit').textContent='£'+profit;
+  const tbody=document.getElementById('revenue-tbody');
+  if(!active.length){tbody.innerHTML='<tr><td colspan="5" class="empty">No active clients yet.</td></tr>';return;}
+  tbody.innerHTML=active.map(c=>`<tr><td><strong>${c.biz}</strong></td><td style="color:var(--green)">£${c.fee||47}</td><td style="color:var(--warn)">£12</td><td style="color:var(--green)">£${(parseFloat(c.fee)||47)-12}</td><td><span class="badge badge-active">active</span></td></tr>`).join('');
 }
 
-function checkComplete() {
-  const total = Object.values(CHECKLIST).flat().length;
-  const done = clDone.length;
-  const el = document.getElementById('cl-complete');
-  if (el) el.style.display = done >= total ? 'block' : 'none';
-}
-
-function resetChecklist() {
-  if (confirm('Reset all checklist items?')) {
-    clDone = [];
-    localStorage.setItem('cl_done', JSON.stringify(clDone));
-    renderChecklist();
-  }
-}
-
-// Utils
-function copyEl(id){navigator.clipboard.writeText(document.getElementById(id).textContent||document.getElementById(id).value).then(()=>notify('Copied!'));}
 function notify(msg){const n=document.getElementById('notif');n.textContent=msg;n.classList.add('show');setTimeout(()=>n.classList.remove('show'),2500);}
 
-// Init
-updateDash();
-renderServices('all');
-renderChecklist();
+renderDash();
+renderTodos();
 </script>
 </body>
 </html>
