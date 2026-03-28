@@ -94,6 +94,7 @@
   <div class="nav-item" onclick="nav('customers',this)">👥 Customers</div>
   <div class="nav-item" onclick="nav('workflows',this)">⚡ ManyChat Flows</div>
   <div class="nav-item" onclick="nav('todo',this)">✅ To-Do List</div>
+  <div class="nav-item" onclick="nav('emails',this)">📧 Emails</div>
   <div class="nav-item" onclick="nav('revenue',this)">💰 Revenue</div>
   <div class="nav-item" onclick="nav('settings',this)" style="position:absolute;bottom:20px;width:100%;">⚙️ Settings</div>
 </aside>
@@ -123,7 +124,7 @@
         <button class="btn btn-ghost" style="width:100%;margin-top:10px;font-size:12px" onclick="nav('todo',document.querySelector('[onclick*=todo]'))">View all →</button>
       </div>
     </div>
-    <div class="grid-3 mt-4">
+    <div class="grid-4 mt-4">
       <div class="card" style="text-align:center;cursor:pointer" onclick="nav('customers',document.querySelector('[onclick*=customers]'))">
         <div style="font-size:28px;margin-bottom:8px">👥</div>
         <div style="font-weight:600;font-size:14px">Add Customer</div>
@@ -138,6 +139,11 @@
         <div style="font-size:28px;margin-bottom:8px">✅</div>
         <div style="font-weight:600;font-size:14px">To-Do List</div>
         <div style="font-size:12px;color:var(--muted);margin-top:4px" id="dash-todo-count">Loading...</div>
+      </div>
+      <div class="card" style="text-align:center;cursor:pointer" onclick="nav('emails',document.querySelector('[onclick*=emails]'))">
+        <div style="font-size:28px;margin-bottom:8px">📧</div>
+        <div style="font-weight:600;font-size:14px">Emails</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px" id="dash-email-count">Loading...</div>
       </div>
     </div>
   </div>
@@ -332,6 +338,57 @@
     </div>
   </div>
 
+  <!-- EMAILS -->
+  <div id="page-emails" class="page">
+    <div class="page-header flex-between">
+      <div><h1>Emails</h1><p>Client onboarding pipeline — one click opens Gmail with the email ready to send</p></div>
+      <div id="emails-need-action" style="background:rgba(255,179,71,0.15);color:var(--warn);padding:6px 14px;border-radius:8px;font-size:12px;font-weight:700;display:none"></div>
+    </div>
+
+    <!-- Pipeline -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;">
+      <div class="card">
+        <div class="card-title" style="color:var(--warn);margin-bottom:14px;">⚡ New — Send Welcome</div>
+        <div id="email-col-new"><div class="empty" style="padding:16px 0;font-size:12px">All clear</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:var(--accent);margin-bottom:14px;">📧 Welcome Sent</div>
+        <div id="email-col-welcomed"><div class="empty" style="padding:16px 0;font-size:12px">None here</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:var(--green);margin-bottom:14px;">✅ Setup Done — Send Live</div>
+        <div id="email-col-setup"><div class="empty" style="padding:16px 0;font-size:12px">None here</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:var(--green);margin-bottom:14px;">🚀 Bot Live</div>
+        <div id="email-col-live"><div class="empty" style="padding:16px 0;font-size:12px">None yet</div></div>
+      </div>
+    </div>
+
+    <!-- How it works -->
+    <div class="card" style="max-width:100%">
+      <div class="card-title">How this works</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:4px;">
+        <div style="background:var(--surface2);border-radius:8px;padding:12px;">
+          <div style="font-size:11px;font-weight:700;color:var(--warn);margin-bottom:6px;">1 — NEW</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.6;">Customer pays on Stripe. Click <strong style="color:var(--text)">Send Welcome Email</strong> — Gmail opens pre-filled. Hit send.</div>
+        </div>
+        <div style="background:var(--surface2);border-radius:8px;padding:12px;">
+          <div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:6px;">2 — WELCOME SENT</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.6;">Waiting for their ✅ Done reply. If no reply in 24hrs click <strong style="color:var(--text)">Send Nudge</strong>. When they reply, click <strong style="color:var(--text)">Mark Setup Done</strong>.</div>
+        </div>
+        <div style="background:var(--surface2);border-radius:8px;padding:12px;">
+          <div style="font-size:11px;font-weight:700;color:var(--green);margin-bottom:6px;">3 — SETUP DONE</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.6;">Their access is ready. Build their ManyChat flows (~20 mins). Then click <strong style="color:var(--text)">Send Live Email</strong>.</div>
+        </div>
+        <div style="background:var(--surface2);border-radius:8px;padding:12px;">
+          <div style="font-size:11px;font-weight:700;color:var(--green);margin-bottom:6px;">4 — BOT LIVE</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.6;">All done. Client is active, bot is running 24/7. Nothing more needed unless they want updates.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- SETTINGS -->
   <div id="page-settings" class="page">
     <div class="page-header"><h1>Settings</h1><p>Connect your Google Sheet for automatic customer imports</p></div>
@@ -401,6 +458,7 @@ function nav(name, el) {
   if(name==='workflows') renderWorkflows();
   if(name==='todo') renderTodos();
   if(name==='revenue') renderRevenue();
+  if(name==='emails') renderEmails();
   if(name==='settings') { const u=localStorage.getItem('pa_gas_url')||''; document.getElementById('gas-url-input').value=u; }
 }
 document.querySelectorAll('.nav-item').forEach(item=>{
@@ -421,6 +479,10 @@ function renderDash() {
   else{dc.innerHTML=customers.slice(-5).reverse().map(c=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:10px;background:var(--surface2);border-radius:7px;margin-bottom:7px"><div><div style="font-size:13px;font-weight:600">${c.biz}${c.isNew?'<span style="margin-left:6px;background:rgba(0,212,170,0.15);color:var(--green);font-size:9px;font-weight:700;padding:2px 5px;border-radius:8px">NEW</span>':''}</div><div style="font-size:11px;color:var(--muted)">${c.channels||c.type||'No channels set'} · ${c.name||''}</div></div><span class="badge badge-${c.status}">${c.status}</span></div>`).join('');}
   const pending = todos.filter(t=>!t.done);
   document.getElementById('dash-todo-count').textContent = pending.length?`${pending.length} tasks remaining`:'All done! 🎉';
+  const emailActions=customers.filter(c=>c.status!=='inactive'&&(emailStage(c)==='new'||emailStage(c)==='setup')).length;
+  const emailEl=document.getElementById('dash-email-count');
+  if(emailEl) emailEl.textContent=emailActions?`${emailActions} action${emailActions===1?'':'s'} needed`:'All up to date ✓';
+  if(emailEl) emailEl.style.color=emailActions?'var(--warn)':'var(--muted)';
   const dt = document.getElementById('dash-todos');
   const next = pending.slice(0,4);
   if(!next.length){dt.innerHTML='<div class="empty" style="padding:16px">All tasks complete! 🎉</div>';}
@@ -438,7 +500,7 @@ function saveCustomer(){
 }
 function deleteCustomer(id){const c=customers.find(x=>String(x.id)===String(id));if(!c)return;if(!confirm('Delete '+c.biz+'?\n\nThis removes them from your dashboard. It does not cancel their Stripe subscription.'))return;if(c.email&&!deletedEmails.includes(c.email)){deletedEmails.push(c.email);localStorage.setItem('pa_deleted_emails',JSON.stringify(deletedEmails));}customers=customers.filter(x=>String(x.id)!==String(id));localStorage.setItem('pa_customers',JSON.stringify(customers));renderAll();notify('Customer deleted');}
 function updateCustomerStatus(id,v){const c=customers.find(x=>String(x.id)===String(id));if(c){c.status=v;localStorage.setItem('pa_customers',JSON.stringify(customers));renderAll();}}
-function renderAll(){renderDash();renderCustomers();renderRevenue();renderWorkflows();}
+function renderAll(){renderDash();renderCustomers();renderRevenue();renderWorkflows();renderEmails();}
 function renderCustomers(){
   const q=(document.getElementById('c-search').value||'').toLowerCase();
   const f=customers.filter(c=>c.biz.toLowerCase().includes(q)||(c.city||'').toLowerCase().includes(q)||(c.type||'').toLowerCase().includes(q));
@@ -566,6 +628,133 @@ function renderRevenue(){
   const tbody=document.getElementById('revenue-tbody');
   if(!active.length){tbody.innerHTML='<tr><td colspan="5" class="empty">No active clients yet.</td></tr>';return;}
   tbody.innerHTML=active.map(c=>`<tr><td><strong>${c.biz}</strong></td><td style="color:var(--green)">£${c.fee||27}</td><td style="color:var(--warn)">£12</td><td style="color:var(--green)">£${(parseFloat(c.fee)||27)-12}</td><td><span class="badge badge-active">active</span></td></tr>`).join('');
+}
+
+// ── EMAILS / ONBOARDING PIPELINE ──
+function emailStage(c){
+  if(c.status==='inactive') return 'inactive';
+  if(c.emailLive) return 'live';
+  if(c.setupDone) return 'setup';
+  if(c.emailWelcome) return 'welcomed';
+  return 'new';
+}
+
+function buildWelcomeBody(c){
+  const channels=(c.channels||'').split(',').map(s=>s.trim().toLowerCase()).filter(Boolean);
+  const chSteps={
+    instagram:`--- INSTAGRAM ---\n1. Open Instagram and go to your profile\n2. Tap the three lines → Settings → Account\n3. Tap Switch to Professional Account → choose Business\n4. Connect it to your Facebook Page when prompted\nDone — nothing else needed from you.\n`,
+    messenger:`--- FACEBOOK MESSENGER ---\nNothing extra needed. Once Step 1 is done we can connect Messenger automatically.\n`,
+    whatsapp:`--- WHATSAPP ---\n1. Download WhatsApp Business app (free) if you haven't already\n2. Set it up with your business phone number\n3. Reply to this email with your WhatsApp Business number\n`,
+    tiktok:`--- TIKTOK ---\n1. Open TikTok → Profile → three lines → Settings\n2. Manage Account → Switch to Business Account\n3. Reply to this email with your TikTok @username\n`,
+    sms:`--- SMS / TEXT ---\nReply to this email with the phone number you want to receive texts on. We'll handle the rest.\n`,
+    email:`--- EMAIL ---\nReply to this email with the address you want the bot to handle (e.g. hello@yourbusiness.co.uk). We'll send you a simple 2-minute forwarding rule.\n`,
+    telegram:`--- TELEGRAM ---\nReply to this email with your preferred Telegram @username or business name. We'll create the bot for you.\n`
+  };
+  const steps=channels.map(ch=>chSteps[ch]).filter(Boolean).join('\n');
+  return `Hi ${c.name||c.biz},\n\nWelcome aboard — really chuffed to have you with us!\n\nYour reply bot will be live within 24 hours. I just need you to follow a few quick steps below — no passwords needed, takes about 10 minutes.\n\n────────────────────────────\nSTEP 1 — REQUIRED (everyone)\n────────────────────────────\n\nAdd me as Admin on your Facebook Page:\n\n1. Go to your Facebook Page\n2. Click Manage → Page Access → Add New\n3. Search: phillipsautomates@gmail.com\n4. Set role to: Admin\n5. Click Confirm\n\nThis lets me connect everything without needing your login details.\n\n────────────────────────────\nSTEPS FOR YOUR CHANNELS\n────────────────────────────\n\n${steps||'No extra steps needed for your selected channels.'}\n────────────────────────────\nONCE YOU'VE DONE YOUR STEPS\n────────────────────────────\n\nJust reply to this email with ✅ Done and I'll take care of everything else. Your bot will be live within 24 hours and I'll email you when it's ready.\n\nYou can still see every conversation and reply yourself anytime — nothing is hidden from you.\n\nAny questions just reply to this email.\n\nFrankie\nPhillips Automates\nphillipsautomates@gmail.com`;
+}
+
+function buildNudgeBody(c){
+  return `Hi ${c.name||c.biz},\n\nJust checking in — did you get a chance to do the setup steps? It's the one thing holding me back from getting your bot live.\n\nIf you got stuck anywhere just reply and I'll help you through it.\n\nFrankie\nphillipsautomates@gmail.com`;
+}
+
+function buildLiveBody(c){
+  const channels=(c.channels||'').split(',').map(s=>s.trim()).filter(Boolean).join(', ');
+  return `Hi ${c.name||c.biz},\n\nGreat news — your reply bot is now live on ${channels||'your channels'}!\n\nFrom right now, every message you receive will get an instant reply, 24/7.\n\nTo see your conversations:\nManyChat → Inbox (manychat.com)\n\nIf you ever want to jump in and reply yourself you can do that directly from the ManyChat inbox.\n\nIf anything needs updating — prices, hours, services — just email me and I'll sort it within 24 hours.\n\nThanks for choosing Phillips Automates!\n\nFrankie\nphillipsautomates@gmail.com`;
+}
+
+function openMailto(to, subject, body){
+  window.open('mailto:'+to+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body));
+}
+
+function sendWelcomeEmail(id){
+  const c=customers.find(x=>String(x.id)===String(id));
+  if(!c||!c.email){notify('No email address for this customer');return;}
+  openMailto(c.email,'Welcome to Phillips Automates — here\'s what happens next 🎉',buildWelcomeBody(c));
+  c.emailWelcome=new Date().toISOString();
+  localStorage.setItem('pa_customers',JSON.stringify(customers));
+  renderAll();notify('Welcome email opened — send it from Gmail!');
+}
+
+function sendNudgeEmail(id){
+  const c=customers.find(x=>String(x.id)===String(id));
+  if(!c||!c.email){notify('No email address for this customer');return;}
+  openMailto(c.email,'Re: Welcome to Phillips Automates — quick nudge',buildNudgeBody(c));
+  c.emailNudge=new Date().toISOString();
+  localStorage.setItem('pa_customers',JSON.stringify(customers));
+  renderAll();notify('Nudge email opened — send it from Gmail!');
+}
+
+function markSetupDone(id){
+  const c=customers.find(x=>String(x.id)===String(id));
+  if(!c)return;
+  c.setupDone=true;
+  localStorage.setItem('pa_customers',JSON.stringify(customers));
+  renderAll();notify(c.biz+' marked as setup done — now build their ManyChat flows!');
+}
+
+function sendLiveEmail(id){
+  const c=customers.find(x=>String(x.id)===String(id));
+  if(!c||!c.email){notify('No email address for this customer');return;}
+  openMailto(c.email,'Your reply bot is live! 🚀',buildLiveBody(c));
+  c.emailLive=new Date().toISOString();
+  c.status='active';
+  localStorage.setItem('pa_customers',JSON.stringify(customers));
+  renderAll();notify('Live email opened — send it from Gmail! Client set to Active.');
+}
+
+function renderEmails(){
+  const cols={new:[],welcomed:[],setup:[],live:[]};
+  customers.filter(c=>c.status!=='inactive').forEach(c=>{
+    const stage=emailStage(c);
+    if(cols[stage]) cols[stage].push(c);
+  });
+
+  const needAction=cols.new.length+cols.setup.length;
+  const badge=document.getElementById('emails-need-action');
+  if(badge){badge.style.display=needAction?'block':'none';badge.textContent=needAction+' action'+(needAction===1?' needed':'s needed');}
+
+  function fmtDate(iso){if(!iso)return'';const d=new Date(iso);return d.toLocaleDateString('en-GB',{day:'numeric',month:'short'})+' '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});}
+
+  function card(c,actions){
+    return `<div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:10px;">
+      <div style="font-weight:600;font-size:13px;margin-bottom:2px;">${c.biz}</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:8px;">${c.name||''}${c.email?' · '+c.email:''}</div>
+      ${c.channels?`<div style="font-size:10px;color:var(--accent);margin-bottom:10px;">${c.channels}</div>`:''}
+      <div style="display:flex;flex-direction:column;gap:6px;">${actions}</div>
+    </div>`;
+  }
+
+  // New — need welcome email
+  const newEl=document.getElementById('email-col-new');
+  if(newEl) newEl.innerHTML=cols.new.length
+    ?cols.new.map(c=>card(c,`<button class="btn btn-primary btn-sm" onclick="sendWelcomeEmail('${c.id}')" style="width:100%">📧 Send Welcome Email</button>`)).join('')
+    :'<div class="empty" style="padding:16px 0;font-size:12px">All clear</div>';
+
+  // Welcomed — waiting for client setup done
+  const welEl=document.getElementById('email-col-welcomed');
+  if(welEl) welEl.innerHTML=cols.welcomed.length
+    ?cols.welcomed.map(c=>card(c,`
+      <div style="font-size:10px;color:var(--muted);margin-bottom:4px;">Welcome sent: ${fmtDate(c.emailWelcome)}</div>
+      <button class="btn btn-ghost btn-sm" onclick="sendNudgeEmail('${c.id}')" style="width:100%">🔔 Send Nudge</button>
+      <button class="btn btn-green btn-sm" onclick="markSetupDone('${c.id}')" style="width:100%">✅ Mark Setup Done</button>
+    `)).join('')
+    :'<div class="empty" style="padding:16px 0;font-size:12px">None here</div>';
+
+  // Setup done — need to build ManyChat then send live email
+  const setupEl=document.getElementById('email-col-setup');
+  if(setupEl) setupEl.innerHTML=cols.setup.length
+    ?cols.setup.map(c=>card(c,`
+      <div style="font-size:10px;color:var(--muted);margin-bottom:4px;">Setup confirmed — build ManyChat flows now</div>
+      <button class="btn btn-primary btn-sm" onclick="sendLiveEmail('${c.id}')" style="width:100%">🚀 Send Live Email</button>
+    `)).join('')
+    :'<div class="empty" style="padding:16px 0;font-size:12px">None here</div>';
+
+  // Live
+  const liveEl=document.getElementById('email-col-live');
+  if(liveEl) liveEl.innerHTML=cols.live.length
+    ?cols.live.map(c=>card(c,`<div style="font-size:10px;color:var(--green);">Live since ${fmtDate(c.emailLive)}</div>`)).join('')
+    :'<div class="empty" style="padding:16px 0;font-size:12px">None yet — keep selling!</div>';
 }
 
 // ── SETTINGS ──
