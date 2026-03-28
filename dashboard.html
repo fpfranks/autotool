@@ -188,7 +188,7 @@
         <input class="form-input" id="c-search" placeholder="Search..." style="width:180px;padding:6px 10px" oninput="renderCustomers()"/>
       </div>
       <table class="table">
-        <thead><tr><th>Business</th><th>Owner</th><th>Type</th><th>City</th><th>Status</th><th>Fee</th><th>Since</th><th></th></tr></thead>
+        <thead><tr><th>Business</th><th>Owner</th><th>Channels</th><th>City</th><th>Status</th><th>Fee</th><th>Since</th><th></th></tr></thead>
         <tbody id="customers-tbody"><tr><td colspan="8" class="empty">No customers yet.</td></tr></tbody>
       </table>
     </div>
@@ -434,7 +434,60 @@ function renderCustomers(){
   const f=customers.filter(c=>c.biz.toLowerCase().includes(q)||(c.city||'').toLowerCase().includes(q)||(c.type||'').toLowerCase().includes(q));
   const tbody=document.getElementById('customers-tbody');
   if(!f.length){tbody.innerHTML='<tr><td colspan="8" class="empty">No customers found.</td></tr>';return;}
-  tbody.innerHTML=f.map(c=>`<tr><td><strong>${c.biz}</strong></td><td>${c.name||'—'}<br><span style="font-size:11px;color:var(--muted)">${c.email||''}</span></td><td>${c.type||'—'}</td><td>${c.city||'—'}</td><td><select onchange="updateCustomerStatus(${c.id},this.value)" style="background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:3px 7px;border-radius:5px;font-size:11px">${['active','pending','inactive'].map(s=>`<option value="${s}"${c.status===s?' selected':''}>${s}</option>`).join('')}</select></td><td style="color:var(--green)">£${c.fee||47}/mo</td><td style="font-size:11px;color:var(--muted)">${c.date}</td><td><button class="btn btn-sm btn-red" onclick="deleteCustomer(${c.id})">✕</button></td></tr>`).join('');
+  tbody.innerHTML=f.map(c=>`
+    <tr style="cursor:pointer" onclick="toggleCustomerDetail(${c.id})">
+      <td><strong>${c.biz}</strong>${c.isNew?'<span style="margin-left:6px;background:rgba(0,212,170,0.15);color:var(--green);font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px;text-transform:uppercase;">New</span>':''}</td>
+      <td>${c.name||'—'}<br><span style="font-size:11px;color:var(--muted)">${c.email||''}</span></td>
+      <td>${c.channels||c.type||'—'}</td>
+      <td>${c.city||'—'}</td>
+      <td><select onchange="event.stopPropagation();updateCustomerStatus(${c.id},this.value)" style="background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:3px 7px;border-radius:5px;font-size:11px">${['active','pending','inactive'].map(s=>`<option value="${s}"${c.status===s?' selected':''}>${s}</option>`).join('')}</select></td>
+      <td style="color:var(--green)">£${c.fee||47}/mo</td>
+      <td style="font-size:11px;color:var(--muted)">${c.date}</td>
+      <td onclick="event.stopPropagation()"><button class="btn btn-sm btn-red" onclick="deleteCustomer(${c.id})">✕</button></td>
+    </tr>
+    <tr id="detail-${c.id}" style="display:none">
+      <td colspan="8" style="padding:0;border-bottom:2px solid var(--accent)">
+        <div style="padding:16px 18px;background:rgba(108,99,255,0.05)">
+          <div style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;">Bot Setup Details</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;">
+            ${renderChannelDetails(c)}
+          </div>
+          ${c.notes&&!c.channels?`<pre style="margin-top:12px;font-size:12px;color:var(--muted);white-space:pre-wrap;line-height:1.8">${c.notes}</pre>`:''}
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function toggleCustomerDetail(id){
+  const row=document.getElementById('detail-'+id);
+  if(row) row.style.display=row.style.display==='none'?'table-row':'none';
+}
+
+function renderChannelDetails(c){
+  const chMap={
+    instagram:{icon:'📸',label:'Instagram',key:'ig'},
+    messenger:{icon:'💬',label:'Facebook Messenger',key:'fb'},
+    whatsapp: {icon:'🟢',label:'WhatsApp',key:'wa'},
+    tiktok:   {icon:'🎵',label:'TikTok',key:'tt'},
+    sms:      {icon:'📱',label:'SMS Number',key:'smsNum'},
+    email:    {icon:'📧',label:'Email Bot',key:'emailBot'},
+    telegram: {icon:'✈️',label:'Telegram',key:'tg'}
+  };
+  const channels=(c.channels||'').split(',').map(s=>s.trim().toLowerCase()).filter(Boolean);
+  let html='';
+  channels.forEach(ch=>{
+    const info=chMap[ch];
+    if(!info) return;
+    const val=c[info.key]||'';
+    html+=`<div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px;">
+      <div style="font-size:10px;color:var(--muted);margin-bottom:4px;">${info.icon} ${info.label}</div>
+      <div style="font-size:13px;font-weight:600;color:${val?'var(--text)':'var(--muted)'}">${val||'—'}</div>
+    </div>`;
+  });
+  if(c.phone) html+=`<div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px;"><div style="font-size:10px;color:var(--muted);margin-bottom:4px;">📞 Phone</div><div style="font-size:13px;font-weight:600">${c.phone}</div></div>`;
+  if(c.email) html+=`<div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px;"><div style="font-size:10px;color:var(--muted);margin-bottom:4px;">✉️ Contact Email</div><div style="font-size:13px;font-weight:600">${c.email}</div></div>`;
+  return html||`<div style="color:var(--muted);font-size:13px;">No channel details recorded.</div>`;
 }
 
 const WF_STEPS=['ManyChat account created for client','Instagram/Facebook connected','Welcome message set up','Booking flow added (collects name + number)','Pricing info added','Opening hours added','Tested — bot replies correctly','Client notified — live!'];
@@ -546,6 +599,13 @@ function fetchFromSheet(url){
             social: sc.ig||'',
             phone: sc.phone||'',
             channels: sc.channels||'',
+            ig: sc.ig||'',
+            fb: sc.fb||'',
+            wa: sc.wa||'',
+            tt: sc.tt||'',
+            smsNum: sc.smsNum||'',
+            emailBot: sc.emailBot||'',
+            tg: sc.tg||'',
             type: '',
             city: '',
             status: sc.status||'pending',
@@ -619,12 +679,22 @@ function notify(msg){const n=document.getElementById('notif');n.textContent=msg;
     // Add to customers
     const existing = customers.find(c=>c.biz===data.biz && c.email===data.email);
     if(!existing){
+      const cd = data.channelData||{};
       customers.push({
         id: Date.now(),
         biz: data.biz,
         name: data.name||'',
         email: data.email||'',
-        social: (data.channelData&&data.channelData.instagram)||'',
+        social: cd.instagram||'',
+        phone: data.phone||'',
+        channels: (data.channels||[]).join(', '),
+        ig: cd.instagram||'',
+        fb: cd.messenger||'',
+        wa: cd.whatsapp||'',
+        tt: cd.tiktok||'',
+        smsNum: cd.sms||'',
+        emailBot: cd.email||'',
+        tg: cd.telegram||'',
         type: '',
         city: '',
         status: 'pending',
