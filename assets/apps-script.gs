@@ -53,7 +53,7 @@ function doPost(e) {
       data.website || '',
       data.booking || '',
       'pending',
-      '47',
+      '27',
       new Date().toLocaleDateString('en-GB')
     ]);
     return ContentService
@@ -97,7 +97,7 @@ function doGet(e) {
         website:  r['Website']     || '',
         booking:  r['Booking URL'] || '',
         status:   r['Status']    || 'pending',
-        fee:      r['Fee']       || 47,
+        fee:      r['Fee']       || 27,
         date:     r['Date']      || '',
         fromSheet: true
       };
