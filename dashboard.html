@@ -409,7 +409,7 @@ function renderDash() {
   document.getElementById('s-profit').textContent = '£'+Math.max(0,revenue-cost-25);
   const dc = document.getElementById('dash-customers');
   if(!customers.length){dc.innerHTML='<div class="empty">No customers yet</div>';}
-  else{dc.innerHTML=customers.slice(-3).reverse().map(c=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:10px;background:var(--surface2);border-radius:7px;margin-bottom:7px"><div><div style="font-size:13px;font-weight:600">${c.biz}</div><div style="font-size:11px;color:var(--muted)">${c.type||''} · ${c.city||''}</div></div><span class="badge badge-${c.status}">${c.status}</span></div>`).join('');}
+  else{dc.innerHTML=customers.slice(-5).reverse().map(c=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:10px;background:var(--surface2);border-radius:7px;margin-bottom:7px"><div><div style="font-size:13px;font-weight:600">${c.biz}${c.isNew?'<span style="margin-left:6px;background:rgba(0,212,170,0.15);color:var(--green);font-size:9px;font-weight:700;padding:2px 5px;border-radius:8px">NEW</span>':''}</div><div style="font-size:11px;color:var(--muted)">${c.channels||c.type||'No channels set'} · ${c.name||''}</div></div><span class="badge badge-${c.status}">${c.status}</span></div>`).join('');}
   const pending = todos.filter(t=>!t.done);
   document.getElementById('dash-todo-count').textContent = pending.length?`${pending.length} tasks remaining`:'All done! 🎉';
   const dt = document.getElementById('dash-todos');
@@ -425,10 +425,11 @@ function saveCustomer(){
   if(!biz){notify('Business name required');return;}
   customers.push({id:Date.now(),biz,name:document.getElementById('c-name').value,email:document.getElementById('c-email').value,social:document.getElementById('c-social').value,type:document.getElementById('c-type').value,city:document.getElementById('c-city').value,status:document.getElementById('c-status').value,fee:document.getElementById('c-fee').value,notes:document.getElementById('c-notes').value,date:new Date().toLocaleDateString('en-GB')});
   localStorage.setItem('pa_customers',JSON.stringify(customers));
-  closeCustomerForm();renderCustomers();notify('Customer saved!');
+  closeCustomerForm();renderAll();notify('Customer saved!');
 }
-function deleteCustomer(id){customers=customers.filter(c=>c.id!==id);localStorage.setItem('pa_customers',JSON.stringify(customers));renderCustomers();}
-function updateCustomerStatus(id,v){const c=customers.find(x=>x.id===id);if(c){c.status=v;localStorage.setItem('pa_customers',JSON.stringify(customers));renderCustomers();renderDash();}}
+function deleteCustomer(id){customers=customers.filter(c=>String(c.id)!==String(id));localStorage.setItem('pa_customers',JSON.stringify(customers));renderAll();}
+function updateCustomerStatus(id,v){const c=customers.find(x=>String(x.id)===String(id));if(c){c.status=v;localStorage.setItem('pa_customers',JSON.stringify(customers));renderAll();}}
+function renderAll(){renderDash();renderCustomers();renderRevenue();renderWorkflows();}
 function renderCustomers(){
   const q=(document.getElementById('c-search').value||'').toLowerCase();
   const f=customers.filter(c=>c.biz.toLowerCase().includes(q)||(c.city||'').toLowerCase().includes(q)||(c.type||'').toLowerCase().includes(q));
@@ -500,8 +501,8 @@ function saveWorkflow(){
   localStorage.setItem('pa_workflows',JSON.stringify(workflows));
   closeWfForm();renderWorkflows();notify('Workflow added!');
 }
-function toggleWfStep(wfId,stepIdx){const wf=workflows.find(w=>w.id===wfId);if(wf){wf.steps[stepIdx]=!wf.steps[stepIdx];localStorage.setItem('pa_workflows',JSON.stringify(workflows));renderWorkflows();}}
-function deleteWf(id){workflows=workflows.filter(w=>w.id!==id);localStorage.setItem('pa_workflows',JSON.stringify(workflows));renderWorkflows();}
+function toggleWfStep(wfId,stepIdx){const wf=workflows.find(w=>String(w.id)===String(wfId));if(wf){wf.steps[stepIdx]=!wf.steps[stepIdx];localStorage.setItem('pa_workflows',JSON.stringify(workflows));renderWorkflows();}}
+function deleteWf(id){workflows=workflows.filter(w=>String(w.id)!==String(id));localStorage.setItem('pa_workflows',JSON.stringify(workflows));renderWorkflows();}
 function renderWorkflows(){
   const el=document.getElementById('workflows-list');
   if(!workflows.length){el.innerHTML='<div class="empty">No workflows yet.</div>';return;}
@@ -592,7 +593,7 @@ function fetchFromSheet(url){
         const exists=customers.find(c=>c.email&&c.email===sc.email);
         if(!exists){
           customers.push({
-            id: sc.id||Date.now()+Math.random(),
+            id: Number(sc.id)||Date.now(),
             biz: sc.biz||'',
             name: sc.name||'',
             email: sc.email||'',
@@ -618,7 +619,7 @@ function fetchFromSheet(url){
           const wfExists=workflows.find(w=>w.biz===sc.biz);
           if(!wfExists){
             workflows.push({
-              id: Date.now()+Math.random(),
+              id: Date.now()+added,
               biz: sc.biz||'',
               ig: sc.ig||'', fb: sc.fb||'', wa: sc.wa||'',
               tt: sc.tt||'', email: sc.emailBot||'', tg: sc.tg||'',
@@ -633,8 +634,7 @@ function fetchFromSheet(url){
       if(added>0){
         localStorage.setItem('pa_customers',JSON.stringify(customers));
         localStorage.setItem('pa_workflows',JSON.stringify(workflows));
-        renderDash();
-        renderCustomers();
+        renderAll();
         notify(`${added} new customer${added>1?'s':''} added from sales page!`);
       }
     })
@@ -724,6 +724,7 @@ function notify(msg){const n=document.getElementById('notif');n.textContent=msg;
 
       // Navigate to customers page and show notification
       setTimeout(()=>{
+        renderAll();
         nav('customers', document.querySelector('[onclick*=customers]'));
         notify('✅ New customer imported: ' + data.biz);
       }, 300);
