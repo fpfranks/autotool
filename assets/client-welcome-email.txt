@@ -3,7 +3,7 @@ CLIENT WELCOME EMAIL — PHILLIPS AUTOMATES
 Send this to every new client immediately after they pay
 ========================================================
 
-WHEN TO SEND: Within 1 hour of receiving payment (ideally within minutes)
+WHEN TO SEND: Within 1 hour of receiving Stripe payment
 HOW TO SEND: From phillipsautomates@gmail.com
 SUBJECT LINE: Welcome to Phillips Automates — here's what happens next 🎉
 
@@ -15,90 +15,156 @@ Subject: Welcome to Phillips Automates — here's what happens next 🎉
 
 Hi [FIRST NAME],
 
-Welcome aboard — really chuffed to have you with us!
+Welcome aboard — really chuffed to have you with us! 🎉
 
-Here's what's going to happen over the next 24 hours:
-
-I'm going to build your AI reply bot and connect it to your Facebook and Instagram. From the moment it's live, every message that comes into your Facebook Page or Instagram — day or night — will get an instant, friendly reply in your name. You won't have to do a thing.
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-THE ONE THING I NEED FROM YOU
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-To connect the bot to your Facebook Page, I need you to do one small thing — it takes about 2 minutes:
-
-1. Go to manychat.com on your phone or computer
-2. Click "Get Started Free" and sign in with the Facebook account you use to manage your business page (the one you use to post on Facebook as your business)
-3. When it asks which page to connect — select [BUSINESS NAME], then email me back your ManyChat login (the email and password you just created)
-
-That's honestly it. Once you've sent me those details, I'll take care of everything else.
+Your AI reply bot will be live within 24 hours. To make
+that happen I just need you to follow a few quick steps
+below — no passwords needed, takes about 10 minutes.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-WHAT HAPPENS AFTER THAT
+STEP 1 — REQUIRED (everyone)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Once I have your ManyChat login, here's the timeline:
+Add me as Admin on your Facebook Page:
 
-✅ I build your bot (your opening hours, your services, your prices, your contact details — all written in a warm, friendly tone)
-✅ I test it to make sure everything works perfectly
-✅ I send you a "You're live!" email — usually within 24 hours
-✅ From that point on, every Facebook and Instagram message gets an instant reply
+1. Go to your Facebook Page
+2. Click Manage → Page Access → Add New
+3. Search: phillipsautomates@gmail.com
+4. Set role to: Admin
+5. Click Confirm
+
+This is the most important step — it lets me connect
+everything without needing your login details.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-WHAT CHANGES FOR YOU (very little)
+STEPS FOR YOUR CHOSEN CHANNELS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-- You can still see every conversation in your Facebook and Instagram inbox as normal — nothing is hidden from you
-- You can still reply to customers yourself whenever you like — the bot just handles it when you're busy
-- If your opening hours or prices ever change, just email me and I'll update the bot within 24 hours
+Only follow the steps for the channels you signed up for:
+
+--- INSTAGRAM ---
+1. Open Instagram → go to your profile
+2. Tap the three lines → Settings → Account
+3. Tap Switch to Professional Account → choose Business
+4. Connect it to your Facebook Page when prompted
+Done — nothing else needed from you.
+
+--- FACEBOOK MESSENGER ---
+Nothing extra needed. Once Step 1 is done we can
+connect Messenger automatically.
+
+--- WHATSAPP ---
+1. Download WhatsApp Business app (free) if not already
+2. Set it up with your business phone number
+3. Reply to this email with your WhatsApp Business number
+
+--- TIKTOK ---
+1. Open TikTok → Profile → three lines → Settings
+2. Manage Account → Switch to Business Account
+3. Reply to this email with your TikTok @username
+
+--- SMS / TEXT ---
+Reply to this email with the phone number you want
+to receive texts on. We'll handle the rest.
+
+--- EMAIL ---
+Reply to this email with the address you want the
+bot to handle (e.g. hello@yourbusiness.co.uk).
+We'll send you a simple 2-minute forwarding rule.
+
+--- TELEGRAM ---
+Reply to this email with your preferred Telegram
+@username or business name. We'll create the bot
+for you.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ONCE YOU'VE DONE YOUR STEPS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Just reply to this email with ✅ Done and I'll take
+care of everything else. Your bot will be live within
+24 hours and I'll email you when it's ready.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+WHAT CHANGES FOR YOU
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+- You can still see every conversation as normal
+- You can still reply yourself whenever you like
+- If your prices or hours change just email me and
+  I'll update the bot within 24 hours
+- Cancel anytime — just send me an email
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ANY QUESTIONS?
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Just reply to this email — I'm a real person and I'll get back to you quickly.
-
-Really looking forward to getting this set up for you. You're about to stop losing customers to unanswered messages for good.
+Just reply to this email — I'll get back to you quickly.
 
 Speak soon,
 
 Frankie
+Phillips Automates
 phillipsautomates@gmail.com
 
-P.S. If you get stuck on the ManyChat step — don't worry, just email me and I'll walk you through it. It genuinely takes 2 minutes once you know what you're looking at.
-
 ========================================================
-NOTES FOR FRANKIE — WHAT TO DO AFTER SENDING THIS EMAIL
+24 HOUR NUDGE — send if no reply after 24 hours
 ========================================================
 
-1. Add the client to your Google Sheet (or wherever you're tracking clients):
-   - Name, business name, email, date paid, date bot went live
-   - Status: "Awaiting ManyChat login"
+Subject: Re: Welcome to Phillips Automates — quick nudge
 
-2. Wait for them to send you the ManyChat login
-   - Most clients do this within a few hours
-   - If no reply after 24 hours, send this nudge:
+Hi [NAME],
 
-   ---
-   Subject: Re: Welcome to Phillips Automates — quick nudge
+Just checking in — did you get a chance to do the
+setup steps? It's the one thing holding me back from
+getting your bot live.
 
-   Hi [NAME],
+If you got stuck anywhere just reply and I'll help
+you through it.
 
-   Just checking in — did you get a chance to set up the ManyChat account? It's the one thing holding me back from getting started on your bot.
-
-   If you got stuck at any point, just reply and I'll help you through it — takes 2 minutes once you know what you're looking for.
-
-   Frankie
-   phillipsautomates@gmail.com
-   ---
-
-3. Once you receive their login — work through the full ManyChat Setup Guide
-   (see manychat-setup-guide.txt)
-
-4. Send the "You're live!" email from manychat-setup-guide.txt when the bot is ready
-
-5. Update your tracker: Status → "Live" | Date live → [date]
+Frankie
+phillipsautomates@gmail.com
 
 ========================================================
-END OF CLIENT WELCOME EMAIL
+NOTES FOR FRANKIE — AFTER SENDING THIS EMAIL
+========================================================
+
+1. Add client to dashboard — status: Awaiting Setup
+2. Wait for their "✅ Done" reply
+3. Connect their channels in ManyChat (see manychat-flows-guide.txt)
+4. Duplicate your master template in ManyChat
+5. Update: business name, services, prices, hours,
+   website URL, booking URL
+6. Test the bot — send a DM from another account
+7. Mark all steps done in dashboard → ManyChat Flows
+8. Send "You're live!" email (below)
+9. Update dashboard status → Active
+
+========================================================
+YOU'RE LIVE EMAIL — send when bot is ready
+========================================================
+
+Subject: Your AI bot is live! 🚀
+
+Hi [NAME],
+
+Great news — your AI reply bot is now live on
+[list their channels]!
+
+From right now, every message you receive on those
+channels will get an instant reply, 24/7.
+
+To see your conversations just visit:
+manychat.com → Inbox
+
+If you ever want to jump in and reply yourself you
+can do that directly from the ManyChat inbox.
+
+If anything needs updating — prices, hours, services —
+just email me and I'll sort it within 24 hours.
+
+Thanks for choosing Phillips Automates!
+
+Frankie
+phillipsautomates@gmail.com
 ========================================================

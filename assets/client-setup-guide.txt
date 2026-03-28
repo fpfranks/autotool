@@ -1,0 +1,119 @@
+CLIENT SETUP GUIDE — Phillips Automates
+========================================
+Hi [Client Name],
+
+Thanks for signing up to Phillips Automates! 🎉
+
+To get your AI bot live within 24 hours we just need you
+to follow the steps below for the channels you selected.
+It takes around 10 minutes and you won't need to share
+any passwords.
+
+Once you're done just reply to this email and we'll take
+care of everything else.
+
+========================================
+STEP 1 — ALL CLIENTS (Required)
+========================================
+
+Add Frankie as an Admin on your Facebook Page. This lets
+us connect your accounts to the bot without needing your
+login details.
+
+1. Go to your Facebook Page
+2. Click Manage → Page Access → Add New
+3. Search for: phillipsautomates@gmail.com
+4. Set role to: Admin
+5. Click Confirm
+
+That's the most important step. Everything else connects
+through this.
+
+========================================
+INSTAGRAM
+========================================
+
+1. Open Instagram → go to your profile
+2. Tap the three lines (top right) → Settings
+3. Tap Account → Switch to Professional Account
+4. Choose Business (not Creator)
+5. Connect it to your Facebook Page when prompted
+
+That's it — once your Instagram is connected to your
+Facebook Page we can link it to the bot.
+
+========================================
+FACEBOOK MESSENGER
+========================================
+
+Nothing extra needed. Once you've added us as Admin on
+your Facebook Page (Step 1) we can connect Messenger
+automatically.
+
+========================================
+WHATSAPP
+========================================
+
+1. Download WhatsApp Business app (free on App Store /
+   Google Play) if you don't have it already
+2. Set it up with your business phone number
+3. Go to Settings → Business Tools → make sure your
+   business name and description are filled in
+4. Reply to this email with your WhatsApp Business number
+   and we'll connect it from our end
+
+========================================
+TIKTOK
+========================================
+
+1. Open TikTok → tap Profile → tap the three lines
+2. Go to Settings → Manage Account
+3. Tap Switch to Business Account
+4. Choose the category that best fits your business
+5. Reply to this email with your TikTok @username
+
+========================================
+SMS / TEXT
+========================================
+
+1. Reply to this email with the phone number you want
+   to receive texts on
+2. We'll set up a dedicated number that forwards to
+   your bot automatically
+3. You don't need to change your existing number
+
+========================================
+EMAIL
+========================================
+
+1. Reply to this email with the email address you want
+   the bot to handle (e.g. hello@yourbusiness.co.uk)
+2. We'll send you a simple forwarding rule to set up
+   (takes 2 minutes in Gmail or Outlook)
+
+========================================
+TELEGRAM
+========================================
+
+1. Download Telegram if you don't have it
+2. Reply to this email with your preferred
+   Telegram @username or business name
+3. We'll create and connect the bot for you
+
+========================================
+ONCE YOU'VE DONE YOUR STEPS
+========================================
+
+Just reply to this email with:
+✅ Done — and list which channels you've set up
+
+We'll take it from there and have your bot live within
+24 hours. We'll send you a confirmation email when
+everything is ready along with a short guide on how to
+view and manage your conversations in ManyChat.
+
+Any questions just reply to this email.
+
+Frankie
+Phillips Automates
+phillipsautomates@gmail.com
