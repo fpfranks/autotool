@@ -646,24 +646,76 @@
     </p>
 
     <div class="pricing-card">
-      <div class="pricing-badge">MOST POPULAR — ONLY PLAN</div>
-      
+      <div class="pricing-badge">ONE PLAN — ALL CHANNELS</div>
       <div class="pricing-main"><span>£</span>47</div>
       <div class="pricing-period">per month &nbsp;·&nbsp; cancel anytime</div>
+
+      <!-- Channel picker -->
+      <div style="margin-bottom:28px;">
+        <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:14px;">Pick the channels you want covered — tick all that apply:</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;text-align:left;">
+          <label style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:11px 14px;cursor:pointer;transition:border 0.15s" onmouseover="this.style.borderColor='#6c63ff'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='rgba(255,255,255,0.08)'">
+            <input type="checkbox" name="channels" value="instagram" style="accent-color:#6c63ff;width:16px;height:16px" onchange="updateChannelBorder(this)">
+            <span style="font-size:0.9rem;">📸 Instagram</span>
+          </label>
+          <label style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:11px 14px;cursor:pointer;transition:border 0.15s" onmouseover="this.style.borderColor='#6c63ff'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='rgba(255,255,255,0.08)'">
+            <input type="checkbox" name="channels" value="messenger" style="accent-color:#6c63ff;width:16px;height:16px" onchange="updateChannelBorder(this)">
+            <span style="font-size:0.9rem;">💬 Facebook Messenger</span>
+          </label>
+          <label style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:11px 14px;cursor:pointer;transition:border 0.15s" onmouseover="this.style.borderColor='#6c63ff'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='rgba(255,255,255,0.08)'">
+            <input type="checkbox" name="channels" value="whatsapp" style="accent-color:#6c63ff;width:16px;height:16px" onchange="updateChannelBorder(this)">
+            <span style="font-size:0.9rem;">🟢 WhatsApp</span>
+          </label>
+          <label style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:11px 14px;cursor:pointer;transition:border 0.15s" onmouseover="this.style.borderColor='#6c63ff'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='rgba(255,255,255,0.08)'">
+            <input type="checkbox" name="channels" value="tiktok" style="accent-color:#6c63ff;width:16px;height:16px" onchange="updateChannelBorder(this)">
+            <span style="font-size:0.9rem;">🎵 TikTok</span>
+          </label>
+          <label style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:11px 14px;cursor:pointer;transition:border 0.15s" onmouseover="this.style.borderColor='#6c63ff'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='rgba(255,255,255,0.08)'">
+            <input type="checkbox" name="channels" value="sms" style="accent-color:#6c63ff;width:16px;height:16px" onchange="updateChannelBorder(this)">
+            <span style="font-size:0.9rem;">📱 SMS / Text</span>
+          </label>
+          <label style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:11px 14px;cursor:pointer;transition:border 0.15s" onmouseover="this.style.borderColor='#6c63ff'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='rgba(255,255,255,0.08)'">
+            <input type="checkbox" name="channels" value="email" style="accent-color:#6c63ff;width:16px;height:16px" onchange="updateChannelBorder(this)">
+            <span style="font-size:0.9rem;">📧 Email</span>
+          </label>
+          <label style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:11px 14px;cursor:pointer;transition:border 0.15s;grid-column:span 2" onmouseover="this.style.borderColor='#6c63ff'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='rgba(255,255,255,0.08)'">
+            <input type="checkbox" name="channels" value="telegram" style="accent-color:#6c63ff;width:16px;height:16px" onchange="updateChannelBorder(this)">
+            <span style="font-size:0.9rem;">✈️ Telegram</span>
+          </label>
+        </div>
+        <div id="channel-warning" style="display:none;margin-top:12px;padding:10px 14px;background:rgba(255,179,71,0.1);border:1px solid rgba(255,179,71,0.3);border-radius:8px;font-size:0.82rem;color:#ffb347;">
+          Please select at least one channel to continue.
+        </div>
+      </div>
+
       <ul class="pricing-features">
-        <li>AI bot connected to Facebook Messenger</li>
-        <li>AI bot connected to Instagram DMs</li>
-        <li>WhatsApp included</li>
+        <li>AI bot set up on every channel you selected</li>
         <li>Replies in under 60 seconds, 24/7</li>
         <li>Set up in 24 hours — you don't do anything</li>
         <li>We write all the messages in your voice</li>
         <li>You can still see and reply to all conversations yourself</li>
         <li>No contracts — cancel anytime, no fuss</li>
-        <li>Cancel anytime — no contracts</li>
       </ul>
-      <a href="https://buy.stripe.com/8x200i242b5dcLn3vfa3u00" class="pricing-cta">Get Started — £47/mo ›</a>
-      <p class="pricing-sub"></p>
+      <a href="https://buy.stripe.com/8x200i242b5dcLn3vfa3u00" class="pricing-cta" id="main-cta" onclick="return validateChannels()">Get Started — £47/mo ›</a>
+      <p class="pricing-sub">All channels included in the same price</p>
     </div>
+
+    <script>
+    function updateChannelBorder(input) {
+      const label = input.closest('label');
+      label.style.borderColor = input.checked ? '#6c63ff' : 'rgba(255,255,255,0.08)';
+      label.style.background = input.checked ? 'rgba(108,99,255,0.1)' : 'rgba(255,255,255,0.04)';
+    }
+    function validateChannels() {
+      const checked = document.querySelectorAll('input[name="channels"]:checked');
+      if(checked.length === 0) {
+        document.getElementById('channel-warning').style.display = 'block';
+        return false;
+      }
+      document.getElementById('channel-warning').style.display = 'none';
+      return true;
+    }
+    </script>
   </div>
 </section>
 
