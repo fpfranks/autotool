@@ -369,6 +369,7 @@
 <script>
 let customers = JSON.parse(localStorage.getItem('pa_customers')||'[]');
 let workflows = JSON.parse(localStorage.getItem('pa_workflows')||'[]');
+let deletedEmails = JSON.parse(localStorage.getItem('pa_deleted_emails')||'[]');
 let todos = JSON.parse(localStorage.getItem('pa_todos')||'null') || [
   {id:1,  text:'Sign up to ManyChat (manychat.com) — start 14 day Pro trial', cat:'Setup', done:false},
   {id:2,  text:'Sign up to Stripe (stripe.com) and verify your account', cat:'Setup', done:true},
@@ -435,7 +436,7 @@ function saveCustomer(){
   localStorage.setItem('pa_customers',JSON.stringify(customers));
   closeCustomerForm();renderAll();notify('Customer saved!');
 }
-function deleteCustomer(id){const c=customers.find(x=>String(x.id)===String(id));if(!c)return;if(!confirm('Delete '+c.biz+'?\n\nThis removes them from your dashboard. It does not cancel their Stripe subscription.'))return;customers=customers.filter(x=>String(x.id)!==String(id));localStorage.setItem('pa_customers',JSON.stringify(customers));renderAll();notify('Customer deleted');}
+function deleteCustomer(id){const c=customers.find(x=>String(x.id)===String(id));if(!c)return;if(!confirm('Delete '+c.biz+'?\n\nThis removes them from your dashboard. It does not cancel their Stripe subscription.'))return;if(c.email&&!deletedEmails.includes(c.email)){deletedEmails.push(c.email);localStorage.setItem('pa_deleted_emails',JSON.stringify(deletedEmails));}customers=customers.filter(x=>String(x.id)!==String(id));localStorage.setItem('pa_customers',JSON.stringify(customers));renderAll();notify('Customer deleted');}
 function updateCustomerStatus(id,v){const c=customers.find(x=>String(x.id)===String(id));if(c){c.status=v;localStorage.setItem('pa_customers',JSON.stringify(customers));renderAll();}}
 function renderAll(){renderDash();renderCustomers();renderRevenue();renderWorkflows();}
 function renderCustomers(){
@@ -603,7 +604,8 @@ function fetchFromSheet(url){
       let added=0;
       data.customers.forEach(sc=>{
         const exists=customers.find(c=>c.email&&c.email===sc.email);
-        if(!exists){
+        const wasDeleted=sc.email&&deletedEmails.includes(sc.email);
+        if(!exists&&!wasDeleted){
           customers.push({
             id: Number(sc.id)||Date.now(),
             biz: sc.biz||'',
