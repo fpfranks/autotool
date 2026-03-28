@@ -153,7 +153,7 @@
     </div>
     <div id="customer-form" class="card mb-4" style="display:none">
       <div class="flex-between mb-4">
-        <div class="card-title">New Customer</div>
+        <div class="card-title" id="c-form-title">New Customer</div>
         <button class="btn btn-ghost btn-sm" onclick="closeCustomerForm()">Cancel</button>
       </div>
       <div class="form-row">
@@ -162,29 +162,43 @@
       </div>
       <div class="form-row">
         <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="c-email" placeholder="dave@davesgarage.co.uk" type="email"/></div>
-        <div class="form-group"><label class="form-label">Instagram / Facebook</label><input class="form-input" id="c-social" placeholder="@davesgarage"/></div>
+        <div class="form-group"><label class="form-label">Phone (for booking alerts)</label><input class="form-input" id="c-phone" placeholder="07700 900000"/></div>
       </div>
       <div class="form-row">
         <div class="form-group"><label class="form-label">Business Type</label><input class="form-input" id="c-type" placeholder="Car Garage"/></div>
         <div class="form-group"><label class="form-label">City</label><input class="form-input" id="c-city" placeholder="Manchester"/></div>
       </div>
+      <div style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.5px;margin:14px 0 10px;">Channel Details</div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">📸 Instagram @username</label><input class="form-input" id="c-ig" placeholder="@davesgarage"/></div>
+        <div class="form-group"><label class="form-label">💬 Facebook Page</label><input class="form-input" id="c-fb" placeholder="facebook.com/davesgarage"/></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">🟢 WhatsApp Number</label><input class="form-input" id="c-wa" placeholder="07700 900000"/></div>
+        <div class="form-group"><label class="form-label">🎵 TikTok @username</label><input class="form-input" id="c-tt" placeholder="@davesgarage"/></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">📧 Email Bot Address</label><input class="form-input" id="c-emailbot" placeholder="hello@davesgarage.co.uk"/></div>
+        <div class="form-group"><label class="form-label">✈️ Telegram @username</label><input class="form-input" id="c-tg" placeholder="@davesgarage"/></div>
+      </div>
+      <div style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.5px;margin:14px 0 10px;">Other Details</div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">🌐 Website URL</label><input class="form-input" id="c-website" placeholder="https://yourbusiness.co.uk" type="url"/></div>
+        <div class="form-group"><label class="form-label">📅 Booking System URL</label><input class="form-input" id="c-booking" placeholder="Fresha, Booksy, Calendly link" type="url"/></div>
+      </div>
       <div class="form-row">
         <div class="form-group">
           <label class="form-label">Status</label>
           <select class="form-select" id="c-status">
-            <option value="active">Active ✅</option>
             <option value="pending">Pending Setup ⏳</option>
+            <option value="active">Active ✅</option>
             <option value="inactive">Inactive ❌</option>
           </select>
         </div>
         <div class="form-group"><label class="form-label">Monthly Fee (£)</label><input class="form-input" id="c-fee" value="27" type="number"/></div>
       </div>
-      <div class="form-row">
-        <div class="form-group"><label class="form-label">🌐 Website URL</label><input class="form-input" id="c-website" placeholder="https://yourbusiness.co.uk" type="url"/></div>
-        <div class="form-group"><label class="form-label">📅 Booking System URL</label><input class="form-input" id="c-booking" placeholder="Fresha, Booksy, Calendly link" type="url"/></div>
-      </div>
       <div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="c-notes" placeholder="Any notes..."></textarea></div>
-      <button class="btn btn-green" onclick="saveCustomer()">Save Customer</button>
+      <button class="btn btn-green" id="c-save-btn" onclick="saveCustomer()">Save Customer</button>
     </div>
     <div class="card">
       <div class="flex-between mb-4">
@@ -192,7 +206,7 @@
         <input class="form-input" id="c-search" placeholder="Search..." style="width:180px;padding:6px 10px" oninput="renderCustomers()"/>
       </div>
       <table class="table">
-        <thead><tr><th>Business</th><th>Owner</th><th>Channels</th><th>City</th><th>Status</th><th>Fee</th><th>Since</th><th></th></tr></thead>
+        <thead><tr><th>Business</th><th>Owner</th><th>Channels</th><th>City</th><th>Status</th><th>Fee</th><th>Since</th><th style="width:120px"></th></tr></thead>
         <tbody id="customers-tbody"><tr><td colspan="8" class="empty">No customers yet.</td></tr></tbody>
       </table>
     </div>
@@ -579,8 +593,89 @@ function renderDash() {
   }
 }
 
-function openCustomerForm(){document.getElementById('customer-form').style.display='block';document.getElementById('customer-form').scrollIntoView({behavior:'smooth'});}
-function closeCustomerForm(){document.getElementById('customer-form').style.display='none';['c-biz','c-name','c-email','c-social','c-type','c-city','c-website','c-booking','c-notes'].forEach(id=>document.getElementById(id).value='');document.getElementById('c-fee').value='27';}
+let editingCustomerId=null;
+function openCustomerForm(){
+  editingCustomerId=null;
+  document.getElementById('c-form-title').textContent='New Customer';
+  document.getElementById('c-save-btn').textContent='Save Customer';
+  document.getElementById('customer-form').style.display='block';
+  document.getElementById('customer-form').scrollIntoView({behavior:'smooth'});
+}
+function closeCustomerForm(){
+  editingCustomerId=null;
+  document.getElementById('customer-form').style.display='none';
+  ['c-biz','c-name','c-email','c-phone','c-type','c-city','c-ig','c-fb','c-wa','c-tt','c-emailbot','c-tg','c-website','c-booking','c-notes'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('c-fee').value='27';
+  document.getElementById('c-status').value='pending';
+}
+function getFormData(existingId){
+  const ig=document.getElementById('c-ig').value.trim();
+  const fb=document.getElementById('c-fb').value.trim();
+  const wa=document.getElementById('c-wa').value.trim();
+  const tt=document.getElementById('c-tt').value.trim();
+  const eb=document.getElementById('c-emailbot').value.trim();
+  const tg=document.getElementById('c-tg').value.trim();
+  const channels=[ig&&'instagram',fb&&'messenger',wa&&'whatsapp',tt&&'tiktok',eb&&'email',tg&&'telegram'].filter(Boolean).join(', ');
+  return {id:existingId||Date.now(),biz:document.getElementById('c-biz').value.trim(),name:document.getElementById('c-name').value,email:document.getElementById('c-email').value,phone:document.getElementById('c-phone').value,type:document.getElementById('c-type').value,city:document.getElementById('c-city').value,ig,fb,wa,tt,emailBot:eb,tg,social:ig,channels,website:document.getElementById('c-website').value,booking:document.getElementById('c-booking').value,status:document.getElementById('c-status').value,fee:document.getElementById('c-fee').value,notes:document.getElementById('c-notes').value,date:new Date().toLocaleDateString('en-GB')};
+}
+function editCustomer(id){
+  const c=customers.find(x=>String(x.id)===String(id));
+  if(!c)return;
+  editingCustomerId=id;
+  document.getElementById('c-form-title').textContent='Edit — '+c.biz;
+  document.getElementById('c-save-btn').textContent='Update Customer';
+  document.getElementById('c-biz').value=c.biz||'';
+  document.getElementById('c-name').value=c.name||'';
+  document.getElementById('c-email').value=c.email||'';
+  document.getElementById('c-phone').value=c.phone||'';
+  document.getElementById('c-type').value=c.type||'';
+  document.getElementById('c-city').value=c.city||'';
+  document.getElementById('c-ig').value=c.ig||c.social||'';
+  document.getElementById('c-fb').value=c.fb||'';
+  document.getElementById('c-wa').value=c.wa||'';
+  document.getElementById('c-tt').value=c.tt||'';
+  document.getElementById('c-emailbot').value=c.emailBot||'';
+  document.getElementById('c-tg').value=c.tg||'';
+  document.getElementById('c-website').value=c.website||'';
+  document.getElementById('c-booking').value=c.booking||'';
+  document.getElementById('c-status').value=c.status||'pending';
+  document.getElementById('c-fee').value=c.fee||27;
+  document.getElementById('c-notes').value=c.notes||'';
+  document.getElementById('customer-form').style.display='block';
+  document.getElementById('customer-form').scrollIntoView({behavior:'smooth'});
+}
+function saveCustomer(){
+  const biz=document.getElementById('c-biz').value.trim();
+  if(!biz){notify('Business name required');return;}
+  if(editingCustomerId){
+    const idx=customers.findIndex(x=>String(x.id)===String(editingCustomerId));
+    if(idx>-1){
+      const updated={...customers[idx],...getFormData(customers[idx].id)};
+      customers[idx]=updated;
+      const wf=workflows.find(w=>w.biz===updated.biz);
+      if(wf){wf.ig=updated.ig||'';wf.fb=updated.fb||'';wf.wa=updated.wa||'';wf.tt=updated.tt||'';wf.email=updated.emailBot||'';wf.tg=updated.tg||'';wf.cal=updated.phone||'';wf.website=updated.website||'';wf.booking=updated.booking||'';localStorage.setItem('pa_workflows',JSON.stringify(workflows));}
+    }
+    localStorage.setItem('pa_customers',JSON.stringify(customers));
+    closeCustomerForm();renderAll();notify('Customer updated — workflow synced!');
+  } else {
+    const c=getFormData(null);
+    customers.push(c);
+    localStorage.setItem('pa_customers',JSON.stringify(customers));
+    autoCreateWorkflow(c);
+    closeCustomerForm();renderAll();notify('Customer saved — workflow created!');
+  }
+}
+function deleteCustomer(id){
+  const c=customers.find(x=>String(x.id)===String(id));
+  if(!c)return;
+  if(!confirm('Delete '+c.biz+'?\n\nThis also removes their ManyChat workflow entry. It does NOT cancel their Stripe subscription.'))return;
+  if(c.email&&!deletedEmails.includes(c.email)){deletedEmails.push(c.email);localStorage.setItem('pa_deleted_emails',JSON.stringify(deletedEmails));}
+  customers=customers.filter(x=>String(x.id)!==String(id));
+  workflows=workflows.filter(w=>w.biz!==c.biz);
+  localStorage.setItem('pa_customers',JSON.stringify(customers));
+  localStorage.setItem('pa_workflows',JSON.stringify(workflows));
+  renderAll();notify('Customer and workflow deleted');
+}
 function autoCreateWorkflow(c){
   const wfExists=workflows.find(w=>w.biz===c.biz);
   if(wfExists) return;
@@ -602,17 +697,6 @@ function autoCreateWorkflow(c){
   });
   localStorage.setItem('pa_workflows',JSON.stringify(workflows));
 }
-
-function saveCustomer(){
-  const biz=document.getElementById('c-biz').value.trim();
-  if(!biz){notify('Business name required');return;}
-  const c={id:Date.now(),biz,name:document.getElementById('c-name').value,email:document.getElementById('c-email').value,social:document.getElementById('c-social').value,type:document.getElementById('c-type').value,city:document.getElementById('c-city').value,website:document.getElementById('c-website').value,booking:document.getElementById('c-booking').value,status:document.getElementById('c-status').value,fee:document.getElementById('c-fee').value,notes:document.getElementById('c-notes').value,date:new Date().toLocaleDateString('en-GB')};
-  customers.push(c);
-  localStorage.setItem('pa_customers',JSON.stringify(customers));
-  autoCreateWorkflow(c);
-  closeCustomerForm();renderAll();notify('Customer saved — workflow created!');
-}
-function deleteCustomer(id){const c=customers.find(x=>String(x.id)===String(id));if(!c)return;if(!confirm('Delete '+c.biz+'?\n\nThis removes them from your dashboard. It does not cancel their Stripe subscription.'))return;if(c.email&&!deletedEmails.includes(c.email)){deletedEmails.push(c.email);localStorage.setItem('pa_deleted_emails',JSON.stringify(deletedEmails));}customers=customers.filter(x=>String(x.id)!==String(id));localStorage.setItem('pa_customers',JSON.stringify(customers));renderAll();notify('Customer deleted');}
 function updateCustomerStatus(id,v){const c=customers.find(x=>String(x.id)===String(id));if(c){c.status=v;localStorage.setItem('pa_customers',JSON.stringify(customers));renderAll();}}
 function renderAll(){renderDash();renderCustomers();renderRevenue();renderWorkflows();renderEmails();}
 function renderCustomers(){
@@ -629,7 +713,7 @@ function renderCustomers(){
       <td><select onchange="event.stopPropagation();updateCustomerStatus('${c.id}',this.value)" style="background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:3px 7px;border-radius:5px;font-size:11px">${['active','pending','inactive'].map(s=>`<option value="${s}"${c.status===s?' selected':''}>${s}</option>`).join('')}</select></td>
       <td style="color:var(--green)">£${c.fee||27}/mo</td>
       <td style="font-size:11px;color:var(--muted)">${c.date}</td>
-      <td onclick="event.stopPropagation()"><button class="btn btn-sm btn-red" onclick="deleteCustomer('${c.id}')">Delete</button></td>
+      <td onclick="event.stopPropagation()" style="display:flex;gap:5px;padding:8px 12px"><button class="btn btn-sm btn-ghost" onclick="editCustomer('${c.id}')">Edit</button><button class="btn btn-sm btn-red" onclick="deleteCustomer('${c.id}')">Delete</button></td>
     </tr>
     <tr id="detail-${c.id}" style="display:none">
       <td colspan="8" style="padding:0;border-bottom:2px solid var(--accent)">
@@ -688,15 +772,46 @@ function saveWorkflow(){
   localStorage.setItem('pa_workflows',JSON.stringify(workflows));
   closeWfForm();renderWorkflows();notify('Workflow added!');
 }
-function toggleWfStep(wfId,stepIdx){const wf=workflows.find(w=>String(w.id)===String(wfId));if(wf){wf.steps[stepIdx]=!wf.steps[stepIdx];localStorage.setItem('pa_workflows',JSON.stringify(workflows));renderWorkflows();}}
-function deleteWf(id){workflows=workflows.filter(w=>String(w.id)!==String(id));localStorage.setItem('pa_workflows',JSON.stringify(workflows));renderWorkflows();}
+function toggleWfStep(wfId,stepIdx){
+  const wf=workflows.find(w=>String(w.id)===String(wfId));
+  if(!wf)return;
+  wf.steps[stepIdx]=!wf.steps[stepIdx];
+  localStorage.setItem('pa_workflows',JSON.stringify(workflows));
+  if(wf.steps.every(Boolean)){
+    const c=customers.find(x=>x.biz===wf.biz);
+    if(c&&!c.setupDone){
+      c.setupDone=true;
+      localStorage.setItem('pa_customers',JSON.stringify(customers));
+      notify('All steps done for '+wf.biz+' — go to Emails to send the live email!');
+    }
+  }
+  renderAll();
+}
+function deleteWf(id){
+  if(!confirm('Remove this workflow?'))return;
+  workflows=workflows.filter(w=>String(w.id)!==String(id));
+  localStorage.setItem('pa_workflows',JSON.stringify(workflows));
+  renderWorkflows();
+}
 function renderWorkflows(){
   const el=document.getElementById('workflows-list');
-  if(!workflows.length){el.innerHTML='<div class="empty">No workflows yet.</div>';return;}
+  if(!workflows.length){el.innerHTML='<div class="empty">No workflows yet. They are created automatically when customers are added.</div>';return;}
   el.innerHTML=workflows.map(wf=>{
     const done=wf.steps.filter(Boolean).length;
     const pct=Math.round((done/WF_STEPS.length)*100);
-    return `<div class="wf-card"><div class="flex-between" style="margin-bottom:8px"><div><div style="font-weight:600;font-size:13px">${wf.biz} ${wf.ig?'<span style="color:var(--muted);font-weight:400;font-size:12px">'+wf.ig+'</span>':''}</div><div style="font-size:11px;color:var(--muted);margin-top:2px">${done}/${WF_STEPS.length} steps · ${wf.date}</div></div><div class="flex-gap"><span style="font-size:13px;font-weight:700;color:${pct===100?'var(--green)':'var(--accent)'}">${pct}%</span><button class="btn btn-sm btn-red" onclick="deleteWf(${wf.id})">✕</button></div></div><div style="background:var(--bg);border-radius:4px;height:4px;margin-bottom:12px;overflow:hidden"><div style="height:100%;background:var(--green);width:${pct}%;transition:width 0.3s;border-radius:4px"></div></div>${WF_STEPS.map((s,i)=>`<div class="wf-step ${wf.steps[i]?'done':''}" onclick="toggleWfStep(${wf.id},${i})">${s}</div>`).join('')}<div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:6px;">
+    const c=customers.find(x=>x.biz===wf.biz);
+    const isLive=c&&c.emailLive;
+    const liveBtn=pct===100&&!isLive?`<button class="btn btn-primary btn-sm" style="width:100%;margin-top:10px" onclick="sendLiveEmail('${c?c.id:''}')" >🚀 All done — Send Live Email</button>`:'';
+    const liveTag=isLive?'<span style="background:rgba(0,212,170,0.15);color:var(--green);font-size:9px;font-weight:700;padding:2px 8px;border-radius:10px;margin-left:8px">LIVE</span>':'';
+    return `<div class="wf-card">
+<div class="flex-between" style="margin-bottom:8px">
+  <div><div style="font-weight:600;font-size:13px">${wf.biz}${liveTag} ${wf.ig?'<span style="color:var(--muted);font-weight:400;font-size:12px">'+wf.ig+'</span>':''}</div>
+  <div style="font-size:11px;color:var(--muted);margin-top:2px">${done}/${WF_STEPS.length} steps · ${wf.date}</div></div>
+  <div class="flex-gap"><span style="font-size:13px;font-weight:700;color:${pct===100?'var(--green)':'var(--accent)'}">${pct}%</span><button class="btn btn-sm btn-ghost" onclick="editCustomer('${c?c.id:''}')" title="Edit customer">✏️</button><button class="btn btn-sm btn-red" onclick="deleteWf('${wf.id}')">✕</button></div>
+</div>
+<div style="background:var(--bg);border-radius:4px;height:4px;margin-bottom:12px;overflow:hidden"><div style="height:100%;background:var(--green);width:${pct}%;transition:width 0.3s;border-radius:4px"></div></div>
+${WF_STEPS.map((s,i)=>`<div class="wf-step ${wf.steps[i]?'done':''}" onclick="toggleWfStep('${wf.id}',${i})">${s}</div>`).join('')}
+<div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:6px;">
 ${wf.ig?`<span style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;">📸 ${wf.ig}</span>`:''}
 ${wf.fb?`<span style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;">💬 ${wf.fb}</span>`:''}
 ${wf.wa?`<span style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;">🟢 ${wf.wa}</span>`:''}
@@ -706,7 +821,10 @@ ${wf.tg?`<span style="background:var(--surface);border:1px solid var(--border);p
 ${wf.cal?`<span style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;">📞 ${wf.cal}</span>`:''}
 ${wf.website?`<a href="${wf.website}" target="_blank" style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;color:var(--accent);text-decoration:none;">🌐 Website</a>`:''}
 ${wf.booking?`<a href="${wf.booking}" target="_blank" style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;color:var(--green);text-decoration:none;">📅 Booking</a>`:''}
-</div>${wf.notes?`<div style="margin-top:6px;font-size:11px;color:var(--muted)">📝 ${wf.notes}</div>`:''}</div>`;
+</div>
+${wf.notes?`<div style="margin-top:6px;font-size:11px;color:var(--muted)">📝 ${wf.notes}</div>`:''}
+${liveBtn}
+</div>`;
   }).join('');
 }
 
