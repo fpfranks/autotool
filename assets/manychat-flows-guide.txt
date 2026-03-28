@@ -172,29 +172,91 @@ FLOW 6: SPEAK TO SOMEONE
 Trigger: Button "💬 Speak to Someone" from Welcome Menu
          Also keywords: human, person, speak, talk, agent, real person, staff, someone
 
-Message:
+─────────────────────────────────
+STEP 1 — Reassure the customer (Message block)
+─────────────────────────────────
 "No problem at all! 😊
+I'll get a real person on this for you right now.
+
+What's it about so we can help you faster?"
+
+→ Set as User Input — save to custom field: speak_query
+
+─────────────────────────────────
+STEP 2 — Confirm to customer (Message block)
+─────────────────────────────────
+"Got it — thanks! ✅
 A member of the team will be with you shortly.
+We usually reply within 2 hours during opening hours."
 
-Our usual response time is under 2 hours during opening hours.
+─────────────────────────────────
+STEP 3 — PAUSE THE BOT (Action block — CRITICAL)
+─────────────────────────────────
+Add an Action block → choose "Live Chat" → "Pause Automation"
 
-Is there anything specific you'd like to discuss so we can help faster?"
+This is what stops the bot from replying.
+The bot will NOT send any more automated messages to this contact
+until the owner manually resumes it in the ManyChat Inbox.
 
-→ Set as User Input — save to custom field: query
-→ Send email notification to owner with the query
+In ManyChat builder:
+  + Add Step → Action → Live Chat → Pause Automation for this Contact
+  (Also called "Assign to Human Agent" on some ManyChat plans)
 
-Action — notify owner:
-"Customer wants to speak to someone.
+─────────────────────────────────
+STEP 4 — NOTIFY THE OWNER (Action block)
+─────────────────────────────────
+Add an Action block → "Send Email Notification"
 
-Name: {{full_name}}
-Message: {{query}}
+To: [client's email address — e.g. owner@theirbusiness.co.uk]
+Subject: ⚠️ Customer wants to speak to someone — action needed
+Body:
+"A customer has asked to speak to someone and the bot has been PAUSED.
+
+Name:    {{full_name}}
+Message: {{speak_query}}
 Channel: {{channel}}
+Time:    {{now}}
 
-Reply directly in ManyChat or contact them."
+ACTION REQUIRED:
+1. Open ManyChat Inbox: https://manychat.com
+2. Find this contact and reply directly
+3. When done, click "Resume Bot" so the bot re-activates for them
 
-NOTES:
-- After this flow, turn ON "Live Chat" mode in ManyChat so the owner can reply manually
-- In ManyChat: Inbox → you can see and reply to all conversations here
+Do NOT ignore this — the bot is paused until you reply."
+
+─────────────────────────────────
+HOW TO SET UP THE EMAIL NOTIFICATION IN MANYCHAT
+─────────────────────────────────
+1. In the flow builder, after the "Pause Automation" action block
+2. Click + Add Step → Action
+3. Choose "Send Email" (may be under "Integrations" depending on plan)
+4. Enter the business owner's email in the "To" field
+5. Paste the subject and body above
+6. Use ManyChat custom field tags: {{full_name}}, {{speak_query}}, {{channel}}
+
+ALTERNATIVE if Send Email isn't on their plan:
+Use a Zapier webhook Action → Zapier triggers a Gmail or email notification
+(Set up one Zap: ManyChat webhook → send email → owner's address)
+
+─────────────────────────────────
+HOW TO RESUME THE BOT (owner's side)
+─────────────────────────────────
+1. Owner receives email notification
+2. Owner opens manychat.com → Inbox
+3. Finds the contact (shown with a pause icon 🔴)
+4. Types their reply directly in the Inbox chat
+5. When conversation is done → click "Resume Bot" button in the Inbox
+   (or it auto-resumes after 24h depending on ManyChat settings)
+
+─────────────────────────────────
+IMPORTANT SETUP NOTE
+─────────────────────────────────
+- Each client needs their OWN notification email set in this flow
+- When duplicating the template for a new client, update:
+  1. The notification email address in Step 4
+  2. The business name/hours in Step 2
+- Test it: send "speak to someone" as a DM — confirm email arrives AND
+  bot stops replying to follow-up messages
 
 
 ==========================================

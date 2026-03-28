@@ -439,6 +439,9 @@
 <script>
 let customers = JSON.parse(localStorage.getItem('pa_customers')||'[]');
 let workflows = JSON.parse(localStorage.getItem('pa_workflows')||'[]');
+// Migrate existing 8-step workflows to 9-step (adds "Speak to Someone" step at index 6)
+workflows = workflows.map(wf=>{if(wf.steps&&wf.steps.length===8){wf.steps.splice(6,0,false);}return wf;});
+localStorage.setItem('pa_workflows',JSON.stringify(workflows));
 let deletedEmails = JSON.parse(localStorage.getItem('pa_deleted_emails')||'[]');
 let outreach = JSON.parse(localStorage.getItem('pa_outreach')||'{}');
 
@@ -692,7 +695,7 @@ function autoCreateWorkflow(c){
     website: c.website||'',
     booking: c.booking||'',
     notes:   'Auto-created from customer',
-    steps:   [false,false,false,false,false,false,false,false],
+    steps:   [false,false,false,false,false,false,false,false,false],
     date:    new Date().toLocaleDateString('en-GB')
   });
   localStorage.setItem('pa_workflows',JSON.stringify(workflows));
@@ -762,13 +765,13 @@ function renderChannelDetails(c){
   return html||`<div style="color:var(--muted);font-size:13px;">No channel details recorded.</div>`;
 }
 
-const WF_STEPS=['ManyChat account created for client','Instagram/Facebook connected','Welcome message set up','Booking flow added (collects name + number)','Pricing info added','Opening hours added','Tested — bot replies correctly','Client notified — live!'];
+const WF_STEPS=['ManyChat account created for client','Instagram/Facebook connected','Welcome message set up','Booking flow added (collects name + number)','Pricing info added','Opening hours added','"Speak to Someone" — Live Chat pause + owner email set up','Tested — bot replies correctly','Client notified — live!'];
 function openWfForm(){document.getElementById('wf-form').style.display='block';}
 function closeWfForm(){document.getElementById('wf-form').style.display='none';['wf-biz','wf-ig','wf-fb','wf-wa','wf-tt','wf-email','wf-tg','wf-cal','wf-website','wf-booking','wf-notes'].forEach(id=>document.getElementById(id).value='');}
 function saveWorkflow(){
   const biz=document.getElementById('wf-biz').value.trim();
   if(!biz){notify('Business name required');return;}
-  workflows.push({id:Date.now(),biz,ig:document.getElementById('wf-ig').value,fb:document.getElementById('wf-fb').value,wa:document.getElementById('wf-wa').value,tt:document.getElementById('wf-tt').value,email:document.getElementById('wf-email').value,tg:document.getElementById('wf-tg').value,cal:document.getElementById('wf-cal').value,website:document.getElementById('wf-website').value,booking:document.getElementById('wf-booking').value,notes:document.getElementById('wf-notes').value,steps:[false,false,false,false,false,false,false,false],date:new Date().toLocaleDateString('en-GB')});
+  workflows.push({id:Date.now(),biz,ig:document.getElementById('wf-ig').value,fb:document.getElementById('wf-fb').value,wa:document.getElementById('wf-wa').value,tt:document.getElementById('wf-tt').value,email:document.getElementById('wf-email').value,tg:document.getElementById('wf-tg').value,cal:document.getElementById('wf-cal').value,website:document.getElementById('wf-website').value,booking:document.getElementById('wf-booking').value,notes:document.getElementById('wf-notes').value,steps:[false,false,false,false,false,false,false,false,false],date:new Date().toLocaleDateString('en-GB')});
   localStorage.setItem('pa_workflows',JSON.stringify(workflows));
   closeWfForm();renderWorkflows();notify('Workflow added!');
 }
