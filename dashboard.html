@@ -259,6 +259,11 @@
         <div class="form-group"><label class="form-label">🌐 Website</label><input class="form-input" id="wf-website" placeholder="https://yourbusiness.co.uk" type="url"/></div>
         <div class="form-group"><label class="form-label">Notes</label><input class="form-input" id="wf-notes" placeholder="Any setup notes..."/></div>
       </div>
+      <div class="form-group" style="background:rgba(0,212,170,0.06);border:1px solid rgba(0,212,170,0.2);border-radius:8px;padding:12px;">
+        <label class="form-label" style="color:var(--green);">🤖 Provisioned AI Phone Number (Twilio — forward calls TO this)</label>
+        <input class="form-input" id="wf-twilio" placeholder="e.g. 01234 567890 — enter after provisioning in Twilio dashboard"/>
+        <div style="font-size:11px;color:var(--muted);margin-top:6px;">This is the number you buy in Twilio and connect to VAPI. Client forwards their calls to this number. Added to the live email automatically.</div>
+      </div>
       <button class="btn btn-green" onclick="saveWorkflow()">Save Client Setup</button>
     </div>
     <div id="workflows-list"><div class="empty">No setups yet. They are created automatically when customers are added.</div></div>
@@ -389,6 +394,20 @@
           <li>Click <strong style="color:var(--text)">Deploy → New deployment</strong></li>
           <li>Type: <strong style="color:var(--text)">Web app</strong> — Execute as: <strong style="color:var(--text)">Me</strong> — Who has access: <strong style="color:var(--text)">Anyone</strong></li>
           <li>Click <strong style="color:var(--text)">Deploy</strong>, copy the URL, paste it above</li>
+        </ol>
+      </div>
+
+      <div style="margin-top:20px;background:rgba(0,212,170,0.06);border:1px solid rgba(0,212,170,0.2);border-radius:8px;padding:16px;">
+        <div style="font-size:11px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">⚡ Full Automation — Stripe → Dashboard (via Zapier)</div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.7;">Set this up once and new sign-ups appear in your dashboard the moment they pay — no pressing Sync, no manual entry.</p>
+        <ol style="font-size:12px;color:var(--muted);line-height:2.2;padding-left:20px;">
+          <li>Go to <strong style="color:var(--text)">zapier.com</strong> → Create Zap</li>
+          <li>Trigger: <strong style="color:var(--text)">Stripe</strong> → Event: <strong style="color:var(--text)">New Customer</strong></li>
+          <li>Action: <strong style="color:var(--text)">Webhooks by Zapier</strong> → <strong style="color:var(--text)">POST</strong></li>
+          <li>URL: paste your Apps Script URL above</li>
+          <li>Payload type: <strong style="color:var(--text)">JSON</strong></li>
+          <li>Map fields: <code style="background:var(--bg);padding:1px 5px;border-radius:4px;">biz</code> → Customer name, <code style="background:var(--bg);padding:1px 5px;border-radius:4px;">email</code> → Email, <code style="background:var(--bg);padding:1px 5px;border-radius:4px;">fee</code> → 197</li>
+          <li>Turn Zap on — done. Every Stripe payment auto-adds to your sheet and dashboard.</li>
         </ol>
       </div>
     </div>
@@ -648,16 +667,17 @@ function autoCreateWorkflow(c){
   const wfExists=workflows.find(w=>w.biz===c.biz);
   if(wfExists) return;
   workflows.push({
-    id:         Date.now(),
-    biz:        c.biz||'',
-    phone:      c.bizPhone||'',
-    ownerPhone: c.phone||'',
-    email:      c.email||'',
-    booking:    c.booking||'',
-    website:    c.website||'',
-    notes:      'Auto-created from customer',
-    steps:      [false,false,false,false,false,false],
-    date:       new Date().toLocaleDateString('en-GB')
+    id:          Date.now(),
+    biz:         c.biz||'',
+    phone:       c.bizPhone||'',
+    ownerPhone:  c.phone||'',
+    email:       c.email||'',
+    booking:     c.booking||'',
+    website:     c.website||'',
+    notes:       'Auto-created from customer',
+    twilioNumber:'',
+    steps:       [false,false,false,false,false,false],
+    date:        new Date().toLocaleDateString('en-GB')
   });
   localStorage.setItem('pa_workflows',JSON.stringify(workflows));
 }
@@ -726,20 +746,21 @@ const WF_STEPS = [
 ];
 
 function openWfForm(){document.getElementById('wf-form').style.display='block';}
-function closeWfForm(){document.getElementById('wf-form').style.display='none';['wf-biz','wf-phone','wf-owner-phone','wf-booking','wf-website','wf-notes'].forEach(id=>document.getElementById(id).value='');}
+function closeWfForm(){document.getElementById('wf-form').style.display='none';['wf-biz','wf-phone','wf-owner-phone','wf-booking','wf-website','wf-notes','wf-twilio'].forEach(id=>document.getElementById(id).value='');}
 function saveWorkflow(){
   const biz=document.getElementById('wf-biz').value.trim();
   if(!biz){notify('Business name required');return;}
   workflows.push({
-    id:         Date.now(),
+    id:          Date.now(),
     biz,
-    phone:      document.getElementById('wf-phone').value,
-    ownerPhone: document.getElementById('wf-owner-phone').value,
-    booking:    document.getElementById('wf-booking').value,
-    website:    document.getElementById('wf-website').value,
-    notes:      document.getElementById('wf-notes').value,
-    steps:      [false,false,false,false,false,false],
-    date:       new Date().toLocaleDateString('en-GB')
+    phone:       document.getElementById('wf-phone').value,
+    ownerPhone:  document.getElementById('wf-owner-phone').value,
+    booking:     document.getElementById('wf-booking').value,
+    website:     document.getElementById('wf-website').value,
+    notes:       document.getElementById('wf-notes').value,
+    twilioNumber:document.getElementById('wf-twilio').value,
+    steps:       [false,false,false,false,false,false],
+    date:        new Date().toLocaleDateString('en-GB')
   });
   localStorage.setItem('pa_workflows',JSON.stringify(workflows));
   closeWfForm();renderWorkflows();notify('Voice setup added!');
@@ -761,6 +782,16 @@ function deleteWf(id){
   localStorage.setItem('pa_workflows',JSON.stringify(workflows));
   renderWorkflows();
 }
+function editTwilioNumber(id){
+  const wf=workflows.find(w=>String(w.id)===String(id));
+  if(!wf)return;
+  const num=prompt('Enter the provisioned Twilio/VAPI phone number for '+wf.biz+':',wf.twilioNumber||'');
+  if(num===null)return;
+  wf.twilioNumber=num.trim();
+  localStorage.setItem('pa_workflows',JSON.stringify(workflows));
+  renderWorkflows();
+  if(num.trim()) notify('AI number saved — live email will now include forwarding codes!');
+}
 function renderWorkflows(){
   const el=document.getElementById('workflows-list');
   if(!workflows.length){el.innerHTML='<div class="empty">No setups yet. They are created automatically when customers are added.</div>';return;}
@@ -780,8 +811,11 @@ function renderWorkflows(){
 <div style="background:var(--bg);border-radius:4px;height:4px;margin-bottom:12px;overflow:hidden"><div style="height:100%;background:var(--green);width:${pct}%;transition:width 0.3s;border-radius:4px"></div></div>
 ${WF_STEPS.map((s,i)=>`<div class="wf-step ${wf.steps[i]?'done':''}" onclick="toggleWfStep('${wf.id}',${i})">${s}</div>`).join('')}
 <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:6px;">
-${wf.phone?`<span style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;">📞 ${wf.phone}</span>`:''}
-${wf.ownerPhone?`<span style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;">📱 ${wf.ownerPhone}</span>`:''}
+${wf.phone?`<span style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;">📞 Client: ${wf.phone}</span>`:''}
+${wf.ownerPhone?`<span style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;">📱 Owner: ${wf.ownerPhone}</span>`:''}
+${wf.twilioNumber
+  ? `<span style="background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);padding:3px 8px;border-radius:5px;font-size:11px;color:var(--green);">🤖 AI: ${wf.twilioNumber}</span>`
+  : `<span onclick="editTwilioNumber('${wf.id}')" style="background:rgba(255,179,71,0.1);border:1px solid rgba(255,179,71,0.3);padding:3px 8px;border-radius:5px;font-size:11px;color:var(--warn);cursor:pointer;">⚠️ Add AI number (Twilio)</span>`}
 ${wf.booking?`<a href="${wf.booking}" target="_blank" style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;color:var(--green);text-decoration:none;">📅 Booking</a>`:''}
 ${wf.website?`<a href="${wf.website}" target="_blank" style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;color:var(--accent);text-decoration:none;">🌐 Website</a>`:''}
 </div>
@@ -881,25 +915,46 @@ Frankie
 phillipsautomates@gmail.com`;
 }
 
-function buildLiveBody(c){
+function buildLiveBody(c, twilioNumber){
+  const num = (twilioNumber||'').replace(/\s/g,'');
+  const numDisplay = twilioNumber || '[AI phone number — add in Voice Setup first]';
+  const fwdSection = num
+    ? `HOW TO ACTIVATE (takes 30 seconds on your phone):
+
+Dial each of these codes on your phone then press the Call button:
+
+When you don't answer:      **61*${num}#
+When you're on a call:      **67*${num}#
+When your phone is off:     **62*${num}#
+
+That's it — your AI is live. Any call you don't pick up goes to your AI receptionist instead of voicemail.
+
+To turn it off at any time, dial: ##61# ##67# ##62# (one at a time)`
+    : `HOW TO ACTIVATE:
+We'll send you the call forwarding codes in a separate message shortly.`;
+
   return `Hi ${c.name||c.biz},
 
-Great news — your AI phone receptionist is ready!
+Great news — your AI phone receptionist is ready and has been fully tested!
 
-HOW TO ACTIVATE IT (takes 30 seconds):
+Your AI number: ${numDisplay}
 
-Dial this code on your phone to set up call forwarding when you don't answer:
-We'll include the exact forwarding number in a follow-up message.
+────────────────────────────
+${fwdSection}
+────────────────────────────
 
-Once that's set up, any call you miss will be answered by your AI receptionist instead of going to voicemail. You still answer first when you're free — the AI is just your backup.
+HOW IT WORKS ONCE LIVE:
+- You answer your phone as normal — nothing changes for you
+- If you don't pick up, the AI answers instantly in your business name
+- It handles pricing, hours, and booking questions automatically
+- When a caller wants to book, it takes their name and number and texts you straight away
+- You call them back when you're free — no missed leads
 
-HOW IT WORKS:
-- AI answers with your business name and handles their query
-- If they want to book, it takes their name and number and texts you straight away
-- You call them back when you're free
+TURNING IT OFF:
+To pause the AI and go back to normal voicemail, dial ##61# ##67# ##62# on your phone.
 
-HOW TO UPDATE ANYTHING:
-If your prices or hours change, just email me at phillipsautomates@gmail.com and I'll update the AI within 24 hours. Included in your plan — no extra charge.
+UPDATES:
+If your prices, hours, or services change, just email phillipsautomates@gmail.com and I'll update the AI within 24 hours. Included in your plan — no extra charge.
 
 Thanks for choosing Phillips Automates!
 
@@ -937,7 +992,10 @@ function markSetupDone(id){
 function sendLiveEmail(id){
   const c=customers.find(x=>String(x.id)===String(id));
   if(!c||!c.email){notify('No email address for this customer');return;}
-  openMailto(c.email,'Your AI receptionist is ready! 🚀',buildLiveBody(c));
+  const wf=workflows.find(w=>w.biz===c.biz);
+  const twilioNum=wf?wf.twilioNumber||'':'';
+  if(!twilioNum&&!confirm('No AI number set yet for '+c.biz+' — the email will have a placeholder instead of real forwarding codes.\n\nSend anyway?'))return;
+  openMailto(c.email,'Your AI receptionist is ready! 🚀',buildLiveBody(c,twilioNum));
   c.emailLive=new Date().toISOString();
   c.status='active';
   localStorage.setItem('pa_customers',JSON.stringify(customers));
@@ -1067,6 +1125,10 @@ function notify(msg){const n=document.getElementById('notif');n.textContent=msg;
   if(gasUrl) fetchFromSheet(gasUrl);
   renderDash();
   document.getElementById('dash-date').textContent=new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  // Auto-poll every 60 seconds — new sign-ups appear without pressing Sync
+  setInterval(()=>{ const u=localStorage.getItem('pa_gas_url'); if(u) fetchFromSheet(u); }, 60000);
+  // Re-sync when switching back to this tab
+  document.addEventListener('visibilitychange',()=>{ if(!document.hidden){ const u=localStorage.getItem('pa_gas_url'); if(u) fetchFromSheet(u); } });
 })();
 </script>
 </body>
