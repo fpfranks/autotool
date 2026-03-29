@@ -24,7 +24,7 @@ function getSheet() {
     sheet.appendRow([
       'ID','Business','Owner','Email','Phone','Type','City',
       'Biz Phone','Booking URL','Hours','Services',
-      'Website','Status','Fee','Date'
+      'Website','Voice','Status','Fee','Date'
     ]);
     sheet.setFrozenRows(1);
   }
@@ -48,6 +48,7 @@ function doPost(e) {
       data.hours    || '',
       data.services || '',
       data.website  || '',
+      data.voice    || 'female',
       'pending',
       data.fee      || 197,
       new Date().toLocaleDateString('en-GB')
@@ -88,6 +89,7 @@ function doGet(e) {
         hours:    r['Hours']       || '',
         services: r['Services']    || '',
         website:  r['Website']     || '',
+        voice:    r['Voice']       || 'female',
         status:   r['Status']      || 'pending',
         fee:      r['Fee']         || 197,
         date:     r['Date']        || '',

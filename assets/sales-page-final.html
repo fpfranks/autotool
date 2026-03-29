@@ -86,6 +86,11 @@
     .pricing-cta:hover { opacity: 0.88; transform: translateY(-2px); }
     .pricing-sub { margin-top: 16px; font-size: 0.82rem; color: var(--text-muted); }
 
+    /* Voice pill selector */
+    .voice-pill { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); color: var(--text-muted); padding: 10px 26px; border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 600; font-family: inherit; transition: all 0.15s; }
+    .voice-pill.active { background: rgba(108,99,255,0.15); border-color: rgba(108,99,255,0.45); color: var(--accent-light); }
+    .voice-pill:hover:not(.active) { border-color: rgba(255,255,255,0.2); color: var(--text); }
+
     /* Form inside pricing */
     .sf-form { text-align: left; border: 1px solid rgba(108,99,255,0.3); border-radius: 12px; padding: 20px; background: rgba(108,99,255,0.05); margin-bottom: 24px; }
     .sf-form-label { font-size: 0.8rem; font-weight: 700; color: #8b85ff; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px; }
@@ -600,9 +605,20 @@
           <label>What does your business do? * <span style="font-size:0.7rem;color:var(--text-muted);">(e.g. plumber in Manchester, hair salon in Leeds)</span></label>
           <input id="sf-type" type="text" placeholder="e.g. Plumbing and boiler engineer based in Manchester">
         </div>
+        <div class="sf-field">
+          <label>Business Phone Number * <span style="font-size:0.7rem;color:var(--text-muted);">(the number you want calls forwarded from)</span></label>
+          <input id="sf-bizphone" type="tel" placeholder="e.g. 0161 234 5678">
+        </div>
         <div class="sf-field" style="margin-bottom:0;">
           <label>Booking / Calendar link <span style="font-size:0.7rem;color:var(--text-muted);">(optional — Fresha, Booksy, Calendly, etc.)</span></label>
           <input id="sf-booking" type="url" placeholder="https://...">
+        </div>
+        <div class="sf-field" style="margin-bottom:0; margin-top:12px;">
+          <label style="display:block; margin-bottom:8px;">AI Voice Preference</label>
+          <div style="display:flex; gap:10px;">
+            <button type="button" class="voice-pill active" id="voice-female" onclick="selectVoice('female')">Female</button>
+            <button type="button" class="voice-pill" id="voice-male" onclick="selectVoice('male')">Male</button>
+          </div>
         </div>
         <div id="sf-warning" class="sf-warning"></div>
       </div>
@@ -634,14 +650,22 @@
     const STRIPE_URL = 'https://buy.stripe.com/fZu28qeQOehp8v73vfa3u02';
     const GAS_URL = 'https://script.google.com/macros/s/AKfycbwjScemQfQne9RlNMywzCtQds14_KsWWGPJJTyMYtFxIS7HT3hsn10CgFojdWiaYwr9/exec';
 
+    let selectedVoice = 'female';
+    function selectVoice(v) {
+      selectedVoice = v;
+      document.getElementById('voice-female').classList.toggle('active', v === 'female');
+      document.getElementById('voice-male').classList.toggle('active', v === 'male');
+    }
+
     function handleGetStarted() {
       document.getElementById('sf-warning').style.display = 'none';
-      const biz   = document.getElementById('sf-biz').value.trim();
-      const name  = document.getElementById('sf-name').value.trim();
-      const email = document.getElementById('sf-email').value.trim();
-      const phone = document.getElementById('sf-phone').value.trim();
-      const type  = document.getElementById('sf-type').value.trim();
-      if (!biz || !name || !email || !phone || !type) {
+      const biz      = document.getElementById('sf-biz').value.trim();
+      const name     = document.getElementById('sf-name').value.trim();
+      const email    = document.getElementById('sf-email').value.trim();
+      const phone    = document.getElementById('sf-phone').value.trim();
+      const type     = document.getElementById('sf-type').value.trim();
+      const bizPhone = document.getElementById('sf-bizphone').value.trim();
+      if (!biz || !name || !email || !phone || !type || !bizPhone) {
         const w = document.getElementById('sf-warning');
         w.textContent = 'Please fill in all required fields (marked *).';
         w.style.display = 'block';
@@ -649,7 +673,8 @@
         return;
       }
       const customer = {
-        biz, name, email, phone, type,
+        biz, name, email, phone, type, bizPhone,
+        voice: selectedVoice,
         booking: document.getElementById('sf-booking').value.trim(),
         fee: 197,
         date: new Date().toLocaleDateString('en-GB')
