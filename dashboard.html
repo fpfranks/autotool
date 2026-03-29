@@ -408,18 +408,11 @@
         </ol>
       </div>
 
-      <div style="margin-top:20px;background:rgba(0,212,170,0.06);border:1px solid rgba(0,212,170,0.2);border-radius:8px;padding:16px;">
-        <div style="font-size:11px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">⚡ Full Automation — Stripe → Dashboard (via Zapier)</div>
-        <p style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.7;">Set this up once and new sign-ups appear in your dashboard the moment they pay — no pressing Sync, no manual entry.</p>
-        <ol style="font-size:12px;color:var(--muted);line-height:2.2;padding-left:20px;">
-          <li>Go to <strong style="color:var(--text)">zapier.com</strong> → Create Zap</li>
-          <li>Trigger: <strong style="color:var(--text)">Stripe</strong> → Event: <strong style="color:var(--text)">New Customer</strong></li>
-          <li>Action: <strong style="color:var(--text)">Webhooks by Zapier</strong> → <strong style="color:var(--text)">POST</strong></li>
-          <li>URL: paste your Apps Script URL above</li>
-          <li>Payload type: <strong style="color:var(--text)">JSON</strong></li>
-          <li>Map fields: <code style="background:var(--bg);padding:1px 5px;border-radius:4px;">biz</code> → Customer name, <code style="background:var(--bg);padding:1px 5px;border-radius:4px;">email</code> → Email, <code style="background:var(--bg);padding:1px 5px;border-radius:4px;">fee</code> → 197</li>
-          <li>Turn Zap on — done. Every Stripe payment auto-adds to your sheet and dashboard.</li>
-        </ol>
+      <div style="margin-top:20px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:16px;">
+        <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">ℹ️ Do you need Zapier?</div>
+        <p style="font-size:12px;color:var(--muted);line-height:1.7;">No — your sales page <strong style="color:var(--text)">already sends customer data to your Google Sheet automatically</strong> the moment someone clicks Get Started. The dashboard picks it up within 60 seconds.<br><br>
+        Just <strong style="color:var(--text)">check Stripe manually</strong> to confirm payment (takes 10 seconds), then send the welcome email. That's the only manual step.<br><br>
+        <span style="color:rgba(255,179,71,0.8);">Zapier is only needed if you want Stripe payment confirmation to trigger the import instead of the form submission. It requires a paid Zapier plan (webhooks aren't on the free tier) — skip it for now.</span></p>
       </div>
     </div>
   </div>
