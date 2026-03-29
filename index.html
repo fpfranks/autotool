@@ -145,16 +145,35 @@
     @keyframes dotbounce { 0%,80%,100%{transform:translateY(0)} 40%{transform:translateY(-5px)} }
     @keyframes msgfadein { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
     @keyframes smsslide { from{opacity:0;transform:translateX(18px)} to{opacity:1;transform:translateX(0)} }
+    /* Testimonials */
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
+    .testimonial-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 24px; display: flex; flex-direction: column; gap: 14px; }
+    .testimonial-stars { color: #f5c842; font-size: 1rem; letter-spacing: 2px; }
+    .testimonial-text { font-size: 0.93rem; color: var(--text); line-height: 1.7; font-style: italic; flex: 1; }
+    .testimonial-author { font-size: 0.82rem; font-weight: 700; color: var(--text-muted); }
+    .testimonial-author span { display: block; color: var(--accent-light); font-weight: 600; margin-top: 2px; }
+
+    /* Sticky mobile CTA bar */
+    .mobile-cta-bar { display: none; }
+
     @media (max-width: 700px) {
       nav { padding: 12px 20px; }
+      .nav-price { display: none; }
+      .topbar { font-size: 12px; padding: 8px 16px; }
+      .topbar-hide { display: none; }
+      #hero { padding: 60px 20px 50px; }
       .handles-grid, .steps-grid { grid-template-columns: 1fr; }
       .who-grid { grid-template-columns: repeat(2, 1fr); }
-      .pricing-card { padding: 44px 22px; }
+      .pricing-card { padding: 36px 18px; margin-top: 24px; }
       .problem-box { padding: 28px 24px; font-size: 1.05rem; }
       .guarantee-box { padding: 32px 24px; }
       .section { padding: 64px 20px; }
       .sf-row { grid-template-columns: 1fr; }
       .demo-split { grid-template-columns: 1fr; gap: 28px; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .mobile-cta-bar { display: block; position: fixed; bottom: 0; left: 0; right: 0; z-index: 200; padding: 12px 16px 20px; background: rgba(13,13,20,0.97); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-top: 1px solid var(--border); }
+      .mobile-cta-bar a { display: block; background: linear-gradient(135deg, var(--accent), #9b6bff); color: #fff; text-align: center; padding: 16px; border-radius: 12px; font-weight: 800; font-size: 1rem; text-decoration: none; box-shadow: 0 4px 20px rgba(108,99,255,0.4); }
+      body { padding-bottom: 90px; }
     }
   </style>
 </head>
@@ -162,13 +181,13 @@
 
 <!-- TOPBAR -->
 <div class="topbar">
-  🔒 No login details ever needed &nbsp;|&nbsp; Live in 24 hours &nbsp;|&nbsp; Cancel anytime
+  🔒 No login details ever needed<span class="topbar-hide"> &nbsp;|&nbsp; Live in 24 hours &nbsp;|&nbsp; Cancel anytime</span>
 </div>
 
 <!-- NAV -->
 <nav>
   <a href="#" class="nav-logo">Phillips <span>Automates</span></a>
-  <a href="#pricing" class="nav-cta">Get Started — £197/mo</a>
+  <a href="#pricing" class="nav-cta">Get Started<span class="nav-price"> — £197/mo</span></a>
 </nav>
 
 <!-- ═══════════════════════════════════════════
@@ -461,6 +480,33 @@
 </section>
 
 <!-- ═══════════════════════════════════════════
+     TESTIMONIALS
+════════════════════════════════════════════ -->
+<section class="section alt">
+  <div class="container">
+    <div class="section-label">What Clients Say</div>
+    <h2>Real businesses. Real results.</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Been running my plumbing business for 12 years and always missed calls when I was under someone's sink. Had it set up in less than a day. Clients get answered, I get a text — sorted."</p>
+        <div class="testimonial-author">Steve M.<span>Plumber · Manchester</span></div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"My old voicemail got about 1 in 5 people leaving a message. Now every caller gets answered and I get the details texted straight to me. Worth every penny."</p>
+        <div class="testimonial-author">Kelly B.<span>Hair Studio Owner · Leeds</span></div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Was worried it'd sound robotic but it sounds proper professional. A couple of my regulars mentioned the 'girl on the phone' — they didn't even know it was AI."</p>
+        <div class="testimonial-author">Dave H.<span>Car Garage Owner · Birmingham</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
      COMPARISON TABLE
 ════════════════════════════════════════════ -->
 <section class="section alt">
@@ -607,6 +653,7 @@
           </div>
         </div>
         <div id="sf-warning" class="sf-warning"></div>
+        <p style="font-size:0.72rem;color:var(--text-muted);margin-top:10px;line-height:1.55;">🔒 Your details are used only to set up your AI receptionist and are never sold or shared. By submitting you agree to us contacting you to complete your setup.</p>
       </div>
 
       <ul class="pricing-features">
@@ -700,6 +747,11 @@
     <div class="faq-list">
 
       <div class="faq-item">
+        <div class="faq-q">Do I have to change my phone number?<span class="faq-icon">+</span></div>
+        <div class="faq-a">No — you keep your existing number. Call forwarding works by redirecting calls that you don't answer to a separate AI number we set up. Your number stays exactly the same. Clients still call the same number they always have. Nothing changes on their end.</div>
+      </div>
+
+      <div class="faq-item">
         <div class="faq-q">Do I need to give you any passwords or account access?<span class="faq-icon">+</span></div>
         <div class="faq-a">Never. We don't need access to any of your accounts. The AI is built on our end. You just set up conditional call forwarding on your phone — it's a 30-second setting, and we send you the exact steps. That's the only thing we ever ask you to do.</div>
       </div>
@@ -757,6 +809,11 @@
   <p>© 2026 Phillips Automates &nbsp;|&nbsp; <a href="mailto:phillipsautomates@gmail.com">phillipsautomates@gmail.com</a></p>
   <p style="margin-top:8px; font-size:0.78rem;">UK-based &nbsp;·&nbsp; Sole trader friendly &nbsp;·&nbsp; No jargon, no contracts</p>
 </footer>
+
+<!-- STICKY MOBILE CTA -->
+<div class="mobile-cta-bar">
+  <a href="#pricing">Get Started — £197/mo ›</a>
+</div>
 
 <script>
   document.querySelectorAll('.faq-q').forEach(function(q) {
