@@ -80,6 +80,12 @@
   .section-title { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin: 20px 0 10px; }
   .empty { text-align: center; color: var(--muted); font-size: 13px; padding: 32px; }
   ::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-track { background: var(--surface); } ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  /* Nav badges */
+  .nav-badge { background: var(--red); color: #fff; font-size: 9px; font-weight: 700; padding: 1px 6px; border-radius: 8px; margin-left: auto; display: none; }
+  .nav-badge.show { display: inline-block; }
+  /* Notes log */
+  .note-row { display:flex; gap:10px; padding:6px 0; border-bottom:1px solid var(--border); font-size:12px; align-items:flex-start; }
+  .note-ts { color:var(--muted); flex-shrink:0; font-size:11px; white-space:nowrap; }
   /* VAPI Script Modal */
   .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:10000; align-items:flex-start; justify-content:center; padding:40px 20px; overflow-y:auto; }
   .modal-overlay.open { display:flex; }
@@ -101,10 +107,10 @@
     <p>phillipsautomates@gmail.com</p>
   </div>
   <div class="nav-item active" onclick="nav('dashboard',this)">📊 Dashboard</div>
-  <div class="nav-item" onclick="nav('customers',this)">👥 Customers</div>
-  <div class="nav-item" onclick="nav('workflows',this)">📞 Voice Setup</div>
+  <div class="nav-item" onclick="nav('customers',this)">👥 Customers <span class="nav-badge" id="badge-customers"></span></div>
+  <div class="nav-item" onclick="nav('workflows',this)">📞 Voice Setup <span class="nav-badge" id="badge-workflows"></span></div>
   <div class="nav-item" onclick="nav('todo',this)">✅ To-Do List</div>
-  <div class="nav-item" onclick="nav('emails',this)">📧 Emails</div>
+  <div class="nav-item" onclick="nav('emails',this)">📧 Emails <span class="nav-badge" id="badge-emails"></span></div>
   <div class="nav-item" onclick="nav('revenue',this)">💰 Revenue</div>
   <div class="nav-item" onclick="nav('settings',this)" style="position:absolute;bottom:20px;width:100%;">⚙️ Settings</div>
 </aside>
@@ -183,6 +189,18 @@
           <select class="form-select" id="c-voice">
             <option value="female">Female</option>
             <option value="male">Male</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">📡 Client's Network <span style="font-weight:400;color:var(--muted)">(for forwarding codes)</span></label>
+          <select class="form-select" id="c-network">
+            <option value="">Unknown / Ask client</option>
+            <option value="ee">EE</option>
+            <option value="o2">O2</option>
+            <option value="vodafone">Vodafone</option>
+            <option value="three">Three / iD Mobile</option>
+            <option value="sky">Sky / giffgaff / Talkmobile</option>
+            <option value="landline">Landline / VoIP</option>
           </select>
         </div>
       </div>
@@ -401,7 +419,12 @@
         <button class="btn btn-ghost" onclick="testGasUrl()">Test Connection</button>
         <span id="gas-status" style="font-size:12px;color:var(--muted);"></span>
       </div>
-      <div style="margin-top:20px;padding:14px;background:rgba(255,77,106,0.06);border:1px solid rgba(255,77,106,0.2);border-radius:8px;">
+      <div style="margin-top:20px;padding:14px;background:rgba(0,212,170,0.06);border:1px solid rgba(0,212,170,0.2);border-radius:8px;">
+        <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:8px;">💾 Backup / Export Data</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:10px;">Downloads all your customers, workflows, and tasks as a JSON file. Do this regularly — your data lives in this browser only.</div>
+        <button class="btn btn-sm btn-green" onclick="exportData()">⬇ Download Backup</button>
+      </div>
+      <div style="margin-top:14px;padding:14px;background:rgba(255,77,106,0.06);border:1px solid rgba(255,77,106,0.2);border-radius:8px;">
         <div style="font-size:12px;font-weight:700;color:var(--red);margin-bottom:8px;">Reset To-Do List</div>
         <div style="font-size:12px;color:var(--muted);margin-bottom:10px;">Resets your task list to the current defaults. Customer and revenue data is not affected.</div>
         <button class="btn btn-sm" style="background:var(--red);color:white" onclick="if(confirm('Reset to-do list to defaults?')){localStorage.removeItem('pa_todos');localStorage.removeItem('pa_todos_v');location.reload();}">Reset Tasks</button>
@@ -623,6 +646,7 @@ function closeCustomerForm(){
   document.getElementById('c-fee').value='197';
   document.getElementById('c-status').value='pending';
   document.getElementById('c-voice').value='female';
+  document.getElementById('c-network').value='';
 }
 function getFormData(existingId){
   return {
@@ -640,6 +664,7 @@ function getFormData(existingId){
     website:  document.getElementById('c-website').value,
     notes:    document.getElementById('c-notes').value,
     voice:    document.getElementById('c-voice').value,
+    network:  document.getElementById('c-network').value,
     status:   document.getElementById('c-status').value,
     fee:      document.getElementById('c-fee').value,
     date:     new Date().toLocaleDateString('en-GB')
@@ -664,6 +689,7 @@ function editCustomer(id){
   document.getElementById('c-website').value=c.website||'';
   document.getElementById('c-notes').value=c.notes||'';
   document.getElementById('c-voice').value=c.voice||'female';
+  document.getElementById('c-network').value=c.network||'';
   document.getElementById('c-status').value=c.status||'pending';
   document.getElementById('c-fee').value=c.fee||197;
   document.getElementById('customer-form').style.display='block';
@@ -720,7 +746,7 @@ function autoCreateWorkflow(c){
   localStorage.setItem('pa_workflows',JSON.stringify(workflows));
 }
 function updateCustomerStatus(id,v){const c=customers.find(x=>String(x.id)===String(id));if(c){c.status=v;localStorage.setItem('pa_customers',JSON.stringify(customers));renderAll();}}
-function renderAll(){renderDash();renderCustomers();renderRevenue();renderWorkflows();renderEmails();}
+function renderAll(){renderDash();renderCustomers();renderRevenue();renderWorkflows();renderEmails();updateNavBadges();}
 
 function renderCustomers(){
   const q=(document.getElementById('c-search').value||'').toLowerCase();
@@ -745,6 +771,14 @@ function renderCustomers(){
           <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;">
             ${renderVoiceDetails(c)}
           </div>
+          <div style="margin-top:16px;border-top:1px solid var(--border);padding-top:14px;">
+            <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">📝 Notes</div>
+            <div id="notes-list-${c.id}">${renderCustomerNotes(c)}</div>
+            <div style="display:flex;gap:8px;margin-top:10px;">
+              <input class="form-input" id="note-input-${c.id}" placeholder="Add a note..." style="flex:1;font-size:12px;padding:7px 10px;" onkeydown="if(event.key==='Enter'){event.preventDefault();addCustomerNote('${c.id}',this.value);}"/>
+              <button class="btn btn-ghost btn-sm" onclick="addCustomerNote('${c.id}',document.getElementById('note-input-${c.id}').value)">+ Add</button>
+            </div>
+          </div>
         </div>
       </td>
     </tr>
@@ -766,14 +800,17 @@ function renderVoiceDetails(c){
   };
   html += field('📞','Business Phone (AI answers)' ,c.bizPhone||c.phone||'');
   html += field('🎙️','AI Voice Preference',(c.voice||'female').charAt(0).toUpperCase()+(c.voice||'female').slice(1));
+  const netLabels={'ee':'EE','o2':'O2','vodafone':'Vodafone','three':'Three / iD Mobile','sky':'Sky / giffgaff','landline':'Landline / VoIP'};
+  html += field('📡','Network',(c.network&&netLabels[c.network])||'Unknown — check with client');
   html += field('📱','Owner Mobile (alert texts)',c.phone||'');
   html += field('✉️','Email',c.email||'');
   if(c.hours) html+=`<div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px;grid-column:span 2"><div style="font-size:10px;color:var(--muted);margin-bottom:4px;">🕐 Opening Hours</div><div style="font-size:12px;white-space:pre-wrap;line-height:1.6">${c.hours}</div></div>`;
   if(c.services) html+=`<div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px;grid-column:span 2"><div style="font-size:10px;color:var(--muted);margin-bottom:4px;">💷 Services &amp; Pricing</div><div style="font-size:12px;white-space:pre-wrap;line-height:1.6">${c.services}</div></div>`;
   html += field('📅','Booking URL',c.booking||'',true);
   html += field('🌐','Website',c.website||'',true);
-  html += `<div style="grid-column:1/-1;margin-top:8px;">
-    <button class="btn btn-primary" style="width:100%" onclick="event.stopPropagation();showVapiScript('${c.id}')">🤖 Generate VAPI Script — copy &amp; paste into vapi.ai</button>
+  html += `<div style="grid-column:1/-1;margin-top:8px;display:flex;gap:8px;">
+    <button class="btn btn-primary" style="flex:1" onclick="event.stopPropagation();showVapiScript('${c.id}')">🤖 Generate VAPI Script</button>
+    ${c.emailLive?`<button class="btn btn-ghost" onclick="event.stopPropagation();sendUpdateEmail('${c.id}')">✏️ Send Update Email</button>`:''}
   </div>`;
   return html||`<div style="color:var(--muted);font-size:13px;">No details recorded yet.</div>`;
 }
@@ -814,7 +851,16 @@ function toggleWfStep(wfId,stepIdx){
   localStorage.setItem('pa_workflows',JSON.stringify(workflows));
   if(wf.steps.every(Boolean)){
     const c=customers.find(x=>x.biz===wf.biz);
-    if(c&&!c.setupDone){c.setupDone=true;localStorage.setItem('pa_customers',JSON.stringify(customers));notify('All steps done for '+wf.biz+' — go to Emails to send the live email!');}
+    if(c){
+      if(!c.setupDone){c.setupDone=true;localStorage.setItem('pa_customers',JSON.stringify(customers));}
+      if(c.emailLive&&c.status!=='active'){
+        if(confirm('All steps complete for '+wf.biz+'!\n\nLive email already sent — mark them as Active now?')){
+          c.status='active';localStorage.setItem('pa_customers',JSON.stringify(customers));notify(wf.biz+' marked Active! 🎉');
+        }
+      } else if(!c.emailLive){
+        notify('All steps done for '+wf.biz+' — send the live email from the Emails tab!');
+      }
+    }
   }
   renderAll();
 }
@@ -843,6 +889,7 @@ function renderWorkflows(){
     const c=customers.find(x=>x.biz===wf.biz);
     const isLive=c&&c.emailLive;
     const liveBtn=pct===100&&!isLive?`<button class="btn btn-primary btn-sm" style="width:100%;margin-top:10px" onclick="sendLiveEmail('${c?c.id:''}')">🚀 All done — Send Live Email</button>`:'';
+    const markActiveBtn=pct===100&&isLive&&c&&c.status!=='active'?`<button class="btn btn-green btn-sm" style="width:100%;margin-top:6px" onclick="markCustomerActive('${c.id}')">✅ Mark as Active</button>`:'';
     const liveTag=isLive?'<span style="background:rgba(0,212,170,0.15);color:var(--green);font-size:9px;font-weight:700;padding:2px 8px;border-radius:10px;margin-left:8px">LIVE</span>':'';
     return `<div class="wf-card">
 <div class="flex-between" style="margin-bottom:8px">
@@ -862,7 +909,7 @@ ${wf.booking?`<a href="${wf.booking}" target="_blank" style="background:var(--su
 ${wf.website?`<a href="${wf.website}" target="_blank" style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;color:var(--accent);text-decoration:none;">🌐 Website</a>`:''}
 </div>
 ${wf.notes&&wf.notes!=='Auto-created from customer'?`<div style="margin-top:6px;font-size:11px;color:var(--muted)">📝 ${wf.notes}</div>`:''}
-${liveBtn}
+${liveBtn}${markActiveBtn}
 </div>`;
   }).join('');
 }
@@ -957,23 +1004,51 @@ Frankie
 phillipsautomates@gmail.com`;
 }
 
+function getForwardingCodes(network, rawNum){
+  const num = (rawNum||'').replace(/\s/g,'');
+  const intNum = num.startsWith('0') ? '+44'+num.slice(1) : num;
+  if(network==='ee') return {
+    noAnswer:`**61*${intNum}*11*20#`, busy:`**67*${intNum}#`, off:`**62*${intNum}#`,
+    cancel:'##61# then ##67# then ##62#',
+    note:'EE requires the number in international format — so +44 instead of a leading 0. The codes above have already been formatted for you.'
+  };
+  return {
+    noAnswer:`**61*${num}#`, busy:`**67*${num}#`, off:`**62*${num}#`,
+    cancel:'##61# then ##67# then ##62#', note:''
+  };
+}
+
 function buildLiveBody(c, twilioNumber){
   const num = (twilioNumber||'').replace(/\s/g,'');
   const numDisplay = twilioNumber || '[AI phone number — add in Voice Setup first]';
-  const fwdSection = num
-    ? `HOW TO ACTIVATE (takes 30 seconds on your phone):
+  const network = c.network||'';
+  let fwdSection;
+  if(!num){
+    fwdSection = `HOW TO ACTIVATE:\nWe'll send you the call forwarding codes in a separate message shortly.`;
+  } else if(network==='landline'){
+    fwdSection = `HOW TO ACTIVATE (landline / VoIP):
 
+Your business number is a landline or VoIP number, so the setup is slightly different:
+
+• If you use a VoIP system (RingCentral, 3CX, etc.): log into your portal and set up "No Answer" divert to: ${numDisplay}
+• If you use a standard BT landline: call 0800 800 150 and ask them to set up conditional divert to: ${numDisplay}
+• If you use another provider: contact them and ask to forward unanswered calls to: ${numDisplay}
+
+It usually takes less than 10 minutes to set up and they'll walk you through it.`;
+  } else {
+    const codes = getForwardingCodes(network, num);
+    fwdSection = `HOW TO ACTIVATE (takes 30 seconds on your phone):
+${codes.note?'\n'+codes.note+'\n':''}
 Dial each of these codes on your phone then press the Call button:
 
-When you don't answer:      **61*${num}#
-When you're on a call:      **67*${num}#
-When your phone is off:     **62*${num}#
+When you don't answer:  ${codes.noAnswer}
+When you're on a call:  ${codes.busy}
+When your phone is off: ${codes.off}
 
 That's it — your AI is live. Any call you don't pick up goes to your AI receptionist instead of voicemail.
 
-To turn it off at any time, dial: ##61# ##67# ##62# (one at a time)`
-    : `HOW TO ACTIVATE:
-We'll send you the call forwarding codes in a separate message shortly.`;
+To turn it off at any time, dial: ${codes.cancel}`;
+  }
 
   return `Hi ${c.name||c.biz},
 
@@ -1044,6 +1119,96 @@ function sendLiveEmail(id){
   renderAll();notify('Live email opened — send it from Gmail! Client set to Active.');
 }
 
+function buildUpdateBody(c){
+  return `Hi ${c.name||c.biz},
+
+Hope everything's going well with your AI receptionist!
+
+I just wanted to check in — let me know if anything needs updating and I'll have it live within 24 hours at no extra charge.
+
+Common updates I can make:
+• New or changed prices
+• New services added or removed
+• Updated opening hours
+• New booking link
+
+Just hit reply with whatever needs changing.
+
+Frankie
+Phillips Automates
+phillipsautomates@gmail.com`;
+}
+function sendUpdateEmail(id){
+  const c=customers.find(x=>String(x.id)===String(id));
+  if(!c||!c.email){notify('No email address for this customer');return;}
+  openMailto(c.email,'Checking in — any updates for your AI receptionist?',buildUpdateBody(c));
+  notify('Update email opened — send it from Gmail!');
+}
+
+function markCustomerActive(id){
+  const c=customers.find(x=>String(x.id)===String(id));
+  if(!c)return;
+  c.status='active';
+  localStorage.setItem('pa_customers',JSON.stringify(customers));
+  renderAll();notify(c.biz+' marked as Active! 🎉');
+}
+
+function renderCustomerNotes(c){
+  if(!c.logs||!c.logs.length) return '<div style="font-size:12px;color:var(--muted);padding:4px 0;">No notes yet.</div>';
+  return c.logs.slice().reverse().map(l=>{
+    const d=new Date(l.ts);
+    const ts=d.toLocaleDateString('en-GB',{day:'numeric',month:'short'})+' '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+    return `<div class="note-row"><span class="note-ts">${ts}</span><span>${l.text}</span></div>`;
+  }).join('');
+}
+function addCustomerNote(id, text){
+  if(!text||!text.trim())return;
+  const c=customers.find(x=>String(x.id)===String(id));
+  if(!c)return;
+  if(!c.logs)c.logs=[];
+  c.logs.push({text:text.trim(),ts:new Date().toISOString()});
+  localStorage.setItem('pa_customers',JSON.stringify(customers));
+  // Update notes section in place without re-rendering whole table
+  const listEl=document.getElementById('notes-list-'+id);
+  if(listEl) listEl.innerHTML=renderCustomerNotes(c);
+  const inputEl=document.getElementById('note-input-'+id);
+  if(inputEl) inputEl.value='';
+  notify('Note saved!');
+}
+
+function updateNavBadges(){
+  const newCusts=customers.filter(c=>emailStage(c)==='new').length;
+  const emailActions=customers.filter(c=>c.status!=='inactive'&&(emailStage(c)==='new'||emailStage(c)==='setup')).length;
+  const incompleteWf=workflows.filter(w=>w.steps.filter(Boolean).length<WF_STEPS.length).length;
+  function setBadge(id,count){
+    const el=document.getElementById(id);
+    if(!el)return;
+    el.textContent=count;
+    el.classList.toggle('show',count>0);
+  }
+  setBadge('badge-customers',newCusts);
+  setBadge('badge-emails',emailActions);
+  setBadge('badge-workflows',incompleteWf);
+}
+
+function exportData(){
+  const data={
+    exported: new Date().toISOString(),
+    customers,
+    workflows,
+    todos,
+    outreach
+  };
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download='phillips-automates-backup-'+new Date().toISOString().split('T')[0]+'.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  notify('Backup downloaded!');
+}
+
 function renderEmails(){
   const cols={new:[],welcomed:[],setup:[],live:[]};
   customers.filter(c=>c.status!=='inactive').forEach(c=>{
@@ -1083,7 +1248,10 @@ function renderEmails(){
     :'<div class="empty" style="padding:16px 0;font-size:12px">None here</div>';
   const liveEl=document.getElementById('email-col-live');
   if(liveEl) liveEl.innerHTML=cols.live.length
-    ?cols.live.map(c=>card(c,`<div style="font-size:10px;color:var(--green);">Live since ${fmtDate(c.emailLive)}</div>`)).join('')
+    ?cols.live.map(c=>card(c,`
+      <div style="font-size:10px;color:var(--green);margin-bottom:6px;">Live since ${fmtDate(c.emailLive)}</div>
+      <button class="btn btn-ghost btn-sm" onclick="sendUpdateEmail('${c.id}')" style="width:100%">✏️ Send Update Email</button>
+    `)).join('')
     :'<div class="empty" style="padding:16px 0;font-size:12px">None yet — keep selling!</div>';
 }
 
@@ -1140,6 +1308,8 @@ function fetchFromSheet(url){
             website:  sc.website||'',
             notes:    '',
             voice:    sc.voice||'female',
+            network:  sc.network||'',
+            logs:     [],
             status:   sc.status||'pending',
             fee:      sc.fee||197,
             date:     sc.date||new Date().toLocaleDateString('en-GB'),
@@ -1326,6 +1496,7 @@ function notify(msg){const n=document.getElementById('notif');n.textContent=msg;
   const gasUrl=localStorage.getItem('pa_gas_url');
   if(gasUrl) fetchFromSheet(gasUrl);
   renderDash();
+  updateNavBadges();
   document.getElementById('dash-date').textContent=new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
   // Auto-poll every 60 seconds — new sign-ups appear without pressing Sync
   setInterval(()=>{ const u=localStorage.getItem('pa_gas_url'); if(u) fetchFromSheet(u); }, 60000);
