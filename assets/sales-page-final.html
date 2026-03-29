@@ -610,8 +610,8 @@
           <input id="sf-bizphone" type="tel" placeholder="e.g. 0161 234 5678">
         </div>
         <div class="sf-field" style="margin-bottom:0;">
-          <label>Booking / Calendar link <span style="font-size:0.7rem;color:var(--text-muted);">(optional — Fresha, Booksy, Calendly, etc.)</span></label>
-          <input id="sf-booking" type="url" placeholder="https://...">
+          <label>Website <span style="font-size:0.7rem;color:var(--text-muted);">(optional)</span></label>
+          <input id="sf-website" type="url" placeholder="https://yourbusiness.co.uk">
         </div>
         <div class="sf-field" style="margin-bottom:0; margin-top:12px;">
           <label style="display:block; margin-bottom:8px;">AI Voice Preference</label>
@@ -675,7 +675,7 @@
       const customer = {
         biz, name, email, phone, type, bizPhone,
         voice: selectedVoice,
-        booking: document.getElementById('sf-booking').value.trim(),
+        website: document.getElementById('sf-website').value.trim(),
         fee: 197,
         date: new Date().toLocaleDateString('en-GB')
       };
