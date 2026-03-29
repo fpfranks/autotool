@@ -80,6 +80,17 @@
   .section-title { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin: 20px 0 10px; }
   .empty { text-align: center; color: var(--muted); font-size: 13px; padding: 32px; }
   ::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-track { background: var(--surface); } ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  /* VAPI Script Modal */
+  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:10000; align-items:flex-start; justify-content:center; padding:40px 20px; overflow-y:auto; }
+  .modal-overlay.open { display:flex; }
+  .modal-box { background:var(--surface); border:1px solid var(--border); border-radius:12px; width:100%; max-width:780px; display:flex; flex-direction:column; max-height:calc(100vh - 80px); }
+  .modal-header { display:flex; align-items:center; justify-content:space-between; padding:16px 20px; border-bottom:1px solid var(--border); flex-shrink:0; }
+  .modal-header h3 { font-size:15px; font-weight:700; }
+  .modal-close { background:none; border:none; color:var(--muted); font-size:20px; cursor:pointer; padding:0 4px; }
+  .modal-close:hover { color:var(--text); }
+  .modal-body { padding:20px; overflow-y:auto; flex:1; }
+  .script-box { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:16px; font-family:'Courier New',monospace; font-size:12px; line-height:1.7; color:var(--text); white-space:pre-wrap; word-break:break-word; max-height:55vh; overflow-y:auto; }
+  .modal-footer { padding:14px 20px; border-top:1px solid var(--border); display:flex; gap:10px; flex-shrink:0; align-items:center; }
 </style>
 </head>
 <body>
@@ -415,6 +426,28 @@
 
 </main>
 
+<!-- VAPI SCRIPT MODAL -->
+<div class="modal-overlay" id="vapi-modal" onclick="if(event.target===this)closeVapiModal()">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 id="vapi-modal-title">🤖 VAPI System Prompt</h3>
+      <button class="modal-close" onclick="closeVapiModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="background:rgba(108,99,255,0.08);border:1px solid rgba(108,99,255,0.2);border-radius:8px;padding:12px;margin-bottom:14px;font-size:12px;color:var(--muted);line-height:1.7;">
+        <strong style="color:var(--accent);">How to use:</strong> Copy the script below → go to <strong style="color:var(--text)">vapi.ai</strong> → open your assistant → paste into the <strong style="color:var(--text)">System Prompt</strong> field → Save. The AI will now know everything about this client's business.
+      </div>
+      <div class="script-box" id="vapi-script-content"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-green" onclick="copyVapiScript()">📋 Copy to Clipboard</button>
+      <span id="copy-confirm" style="font-size:12px;color:var(--green);opacity:0;transition:opacity 0.3s;">Copied!</span>
+      <div style="flex:1"></div>
+      <button class="btn btn-ghost btn-sm" onclick="closeVapiModal()">Close</button>
+    </div>
+  </div>
+</div>
+
 <div class="notif" id="notif"></div>
 
 <script>
@@ -733,6 +766,9 @@ function renderVoiceDetails(c){
   if(c.services) html+=`<div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px;grid-column:span 2"><div style="font-size:10px;color:var(--muted);margin-bottom:4px;">💷 Services &amp; Pricing</div><div style="font-size:12px;white-space:pre-wrap;line-height:1.6">${c.services}</div></div>`;
   html += field('📅','Booking URL',c.booking||'',true);
   html += field('🌐','Website',c.website||'',true);
+  html += `<div style="grid-column:1/-1;margin-top:8px;">
+    <button class="btn btn-primary" style="width:100%" onclick="event.stopPropagation();showVapiScript('${c.id}')">🤖 Generate VAPI Script — copy &amp; paste into vapi.ai</button>
+  </div>`;
   return html||`<div style="color:var(--muted);font-size:13px;">No details recorded yet.</div>`;
 }
 
@@ -1115,6 +1151,162 @@ function fetchFromSheet(url){
       }
     })
     .catch(()=>{});
+}
+
+// ── VAPI SCRIPT GENERATOR ──
+function generateVapiScript(c){
+  const biz     = c.biz     || 'this business';
+  const type    = c.type    || 'local business';
+  const hours   = c.hours   || 'Please contact us for opening hours.';
+  const services= c.services|| 'Please contact us for service and pricing information.';
+  const booking = c.booking || '';
+  const phone   = c.bizPhone|| c.phone || '';
+
+  const bookingFlow = booking
+    ? `When a caller wants to book or make an appointment:
+
+1. First offer the online booking link:
+   "I can give you our online booking link — it's ${booking}
+   You can pick a time there directly. Would that work for you?"
+
+2. If they'd prefer to book over the phone:
+   Take their name and phone number, then say:
+   "Perfect — I've noted that down. Someone from ${biz} will call you back shortly to confirm your booking."`
+    : `When a caller wants to book or make an appointment:
+
+Take their full name and phone number, then say:
+"Perfect — I've noted that down. Someone from ${biz} will call you back shortly to confirm your booking."
+
+Do NOT try to confirm specific times — you don't have access to the live calendar.`;
+
+  return `# AI RECEPTIONIST — SYSTEM PROMPT
+# Business: ${biz}
+# Generated by Phillips Automates
+# ─────────────────────────────────────────────────
+# HOW TO USE:
+#   1. Go to vapi.ai → Your Assistant → System Prompt
+#   2. Delete any existing content
+#   3. Paste this entire script
+#   4. Click Save
+# ─────────────────────────────────────────────────
+
+
+## ROLE & PURPOSE
+
+You are an AI receptionist for ${biz}, a ${type}. You answer incoming calls professionally, handle common questions about services and pricing, and take booking requests so the team can call back to confirm.
+
+You are an AI assistant — if a caller directly asks whether they're speaking to a person, you can say:
+"I'm ${biz}'s AI assistant — I'm here to help with any questions and can take your details for the team."
+
+Never pretend to be a human if sincerely asked.
+
+
+## VOICE & PERSONALITY
+
+- Warm, friendly, and professional at all times
+- Speak naturally using contractions ("I'll", "you're", "that's", "we're")
+- Be patient and clear — some callers may be elderly or less familiar with AI
+- If you mishear something: "I'm sorry, I didn't quite catch that — could you say that again for me?"
+- Never sound rushed or dismissive
+- If you genuinely don't know an answer, be honest rather than making something up
+
+
+## GREETING
+
+Start every call with:
+"Hello, thanks for calling ${biz}! How can I help you today?"
+
+If it's clearly outside opening hours:
+"Hi, thanks for calling ${biz}! We're not open right now, but I'd be happy to take your details and make sure someone calls you back."
+
+
+## WHAT YOU CAN HELP WITH
+
+
+### 1. SERVICES & PRICING
+
+When asked about services, prices, or what you offer, use the following information:
+
+${services}
+
+If asked about something not listed above:
+"I don't have the exact details on that one — let me take your name and number and get someone to call you back with the right information."
+
+
+### 2. OPENING HOURS
+
+When asked when you're open or about your hours:
+
+${hours}
+
+If called outside of these hours:
+"We're not open right now — our hours are ${hours.split('\n')[0]}. I can take your details and make sure someone calls you back when we're next open."
+
+
+### 3. BOOKING AN APPOINTMENT
+
+${bookingFlow}
+
+
+### 4. TAKING A MESSAGE / SPEAKING TO SOMEONE
+
+If a caller has a question you can't answer, or wants to speak to a real person:
+"Of course — let me take your name and number so someone can get back to you."
+
+Collect:
+- Full name
+- Phone number
+- Brief reason for calling (1 sentence)
+
+Then say:
+"Got that — I'll make sure someone from the team calls you back shortly."
+
+
+## WHAT NOT TO DO
+
+- Do NOT confirm specific appointment times — you don't have live calendar access
+- Do NOT give medical, legal, or professional advice
+- Do NOT invent prices or services not listed in this prompt
+- Do NOT say "please hold" — you're a voice AI and cannot place callers on hold
+- Do NOT end the call without asking "Is there anything else I can help with today?"
+
+
+## CLOSING THE CALL
+
+If you've answered their question:
+"Great — is there anything else I can help you with today?"
+Then: "Thanks for calling ${biz} — have a great day!"
+
+If you've taken their details:
+"We'll be in touch soon. Thanks for calling ${biz} — take care!"
+
+
+## KEY FACTS
+
+- Business name: ${biz}
+- Business type: ${type}${phone ? `\n- Phone number: ${phone}` : ''}${booking ? `\n- Online booking: ${booking}` : ''}
+
+Always refer to the business as "${biz}" — never as "the company" or "the business".`;
+}
+
+function showVapiScript(id){
+  const c = customers.find(x=>String(x.id)===String(id));
+  if(!c) return;
+  const script = generateVapiScript(c);
+  document.getElementById('vapi-modal-title').textContent = '🤖 VAPI Script — ' + c.biz;
+  document.getElementById('vapi-script-content').textContent = script;
+  document.getElementById('vapi-modal').classList.add('open');
+}
+function closeVapiModal(){
+  document.getElementById('vapi-modal').classList.remove('open');
+}
+function copyVapiScript(){
+  const text = document.getElementById('vapi-script-content').textContent;
+  navigator.clipboard.writeText(text).then(()=>{
+    const el = document.getElementById('copy-confirm');
+    el.style.opacity='1';
+    setTimeout(()=>{ el.style.opacity='0'; }, 2000);
+  }).catch(()=>{ notify('Copy failed — select the text manually'); });
 }
 
 function notify(msg){const n=document.getElementById('notif');n.textContent=msg;n.classList.add('show');setTimeout(()=>n.classList.remove('show'),2500);}
