@@ -134,6 +134,30 @@
     footer a { color: var(--accent-light); text-decoration: none; }
     footer a:hover { text-decoration: underline; }
 
+    /* ── Demo section ── */
+    .demo-tab { background: var(--card); border: 1px solid var(--border); color: var(--text-muted); padding: 10px 22px; border-radius: 999px; cursor: pointer; font-size: 14px; font-weight: 600; font-family: inherit; transition: all 0.2s; }
+    .demo-tab:hover { border-color: var(--accent); color: var(--text); }
+    .demo-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .demo-split { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; max-width: 820px; margin: 0 auto; align-items: start; }
+    .phone-frame { background: #1c1c2a; border: 7px solid #2d2d3d; border-radius: 38px; overflow: hidden; max-width: 272px; margin: 0 auto; box-shadow: 0 28px 70px rgba(0,0,0,0.65), 0 0 0 1px rgba(255,255,255,0.04); }
+    .phone-convo { background: #090910; padding: 12px; min-height: 268px; max-height: 268px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; scroll-behavior: smooth; }
+    .phone-convo::-webkit-scrollbar { display: none; }
+    .sms-frame { background: #f2f2f7; border-radius: 32px; overflow: hidden; max-width: 272px; margin: 0 auto; box-shadow: 0 28px 70px rgba(0,0,0,0.55); }
+    .compare-wrap { overflow-x: auto; margin-top: 40px; border-radius: 14px; border: 1px solid var(--border); }
+    .compare-table { width: 100%; border-collapse: collapse; min-width: 500px; }
+    .compare-table th { padding: 15px 20px; font-size: 13px; font-weight: 700; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; }
+    .compare-table th:first-child { color: var(--text-muted); font-weight: 500; }
+    .compare-table th.col-us { color: var(--green); background: rgba(0,212,170,0.07); }
+    .compare-table td { padding: 14px 20px; font-size: 13.5px; border-bottom: 1px solid var(--border); }
+    .compare-table td.col-us { background: rgba(0,212,170,0.04); font-weight: 600; }
+    .compare-table tr:last-child td { border-bottom: none; }
+    .tick { color: var(--green); font-weight: 800; }
+    .cross { color: #ff4d6a; }
+    .partial { color: #ffb347; font-size: 12px; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
+    @keyframes dotbounce { 0%,80%,100%{transform:translateY(0)} 40%{transform:translateY(-5px)} }
+    @keyframes msgfadein { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes smsslide { from{opacity:0;transform:translateX(18px)} to{opacity:1;transform:translateX(0)} }
     @media (max-width: 700px) {
       nav { padding: 12px 20px; }
       .handles-grid, .steps-grid { grid-template-columns: 1fr; }
@@ -143,6 +167,7 @@
       .guarantee-box { padding: 32px 24px; }
       .section { padding: 64px 20px; }
       .sf-row { grid-template-columns: 1fr; }
+      .demo-split { grid-template-columns: 1fr; gap: 28px; }
     }
   </style>
 </head>
@@ -255,54 +280,262 @@
 </section>
 
 <!-- ═══════════════════════════════════════════
-     DEMO — PHONE CALL TRANSCRIPT
+     DEMO — ANIMATED
 ════════════════════════════════════════════ -->
-<section class="section">
+<section class="section" id="demo">
   <div class="container" style="text-align:center;">
     <div class="section-label">See It In Action</div>
-    <h2>Here's what your callers actually experience.</h2>
-    <p class="muted" style="margin-top:14px; max-width:520px; margin-left:auto; margin-right:auto;">A real example. Saturday afternoon — the plumber is under someone's sink. Phone rings. AI answers instantly.</p>
+    <h2>What your callers hear.<br><span class="green-text">What you receive.</span></h2>
+    <p class="muted" style="margin-top:14px;max-width:520px;margin-left:auto;margin-right:auto;">Pick a business type below. The conversation plays out in real time — and at the end, see the text message you'd receive.</p>
 
-    <div class="call-wrap">
-      <div class="call-header">
-        <div class="call-icon">🔧</div>
-        <div class="call-info">
-          <div class="biz-name">Pete's Plumbing</div>
-          <div class="call-status">● AI Receptionist — Connected</div>
-        </div>
-        <div class="call-ai-tag">AI Answering</div>
-      </div>
-      <div class="call-transcript">
-        <div class="call-line ai">
-          <span class="speaker-tag">AI</span>
-          <div class="speech-bubble">Hello, thanks for calling Pete's Plumbing! How can I help you today?</div>
-        </div>
-        <div class="call-line caller">
-          <span class="speaker-tag">Caller</span>
-          <div class="speech-bubble">Hi — I've got a leaking tap. How much would that be to sort?</div>
-        </div>
-        <div class="call-line ai">
-          <span class="speaker-tag">AI</span>
-          <div class="speech-bubble">A tap repair is usually £65 including parts. If it needs a full replacement it's from £85. Would you like to get booked in?</div>
-        </div>
-        <div class="call-line caller">
-          <span class="speaker-tag">Caller</span>
-          <div class="speech-bubble">Yes please — are you free this week?</div>
-        </div>
-        <div class="call-line ai">
-          <span class="speaker-tag">AI</span>
-          <div class="speech-bubble">We have availability Monday through Friday. Let me take your name and number and Pete will call you back to confirm a time — what's your name?</div>
-        </div>
-        <div class="call-line caller">
-          <span class="speaker-tag">Caller</span>
-          <div class="speech-bubble">It's Sarah — 07700 900 123</div>
-        </div>
-        <div class="call-line ai">
-          <span class="speaker-tag">AI</span>
-          <div class="speech-bubble">Perfect, Sarah — got that noted. Pete will give you a call back shortly to confirm. Is there anything else I can help with today?</div>
+    <!-- Tabs -->
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:28px 0 36px;">
+      <button class="demo-tab active" onclick="switchDemo(0,this)">🔧 Plumber</button>
+      <button class="demo-tab" onclick="switchDemo(1,this)">💇 Hair Salon</button>
+      <button class="demo-tab" onclick="switchDemo(2,this)">🚗 Car Garage</button>
+    </div>
+
+    <div class="demo-split">
+
+      <!-- LEFT — Phone mockup -->
+      <div>
+        <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;text-align:center;">📞 What your caller hears</div>
+        <div class="phone-frame">
+          <div style="background:#1c1c2a;padding:9px 18px 5px;display:flex;justify-content:space-between;font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);">
+            <span>9:41</span><span>●●● 100%</span>
+          </div>
+          <div style="background:linear-gradient(160deg,#0f200f,#0a120a);padding:12px 16px;border-bottom:1px solid rgba(0,212,170,0.1);">
+            <div style="font-size:10px;font-weight:700;color:rgba(0,212,170,0.6);letter-spacing:0.8px;text-transform:uppercase;margin-bottom:3px;">AI RECEPTIONIST</div>
+            <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:5px;" id="demo-biz-name">Pete's Plumbing</div>
+            <div style="display:flex;align-items:center;gap:7px;">
+              <div style="width:7px;height:7px;background:#00d4aa;border-radius:50%;animation:pulse 1.6s ease-in-out infinite;"></div>
+              <span style="font-size:11px;color:#00d4aa;font-weight:600;">Connected</span>
+              <span style="font-size:10px;color:rgba(255,255,255,0.25);margin-left:auto;" id="demo-timer">0:00</span>
+            </div>
+          </div>
+          <div class="phone-convo" id="phone-convo"></div>
+          <div style="background:#1c1c2a;padding:9px;display:flex;justify-content:center;">
+            <div style="width:72px;height:4px;background:rgba(255,255,255,0.15);border-radius:2px;"></div>
+          </div>
         </div>
       </div>
-      <div class="call-note">Pete was under a sink and couldn't answer. The AI handled it — gave the price, took Sarah's details, and texted Pete instantly. Zero missed revenue.</div>
+
+      <!-- RIGHT — SMS mockup -->
+      <div>
+        <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;text-align:center;">📱 What you receive</div>
+        <div class="sms-frame">
+          <div style="background:#f2f2f7;padding:9px 18px 5px;display:flex;justify-content:space-between;font-size:11px;font-weight:700;color:#444;">
+            <span>9:41</span><span>●●● 100%</span>
+          </div>
+          <div style="background:#f2f2f7;padding:6px 18px 10px;text-align:center;border-bottom:1px solid #e2e2e8;">
+            <div style="font-size:15px;font-weight:700;color:#000;">Messages</div>
+          </div>
+          <div style="background:#fff;display:flex;gap:12px;padding:12px 14px;border-bottom:1px solid #f0f0f0;align-items:flex-start;">
+            <div style="width:46px;height:46px;background:linear-gradient(135deg,#34c759,#248a3d);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">🤖</div>
+            <div style="flex:1;min-width:0;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:2px;">
+                <span style="font-size:13px;font-weight:700;color:#000;" id="sms-contact">Pete's Plumbing AI</span>
+                <span style="font-size:11px;color:#aaa;" id="sms-time" style="opacity:0;">now</span>
+              </div>
+              <div style="font-size:12px;color:#888;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" id="sms-preview">Waiting for call to end...</div>
+            </div>
+          </div>
+          <div style="background:#fff;padding:14px 12px;min-height:130px;display:flex;flex-direction:column;gap:8px;" id="sms-thread">
+            <div style="font-size:11px;color:#aaa;text-align:center;margin-bottom:4px;">Today 9:41 AM</div>
+            <div id="sms-bubble-wrap" style="opacity:0.3;filter:blur(2px);transition:all 0.5s;">
+              <div style="background:#e9e9eb;border-radius:18px 18px 18px 4px;padding:12px 14px;font-size:12.5px;color:#111;line-height:1.6;max-width:92%;text-align:left;white-space:pre-line;" id="sms-bubble">Waiting...</div>
+            </div>
+          </div>
+          <div style="background:#fff;border-top:1px solid #ebebeb;padding:9px 12px;display:flex;gap:8px;align-items:center;">
+            <div style="flex:1;background:#f2f2f2;border-radius:20px;padding:8px 14px;font-size:12px;color:#aaa;">Message</div>
+            <div style="width:30px;height:30px;background:#34c759;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:700;">↑</div>
+          </div>
+          <div style="background:#f2f2f7;padding:9px;display:flex;justify-content:center;">
+            <div style="width:72px;height:4px;background:rgba(0,0,0,0.12);border-radius:2px;"></div>
+          </div>
+        </div>
+        <p style="font-size:13px;color:var(--text-muted);margin-top:16px;line-height:1.7;text-align:center;">Text arrives the moment the call ends.<br>Call back when you're free — the lead is never lost.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:32px;display:inline-flex;align-items:center;gap:10px;background:rgba(0,212,170,0.07);border:1px solid rgba(0,212,170,0.2);border-radius:999px;padding:10px 22px;font-size:13.5px;color:var(--text-muted);">
+      <span style="font-size:16px;">🔄</span> Demo loops automatically — or switch business type above
+    </div>
+  </div>
+
+  <script>
+  const DEMOS=[
+    {
+      biz:"Pete's Plumbing",
+      msgs:[
+        {from:'ai',   text:"Hello, thanks for calling Pete's Plumbing! How can I help you today?",         pause:700},
+        {from:'caller',text:"Hi — I've got a leaking tap. How much would that be to fix?",                 pause:2000},
+        {from:'ai',   text:"A tap repair is £65 including parts, or £85 for a full replacement. Would you like to get booked in?", pause:2200},
+        {from:'caller',text:"Yes please — are you free this week?",                                         pause:1600},
+        {from:'ai',   text:"We're open Monday to Friday 8am–6pm. Let me take your name and number and Pete will call back to confirm — what's your name?", pause:2400},
+        {from:'caller',text:"It's Sarah — 07700 900 123",                                                  pause:1400},
+        {from:'ai',   text:"Got that, Sarah! Pete will be in touch shortly. Is there anything else I can help with today?", pause:2000},
+      ],
+      smsPreview:"🔔 New lead: Sarah — tap repair",
+      smsBody:"🤖 New booking request!\n\nSarah called about a leaking tap.\n📞 07700 900 123\n\nCall back to confirm the job."
+    },
+    {
+      biz:"Kelly's Hair Studio",
+      msgs:[
+        {from:'ai',   text:"Hello, thanks for calling Kelly's Hair Studio! How can I help?",               pause:700},
+        {from:'caller',text:"Hi — how much is a cut and colour?",                                           pause:1800},
+        {from:'ai',   text:"A cut and colour starts from £85. Full head of highlights is from £95. Blow-dry only is £35. Shall I book you in?", pause:2200},
+        {from:'caller',text:"Yes — do you have anything on Saturday?",                                      pause:1600},
+        {from:'ai',   text:"Let me take your name and number and Kelly will call to confirm a Saturday slot — what's your name?", pause:2200},
+        {from:'caller',text:"Emma — 07812 345 678",                                                         pause:1200},
+        {from:'ai',   text:"Lovely! Kelly will be in touch to get you booked in. Anything else I can help with today?", pause:2000},
+      ],
+      smsPreview:"🔔 New lead: Emma — cut & colour",
+      smsBody:"🤖 New booking request!\n\nEmma called about a cut and colour.\n📞 07812 345 678\n💬 Wants a Saturday slot.\n\nCall back to confirm."
+    },
+    {
+      biz:"Dave's Auto Centre",
+      msgs:[
+        {from:'ai',   text:"Hello, thanks for calling Dave's Auto Centre! How can I help?",                pause:700},
+        {from:'caller',text:"Yeah hi — how much is an MOT?",                                               pause:1800},
+        {from:'ai',   text:"An MOT is £45 and takes about an hour. We include a free visual health check with every MOT. Want to get one booked in?", pause:2200},
+        {from:'caller',text:"Yeah — how soon can you fit me in?",                                          pause:1600},
+        {from:'ai',   text:"Let me take your name and number and Dave will call to confirm the earliest available slot — what's your name?", pause:2200},
+        {from:'caller',text:"Mark — 07923 456 789",                                                         pause:1200},
+        {from:'ai',   text:"Perfect, Mark! Dave will be in touch very shortly. Anything else I can help with?", pause:2000},
+      ],
+      smsPreview:"🔔 New lead: Mark — MOT booking",
+      smsBody:"🤖 New booking request!\n\nMark called about an MOT.\n📞 07923 456 789\n💬 Asked about earliest availability.\n\nCall back to confirm."
+    }
+  ];
+
+  let activeDemo=0, demoStep=0, demoT=null, timerT=null, timerSecs=0;
+
+  function switchDemo(idx,btn){
+    if(btn){ document.querySelectorAll('.demo-tab').forEach(t=>t.classList.remove('active')); btn.classList.add('active'); }
+    activeDemo=idx; demoStep=0; clearTimeout(demoT); clearInterval(timerT); timerSecs=0;
+    const d=DEMOS[idx];
+    document.getElementById('demo-biz-name').textContent=d.biz;
+    document.getElementById('phone-convo').innerHTML='';
+    document.getElementById('sms-contact').textContent=d.biz+' AI';
+    document.getElementById('sms-preview').textContent='Waiting for call to end...';
+    document.getElementById('sms-bubble').textContent='Waiting...';
+    document.getElementById('sms-bubble-wrap').style.opacity='0.3';
+    document.getElementById('sms-bubble-wrap').style.filter='blur(2px)';
+    document.getElementById('sms-time').style.opacity='0';
+    document.getElementById('demo-timer').textContent='0:00';
+    timerT=setInterval(()=>{timerSecs++;const m=Math.floor(timerSecs/60),s=timerSecs%60;document.getElementById('demo-timer').textContent=m+':'+(s<10?'0':'')+s;},1000);
+    demoT=setTimeout(runStep,600);
+  }
+
+  function runStep(){
+    const d=DEMOS[activeDemo];
+    if(demoStep>=d.msgs.length){
+      const bw=document.getElementById('sms-bubble-wrap');
+      document.getElementById('sms-preview').textContent=d.smsPreview;
+      document.getElementById('sms-bubble').textContent=d.smsBody;
+      document.getElementById('sms-time').style.opacity='1';
+      bw.style.animation='smsslide 0.5s ease forwards';
+      bw.style.opacity='1'; bw.style.filter='none';
+      clearInterval(timerT);
+      demoT=setTimeout(()=>switchDemo(activeDemo,null),5500);
+      return;
+    }
+    const msg=d.msgs[demoStep];
+    const convo=document.getElementById('phone-convo');
+    const tid='typing-'+Date.now();
+    const isAi=msg.from==='ai';
+    const typing=document.createElement('div');
+    typing.id=tid;
+    typing.style.cssText=`display:flex;flex-direction:column;align-items:${isAi?'flex-start':'flex-end'};`;
+    typing.innerHTML=`<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:${isAi?'rgba(0,212,170,0.5)':'rgba(255,255,255,0.28)'};margin-bottom:3px;padding:0 4px;">${isAi?'AI':'Caller'}</div>
+    <div style="background:${isAi?'rgba(0,212,170,0.1)':'rgba(255,255,255,0.06)'};border:1px solid ${isAi?'rgba(0,212,170,0.18)':'rgba(255,255,255,0.1)'};border-radius:${isAi?'4px 14px 14px 14px':'14px 4px 14px 14px'};padding:10px 14px;display:flex;gap:4px;align-items:center;">
+      <span style="width:6px;height:6px;background:${isAi?'#00d4aa':'rgba(255,255,255,0.5)'};border-radius:50%;animation:dotbounce 0.9s 0s infinite;display:inline-block;"></span>
+      <span style="width:6px;height:6px;background:${isAi?'#00d4aa':'rgba(255,255,255,0.5)'};border-radius:50%;animation:dotbounce 0.9s 0.18s infinite;display:inline-block;"></span>
+      <span style="width:6px;height:6px;background:${isAi?'#00d4aa':'rgba(255,255,255,0.5)'};border-radius:50%;animation:dotbounce 0.9s 0.36s infinite;display:inline-block;"></span>
+    </div>`;
+    convo.appendChild(typing);
+    convo.scrollTop=convo.scrollHeight;
+    demoT=setTimeout(()=>{
+      const t=document.getElementById(tid); if(t) t.remove();
+      const el=document.createElement('div');
+      el.style.cssText=`display:flex;flex-direction:column;align-items:${isAi?'flex-start':'flex-end'};animation:msgfadein 0.3s ease;`;
+      el.innerHTML=`<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:${isAi?'rgba(0,212,170,0.5)':'rgba(255,255,255,0.28)'};margin-bottom:3px;padding:0 4px;">${isAi?'AI':'Caller'}</div>
+      <div style="background:${isAi?'rgba(0,212,170,0.12)':'rgba(255,255,255,0.07)'};border:1px solid ${isAi?'rgba(0,212,170,0.2)':'rgba(255,255,255,0.1)'};border-radius:${isAi?'4px 14px 14px 14px':'14px 4px 14px 14px'};padding:9px 13px;font-size:12px;color:${isAi?'#c8f5ec':'#e8e8f0'};line-height:1.5;max-width:88%;">${msg.text}</div>`;
+      convo.appendChild(el);
+      convo.scrollTop=convo.scrollHeight;
+      demoStep++;
+      demoT=setTimeout(runStep, msg.pause);
+    }, 900);
+  }
+
+  document.addEventListener('DOMContentLoaded',()=>switchDemo(0,document.querySelector('.demo-tab')));
+  </script>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     COMPARISON TABLE
+════════════════════════════════════════════ -->
+<section class="section alt">
+  <div class="container">
+    <div class="section-label">How It Compares</div>
+    <h2>AI receptionist vs the alternatives.</h2>
+    <p class="muted" style="margin-top:14px;max-width:520px;">Most businesses rely on voicemail — or pay thousands a month for a human. There's a better option.</p>
+    <div class="compare-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th style="width:38%"></th>
+            <th class="col-us">🤖 AI Receptionist<br><span style="font-weight:500;font-size:12px;color:var(--green);">Phillips Automates</span></th>
+            <th style="color:var(--text-muted);">📼 Voicemail</th>
+            <th style="color:var(--text-muted);">👤 Human Receptionist</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Answers calls 24/7</td>
+            <td class="col-us"><span class="tick">✓</span> Always on</td>
+            <td><span class="tick">✓</span> Records message</td>
+            <td><span class="cross">✗</span> Office hours only</td>
+          </tr>
+          <tr>
+            <td>Gives callers your prices instantly</td>
+            <td class="col-us"><span class="tick">✓</span> Full price list</td>
+            <td><span class="cross">✗</span> Can't</td>
+            <td><span class="tick">✓</span> If trained</td>
+          </tr>
+          <tr>
+            <td>Takes booking requests</td>
+            <td class="col-us"><span class="tick">✓</span> Name &amp; number every time</td>
+            <td><span class="partial">~ Most callers hang up</span></td>
+            <td><span class="tick">✓</span></td>
+          </tr>
+          <tr>
+            <td>Texts you immediately after every call</td>
+            <td class="col-us"><span class="tick">✓</span> Instant</td>
+            <td><span class="cross">✗</span></td>
+            <td><span class="cross">✗</span></td>
+          </tr>
+          <tr>
+            <td>No login details or account access needed</td>
+            <td class="col-us"><span class="tick">✓</span> Never</td>
+            <td><span class="tick">✓</span></td>
+            <td><span class="partial">~ Varies</span></td>
+          </tr>
+          <tr>
+            <td>Live in 24 hours</td>
+            <td class="col-us"><span class="tick">✓</span></td>
+            <td><span class="tick">✓</span></td>
+            <td><span class="cross">✗</span> Weeks to hire</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Monthly cost</td>
+            <td class="col-us" style="color:var(--green);font-size:15px;font-weight:800;">£197/mo</td>
+            <td style="color:var(--text-muted);">Free</td>
+            <td style="color:var(--text-muted);">£800 – £2,000+/mo</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </section>
