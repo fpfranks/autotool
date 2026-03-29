@@ -1452,6 +1452,7 @@ function generateVapiScript(c){
   const booking = c.booking || '';
   const phone   = c.bizPhone|| c.phone || '';
   const voice   = (c.voice  || 'female');
+  const notes   = c.notes   || '';
 
   const bookingFlow = booking
     ? `When a caller wants to book or make an appointment:
@@ -1578,6 +1579,8 @@ If you've taken their details:
 
 - Business name: ${biz}
 - Business type: ${type}${phone ? `\n- Phone number: ${phone}` : ''}${booking ? `\n- Online booking: ${booking}` : ''}
+- City/location: ${c.city || 'not specified'}
+${notes ? `\n## ADDITIONAL INFORMATION\n\nUse the following to answer any other questions callers may have:\n\n${notes}` : ''}
 
 Always refer to the business as "${biz}" — never as "the company" or "the business".`;
 }
