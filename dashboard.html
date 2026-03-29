@@ -208,7 +208,13 @@
       <div class="form-group"><label class="form-label">💷 Services &amp; Pricing</label><textarea class="form-textarea" id="c-services" placeholder="List all services and prices — e.g. Tap repair £65, Boiler service £85, Emergency call-out from £120"></textarea></div>
       <div style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.5px;margin:14px 0 10px;">Other Details</div>
       <div class="form-row">
-        <div class="form-group"><label class="form-label">🌐 Website URL</label><input class="form-input" id="c-website" placeholder="https://yourbusiness.co.uk" type="url"/></div>
+        <div class="form-group"><label class="form-label">🌐 Website URL</label>
+          <div style="display:flex;gap:8px;">
+            <input class="form-input" id="c-website" placeholder="https://yourbusiness.co.uk" type="url" style="flex:1"/>
+            <button type="button" class="btn btn-ghost" id="scrape-btn" onclick="scrapeWebsite()" style="white-space:nowrap;flex-shrink:0;">🔍 Scrape Site</button>
+          </div>
+          <div id="scrape-status" style="font-size:11px;color:var(--muted);margin-top:5px;display:none;"></div>
+        </div>
         <div class="form-group"><label class="form-label">📝 Special Instructions</label><input class="form-input" id="c-notes" placeholder="Anything the AI should know — parking, FAQs, etc."/></div>
       </div>
       <div class="form-row">
@@ -419,7 +425,17 @@
         <button class="btn btn-ghost" onclick="testGasUrl()">Test Connection</button>
         <span id="gas-status" style="font-size:12px;color:var(--muted);"></span>
       </div>
-      <div style="margin-top:20px;padding:14px;background:rgba(0,212,170,0.06);border:1px solid rgba(0,212,170,0.2);border-radius:8px;">
+      <div style="margin-top:20px;padding:14px;background:rgba(108,99,255,0.07);border:1px solid rgba(108,99,255,0.25);border-radius:8px;">
+        <div style="font-size:12px;font-weight:700;color:var(--accent);margin-bottom:8px;">🤖 Claude API Key — Website Scraping</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.7;">Paste a client's website URL in their customer form and click <strong style="color:var(--text)">Scrape Site</strong> — Claude reads the whole page and auto-fills their hours, pricing, services, address, FAQs, and anything else a caller might ask. Stored in your browser only — never in the code or on GitHub.</div>
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+          <input class="form-input" id="claude-key-input" type="password" placeholder="sk-ant-api03-..." style="flex:1"/>
+          <button class="btn btn-primary" onclick="saveClaudeKey()">Save</button>
+        </div>
+        <span id="claude-key-status" style="font-size:12px;color:var(--muted);"></span>
+        <div style="font-size:11px;color:var(--muted);margin-top:8px;">Get your key at <strong style="color:var(--text)">console.anthropic.com</strong> → API Keys → Create Key &nbsp;·&nbsp; ~£0.01 per scrape</div>
+      </div>
+      <div style="margin-top:14px;padding:14px;background:rgba(0,212,170,0.06);border:1px solid rgba(0,212,170,0.2);border-radius:8px;">
         <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:8px;">💾 Backup / Export Data</div>
         <div style="font-size:12px;color:var(--muted);margin-bottom:10px;">Downloads all your customers, workflows, and tasks as a JSON file. Do this regularly — your data lives in this browser only.</div>
         <button class="btn btn-sm btn-green" onclick="exportData()">⬇ Download Backup</button>
@@ -519,7 +535,12 @@ function nav(name, el) {
   if(name==='todo') renderTodos();
   if(name==='revenue') renderRevenue();
   if(name==='emails') renderEmails();
-  if(name==='settings') { const u=localStorage.getItem('pa_gas_url')||''; document.getElementById('gas-url-input').value=u; }
+  if(name==='settings') {
+    const u=localStorage.getItem('pa_gas_url')||''; document.getElementById('gas-url-input').value=u;
+    const hasKey=!!localStorage.getItem('pa_claude_key');
+    const ks=document.getElementById('claude-key-status');
+    if(ks){ks.textContent=hasKey?'✅ Key saved — ready to scrape':'No key saved yet';ks.style.color=hasKey?'var(--green)':'var(--muted)';}
+  }
 }
 document.querySelectorAll('.nav-item').forEach(item=>{
   item.addEventListener('click',function(){document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));this.classList.add('active');});
@@ -1189,6 +1210,98 @@ function updateNavBadges(){
   setBadge('badge-customers',newCusts);
   setBadge('badge-emails',emailActions);
   setBadge('badge-workflows',incompleteWf);
+}
+
+function saveClaudeKey(){
+  const key=document.getElementById('claude-key-input').value.trim();
+  if(!key){notify('Paste your API key first');return;}
+  localStorage.setItem('pa_claude_key',key);
+  document.getElementById('claude-key-input').value='';
+  const ks=document.getElementById('claude-key-status');
+  ks.textContent='✅ Key saved — ready to scrape';ks.style.color='var(--green)';
+  notify('Claude API key saved!');
+}
+
+async function scrapeWebsite(){
+  const key=localStorage.getItem('pa_claude_key');
+  if(!key){notify('Add your Claude API key in Settings first');return;}
+  const url=document.getElementById('c-website').value.trim();
+  if(!url){notify('Enter a website URL first');return;}
+  const btn=document.getElementById('scrape-btn');
+  const status=document.getElementById('scrape-status');
+  btn.textContent='⏳ Scraping...';btn.disabled=true;
+  status.style.display='block';status.textContent='Fetching website...';status.style.color='var(--muted)';
+  try{
+    // Fetch via CORS proxy
+    const proxyUrl='https://api.allorigins.win/get?url='+encodeURIComponent(url);
+    const res=await fetch(proxyUrl);
+    const data=await res.json();
+    if(!data.contents) throw new Error('Could not fetch website — try a different proxy or check the URL');
+    status.textContent='Reading page content...';
+    // Strip scripts, styles, HTML tags
+    const text=data.contents
+      .replace(/<script[\s\S]*?<\/script>/gi,'')
+      .replace(/<style[\s\S]*?<\/style>/gi,'')
+      .replace(/<[^>]+>/g,' ')
+      .replace(/\s+/g,' ')
+      .trim()
+      .slice(0,10000);
+    status.textContent='Asking Claude to extract info...';
+    // Call Claude API
+    const claudeRes=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'x-api-key':key,
+        'anthropic-version':'2023-06-01',
+        'anthropic-dangerous-allow-browser':'true'
+      },
+      body:JSON.stringify({
+        model:'claude-haiku-4-5-20251001',
+        max_tokens:1500,
+        messages:[{
+          role:'user',
+          content:`You are extracting information from a UK small business website to configure an AI phone receptionist. Extract every piece of information a caller might ask about.
+
+Return ONLY valid JSON with exactly these fields (use empty string if not found):
+{
+  "hours": "opening hours, one day per line e.g. Monday: 9am-5pm",
+  "services": "every service and price mentioned, one per line e.g. Haircut: £25",
+  "notes": "everything else useful: full address, areas covered, parking, payment methods, qualifications, FAQs, how to book, response times, emergency info, anything a caller might ask"
+}
+
+Be thorough. Include everything. Do not summarise — use the actual text from the page.
+
+Website text:
+${text}`
+        }]
+      })
+    });
+    const claudeData=await claudeRes.json();
+    if(claudeData.error) throw new Error(claudeData.error.message);
+    const raw=claudeData.content[0].text.trim();
+    const jsonMatch=raw.match(/\{[\s\S]*\}/);
+    if(!jsonMatch) throw new Error('Could not parse Claude response');
+    const extracted=JSON.parse(jsonMatch[0]);
+    // Fill fields
+    let filled=[];
+    if(extracted.hours&&extracted.hours.trim()){document.getElementById('c-hours').value=extracted.hours.trim();filled.push('hours');}
+    if(extracted.services&&extracted.services.trim()){document.getElementById('c-services').value=extracted.services.trim();filled.push('services & pricing');}
+    if(extracted.notes&&extracted.notes.trim()){
+      const existing=document.getElementById('c-notes').value.trim();
+      document.getElementById('c-notes').value=existing?existing+'\n\n'+extracted.notes.trim():extracted.notes.trim();
+      filled.push('extra info');
+    }
+    btn.textContent='✅ Done!';
+    status.textContent=filled.length?'Filled in: '+filled.join(', ')+' — review then save':'Nothing found — the site may block scraping';
+    status.style.color=filled.length?'var(--green)':'var(--warn)';
+    setTimeout(()=>{btn.textContent='🔍 Scrape Site';btn.disabled=false;},3000);
+    if(filled.length) notify('Website scraped! Check the fields then save.');
+  } catch(err){
+    btn.textContent='🔍 Scrape Site';btn.disabled=false;
+    status.textContent='Failed: '+err.message;status.style.color='var(--red)';
+    notify('Scrape failed — see status below website field');
+  }
 }
 
 function exportData(){
