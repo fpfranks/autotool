@@ -295,10 +295,67 @@
       <button class="btn btn-green" id="c-save-btn" onclick="saveCustomer()">Save Customer</button>
     </div>
     <div class="pipeline" id="pipeline-board">
-      <div class="pipe-col"><div class="pipe-col-head" style="color:var(--warn)">🔴 New Sign-ups <span id="pipe-count-new" style="background:rgba(255,179,71,0.2);padding:1px 7px;border-radius:8px;">0</span></div><div class="pipe-col-body" id="pipe-new"></div></div>
-      <div class="pipe-col"><div class="pipe-col-head" style="color:var(--accent)">🟣 Awaiting Reply <span id="pipe-count-welcomed" style="background:rgba(108,99,255,0.2);padding:1px 7px;border-radius:8px;">0</span></div><div class="pipe-col-body" id="pipe-welcomed"></div></div>
-      <div class="pipe-col"><div class="pipe-col-head" style="color:#64b4ff">🔵 Building <span id="pipe-count-setup" style="background:rgba(100,180,255,0.2);padding:1px 7px;border-radius:8px;">0</span></div><div class="pipe-col-body" id="pipe-setup"></div></div>
-      <div class="pipe-col"><div class="pipe-col-head" style="color:var(--green)">✅ Live <span id="pipe-count-live" style="background:rgba(0,212,170,0.15);padding:1px 7px;border-radius:8px;">0</span></div><div class="pipe-col-body" id="pipe-live"></div></div>
+
+      <div class="pipe-col">
+        <div class="pipe-col-head" style="color:var(--warn)">🔴 New Sign-ups <span id="pipe-count-new" style="background:rgba(255,179,71,0.2);padding:1px 7px;border-radius:8px;">0</span></div>
+        <div style="padding:10px 10px 0;border-bottom:1px solid var(--border);margin-bottom:8px;">
+          <div style="font-size:10px;font-weight:700;color:var(--warn);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Your action</div>
+          <ol style="font-size:11px;color:var(--muted);line-height:1.9;padding-left:16px;margin:0 0 8px;">
+            <li>Check Stripe — confirm payment received</li>
+            <li>Click <strong style="color:var(--text)">👁 View → 📧 Emails</strong> and send the Welcome email</li>
+            <li>Scrape their website if they have one (auto-fills hours + services)</li>
+          </ol>
+          <div style="font-size:10px;color:var(--muted);padding:7px 9px;background:rgba(255,179,71,0.06);border-radius:6px;margin-bottom:10px;line-height:1.7;">⏱ Aim: welcome email sent within <strong style="color:var(--warn);">1 hour</strong> of sign-up. Speed = trust.</div>
+        </div>
+        <div class="pipe-col-body" id="pipe-new"></div>
+      </div>
+
+      <div class="pipe-col">
+        <div class="pipe-col-head" style="color:var(--accent)">🟣 Awaiting Reply <span id="pipe-count-welcomed" style="background:rgba(108,99,255,0.2);padding:1px 7px;border-radius:8px;">0</span></div>
+        <div style="padding:10px 10px 0;border-bottom:1px solid var(--border);margin-bottom:8px;">
+          <div style="font-size:10px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Waiting on client</div>
+          <ol style="font-size:11px;color:var(--muted);line-height:1.9;padding-left:16px;margin:0 0 8px;">
+            <li>Client replies with their business info</li>
+            <li>If 48 hrs pass with no reply — send the Nudge</li>
+            <li>Once info arrives — click <strong style="color:var(--text)">📋 Info In</strong></li>
+          </ol>
+          <div style="font-size:10px;color:var(--muted);padding:7px 9px;background:rgba(108,99,255,0.06);border-radius:6px;margin-bottom:10px;line-height:1.7;">💡 While you wait: scrape their website now so their VAPI script is ready to go the moment they reply.</div>
+        </div>
+        <div class="pipe-col-body" id="pipe-welcomed"></div>
+      </div>
+
+      <div class="pipe-col">
+        <div class="pipe-col-head" style="color:#64b4ff">🔵 Building <span id="pipe-count-setup" style="background:rgba(100,180,255,0.2);padding:1px 7px;border-radius:8px;">0</span></div>
+        <div style="padding:10px 10px 0;border-bottom:1px solid var(--border);margin-bottom:8px;">
+          <div style="font-size:10px;font-weight:700;color:#64b4ff;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Your action</div>
+          <ol style="font-size:11px;color:var(--muted);line-height:1.9;padding-left:16px;margin:0 0 8px;">
+            <li>Click <strong style="color:var(--text)">🤖 VAPI</strong> — copy the system prompt</li>
+            <li>Create assistant on vapi.ai — paste prompt, set voice</li>
+            <li>Add a Twilio number → connect to the assistant</li>
+            <li>Test: call the Twilio number yourself first</li>
+            <li>Send <strong style="color:var(--text)">📋 Forwarding Guide</strong> to client via WhatsApp/text</li>
+            <li>Click <strong style="color:var(--text)">🚀 Go Live</strong> — sends the live email</li>
+          </ol>
+          <div style="font-size:10px;color:var(--muted);padding:7px 9px;background:rgba(100,180,255,0.06);border-radius:6px;margin-bottom:10px;line-height:1.7;">⏱ Aim: built and live within <strong style="color:#64b4ff;">24 hrs</strong> of receiving their info. Fast delivery = 5-star reviews.</div>
+        </div>
+        <div class="pipe-col-body" id="pipe-setup"></div>
+      </div>
+
+      <div class="pipe-col">
+        <div class="pipe-col-head" style="color:var(--green)">✅ Live <span id="pipe-count-live" style="background:rgba(0,212,170,0.15);padding:1px 7px;border-radius:8px;">0</span></div>
+        <div style="padding:10px 10px 0;border-bottom:1px solid var(--border);margin-bottom:8px;">
+          <div style="font-size:10px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Keep &amp; grow</div>
+          <ol style="font-size:11px;color:var(--muted);line-height:1.9;padding-left:16px;margin:0 0 8px;">
+            <li>Confirm forwarding is active — call their business number</li>
+            <li>WhatsApp them: <em>"How's it going? Any feedback?"</em></li>
+            <li>After 2 weeks — ask for a Google / Trustpilot review</li>
+            <li>After 30 days — check in for retention + upsell</li>
+          </ol>
+          <div style="font-size:10px;color:var(--muted);padding:7px 9px;background:rgba(0,212,170,0.06);border-radius:6px;margin-bottom:10px;line-height:1.7;">💰 Each active client = £197/mo recurring. Keep them happy and they'll refer others. When finished, click <strong style="color:var(--green);">⭐ Complete</strong> to archive.</div>
+        </div>
+        <div class="pipe-col-body" id="pipe-live"></div>
+      </div>
+
     </div>
   </div>
 
