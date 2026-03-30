@@ -131,6 +131,16 @@
   .pipe-empty { text-align:center; padding:20px 10px; color:var(--muted); font-size:12px; }
   @media (max-width:1100px){ .pipeline { grid-template-columns:repeat(2,1fr); } }
   @media (max-width:768px){ .pipeline { grid-template-columns:1fr; } }
+  /* Customer modal tabs */
+  .cmodal-tab { transition:color 0.15s,border-color 0.15s; }
+  .cmodal-tab.active { color:var(--accent) !important; border-bottom-color:var(--accent) !important; }
+  .cmodal-tab:hover { color:var(--text) !important; }
+  /* Info grid in modal */
+  .info-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .info-cell { background:var(--surface2); border-radius:8px; padding:10px 12px; }
+  .info-cell-label { font-size:10px; color:var(--muted); margin-bottom:3px; }
+  .info-cell-val { font-size:13px; font-weight:600; word-break:break-all; }
+  @media(max-width:480px){ .info-grid { grid-template-columns:1fr; } }
   /* Nav badges */
   .nav-badge { background: var(--red); color: #fff; font-size: 9px; font-weight: 700; padding: 1px 6px; border-radius: 8px; margin-left: auto; display: none; }
   .nav-badge.show { display: inline-block; }
@@ -159,7 +169,6 @@
   </div>
   <div class="nav-item active" onclick="nav('dashboard',this)">📊 Dashboard</div>
   <div class="nav-item" onclick="nav('customers',this)">🚀 Pipeline <span class="nav-badge" id="badge-customers"></span></div>
-  <div class="nav-item" onclick="nav('workflows',this)">📞 Voice Setup <span class="nav-badge" id="badge-workflows"></span></div>
   <div class="nav-item" onclick="nav('todo',this)">✅ To-Do List</div>
   <div class="nav-item" onclick="nav('revenue',this)">💰 Revenue</div>
   <div class="nav-item" onclick="nav('settings',this)" style="position:absolute;bottom:20px;width:100%;">⚙️ Settings</div>
@@ -517,6 +526,37 @@
 
 </main>
 
+<!-- CUSTOMER DETAIL MODAL -->
+<div class="modal-overlay" id="customer-modal" onclick="if(event.target===this)closeCustomerModal()">
+  <div class="modal-box" style="max-width:620px">
+    <div class="modal-header">
+      <div>
+        <h3 id="cmodal-title">Customer</h3>
+        <div id="cmodal-sub" style="font-size:11px;color:var(--muted);margin-top:2px;"></div>
+      </div>
+      <button class="modal-close" onclick="closeCustomerModal()">✕</button>
+    </div>
+    <div class="modal-body" style="padding:0;">
+      <!-- Section tabs -->
+      <div style="display:flex;border-bottom:1px solid var(--border);background:var(--surface);">
+        <div class="cmodal-tab active" onclick="cmodalTab('info',this)" style="flex:1;text-align:center;padding:11px;font-size:12px;font-weight:600;cursor:pointer;color:var(--accent);border-bottom:2px solid var(--accent);">📋 Info</div>
+        <div class="cmodal-tab" onclick="cmodalTab('emails',this)" style="flex:1;text-align:center;padding:11px;font-size:12px;font-weight:600;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;">📧 Emails</div>
+        <div class="cmodal-tab" onclick="cmodalTab('setup',this)" style="flex:1;text-align:center;padding:11px;font-size:12px;font-weight:600;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;">📞 Setup</div>
+        <div class="cmodal-tab" onclick="cmodalTab('notes',this)" style="flex:1;text-align:center;padding:11px;font-size:12px;font-weight:600;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;">📝 Notes</div>
+      </div>
+      <div id="cmodal-info" style="padding:18px;"></div>
+      <div id="cmodal-emails" style="padding:18px;display:none;"></div>
+      <div id="cmodal-setup" style="padding:18px;display:none;"></div>
+      <div id="cmodal-notes" style="padding:18px;display:none;"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" id="cmodal-edit-btn">✏️ Edit Details</button>
+      <button class="btn btn-primary" id="cmodal-vapi-btn">🤖 VAPI Script</button>
+      <button class="btn btn-ghost btn-sm" onclick="closeCustomerModal()" style="margin-left:auto">Close</button>
+    </div>
+  </div>
+</div>
+
 <!-- VAPI SCRIPT MODAL -->
 <div class="modal-overlay" id="vapi-modal" onclick="if(event.target===this)closeVapiModal()">
   <div class="modal-box">
@@ -545,7 +585,7 @@
 <nav class="mobile-nav" id="mobile-nav">
   <div class="mobile-nav-item nav-item active" onclick="nav('dashboard',this)">📊<span>Home</span></div>
   <div class="mobile-nav-item nav-item" onclick="nav('customers',this)">🚀<span>Pipeline</span><span class="mnav-badge" id="mbadge-customers"></span></div>
-  <div class="mobile-nav-item nav-item" onclick="nav('workflows',this)">📞<span>Setup</span><span class="mnav-badge" id="mbadge-workflows"></span></div>
+  <div class="mobile-nav-item nav-item" onclick="nav('todo',this)">✅<span>Tasks</span></div>
   <div class="mobile-nav-item nav-item" onclick="nav('revenue',this)">💰<span>Revenue</span></div>
   <div class="mobile-nav-item nav-item" onclick="nav('settings',this)">⚙️<span>Settings</span></div>
 </nav>
@@ -858,16 +898,17 @@ function renderPipeline(){
     if(c.website) tags.push(`<a href="${c.website}" target="_blank" style="color:var(--accent);text-decoration:none;">🌐 site</a>`);
     // actions per stage
     let actions='';
+    const viewBtn=`<button class="pipe-btn pipe-btn-primary" onclick="showCustomerModal('${c.id}')">👁 View</button>`;
     if(isInactive){
-      actions=`<button class="pipe-btn" onclick="editCustomer('${c.id}')">✏️ Edit</button>`;
+      actions=`${viewBtn}<button class="pipe-btn" onclick="editCustomer('${c.id}')">✏️ Edit</button>`;
     } else if(stage==='new'){
-      actions=`<button class="pipe-btn pipe-btn-primary" onclick="sendWelcomeEmail('${c.id}')">📧 Send Welcome</button><button class="pipe-btn" onclick="editCustomer('${c.id}')">✏️ Edit</button>`;
+      actions=`${viewBtn}<button class="pipe-btn pipe-btn-green" onclick="sendWelcomeEmail('${c.id}')">📧 Welcome</button>`;
     } else if(stage==='welcomed'){
-      actions=`${nudge?`<button class="pipe-btn pipe-btn-primary" style="background:var(--warn);border-color:var(--warn);color:#000" onclick="sendNudgeEmail('${c.id}')">🔔 Nudge</button>`:`<button class="pipe-btn" onclick="sendNudgeEmail('${c.id}')">🔔 Nudge</button>`}<button class="pipe-btn pipe-btn-green" onclick="markSetupDone('${c.id}')">📋 Info In</button><button class="pipe-btn" onclick="editCustomer('${c.id}')">✏️ Edit</button>`;
+      actions=`${viewBtn}${nudge?`<button class="pipe-btn" style="background:var(--warn);border-color:var(--warn);color:#000" onclick="sendNudgeEmail('${c.id}')">🔔 Nudge</button>`:`<button class="pipe-btn" onclick="sendNudgeEmail('${c.id}')">🔔 Nudge</button>`}<button class="pipe-btn pipe-btn-green" onclick="markSetupDone('${c.id}')">📋 Info In</button>`;
     } else if(stage==='setup'){
-      actions=`<button class="pipe-btn pipe-btn-primary" onclick="showVapiScript('${c.id}')">🤖 VAPI Script</button><button class="pipe-btn pipe-btn-green" onclick="sendLiveEmail('${c.id}')">🚀 Go Live</button><button class="pipe-btn" onclick="editCustomer('${c.id}')">✏️ Edit</button>`;
+      actions=`${viewBtn}<button class="pipe-btn" onclick="showVapiScript('${c.id}')">🤖 VAPI</button><button class="pipe-btn pipe-btn-green" onclick="sendLiveEmail('${c.id}')">🚀 Go Live</button>`;
     } else {
-      actions=`<button class="pipe-btn" onclick="copyForwardingGuide('${c.id}')">📋 Fwd Guide</button><button class="pipe-btn" onclick="sendUpdateEmail('${c.id}')">✏️ Update</button><button class="pipe-btn" onclick="editCustomer('${c.id}')">Edit</button>`;
+      actions=`${viewBtn}<button class="pipe-btn" onclick="copyForwardingGuide('${c.id}')">📋 Fwd</button><button class="pipe-btn" onclick="sendUpdateEmail('${c.id}')">📧 Update</button>`;
     }
     return `<div class="pipe-card"${isInactive?' style="opacity:0.5"':''}>
       <div style="display:flex;justify-content:space-between;align-items:flex-start;">
@@ -894,85 +935,6 @@ function renderPipeline(){
 }
 
 function renderCustomers(){renderPipeline();}
-  const q=(document.getElementById('c-search').value||'').toLowerCase();
-  let f=customers
-    .slice()
-    .sort((a,b)=>Number(b.id)-Number(a.id))
-    .filter(c=>c.biz.toLowerCase().includes(q)||(c.city||'').toLowerCase().includes(q)||(c.type||'').toLowerCase().includes(q));
-  if(customerStatusFilter!=='all') f=f.filter(c=>c.status===customerStatusFilter);
-  const countEl=document.getElementById('c-count');
-  if(countEl) countEl.textContent=f.length?`— ${f.length} client${f.length===1?'':'s'}`:'';
-  const tbody=document.getElementById('customers-tbody');
-  if(!f.length){tbody.innerHTML='<tr><td colspan="8" class="empty">No customers found.</td></tr>';return;}
-  const statusOpts=['pending','welcomed','info-received','active','inactive'];
-  tbody.innerHTML=f.map(c=>`
-    <tr style="cursor:pointer" onclick="toggleCustomerDetail('${c.id}')">
-      <td><div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;"><strong>${c.biz}</strong>${c.isNew?'<span style="background:rgba(0,212,170,0.15);color:var(--green);font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px;text-transform:uppercase;">New</span>':''}${(emailStage(c)==='welcomed'&&c.emailWelcome&&(Date.now()-new Date(c.emailWelcome).getTime())>172800000)?'<span style="background:rgba(255,179,71,0.2);color:var(--warn);font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px;">48hr — nudge!</span>':''}</div>${progressBar(c)}</td>
-      <td>${c.name||'—'}<br><span style="font-size:11px;color:var(--muted)">${c.email||''}</span></td>
-      <td style="font-size:12px">${c.type||'—'}</td>
-      <td style="font-size:12px">${c.city||'—'}</td>
-      <td><select onchange="event.stopPropagation();updateCustomerStatus('${c.id}',this.value)" style="background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:3px 7px;border-radius:5px;font-size:11px">${statusOpts.map(s=>`<option value="${s}"${c.status===s?' selected':''}>${STATUS_LABELS[s]||s}</option>`).join('')}</select></td>
-      <td style="color:var(--green);font-weight:600">£${c.fee||197}/mo</td>
-      <td style="font-size:11px;color:var(--muted)">${c.date||'—'}</td>
-      <td onclick="event.stopPropagation()" style="display:flex;gap:5px;padding:8px 12px"><button class="btn btn-sm btn-ghost" onclick="editCustomer('${c.id}')">Edit</button><button class="btn btn-sm btn-red" onclick="deleteCustomer('${c.id}')">Delete</button></td>
-    </tr>
-    <tr id="detail-${c.id}" style="display:none">
-      <td colspan="8" style="padding:0;border-bottom:2px solid var(--accent)">
-        <div style="padding:16px 18px;background:rgba(108,99,255,0.05)">
-          <div style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;">Voice Receptionist Details</div>
-          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;">
-            ${renderVoiceDetails(c)}
-          </div>
-          <div style="margin-top:16px;border-top:1px solid var(--border);padding-top:14px;">
-            <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">📝 Notes</div>
-            <div id="notes-list-${c.id}">${renderCustomerNotes(c)}</div>
-            <div style="display:flex;gap:8px;margin-top:10px;">
-              <input class="form-input" id="note-input-${c.id}" placeholder="Add a note..." style="flex:1;font-size:12px;padding:7px 10px;" onkeydown="if(event.key==='Enter'){event.preventDefault();addCustomerNote('${c.id}',this.value);}"/>
-              <button class="btn btn-ghost btn-sm" onclick="addCustomerNote('${c.id}',document.getElementById('note-input-${c.id}').value)">+ Add</button>
-            </div>
-          </div>
-        </div>
-      </td>
-    </tr>
-  `).join('');
-}
-
-function toggleCustomerDetail(id){
-  const row=document.getElementById('detail-'+id);
-  if(!row) return;
-  const isOpening=row.style.display==='none';
-  row.style.display=isOpening?'table-row':'none';
-  if(isOpening){
-    const c=customers.find(x=>String(x.id)===String(id));
-    if(c&&c.isNew){c.isNew=false;localStorage.setItem('pa_customers',JSON.stringify(customers));updateNavBadges();}
-  }
-}
-
-function renderVoiceDetails(c){
-  let html='';
-  const field=(icon,label,val,isLink)=>{
-    if(!val) return '';
-    const display=isLink?`<a href="${val}" target="_blank" style="color:var(--accent)">${val}</a>`:`<div style="font-size:13px;font-weight:600">${val}</div>`;
-    return `<div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px;">
-      <div style="font-size:10px;color:var(--muted);margin-bottom:4px;">${icon} ${label}</div>${display}</div>`;
-  };
-  html += field('📞','Business Phone (AI answers)' ,c.bizPhone||c.phone||'');
-  html += field('🎙️','AI Voice Preference',(c.voice||'female').charAt(0).toUpperCase()+(c.voice||'female').slice(1));
-  const netLabels={'ee':'EE','o2':'O2','vodafone':'Vodafone','three':'Three / iD Mobile','sky':'Sky / giffgaff','landline':'Landline / VoIP'};
-  html += field('📡','Network',(c.network&&netLabels[c.network])||'Unknown — check with client');
-  html += field('📱','Owner Mobile (alert texts)',c.phone||'');
-  html += field('✉️','Email',c.email||'');
-  if(c.hours) html+=`<div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px;grid-column:span 2"><div style="font-size:10px;color:var(--muted);margin-bottom:4px;">🕐 Opening Hours</div><div style="font-size:12px;white-space:pre-wrap;line-height:1.6">${c.hours}</div></div>`;
-  if(c.services) html+=`<div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px;grid-column:span 2"><div style="font-size:10px;color:var(--muted);margin-bottom:4px;">💷 Services &amp; Pricing</div><div style="font-size:12px;white-space:pre-wrap;line-height:1.6">${c.services}</div></div>`;
-  html += field('📅','Booking URL',c.booking||'',true);
-  html += field('🌐','Website',c.website||'',true);
-  html += `<div style="grid-column:1/-1;margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
-    <button class="btn btn-primary" style="flex:1;min-width:140px" onclick="event.stopPropagation();showVapiScript('${c.id}')">🤖 VAPI Script</button>
-    <button class="btn btn-ghost" style="flex:1;min-width:140px" onclick="event.stopPropagation();copyForwardingGuide('${c.id}')">📋 Copy Forwarding Guide</button>
-    ${c.emailLive?`<button class="btn btn-ghost" style="flex:1;min-width:140px" onclick="event.stopPropagation();sendUpdateEmail('${c.id}')">✏️ Update Email</button>`:''}
-  </div>`;
-  return html||`<div style="color:var(--muted);font-size:13px;">No details recorded yet.</div>`;
-}
 
 const WF_STEPS = [
   'Business info received (hours, pricing, booking link)',
@@ -1645,6 +1607,136 @@ function fetchFromSheet(url){
       console.error('Sheet sync error:',err);
       if(statusEl){statusEl.textContent='❌ Sync failed — check URL or redeploy GAS';statusEl.style.color='var(--red)';}
     });
+}
+
+// ── CUSTOMER DETAIL MODAL ──
+let currentModalId=null;
+function showCustomerModal(id){
+  const c=customers.find(x=>String(x.id)===String(id));
+  if(!c)return;
+  currentModalId=id;
+  document.getElementById('cmodal-title').textContent=c.biz;
+  document.getElementById('cmodal-sub').textContent=(c.name||'')+(c.email?' · '+c.email:'')+(c.status?' · '+STATUS_LABELS[c.status]:'');
+  document.getElementById('cmodal-edit-btn').onclick=()=>{closeCustomerModal();editCustomer(id);};
+  document.getElementById('cmodal-vapi-btn').onclick=()=>showVapiScript(id);
+  // mark as seen
+  if(c.isNew){c.isNew=false;localStorage.setItem('pa_customers',JSON.stringify(customers));updateNavBadges();}
+  cmodalTab('info',document.querySelector('.cmodal-tab'));
+  renderCmodalInfo(c);
+  document.getElementById('customer-modal').classList.add('open');
+}
+function closeCustomerModal(){
+  document.getElementById('customer-modal').classList.remove('open');
+  currentModalId=null;
+  renderPipeline();
+}
+function cmodalTab(name,el){
+  document.querySelectorAll('.cmodal-tab').forEach(t=>{t.classList.remove('active');t.style.color='var(--muted)';t.style.borderBottomColor='transparent';});
+  if(el){el.classList.add('active');el.style.color='var(--accent)';el.style.borderBottomColor='var(--accent)';}
+  ['info','emails','setup','notes'].forEach(n=>document.getElementById('cmodal-'+n).style.display=n===name?'block':'none');
+  const c=customers.find(x=>String(x.id)===String(currentModalId));
+  if(!c)return;
+  if(name==='info') renderCmodalInfo(c);
+  if(name==='emails') renderCmodalEmails(c);
+  if(name==='setup') renderCmodalSetup(c);
+  if(name==='notes') renderCmodalNotes(c);
+}
+function infoCell(icon,label,val,isLink){
+  if(!val)return'';
+  const v=isLink?`<a href="${val}" target="_blank" style="color:var(--accent)">${val}</a>`:val;
+  return`<div class="info-cell"><div class="info-cell-label">${icon} ${label}</div><div class="info-cell-val">${v}</div></div>`;
+}
+function renderCmodalInfo(c){
+  const netLabels={ee:'EE',o2:'O2',vodafone:'Vodafone',three:'Three / iD Mobile',sky:'Sky / giffgaff',landline:'Landline / VoIP'};
+  document.getElementById('cmodal-info').innerHTML=`
+    <div class="info-grid">
+      ${infoCell('👤','Owner',c.name||'—')}
+      ${infoCell('📧','Email',c.email||'—')}
+      ${infoCell('📱','Mobile',c.phone||'—')}
+      ${infoCell('📞','Business Phone',c.bizPhone||'—')}
+      ${infoCell('📡','Network',(c.network&&netLabels[c.network])||'Unknown')}
+      ${infoCell('🎙️','Voice',(c.voice||'female').charAt(0).toUpperCase()+(c.voice||'female').slice(1))}
+      ${infoCell('📍','City',c.city||'—')}
+      ${infoCell('💷','Monthly Fee','£'+(c.fee||197)+'/mo')}
+      ${infoCell('📅','Since',c.date||'—')}
+      ${c.website?infoCell('🌐','Website',c.website,true):''}
+      ${c.booking?infoCell('📅','Booking URL',c.booking,true):''}
+    </div>
+    ${c.hours?`<div style="margin-top:10px;background:var(--surface2);border-radius:8px;padding:12px;"><div class="info-cell-label">🕐 Opening Hours</div><div style="font-size:12px;white-space:pre-wrap;line-height:1.6;margin-top:4px;">${c.hours}</div></div>`:''}
+    ${c.services?`<div style="margin-top:8px;background:var(--surface2);border-radius:8px;padding:12px;"><div class="info-cell-label">💷 Services & Pricing</div><div style="font-size:12px;white-space:pre-wrap;line-height:1.6;margin-top:4px;">${c.services}</div></div>`:''}
+    ${c.type?`<div style="margin-top:8px;background:var(--surface2);border-radius:8px;padding:12px;"><div class="info-cell-label">🏢 Business Type</div><div style="font-size:13px;font-weight:600;">${c.type}</div></div>`:''}
+  `;
+}
+function renderCmodalEmails(c){
+  const stage=emailStage(c);
+  const nudge=stage==='welcomed'&&c.emailWelcome&&(Date.now()-new Date(c.emailWelcome).getTime())>172800000;
+  const stageBar=(s,label,done)=>`<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--surface2);border-radius:8px;margin-bottom:7px;">
+    <div style="width:10px;height:10px;border-radius:50%;background:${done?'var(--green)':'var(--border)'};flex-shrink:0;"></div>
+    <div style="flex:1;font-size:12px;${done?'color:var(--green)':'color:var(--muted)'}">${label}</div>
+    ${done?`<span style="font-size:10px;color:var(--muted);">✓ done</span>`:''}
+  </div>`;
+  document.getElementById('cmodal-emails').innerHTML=`
+    <div style="margin-bottom:16px;">
+      ${stageBar('new','Welcome email sent',!!c.emailWelcome)}
+      ${stageBar('nudge','Nudge sent (if needed)',!!c.emailNudge)}
+      ${stageBar('setup','Info received — setup started',!!c.setupDone)}
+      ${stageBar('live','Live email sent — client activating',!!c.emailLive)}
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      ${!c.emailWelcome?`<button class="btn btn-primary" onclick="sendWelcomeEmail('${c.id}');renderCmodalEmails(customers.find(x=>String(x.id)==='${c.id}'))">📧 Send Welcome Email</button>`:''}
+      ${c.emailWelcome&&!c.setupDone?`<button class="btn btn-ghost" onclick="sendNudgeEmail('${c.id}');renderCmodalEmails(customers.find(x=>String(x.id)==='${c.id}'))">${nudge?'⚠️':'🔔'} Send Nudge</button>`:''}
+      ${c.emailWelcome&&!c.setupDone?`<button class="btn btn-ghost" onclick="markSetupDone('${c.id}');renderCmodalEmails(customers.find(x=>String(x.id)==='${c.id}'))">📋 Mark Info Received</button>`:''}
+      ${c.setupDone&&!c.emailLive?`<button class="btn btn-green" onclick="sendLiveEmail('${c.id}');renderCmodalEmails(customers.find(x=>String(x.id)==='${c.id}'))">🚀 Send Live Email</button>`:''}
+      ${c.emailLive?`<button class="btn btn-ghost" onclick="sendUpdateEmail('${c.id}')">✏️ Send Update Email</button>`:''}
+    </div>
+  `;
+}
+function renderCmodalSetup(c){
+  const wf=workflows.find(w=>w.biz===c.biz);
+  if(!wf){document.getElementById('cmodal-setup').innerHTML='<div class="empty">No voice setup found for this client.</div>';return;}
+  const pct=Math.round(wf.steps.filter(Boolean).length/WF_STEPS.length*100);
+  document.getElementById('cmodal-setup').innerHTML=`
+    <div style="margin-bottom:14px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><span style="font-size:12px;font-weight:600;">Progress</span><span style="font-size:12px;color:${pct===100?'var(--green)':'var(--muted)'};">${pct}%</span></div>
+      <div style="background:var(--bg);border-radius:6px;height:6px;overflow:hidden;"><div style="height:100%;background:${pct===100?'var(--green)':'var(--accent)'};width:${pct}%;transition:width 0.3s"></div></div>
+    </div>
+    ${wf.twilioNumber?`<div style="background:rgba(0,212,170,0.07);border:1px solid rgba(0,212,170,0.25);border-radius:8px;padding:10px 12px;margin-bottom:12px;"><div style="font-size:10px;color:var(--green);margin-bottom:3px;">🤖 AI Phone Number (Twilio)</div><div style="font-size:14px;font-weight:700;">${wf.twilioNumber}</div><button class="btn btn-ghost btn-sm" style="margin-top:6px" onclick="copyForwardingGuide('${c.id}')">📋 Copy Forwarding Guide</button></div>`:'<div style="background:rgba(255,179,71,0.08);border:1px solid rgba(255,179,71,0.25);border-radius:8px;padding:10px 12px;margin-bottom:12px;font-size:12px;color:var(--warn);">⚠️ No Twilio number yet — add it in step 3 below</div>'}
+    <div style="display:flex;flex-direction:column;gap:6px;">
+      ${WF_STEPS.map((step,i)=>`<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--surface2);border-radius:8px;cursor:pointer;" onclick="toggleWfStepModal('${wf.id}',${i})">
+        <div style="width:18px;height:18px;border-radius:5px;border:2px solid ${wf.steps[i]?'var(--green)':'var(--border)'};background:${wf.steps[i]?'var(--green)':'transparent'};display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;color:#000;">${wf.steps[i]?'✓':''}</div>
+        <div style="font-size:12px;${wf.steps[i]?'color:var(--green);text-decoration:line-through;':''};">${step}</div>
+      </div>`).join('')}
+    </div>
+    <div style="margin-top:12px;"><button class="btn btn-primary" style="width:100%" onclick="showVapiScript('${c.id}')">🤖 Generate VAPI Script</button></div>
+  `;
+}
+function renderCmodalNotes(c){
+  document.getElementById('cmodal-notes').innerHTML=`
+    <div id="cmodal-notes-list">${renderCustomerNotes(c)||'<div style="color:var(--muted);font-size:13px;">No notes yet.</div>'}</div>
+    <div style="display:flex;gap:8px;margin-top:12px;">
+      <input class="form-input" id="cmodal-note-input" placeholder="Add a note..." style="flex:1;font-size:12px;" onkeydown="if(event.key==='Enter'){addCmodalNote('${c.id}',this.value);}"/>
+      <button class="btn btn-ghost btn-sm" onclick="addCmodalNote('${c.id}',document.getElementById('cmodal-note-input').value)">+ Add</button>
+    </div>
+  `;
+}
+function addCmodalNote(id,text){
+  if(!text||!text.trim())return;
+  const c=customers.find(x=>String(x.id)===String(id));
+  if(!c)return;
+  if(!c.logs)c.logs=[];
+  c.logs.push({ts:new Date().toISOString(),text:text.trim()});
+  localStorage.setItem('pa_customers',JSON.stringify(customers));
+  document.getElementById('cmodal-note-input').value='';
+  document.getElementById('cmodal-notes-list').innerHTML=renderCustomerNotes(c);
+  notify('Note added');
+}
+function toggleWfStepModal(wfId,i){
+  const wf=workflows.find(w=>String(w.id)===String(wfId));
+  if(!wf)return;
+  wf.steps[i]=!wf.steps[i];
+  localStorage.setItem('pa_workflows',JSON.stringify(workflows));
+  const c=customers.find(x=>x.biz===wf.biz);
+  if(c) renderCmodalSetup(c);
 }
 
 // ── VAPI SCRIPT GENERATOR ──
