@@ -671,9 +671,8 @@
 <script>
 let customers = JSON.parse(localStorage.getItem('pa_customers')||'[]');
 let workflows  = JSON.parse(localStorage.getItem('pa_workflows')||'[]');
-// deletedEmails was deprecated — ID-based dedup now handles this
-localStorage.removeItem('pa_deleted_emails');
-const deletedEmails = [];
+// knownIds — every sheet ID ever imported; prevents re-import after delete/archive/complete
+let knownIds = new Set(JSON.parse(localStorage.getItem('pa_known_ids')||'[]'));
 let archived   = JSON.parse(localStorage.getItem('pa_archived')||'[]');
 let completed  = JSON.parse(localStorage.getItem('pa_completed')||'[]');
 // purge archive entries older than 7 days on load
@@ -1736,13 +1735,12 @@ function fetchFromSheet(url){
       let added=0;
       const validStatuses=['pending','welcomed','info-received','active','inactive'];
       data.customers.forEach(sc=>{
-        // skip if ID already exists in active, archived, or completed lists
-        const existsById=customers.find(c=>String(c.id)===String(sc.id))
-                       ||archived.find(c=>String(c.id)===String(sc.id))
-                       ||completed.find(c=>String(c.id)===String(sc.id));
-        // skip if email already active (prevents double-import of same submission)
-        const existsByEmail=customers.find(c=>c.email&&c.email===sc.email);
-        if(!existsById&&!existsByEmail){
+        const sid=String(sc.id);
+        // skip if this sheet ID was ever imported before (even if later deleted/archived/completed)
+        if(knownIds.has(sid)) return;
+        // skip if email is already an active customer (same person submitted twice)
+        if(sc.email&&customers.find(c=>c.email===sc.email)) return;
+        {
           // fix column mismatch: if status looks like a voice value, correct it
           const rawStatus=sc.status||'';
           const cleanStatus=validStatuses.includes(rawStatus)?rawStatus:'pending';
@@ -1772,11 +1770,13 @@ function fetchFromSheet(url){
             isNew:    true
           };
           customers.push(newC);
+          knownIds.add(sid);
           autoCreateWorkflow(newC);
           added++;
         }
       });
       if(added>0){
+        localStorage.setItem('pa_known_ids',JSON.stringify([...knownIds]));
         localStorage.setItem('pa_customers',JSON.stringify(customers));
         localStorage.setItem('pa_workflows',JSON.stringify(workflows));
         renderAll();
