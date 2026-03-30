@@ -1233,14 +1233,20 @@ async function scrapeWebsite(){
   btn.textContent='⏳ Scraping...';btn.disabled=true;
   status.style.display='block';status.textContent='Fetching website...';status.style.color='var(--muted)';
   try{
-    // Fetch via CORS proxy
-    const proxyUrl='https://api.allorigins.win/get?url='+encodeURIComponent(url);
-    const res=await fetch(proxyUrl);
-    const data=await res.json();
-    if(!data.contents) throw new Error('Could not fetch website — try a different proxy or check the URL');
+    // Fetch via CORS proxy (try two in sequence)
+    status.textContent='Fetching website...';
+    let html='';
+    const proxies=[
+      ()=>fetch('https://corsproxy.io/?'+encodeURIComponent(url)).then(r=>{if(!r.ok)throw new Error('proxy1 failed');return r.text();}),
+      ()=>fetch('https://api.allorigins.win/get?url='+encodeURIComponent(url)).then(r=>r.json()).then(d=>{if(!d.contents)throw new Error('proxy2 failed');return d.contents;})
+    ];
+    for(const proxy of proxies){
+      try{html=await proxy();if(html)break;}catch(e){continue;}
+    }
+    if(!html) throw new Error('Could not fetch website — the site may block external access. Fill in the fields manually.');
     status.textContent='Reading page content...';
     // Strip scripts, styles, HTML tags
-    const text=data.contents
+    const text=html
       .replace(/<script[\s\S]*?<\/script>/gi,'')
       .replace(/<style[\s\S]*?<\/style>/gi,'')
       .replace(/<[^>]+>/g,' ')
