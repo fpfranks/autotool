@@ -932,14 +932,16 @@ function deleteCustomer(id){
   archived.push({...c,deletedAt:new Date().toISOString()});
   customers=customers.filter(x=>String(x.id)!==String(id));
   workflows=workflows.filter(w=>w.biz!==c.biz);
-  // block re-import from sheet regardless of whether knownIds had this ID before
   knownIds.add(String(id));
   localStorage.setItem('pa_known_ids',JSON.stringify([...knownIds]));
   localStorage.setItem('pa_archived',JSON.stringify(archived));
   localStorage.setItem('pa_customers',JSON.stringify(customers));
   localStorage.setItem('pa_workflows',JSON.stringify(workflows));
+  // delete from Google Sheet so it never syncs back
+  const gasUrl=localStorage.getItem('pa_gas_url');
+  if(gasUrl) fetch(gasUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'delete',id:String(id)})}).catch(()=>{});
   closeCustomerModal();
-  renderAll();updateNavBadges();notify(c.biz+' moved to Archive — 7 days to restore');
+  renderAll();updateNavBadges();notify(c.biz+' deleted from dashboard and Google Sheet');
 }
 function completeCustomer(id){
   const c=customers.find(x=>String(x.id)===String(id));

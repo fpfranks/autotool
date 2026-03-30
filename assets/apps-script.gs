@@ -35,6 +35,25 @@ function getSheet() {
 function doPost(e) {
   try {
     const data = JSON.parse(e.postData.contents);
+
+    // ── DELETE ROW ──
+    if (data.action === 'delete' && data.id) {
+      const sheet = getSheet();
+      const rows = sheet.getDataRange().getValues();
+      for (let i = 1; i < rows.length; i++) {
+        if (String(rows[i][0]) === String(data.id)) {
+          sheet.deleteRow(i + 1);
+          return ContentService
+            .createTextOutput(JSON.stringify({ ok: true }))
+            .setMimeType(ContentService.MimeType.JSON);
+        }
+      }
+      // ID not found — still return ok (already gone)
+      return ContentService
+        .createTextOutput(JSON.stringify({ ok: true, note: 'not found' }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+
     const sheet = getSheet();
     sheet.appendRow([
       String(Date.now()),
