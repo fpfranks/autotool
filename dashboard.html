@@ -2103,6 +2103,8 @@ function notify(msg){const n=document.getElementById('notif');n.textContent=msg;
 
 // ── INIT ──
 (function(){
+  const DEFAULT_GAS='https://script.google.com/macros/s/AKfycbzEVM8f9pBVphARJywbtomSsQLTaGldysZLK2tSWlvDNSsJIFmW39OgWAbu6a5nwcuO/exec';
+  if(!localStorage.getItem('pa_gas_url')) localStorage.setItem('pa_gas_url',DEFAULT_GAS);
   const gasUrl=localStorage.getItem('pa_gas_url');
   if(gasUrl) fetchFromSheet(gasUrl);
   renderDash();
