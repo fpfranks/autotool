@@ -1747,10 +1747,10 @@ function fetchFromSheet(url){
       const validStatuses=['pending','welcomed','info-received','active','inactive'];
       data.customers.forEach(sc=>{
         const sid=String(sc.id);
-        // skip if this sheet ID was ever imported before (even if later deleted/archived/completed)
+        // skip if this sheet ID was ever imported before
         if(knownIds.has(sid)) return;
-        // skip if email is already an active customer (same person submitted twice)
-        if(sc.email&&customers.find(c=>c.email===sc.email)) return;
+        // skip if this email already exists anywhere (active, archived, or completed)
+        if(sc.email&&[...customers,...archived,...completed].find(c=>c.email===sc.email)) return;
         {
           // fix column mismatch: if status looks like a voice value, correct it
           const rawStatus=sc.status||'';
