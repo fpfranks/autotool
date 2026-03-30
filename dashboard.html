@@ -171,6 +171,8 @@
   <div class="nav-item" onclick="nav('customers',this)">🚀 Pipeline <span class="nav-badge" id="badge-customers"></span></div>
   <div class="nav-item" onclick="nav('todo',this)">✅ To-Do List</div>
   <div class="nav-item" onclick="nav('revenue',this)">💰 Revenue</div>
+  <div class="nav-item" onclick="nav('completed',this)">⭐ Completed <span class="nav-badge" id="badge-completed"></span></div>
+  <div class="nav-item" onclick="nav('archive',this)">🗑️ Archive <span class="nav-badge" id="badge-archive" style="background:var(--red);"></span></div>
   <div class="nav-item" onclick="nav('settings',this)" style="position:absolute;bottom:20px;width:100%;">⚙️ Settings</div>
 </aside>
 
@@ -524,6 +526,23 @@
     </div>
   </div>
 
+  <!-- COMPLETED -->
+  <div id="page-completed" class="page">
+    <div class="page-header flex-between">
+      <div><h1>Completed Clients</h1><p>Saved record of every client you've worked with</p></div>
+    </div>
+    <div id="completed-list"></div>
+  </div>
+
+  <!-- ARCHIVE -->
+  <div id="page-archive" class="page">
+    <div class="page-header flex-between">
+      <div><h1>Archive</h1><p>Deleted customers — automatically removed after 7 days</p></div>
+      <button class="btn btn-ghost btn-sm" onclick="if(confirm('Permanently delete all archived customers now?'))purgeAllArchive()">🗑️ Clear All</button>
+    </div>
+    <div id="archive-list"></div>
+  </div>
+
 </main>
 
 <!-- CUSTOMER DETAIL MODAL -->
@@ -550,9 +569,11 @@
       <div id="cmodal-notes" style="display:none;"></div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-ghost" id="cmodal-edit-btn">✏️ Edit Details</button>
-      <button class="btn btn-primary" id="cmodal-vapi-btn">🤖 VAPI Script</button>
-      <button class="btn btn-ghost btn-sm" onclick="closeCustomerModal()" style="margin-left:auto">Close</button>
+      <button class="btn btn-ghost" id="cmodal-edit-btn">✏️ Edit</button>
+      <button class="btn btn-primary" id="cmodal-vapi-btn">🤖 VAPI</button>
+      <button class="btn btn-green btn-sm" id="cmodal-complete-btn">⭐ Complete</button>
+      <button class="btn btn-sm" id="cmodal-delete-btn" style="background:var(--red);color:#fff;border-color:var(--red);">🗑️ Delete</button>
+      <button class="btn btn-ghost btn-sm" onclick="closeCustomerModal()" style="margin-left:auto">✕ Close</button>
     </div>
   </div>
 </div>
@@ -594,6 +615,14 @@
 let customers = JSON.parse(localStorage.getItem('pa_customers')||'[]');
 let workflows  = JSON.parse(localStorage.getItem('pa_workflows')||'[]');
 let deletedEmails = JSON.parse(localStorage.getItem('pa_deleted_emails')||'[]');
+let archived   = JSON.parse(localStorage.getItem('pa_archived')||'[]');
+let completed  = JSON.parse(localStorage.getItem('pa_completed')||'[]');
+// purge archive entries older than 7 days on load
+(function purgeExpiredArchive(){
+  const cutoff=Date.now()-7*24*60*60*1000;
+  archived=archived.filter(c=>new Date(c.deletedAt).getTime()>cutoff);
+  localStorage.setItem('pa_archived',JSON.stringify(archived));
+})();
 let outreach = JSON.parse(localStorage.getItem('pa_outreach')||'{}');
 
 // Version-controlled to-do list — bump TODOS_V to reset to new defaults
@@ -633,6 +662,8 @@ function nav(name, el) {
   if(name==='workflows') renderWorkflows();
   if(name==='todo') renderTodos();
   if(name==='revenue') renderRevenue();
+  if(name==='archive') renderArchive();
+  if(name==='completed') renderCompleted();
   if(name==='emails') renderEmails();
   if(name==='settings') {
     const u=localStorage.getItem('pa_gas_url')||''; document.getElementById('gas-url-input').value=u;
@@ -839,13 +870,103 @@ function saveCustomer(){
 function deleteCustomer(id){
   const c=customers.find(x=>String(x.id)===String(id));
   if(!c)return;
-  if(!confirm('Delete '+c.biz+'?\n\nThis also removes their voice setup entry. It does NOT cancel their Stripe subscription.'))return;
+  if(!confirm('Move '+c.biz+' to Archive?\n\nThey will be permanently deleted after 7 days. You can restore them before then.'))return;
   if(c.email&&!deletedEmails.includes(c.email)){deletedEmails.push(c.email);localStorage.setItem('pa_deleted_emails',JSON.stringify(deletedEmails));}
+  archived.push({...c,deletedAt:new Date().toISOString()});
   customers=customers.filter(x=>String(x.id)!==String(id));
   workflows=workflows.filter(w=>w.biz!==c.biz);
+  localStorage.setItem('pa_archived',JSON.stringify(archived));
   localStorage.setItem('pa_customers',JSON.stringify(customers));
   localStorage.setItem('pa_workflows',JSON.stringify(workflows));
-  renderAll();notify('Customer and voice setup deleted');
+  closeCustomerModal();
+  renderAll();updateNavBadges();notify(c.biz+' moved to Archive — 7 days to restore');
+}
+function completeCustomer(id){
+  const c=customers.find(x=>String(x.id)===String(id));
+  if(!c)return;
+  if(!confirm('Mark '+c.biz+' as Completed?\n\nThey will be saved permanently in your Completed list and removed from the Pipeline.'))return;
+  completed.push({...c,completedAt:new Date().toISOString()});
+  customers=customers.filter(x=>String(x.id)!==String(id));
+  workflows=workflows.filter(w=>w.biz!==c.biz);
+  localStorage.setItem('pa_completed',JSON.stringify(completed));
+  localStorage.setItem('pa_customers',JSON.stringify(customers));
+  localStorage.setItem('pa_workflows',JSON.stringify(workflows));
+  closeCustomerModal();
+  renderAll();updateNavBadges();notify('⭐ '+c.biz+' saved to Completed!');
+}
+function restoreCustomer(id){
+  const c=archived.find(x=>String(x.id)===String(id));
+  if(!c)return;
+  const {deletedAt,...restored}=c;
+  customers.push(restored);
+  archived=archived.filter(x=>String(x.id)!==String(id));
+  localStorage.setItem('pa_customers',JSON.stringify(customers));
+  localStorage.setItem('pa_archived',JSON.stringify(archived));
+  autoCreateWorkflow(restored);
+  renderAll();updateNavBadges();renderArchive();notify(restored.biz+' restored to Pipeline!');
+}
+function purgeArchiveEntry(id){
+  if(!confirm('Permanently delete this customer? This cannot be undone.'))return;
+  archived=archived.filter(x=>String(x.id)!==String(id));
+  localStorage.setItem('pa_archived',JSON.stringify(archived));
+  updateNavBadges();renderArchive();notify('Permanently deleted');
+}
+function purgeAllArchive(){
+  archived=[];
+  localStorage.setItem('pa_archived',JSON.stringify(archived));
+  updateNavBadges();renderArchive();notify('Archive cleared');
+}
+function removeCompleted(id){
+  if(!confirm('Remove from Completed list? This permanently deletes this record.'))return;
+  completed=completed.filter(x=>String(x.id)!==String(id));
+  localStorage.setItem('pa_completed',JSON.stringify(completed));
+  updateNavBadges();renderCompleted();notify('Removed from Completed');
+}
+function renderArchive(){
+  const el=document.getElementById('archive-list');
+  if(!el)return;
+  if(!archived.length){el.innerHTML='<div class="empty" style="padding:40px;text-align:center;color:var(--muted);">No archived customers — deleted customers appear here for 7 days before being permanently removed.</div>';return;}
+  const now=Date.now();
+  const sorted=[...archived].sort((a,b)=>new Date(b.deletedAt)-new Date(a.deletedAt));
+  el.innerHTML=sorted.map(c=>{
+    const daysLeft=Math.ceil((new Date(c.deletedAt).getTime()+7*24*60*60*1000-now)/(24*60*60*1000));
+    const deletedDate=new Date(c.deletedAt).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+    return`<div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:10px;max-width:680px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+      <div style="flex:1;min-width:200px;">
+        <div style="font-weight:700;font-size:14px;color:var(--muted);margin-bottom:3px;">${c.biz}</div>
+        <div style="font-size:12px;color:var(--muted);">${c.name||''}${c.email?' · '+c.email:''}</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px;">Deleted ${deletedDate} · <span style="color:${daysLeft<=1?'var(--red)':'var(--warn)'};">${daysLeft} day${daysLeft===1?'':'s'} left</span></div>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-ghost btn-sm" onclick="restoreCustomer('${c.id}')">↩ Restore</button>
+        <button class="btn btn-sm" style="background:var(--red);color:#fff;border-color:var(--red);" onclick="purgeArchiveEntry('${c.id}')">🗑️ Delete Forever</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+function renderCompleted(){
+  const el=document.getElementById('completed-list');
+  if(!el)return;
+  if(!completed.length){el.innerHTML='<div class="empty" style="padding:40px;text-align:center;color:var(--muted);">No completed clients yet. Mark a client as ⭐ Complete from their pipeline card to save them here permanently.</div>';return;}
+  const sorted=[...completed].sort((a,b)=>new Date(b.completedAt||0)-new Date(a.completedAt||0));
+  el.innerHTML=`
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;max-width:900px;">
+    ${sorted.map(c=>{
+      const completedDate=c.completedAt?new Date(c.completedAt).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}):'—';
+      return`<div style="background:var(--surface);border:1px solid rgba(0,212,170,0.3);border-radius:10px;padding:16px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+          <div style="font-weight:700;font-size:14px;">${c.biz}</div>
+          <span style="font-size:10px;font-weight:700;background:rgba(0,212,170,0.12);color:var(--green);padding:2px 8px;border-radius:8px;">⭐ Complete</span>
+        </div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:4px;">👤 ${c.name||'—'}${c.email?' · '+c.email:''}</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:4px;">📞 ${c.bizPhone||c.phone||'—'}</div>
+        <div style="font-size:12px;color:var(--green);font-weight:600;margin-bottom:4px;">£${c.fee||197}/mo</div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:12px;">Completed ${completedDate}</div>
+        ${c.notes||c.hours?`<div style="font-size:11px;color:var(--muted);background:var(--surface2);border-radius:6px;padding:8px;margin-bottom:10px;max-height:60px;overflow:hidden;">${c.notes||c.hours}</div>`:''}
+        <button class="btn btn-ghost btn-sm" style="width:100%;color:var(--red);border-color:rgba(255,77,106,0.3);" onclick="removeCompleted('${c.id}')">Remove from list</button>
+      </div>`;
+    }).join('')}
+    </div>`;
 }
 function autoCreateWorkflow(c){
   const wfExists=workflows.find(w=>w.biz===c.biz);
@@ -1310,6 +1431,8 @@ function updateNavBadges(){
   setBadge('badge-customers',newCusts);
   setBadge('badge-emails',emailActions);
   setBadge('badge-workflows',incompleteWf);
+  setBadge('badge-archive',archived.length);
+  setBadge('badge-completed',completed.length);
   // mobile badges
   setBadge('mbadge-customers',newCusts);
   setBadge('mbadge-emails',emailActions);
@@ -1619,6 +1742,8 @@ function showCustomerModal(id){
   document.getElementById('cmodal-sub').textContent=(c.name||'')+(c.email?' · '+c.email:'')+(c.status?' · '+STATUS_LABELS[c.status]:'');
   document.getElementById('cmodal-edit-btn').onclick=()=>{closeCustomerModal();editCustomer(id);};
   document.getElementById('cmodal-vapi-btn').onclick=()=>showVapiScript(id);
+  document.getElementById('cmodal-complete-btn').onclick=()=>completeCustomer(id);
+  document.getElementById('cmodal-delete-btn').onclick=()=>deleteCustomer(id);
   // mark as seen
   if(c.isNew){c.isNew=false;localStorage.setItem('pa_customers',JSON.stringify(customers));updateNavBadges();}
   cmodalTab('info',document.querySelector('.cmodal-tab'));
