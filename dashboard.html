@@ -420,9 +420,10 @@
         <label class="form-label">Script URL</label>
         <input class="form-input" id="gas-url-input" placeholder="https://script.google.com/macros/s/.../exec" type="url"/>
       </div>
-      <div style="display:flex;gap:10px;align-items:center;">
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
         <button class="btn btn-green" onclick="saveGasUrl()">Save &amp; Connect</button>
         <button class="btn btn-ghost" onclick="testGasUrl()">Test Connection</button>
+        <button class="btn btn-ghost" onclick="forceResync()">🔁 Force Re-sync</button>
         <span id="gas-status" style="font-size:12px;color:var(--muted);"></span>
       </div>
       <div style="margin-top:20px;padding:14px;background:rgba(108,99,255,0.07);border:1px solid rgba(108,99,255,0.25);border-radius:8px;">
@@ -1369,6 +1370,16 @@ function renderEmails(){
 }
 
 // ── SETTINGS ──
+function forceResync(){
+  const url=localStorage.getItem('pa_gas_url');
+  if(!url){notify('Save a GAS URL first');return;}
+  if(!confirm('This will remove all sheet-imported customers and re-pull from the sheet fresh.\n\nCustomers you added manually in the dashboard will NOT be affected.\n\nContinue?'))return;
+  customers=customers.filter(c=>!c.isNew);
+  localStorage.setItem('pa_customers',JSON.stringify(customers));
+  renderAll();
+  fetchFromSheet(url);
+  notify('Re-syncing from sheet...');
+}
 function saveGasUrl(){
   const url=document.getElementById('gas-url-input').value.trim();
   localStorage.setItem('pa_gas_url',url);
@@ -1397,35 +1408,48 @@ function testGasUrl(){
 // ── SHEET SYNC ──
 function fetchFromSheet(url){
   if(!url) return;
+  const statusEl=document.getElementById('gas-status');
   fetch(url)
     .then(r=>r.json())
     .then(data=>{
-      if(!data.customers||!data.customers.length) return;
+      if(!data.customers||!data.customers.length){
+        if(statusEl){statusEl.textContent='Sheet empty — no customers yet';statusEl.style.color='var(--muted)';}
+        return;
+      }
       let added=0;
+      const validStatuses=['pending','welcomed','info-received','active','inactive'];
       data.customers.forEach(sc=>{
-        const exists=customers.find(c=>c.email&&c.email===sc.email);
+        // deduplicate by sheet ID, fall back to email
+        const existsById=customers.find(c=>String(c.id)===String(sc.id));
+        const existsByEmail=customers.find(c=>c.email&&c.email===sc.email);
         const wasDeleted=sc.email&&deletedEmails.includes(sc.email);
-        if(!exists&&!wasDeleted){
+        if(!existsById&&!existsByEmail&&!wasDeleted){
+          // fix column mismatch: if status looks like a voice value, correct it
+          const rawStatus=sc.status||'';
+          const cleanStatus=validStatuses.includes(rawStatus)?rawStatus:'pending';
+          const cleanVoice=['male','female'].includes(sc.voice||'')?sc.voice:'female';
+          const cleanFee=isNaN(Number(sc.fee))?197:Number(sc.fee)||197;
+          const cleanDate=typeof sc.date==='string'&&sc.date.includes('/')?sc.date:new Date().toLocaleDateString('en-GB');
           const newC={
-            id:       Number(sc.id)||Date.now(),
+            id:       String(sc.id)||String(Date.now()),
             biz:      sc.biz||'',
             name:     sc.name||'',
             email:    sc.email||'',
-            phone:    sc.phone||'',
+            phone:    String(sc.phone||''),
             type:     sc.type||'',
-            city:     '',
-            bizPhone: sc.bizPhone||'',
+            city:     sc.city||'',
+            bizPhone: String(sc.bizPhone||''),
             booking:  sc.booking||'',
             hours:    sc.hours||'',
             services: sc.services||'',
             website:  sc.website||'',
             notes:    '',
-            voice:    sc.voice||'female',
+            voice:    cleanVoice,
             network:  sc.network||'',
             logs:     [],
-            status:   sc.status||'pending',
-            fee:      sc.fee||197,
-            date:     sc.date||new Date().toLocaleDateString('en-GB'),
+            status:   cleanStatus,
+            fee:      cleanFee,
+            date:     cleanDate,
             isNew:    true
           };
           customers.push(newC);
@@ -1438,9 +1462,15 @@ function fetchFromSheet(url){
         localStorage.setItem('pa_workflows',JSON.stringify(workflows));
         renderAll();
         notify(`${added} new customer${added>1?'s':''} added from sales page!`);
+        if(statusEl){statusEl.textContent=`✅ ${added} new customer${added>1?'s':''} imported`;statusEl.style.color='var(--green)';}
+      } else {
+        if(statusEl){statusEl.textContent='✅ Connected — no new customers';statusEl.style.color='var(--green)';}
       }
     })
-    .catch(()=>{});
+    .catch(err=>{
+      console.error('Sheet sync error:',err);
+      if(statusEl){statusEl.textContent='❌ Sync failed — check URL or redeploy GAS';statusEl.style.color='var(--red)';}
+    });
 }
 
 // ── VAPI SCRIPT GENERATOR ──
