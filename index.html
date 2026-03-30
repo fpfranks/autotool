@@ -693,9 +693,10 @@
       const email    = document.getElementById('sf-email').value.trim();
       const phone    = document.getElementById('sf-phone').value.trim();
       const bizPhone = document.getElementById('sf-bizphone').value.trim();
-      if (!biz || !name || !email || !phone || !bizPhone) {
+      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      if (!biz || !name || !email || !phone || !bizPhone || !emailOk) {
         const w = document.getElementById('sf-warning');
-        w.textContent = 'Please fill in all required fields (marked *).';
+        w.textContent = !emailOk && email ? 'Please enter a valid email address.' : 'Please fill in all required fields (marked *).';
         w.style.display = 'block';
         document.querySelector('.pricing-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;

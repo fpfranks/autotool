@@ -777,7 +777,7 @@ function renderDash() {
       actions.push(actionRow('var(--warn)',`<strong>${c.biz}</strong> — no reply in 24hrs`,'🔔 Nudge',`sendNudgeEmail('${c.id}')`));
   });
   const incompleteFl=workflows.filter(w=>w.steps.filter(Boolean).length<WF_STEPS.length);
-  if(incompleteFl.length) actions.push(actionRow('var(--warn)',`${incompleteFl.length} voice setup${incompleteFl.length>1?'s':''} not fully complete`,'View →',`nav('workflows',document.querySelector('[onclick*=workflows]'))`));
+  if(incompleteFl.length) actions.push(actionRow('var(--warn)',`${incompleteFl.length} voice setup${incompleteFl.length>1?'s':''} not fully complete — open Pipeline to build`,'📋 Pipeline',`nav('customers',document.querySelector('[onclick*=customers]'))`));
   const todayC=outreach[todayKey()]||0;
   actions.push(actionRow(todayC>=10?'var(--green)':todayC>=5?'var(--warn)':'var(--muted)',`Cold outreach today: <strong>${todayC} / 10</strong> sent`,'+ 1',`incrementOutreach()`));
   actEl.innerHTML = actions.length ? actions.join('') : '<div style="text-align:center;padding:20px;color:var(--green);font-size:13px">All clear — great work! 🎉</div>';
@@ -1490,10 +1490,8 @@ function updateNavBadges(){
   setBadge('badge-workflows',incompleteWf);
   setBadge('badge-archive',archived.length);
   setBadge('badge-completed',completed.length);
-  // mobile badges
+  // mobile badges (pipeline only — other mobile tabs have no badge slot)
   setBadge('mbadge-customers',newCusts);
-  setBadge('mbadge-emails',emailActions);
-  setBadge('mbadge-workflows',incompleteWf);
 }
 
 // ── PROGRESS BAR ──
@@ -1689,9 +1687,17 @@ function renderEmails(){
 function forceResync(){
   const url=localStorage.getItem('pa_gas_url');
   if(!url){notify('Save a GAS URL first');return;}
-  if(!confirm('This will remove all sheet-imported customers and re-pull from the sheet fresh.\n\nCustomers you added manually in the dashboard will NOT be affected.\n\nContinue?'))return;
-  customers=customers.filter(c=>!c.isNew);
+  if(!confirm('This removes all sheet-imported customers and re-pulls everything fresh from Google Sheets.\n\nCustomers you added manually will NOT be affected.\n\nContinue?'))return;
+  // capture which biz names are being removed (sheet-imported customers)
+  const removedBizNames=customers.filter(c=>knownIds.has(String(c.id))).map(c=>c.biz);
+  // remove sheet-imported customers and their workflows
+  customers=customers.filter(c=>!knownIds.has(String(c.id)));
+  workflows=workflows.filter(w=>!removedBizNames.includes(w.biz));
+  // clear knownIds so the sheet can re-import fresh
+  knownIds=new Set();
+  localStorage.setItem('pa_known_ids','[]');
   localStorage.setItem('pa_customers',JSON.stringify(customers));
+  localStorage.setItem('pa_workflows',JSON.stringify(workflows));
   renderAll();
   fetchFromSheet(url);
   notify('Re-syncing from sheet...');
