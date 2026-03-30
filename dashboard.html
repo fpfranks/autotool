@@ -932,6 +932,9 @@ function deleteCustomer(id){
   archived.push({...c,deletedAt:new Date().toISOString()});
   customers=customers.filter(x=>String(x.id)!==String(id));
   workflows=workflows.filter(w=>w.biz!==c.biz);
+  // block re-import from sheet regardless of whether knownIds had this ID before
+  knownIds.add(String(id));
+  localStorage.setItem('pa_known_ids',JSON.stringify([...knownIds]));
   localStorage.setItem('pa_archived',JSON.stringify(archived));
   localStorage.setItem('pa_customers',JSON.stringify(customers));
   localStorage.setItem('pa_workflows',JSON.stringify(workflows));
@@ -945,6 +948,8 @@ function completeCustomer(id){
   completed.push({...c,completedAt:new Date().toISOString()});
   customers=customers.filter(x=>String(x.id)!==String(id));
   workflows=workflows.filter(w=>w.biz!==c.biz);
+  knownIds.add(String(id));
+  localStorage.setItem('pa_known_ids',JSON.stringify([...knownIds]));
   localStorage.setItem('pa_completed',JSON.stringify(completed));
   localStorage.setItem('pa_customers',JSON.stringify(customers));
   localStorage.setItem('pa_workflows',JSON.stringify(workflows));
