@@ -1386,7 +1386,7 @@ phillipsautomates@gmail.com`;
 }
 
 function openMailto(to, subject, body){
-  window.open('mailto:'+to+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body));
+  window.location.href='mailto:'+to+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
 }
 
 function sendWelcomeEmail(id){
