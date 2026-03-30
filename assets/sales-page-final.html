@@ -634,10 +634,6 @@
           </div>
         </div>
         <div class="sf-field">
-          <label>What does your business do? * <span style="font-size:0.7rem;color:var(--text-muted);">(e.g. plumber in Manchester, hair salon in Leeds)</span></label>
-          <input id="sf-type" type="text" placeholder="e.g. Plumbing and boiler engineer based in Manchester">
-        </div>
-        <div class="sf-field">
           <label>Business Phone Number * <span style="font-size:0.7rem;color:var(--text-muted);">(the number you want calls forwarded from)</span></label>
           <input id="sf-bizphone" type="tel" placeholder="e.g. 0161 234 5678">
         </div>
@@ -696,9 +692,8 @@
       const name     = document.getElementById('sf-name').value.trim();
       const email    = document.getElementById('sf-email').value.trim();
       const phone    = document.getElementById('sf-phone').value.trim();
-      const type     = document.getElementById('sf-type').value.trim();
       const bizPhone = document.getElementById('sf-bizphone').value.trim();
-      if (!biz || !name || !email || !phone || !type || !bizPhone) {
+      if (!biz || !name || !email || !phone || !bizPhone) {
         const w = document.getElementById('sf-warning');
         w.textContent = 'Please fill in all required fields (marked *).';
         w.style.display = 'block';
@@ -706,7 +701,7 @@
         return;
       }
       const customer = {
-        biz, name, email, phone, type, bizPhone,
+        biz, name, email, phone, type:'', bizPhone,
         voice: selectedVoice,
         website: document.getElementById('sf-website').value.trim(),
         fee: 197,
