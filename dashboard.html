@@ -59,6 +59,13 @@
   .badge-active { background: rgba(0,212,170,0.15); color: var(--green); }
   .badge-pending { background: rgba(255,179,71,0.15); color: var(--warn); }
   .badge-inactive { background: rgba(255,77,106,0.15); color: var(--red); }
+  .badge-welcomed { background: rgba(108,99,255,0.15); color: var(--accent); }
+  .badge-info-received { background: rgba(100,180,255,0.15); color: #64b4ff; }
+  /* Status filter tabs */
+  .filter-tabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px; }
+  .filter-tab { padding:5px 12px; border-radius:20px; font-size:11px; font-weight:600; cursor:pointer; border:1px solid var(--border); color:var(--muted); background:var(--surface2); transition:all 0.15s; }
+  .filter-tab:hover { color:var(--text); border-color:var(--accent); }
+  .filter-tab.active { background:var(--accent); color:#fff; border-color:var(--accent); }
   .todo-item { display: flex; align-items: flex-start; gap: 10px; padding: 12px; background: var(--surface2); border-radius: 8px; margin-bottom: 8px; border: 1px solid var(--border); }
   .todo-check { width: 18px; height: 18px; border-radius: 5px; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; margin-top: 1px; transition: all 0.15s; font-size: 11px; }
   .todo-check.done { background: var(--green); border-color: var(--green); color: #000; }
@@ -221,7 +228,9 @@
         <div class="form-group">
           <label class="form-label">Status</label>
           <select class="form-select" id="c-status">
-            <option value="pending">Pending Setup ⏳</option>
+            <option value="pending">Pending ⏳</option>
+            <option value="welcomed">Welcomed 📧</option>
+            <option value="info-received">Info Received 📋</option>
             <option value="active">Active ✅</option>
             <option value="inactive">Inactive ❌</option>
           </select>
@@ -232,8 +241,16 @@
     </div>
     <div class="card">
       <div class="flex-between mb-4">
-        <div class="card-title">All Clients</div>
+        <div class="card-title">All Clients <span id="c-count" style="font-weight:400;color:var(--muted);text-transform:none;font-size:12px;letter-spacing:0"></span></div>
         <input class="form-input" id="c-search" placeholder="Search..." style="width:180px;padding:6px 10px" oninput="renderCustomers()"/>
+      </div>
+      <div class="filter-tabs">
+        <div class="filter-tab active" onclick="setStatusFilter('all',this)">All</div>
+        <div class="filter-tab" onclick="setStatusFilter('pending',this)">Pending ⏳</div>
+        <div class="filter-tab" onclick="setStatusFilter('welcomed',this)">Welcomed 📧</div>
+        <div class="filter-tab" onclick="setStatusFilter('info-received',this)">Info Received 📋</div>
+        <div class="filter-tab" onclick="setStatusFilter('active',this)">Active ✅</div>
+        <div class="filter-tab" onclick="setStatusFilter('inactive',this)">Inactive ❌</div>
       </div>
       <table class="table">
         <thead><tr><th>Business</th><th>Owner</th><th>Type</th><th>City</th><th>Status</th><th>Fee</th><th>Since</th><th style="width:120px"></th></tr></thead>
@@ -630,7 +647,7 @@ function renderDash() {
     else{dc.innerHTML=customers.slice(-5).reverse().map(c=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:10px;background:var(--surface2);border-radius:7px;margin-bottom:7px">
       <div><div style="font-size:13px;font-weight:600">${c.biz}${c.isNew?'<span style="margin-left:6px;background:rgba(0,212,170,0.15);color:var(--green);font-size:9px;font-weight:700;padding:2px 5px;border-radius:8px">NEW</span>':''}</div>
       <div style="font-size:11px;color:var(--muted)">${c.type||'—'} · ${c.name||''}</div></div>
-      <span class="badge badge-${c.status}">${c.status}</span></div>`).join('');}
+      <span class="badge badge-${c.status}">${STATUS_LABELS[c.status]||c.status}</span></div>`).join('');}
   }
 
   // ── AUTOMATION STATUS ──
@@ -770,20 +787,35 @@ function autoCreateWorkflow(c){
 function updateCustomerStatus(id,v){const c=customers.find(x=>String(x.id)===String(id));if(c){c.status=v;localStorage.setItem('pa_customers',JSON.stringify(customers));renderAll();}}
 function renderAll(){renderDash();renderCustomers();renderRevenue();renderWorkflows();renderEmails();updateNavBadges();}
 
+let customerStatusFilter='all';
+function setStatusFilter(val,el){
+  customerStatusFilter=val;
+  document.querySelectorAll('.filter-tab').forEach(t=>t.classList.remove('active'));
+  if(el)el.classList.add('active');
+  renderCustomers();
+}
+const STATUS_LABELS={pending:'Pending ⏳',welcomed:'Welcomed 📧','info-received':'Info Received 📋',active:'Active ✅',inactive:'Inactive ❌'};
 function renderCustomers(){
   const q=(document.getElementById('c-search').value||'').toLowerCase();
-  const f=customers.filter(c=>c.biz.toLowerCase().includes(q)||(c.city||'').toLowerCase().includes(q)||(c.type||'').toLowerCase().includes(q));
+  let f=customers
+    .slice()
+    .sort((a,b)=>Number(b.id)-Number(a.id))
+    .filter(c=>c.biz.toLowerCase().includes(q)||(c.city||'').toLowerCase().includes(q)||(c.type||'').toLowerCase().includes(q));
+  if(customerStatusFilter!=='all') f=f.filter(c=>c.status===customerStatusFilter);
+  const countEl=document.getElementById('c-count');
+  if(countEl) countEl.textContent=f.length?`— ${f.length} client${f.length===1?'':'s'}`:'';
   const tbody=document.getElementById('customers-tbody');
   if(!f.length){tbody.innerHTML='<tr><td colspan="8" class="empty">No customers found.</td></tr>';return;}
+  const statusOpts=['pending','welcomed','info-received','active','inactive'];
   tbody.innerHTML=f.map(c=>`
     <tr style="cursor:pointer" onclick="toggleCustomerDetail('${c.id}')">
       <td><strong>${c.biz}</strong>${c.isNew?'<span style="margin-left:6px;background:rgba(0,212,170,0.15);color:var(--green);font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px;text-transform:uppercase;">New</span>':''}</td>
       <td>${c.name||'—'}<br><span style="font-size:11px;color:var(--muted)">${c.email||''}</span></td>
-      <td>${c.type||'—'}</td>
-      <td>${c.city||'—'}</td>
-      <td><select onchange="event.stopPropagation();updateCustomerStatus('${c.id}',this.value)" style="background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:3px 7px;border-radius:5px;font-size:11px">${['active','pending','inactive'].map(s=>`<option value="${s}"${c.status===s?' selected':''}>${s}</option>`).join('')}</select></td>
-      <td style="color:var(--green)">£${c.fee||197}/mo</td>
-      <td style="font-size:11px;color:var(--muted)">${c.date}</td>
+      <td style="font-size:12px">${c.type||'—'}</td>
+      <td style="font-size:12px">${c.city||'—'}</td>
+      <td><select onchange="event.stopPropagation();updateCustomerStatus('${c.id}',this.value)" style="background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:3px 7px;border-radius:5px;font-size:11px">${statusOpts.map(s=>`<option value="${s}"${c.status===s?' selected':''}>${STATUS_LABELS[s]||s}</option>`).join('')}</select></td>
+      <td style="color:var(--green);font-weight:600">£${c.fee||197}/mo</td>
+      <td style="font-size:11px;color:var(--muted)">${c.date||'—'}</td>
       <td onclick="event.stopPropagation()" style="display:flex;gap:5px;padding:8px 12px"><button class="btn btn-sm btn-ghost" onclick="editCustomer('${c.id}')">Edit</button><button class="btn btn-sm btn-red" onclick="deleteCustomer('${c.id}')">Delete</button></td>
     </tr>
     <tr id="detail-${c.id}" style="display:none">
@@ -809,7 +841,13 @@ function renderCustomers(){
 
 function toggleCustomerDetail(id){
   const row=document.getElementById('detail-'+id);
-  if(row) row.style.display=row.style.display==='none'?'table-row':'none';
+  if(!row) return;
+  const isOpening=row.style.display==='none';
+  row.style.display=isOpening?'table-row':'none';
+  if(isOpening){
+    const c=customers.find(x=>String(x.id)===String(id));
+    if(c&&c.isNew){c.isNew=false;localStorage.setItem('pa_customers',JSON.stringify(customers));updateNavBadges();}
+  }
 }
 
 function renderVoiceDetails(c){
