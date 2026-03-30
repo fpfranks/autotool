@@ -536,18 +536,18 @@
       </div>
       <button class="modal-close" onclick="closeCustomerModal()">✕</button>
     </div>
-    <div class="modal-body" style="padding:0;">
-      <!-- Section tabs -->
-      <div style="display:flex;border-bottom:1px solid var(--border);background:var(--surface);">
-        <div class="cmodal-tab active" onclick="cmodalTab('info',this)" style="flex:1;text-align:center;padding:11px;font-size:12px;font-weight:600;cursor:pointer;color:var(--accent);border-bottom:2px solid var(--accent);">📋 Info</div>
-        <div class="cmodal-tab" onclick="cmodalTab('emails',this)" style="flex:1;text-align:center;padding:11px;font-size:12px;font-weight:600;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;">📧 Emails</div>
-        <div class="cmodal-tab" onclick="cmodalTab('setup',this)" style="flex:1;text-align:center;padding:11px;font-size:12px;font-weight:600;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;">📞 Setup</div>
-        <div class="cmodal-tab" onclick="cmodalTab('notes',this)" style="flex:1;text-align:center;padding:11px;font-size:12px;font-weight:600;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;">📝 Notes</div>
-      </div>
-      <div id="cmodal-info" style="padding:18px;"></div>
-      <div id="cmodal-emails" style="padding:18px;display:none;"></div>
-      <div id="cmodal-setup" style="padding:18px;display:none;"></div>
-      <div id="cmodal-notes" style="padding:18px;display:none;"></div>
+    <!-- Section tabs — outside modal-body so they stay fixed while content scrolls -->
+    <div style="display:flex;border-bottom:1px solid var(--border);background:var(--surface);flex-shrink:0;">
+      <div class="cmodal-tab active" onclick="cmodalTab('info',this)" style="flex:1;text-align:center;padding:11px;font-size:12px;font-weight:600;cursor:pointer;color:var(--accent);border-bottom:2px solid var(--accent);">📋 Info</div>
+      <div class="cmodal-tab" onclick="cmodalTab('emails',this)" style="flex:1;text-align:center;padding:11px;font-size:12px;font-weight:600;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;">📧 Emails</div>
+      <div class="cmodal-tab" onclick="cmodalTab('setup',this)" style="flex:1;text-align:center;padding:11px;font-size:12px;font-weight:600;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;">📞 Setup</div>
+      <div class="cmodal-tab" onclick="cmodalTab('notes',this)" style="flex:1;text-align:center;padding:11px;font-size:12px;font-weight:600;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;">📝 Notes</div>
+    </div>
+    <div class="modal-body">
+      <div id="cmodal-info"></div>
+      <div id="cmodal-emails" style="display:none;"></div>
+      <div id="cmodal-setup" style="display:none;"></div>
+      <div id="cmodal-notes" style="display:none;"></div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" id="cmodal-edit-btn">✏️ Edit Details</button>
