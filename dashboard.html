@@ -87,6 +87,30 @@
   .section-title { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin: 20px 0 10px; }
   .empty { text-align: center; color: var(--muted); font-size: 13px; padding: 32px; }
   ::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-track { background: var(--surface); } ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  /* Mobile nav */
+  .mobile-nav { display:none; position:fixed; bottom:0; left:0; right:0; background:var(--surface); border-top:1px solid var(--border); z-index:500; flex-direction:row; }
+  .mobile-nav-item { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:9px 2px 10px; font-size:17px; color:var(--muted); cursor:pointer; gap:2px; position:relative; }
+  .mobile-nav-item span { font-size:8px; font-weight:600; letter-spacing:0.3px; }
+  .mobile-nav-item.active { color:var(--accent); }
+  .mobile-nav-item .mnav-badge { position:absolute; top:5px; right:12px; background:var(--red); color:#fff; font-size:8px; font-weight:700; padding:1px 4px; border-radius:6px; display:none; }
+  .mobile-nav-item .mnav-badge.show { display:block; }
+  /* Table wrapper for horizontal scroll on mobile */
+  .table-wrapper { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  /* Responsive */
+  @media (max-width:768px){
+    .sidebar { display:none; }
+    .mobile-nav { display:flex; }
+    .main { margin-left:0; padding:16px 12px 80px; }
+    .grid-4 { grid-template-columns:repeat(2,1fr); gap:10px; }
+    .grid-2 { grid-template-columns:1fr; }
+    .form-row { grid-template-columns:1fr; }
+    .filter-tabs { overflow-x:auto; flex-wrap:nowrap; padding-bottom:4px; scrollbar-width:none; }
+    .filter-tabs::-webkit-scrollbar { display:none; }
+    .page-header h1 { font-size:17px; }
+    .stat-value { font-size:22px; }
+    .card { padding:14px; }
+    .modal-box { max-width:100%; }
+  }
   /* Nav badges */
   .nav-badge { background: var(--red); color: #fff; font-size: 9px; font-weight: 700; padding: 1px 6px; border-radius: 8px; margin-left: auto; display: none; }
   .nav-badge.show { display: inline-block; }
@@ -252,10 +276,12 @@
         <div class="filter-tab" onclick="setStatusFilter('active',this)">Active ✅</div>
         <div class="filter-tab" onclick="setStatusFilter('inactive',this)">Inactive ❌</div>
       </div>
+      <div class="table-wrapper">
       <table class="table">
         <thead><tr><th>Business</th><th>Owner</th><th>Type</th><th>City</th><th>Status</th><th>Fee</th><th>Since</th><th style="width:120px"></th></tr></thead>
         <tbody id="customers-tbody"><tr><td colspan="8" class="empty">No customers yet.</td></tr></tbody>
       </table>
+      </div>
     </div>
   </div>
 
@@ -508,6 +534,16 @@
 </div>
 
 <div class="notif" id="notif"></div>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-nav" id="mobile-nav">
+  <div class="mobile-nav-item nav-item active" onclick="nav('dashboard',this)">📊<span>Home</span></div>
+  <div class="mobile-nav-item nav-item" onclick="nav('customers',this)">👥<span>Clients</span><span class="mnav-badge" id="mbadge-customers"></span></div>
+  <div class="mobile-nav-item nav-item" onclick="nav('workflows',this)">📞<span>Setup</span><span class="mnav-badge" id="mbadge-workflows"></span></div>
+  <div class="mobile-nav-item nav-item" onclick="nav('emails',this)">📧<span>Emails</span><span class="mnav-badge" id="mbadge-emails"></span></div>
+  <div class="mobile-nav-item nav-item" onclick="nav('revenue',this)">💰<span>Revenue</span></div>
+  <div class="mobile-nav-item nav-item" onclick="nav('settings',this)">⚙️<span>Settings</span></div>
+</nav>
 
 <script>
 let customers = JSON.parse(localStorage.getItem('pa_customers')||'[]');
@@ -809,7 +845,7 @@ function renderCustomers(){
   const statusOpts=['pending','welcomed','info-received','active','inactive'];
   tbody.innerHTML=f.map(c=>`
     <tr style="cursor:pointer" onclick="toggleCustomerDetail('${c.id}')">
-      <td><strong>${c.biz}</strong>${c.isNew?'<span style="margin-left:6px;background:rgba(0,212,170,0.15);color:var(--green);font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px;text-transform:uppercase;">New</span>':''}</td>
+      <td><div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;"><strong>${c.biz}</strong>${c.isNew?'<span style="background:rgba(0,212,170,0.15);color:var(--green);font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px;text-transform:uppercase;">New</span>':''}${(emailStage(c)==='welcomed'&&c.emailWelcome&&(Date.now()-new Date(c.emailWelcome).getTime())>172800000)?'<span style="background:rgba(255,179,71,0.2);color:var(--warn);font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px;">48hr — nudge!</span>':''}</div>${progressBar(c)}</td>
       <td>${c.name||'—'}<br><span style="font-size:11px;color:var(--muted)">${c.email||''}</span></td>
       <td style="font-size:12px">${c.type||'—'}</td>
       <td style="font-size:12px">${c.city||'—'}</td>
@@ -868,9 +904,10 @@ function renderVoiceDetails(c){
   if(c.services) html+=`<div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px;grid-column:span 2"><div style="font-size:10px;color:var(--muted);margin-bottom:4px;">💷 Services &amp; Pricing</div><div style="font-size:12px;white-space:pre-wrap;line-height:1.6">${c.services}</div></div>`;
   html += field('📅','Booking URL',c.booking||'',true);
   html += field('🌐','Website',c.website||'',true);
-  html += `<div style="grid-column:1/-1;margin-top:8px;display:flex;gap:8px;">
-    <button class="btn btn-primary" style="flex:1" onclick="event.stopPropagation();showVapiScript('${c.id}')">🤖 Generate VAPI Script</button>
-    ${c.emailLive?`<button class="btn btn-ghost" onclick="event.stopPropagation();sendUpdateEmail('${c.id}')">✏️ Send Update Email</button>`:''}
+  html += `<div style="grid-column:1/-1;margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
+    <button class="btn btn-primary" style="flex:1;min-width:140px" onclick="event.stopPropagation();showVapiScript('${c.id}')">🤖 VAPI Script</button>
+    <button class="btn btn-ghost" style="flex:1;min-width:140px" onclick="event.stopPropagation();copyForwardingGuide('${c.id}')">📋 Copy Forwarding Guide</button>
+    ${c.emailLive?`<button class="btn btn-ghost" style="flex:1;min-width:140px" onclick="event.stopPropagation();sendUpdateEmail('${c.id}')">✏️ Update Email</button>`:''}
   </div>`;
   return html||`<div style="color:var(--muted);font-size:13px;">No details recorded yet.</div>`;
 }
@@ -1249,6 +1286,39 @@ function updateNavBadges(){
   setBadge('badge-customers',newCusts);
   setBadge('badge-emails',emailActions);
   setBadge('badge-workflows',incompleteWf);
+  // mobile badges
+  setBadge('mbadge-customers',newCusts);
+  setBadge('mbadge-emails',emailActions);
+  setBadge('mbadge-workflows',incompleteWf);
+}
+
+// ── PROGRESS BAR ──
+function progressBar(c){
+  const stage=emailStage(c);
+  const stageMap={new:1,welcomed:2,setup:3,live:4,active:5,inactive:0};
+  const n=stageMap[stage]||0;
+  const colors=['','var(--warn)','var(--accent)','#64b4ff','#f5c842','var(--green)'];
+  const col=colors[n]||'var(--border)';
+  return '<div style="display:flex;gap:2px;margin-top:5px;">'+
+    Array(5).fill(0).map((_,i)=>`<span style="flex:1;height:3px;border-radius:2px;background:${i<n?col:'var(--border)'};display:inline-block;min-width:10px;"></span>`).join('')+
+    '</div>';
+}
+
+// ── COPY FORWARDING GUIDE ──
+function copyForwardingGuide(id){
+  const c=customers.find(x=>String(x.id)===String(id));
+  if(!c)return;
+  const wf=workflows.find(w=>w.biz===c.biz);
+  const twilioNum=wf&&wf.twilioNumber?wf.twilioNumber:'[YOUR AI NUMBER]';
+  const network=c.network||'';
+  let msg='';
+  if(network==='landline'){
+    msg=`Hi ${c.name||c.biz}! Your AI receptionist is ready.\n\nYour AI number: ${twilioNum}\n\nTo activate, contact your phone provider and ask them to forward unanswered calls to ${twilioNum}. Takes ~10 mins.\n\nAny questions just reply! — Frankie, Phillips Automates`;
+  } else {
+    const codes=getForwardingCodes(network,twilioNum);
+    msg=`Hi ${c.name||c.biz}! Your AI receptionist is ready.\n\nYour AI number: ${twilioNum}\n\nTo activate (30 seconds):\nDial on your phone:\n${codes.noAnswer} (no answer)\n${codes.busy} (busy)\n${codes.off} (phone off)\n\nThat's it — you're live! To turn off: ${codes.cancel}\n\n— Frankie, Phillips Automates`;
+  }
+  navigator.clipboard.writeText(msg).then(()=>notify('Forwarding guide copied — paste into WhatsApp/SMS!')).catch(()=>notify('Copy failed — try selecting manually'));
 }
 
 function saveClaudeKey(){
