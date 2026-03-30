@@ -671,7 +671,9 @@
 <script>
 let customers = JSON.parse(localStorage.getItem('pa_customers')||'[]');
 let workflows  = JSON.parse(localStorage.getItem('pa_workflows')||'[]');
-let deletedEmails = JSON.parse(localStorage.getItem('pa_deleted_emails')||'[]');
+// deletedEmails was deprecated — ID-based dedup now handles this
+localStorage.removeItem('pa_deleted_emails');
+const deletedEmails = [];
 let archived   = JSON.parse(localStorage.getItem('pa_archived')||'[]');
 let completed  = JSON.parse(localStorage.getItem('pa_completed')||'[]');
 // purge archive entries older than 7 days on load
@@ -928,7 +930,6 @@ function deleteCustomer(id){
   const c=customers.find(x=>String(x.id)===String(id));
   if(!c)return;
   if(!confirm('Move '+c.biz+' to Archive?\n\nThey will be permanently deleted after 7 days. You can restore them before then.'))return;
-  if(c.email&&!deletedEmails.includes(c.email)){deletedEmails.push(c.email);localStorage.setItem('pa_deleted_emails',JSON.stringify(deletedEmails));}
   archived.push({...c,deletedAt:new Date().toISOString()});
   customers=customers.filter(x=>String(x.id)!==String(id));
   workflows=workflows.filter(w=>w.biz!==c.biz);
@@ -1735,11 +1736,13 @@ function fetchFromSheet(url){
       let added=0;
       const validStatuses=['pending','welcomed','info-received','active','inactive'];
       data.customers.forEach(sc=>{
-        // deduplicate by sheet ID, fall back to email
-        const existsById=customers.find(c=>String(c.id)===String(sc.id));
+        // skip if ID already exists in active, archived, or completed lists
+        const existsById=customers.find(c=>String(c.id)===String(sc.id))
+                       ||archived.find(c=>String(c.id)===String(sc.id))
+                       ||completed.find(c=>String(c.id)===String(sc.id));
+        // skip if email already active (prevents double-import of same submission)
         const existsByEmail=customers.find(c=>c.email&&c.email===sc.email);
-        const wasDeleted=sc.email&&deletedEmails.includes(sc.email);
-        if(!existsById&&!existsByEmail&&!wasDeleted){
+        if(!existsById&&!existsByEmail){
           // fix column mismatch: if status looks like a voice value, correct it
           const rawStatus=sc.status||'';
           const cleanStatus=validStatuses.includes(rawStatus)?rawStatus:'pending';
