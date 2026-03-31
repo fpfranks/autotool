@@ -331,8 +331,9 @@
           <ol style="font-size:11px;color:var(--muted);line-height:1.9;padding-left:16px;margin:0 0 8px;">
             <li>Click <strong style="color:var(--text)">🤖 VAPI</strong> — copy the system prompt</li>
             <li>Create assistant on vapi.ai — paste prompt, set voice</li>
-            <li>Add a Twilio number → connect to the assistant</li>
-            <li>Test: call the Twilio number yourself first</li>
+            <li>Buy a VAPI phone number: vapi.ai → Phone Numbers → Buy Number</li>
+            <li>Connect the number to your assistant in VAPI dashboard</li>
+            <li>Test: call the VAPI number yourself first</li>
             <li>Send <strong style="color:var(--text)">📋 Forwarding Guide</strong> to client via WhatsApp/text</li>
             <li>Click <strong style="color:var(--text)">🚀 Go Live</strong> — sends the live email</li>
           </ol>
@@ -421,9 +422,9 @@
         <div class="form-group"><label class="form-label">Notes</label><input class="form-input" id="wf-notes" placeholder="Any setup notes..."/></div>
       </div>
       <div class="form-group" style="background:rgba(0,212,170,0.06);border:1px solid rgba(0,212,170,0.2);border-radius:8px;padding:12px;">
-        <label class="form-label" style="color:var(--green);">🤖 Provisioned AI Phone Number (Twilio — forward calls TO this)</label>
-        <input class="form-input" id="wf-twilio" placeholder="e.g. 01234 567890 — enter after provisioning in Twilio dashboard"/>
-        <div style="font-size:11px;color:var(--muted);margin-top:6px;">This is the number you buy in Twilio and connect to VAPI. Client forwards their calls to this number. Added to the live email automatically.</div>
+        <label class="form-label" style="color:var(--green);">🤖 VAPI Phone Number (buy at vapi.ai → Phone Numbers)</label>
+        <input class="form-input" id="wf-twilio" placeholder="e.g. 01234 567890 — enter after buying in VAPI dashboard"/>
+        <div style="font-size:11px;color:var(--muted);margin-top:6px;">Buy this number directly in VAPI (no Twilio needed). Client forwards their calls to this number. Added to the live email automatically.</div>
       </div>
       <button class="btn btn-green" onclick="saveWorkflow()">Save Client Setup</button>
     </div>
@@ -459,7 +460,7 @@
     <div class="grid-4 mb-4">
       <div class="stat"><div class="stat-label">Gross Revenue</div><div class="stat-value purple" id="r-gross">£0</div><div class="stat-sub">from all clients</div></div>
       <div class="stat"><div class="stat-label">VAPI Costs</div><div class="stat-value orange" id="r-cost">£0</div><div class="stat-sub">~£35 per client</div></div>
-      <div class="stat"><div class="stat-label">Other Costs</div><div class="stat-value orange">~£15</div><div class="stat-sub">Twilio numbers + misc</div></div>
+      <div class="stat"><div class="stat-label">Other Costs</div><div class="stat-value orange">~£10</div><div class="stat-sub">VAPI numbers + misc</div></div>
       <div class="stat"><div class="stat-label">Net Profit</div><div class="stat-value green" id="r-profit">£0</div><div class="stat-sub">in your pocket</div></div>
     </div>
     <div class="card">
@@ -689,7 +690,7 @@ if(localStorage.getItem('pa_todos_v') !== TODOS_V){ localStorage.removeItem('pa_
 let todos = JSON.parse(localStorage.getItem('pa_todos')||'null') || [
   // ── ONE-TIME SETUP ──
   {id:1,  text:'Sign up to VAPI.ai (vapi.ai) — free trial, this is where you build the AI voice scripts', cat:'Setup', done:false},
-  {id:2,  text:'Sign up to Twilio (twilio.com) — buy UK phone numbers for each client (~£1/month each)', cat:'Setup', done:false},
+  {id:2,  text:'Sign up to VAPI.ai — buy UK phone numbers for each client directly in vapi.ai → Phone Numbers (~$2-3/mo each, no Twilio needed)', cat:'Setup', done:false},
   {id:3,  text:'Sign up to Stripe and verify your account — stripe.com', cat:'Setup', done:false},
   {id:4,  text:'Create a new Stripe payment link at £197/month (Products → Payment Links)', cat:'Setup', done:false},
   {id:5,  text:'Sales page live on GitHub Pages with new voice copy', cat:'Setup', done:false},
@@ -698,7 +699,7 @@ let todos = JSON.parse(localStorage.getItem('pa_todos')||'null') || [
   {id:8,  text:'Test Stripe payment link end-to-end — make a test purchase', cat:'Setup', done:false},
   // ── VAPI DEMO (build once — use as sales proof) ──
   {id:9,  text:'Build a demo AI receptionist in VAPI using a fake "Demo Plumbing Co" business', cat:'VAPI', done:false},
-  {id:10, text:'Provision a test Twilio UK number and connect it to your VAPI demo', cat:'VAPI', done:false},
+  {id:10, text:'Buy a test VAPI UK phone number (vapi.ai → Phone Numbers → Buy Number) and connect it to your demo assistant', cat:'VAPI', done:false},
   {id:11, text:'Test the demo: call the number and confirm the AI answers correctly', cat:'VAPI', done:false},
   {id:12, text:'Record a demo call (any screen recorder or just a phone recording)', cat:'VAPI', done:false},
   {id:13, text:'Add demo recording or transcript to sales page as proof — push to GitHub', cat:'VAPI', done:false},
@@ -1124,7 +1125,7 @@ function renderCustomers(){renderPipeline();}
 const WF_STEPS = [
   'Business info received (hours, pricing, booking link)',
   'VAPI account created &amp; AI script written',
-  'Twilio phone number provisioned',
+  'VAPI phone number purchased &amp; connected to assistant',
   'Test call passed — AI responds correctly',
   'Forwarding guide sent to client',
   'Client confirmed — call forwarding live!'
@@ -1179,7 +1180,7 @@ function deleteWf(id){
 function editTwilioNumber(id){
   const wf=workflows.find(w=>String(w.id)===String(id));
   if(!wf)return;
-  const num=prompt('Enter the provisioned Twilio/VAPI phone number for '+wf.biz+':',wf.twilioNumber||'');
+  const num=prompt('Enter the VAPI phone number for '+wf.biz+' (buy at vapi.ai → Phone Numbers):',wf.twilioNumber||'');
   if(num===null)return;
   wf.twilioNumber=num.trim();
   localStorage.setItem('pa_workflows',JSON.stringify(workflows));
@@ -1210,7 +1211,7 @@ ${wf.phone?`<span style="background:var(--surface);border:1px solid var(--border
 ${wf.ownerPhone?`<span style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;">📱 Owner: ${wf.ownerPhone}</span>`:''}
 ${wf.twilioNumber
   ? `<span style="background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);padding:3px 8px;border-radius:5px;font-size:11px;color:var(--green);">🤖 AI: ${wf.twilioNumber}</span>`
-  : `<span onclick="editTwilioNumber('${wf.id}')" style="background:rgba(255,179,71,0.1);border:1px solid rgba(255,179,71,0.3);padding:3px 8px;border-radius:5px;font-size:11px;color:var(--warn);cursor:pointer;">⚠️ Add AI number (Twilio)</span>`}
+  : `<span onclick="editTwilioNumber('${wf.id}')" style="background:rgba(255,179,71,0.1);border:1px solid rgba(255,179,71,0.3);padding:3px 8px;border-radius:5px;font-size:11px;color:var(--warn);cursor:pointer;">⚠️ Add VAPI number</span>`}
 ${wf.booking?`<a href="${wf.booking}" target="_blank" style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;color:var(--green);text-decoration:none;">📅 Booking</a>`:''}
 ${wf.website?`<a href="${wf.website}" target="_blank" style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;color:var(--accent);text-decoration:none;">🌐 Website</a>`:''}
 </div>
