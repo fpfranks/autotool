@@ -182,12 +182,15 @@
   <div id="page-dashboard" class="page active">
     <div class="page-header flex-between">
       <div><h1>Command Centre</h1><p id="dash-date"></p></div>
-      <button class="btn btn-ghost btn-sm" onclick="fetchFromSheet(localStorage.getItem('pa_gas_url'))" title="Sync customers from sales page">🔄 Sync</button>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span class="sync-time-label" style="font-size:11px;color:var(--muted);"></span>
+        <button class="btn btn-ghost btn-sm" onclick="fetchFromSheet(localStorage.getItem('pa_gas_url'))" title="Sync customers from sales page">🔄 Sync</button>
+      </div>
     </div>
     <div class="grid-4">
       <div class="stat"><div class="stat-label">Active Clients</div><div class="stat-value green" id="s-active">0</div><div class="stat-sub">paying £197/mo</div></div>
       <div class="stat"><div class="stat-label">Monthly Revenue</div><div class="stat-value purple" id="s-revenue">£0</div><div class="stat-sub">recurring</div></div>
-      <div class="stat"><div class="stat-label">Monthly Profit</div><div class="stat-value green" id="s-profit">£0</div><div class="stat-sub">after VAPI costs</div></div>
+      <div class="stat"><div class="stat-label">Monthly Profit</div><div class="stat-value green" id="s-profit">£0</div><div class="stat-sub" id="s-profit-sub">after costs</div></div>
       <div class="stat"><div class="stat-label">Emails to Action</div><div class="stat-value orange" id="s-email-action">0</div><div class="stat-sub" id="s-email-sub">all up to date</div></div>
     </div>
     <div class="grid-2" style="margin-top:14px">
@@ -588,7 +591,11 @@
       <div style="margin-top:14px;padding:14px;background:rgba(0,212,170,0.06);border:1px solid rgba(0,212,170,0.2);border-radius:8px;">
         <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:8px;">💾 Backup / Export Data</div>
         <div style="font-size:12px;color:var(--muted);margin-bottom:10px;">Downloads all your customers, workflows, and tasks as a JSON file. Do this regularly — your data lives in this browser only.</div>
-        <button class="btn btn-sm btn-green" onclick="exportData()">⬇ Download Backup</button>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+          <button class="btn btn-sm btn-green" onclick="exportData()">⬇ Download Backup</button>
+          <button class="btn btn-sm btn-ghost" onclick="document.getElementById('import-file').click()">⬆ Restore Backup</button>
+          <input type="file" id="import-file" accept=".json" style="display:none" onchange="importData(event)"/>
+        </div>
       </div>
       <div style="margin-top:14px;padding:14px;background:rgba(255,77,106,0.06);border:1px solid rgba(255,77,106,0.2);border-radius:8px;">
         <div style="font-size:12px;font-weight:700;color:var(--red);margin-bottom:8px;">Reset To-Do List</div>
@@ -767,16 +774,30 @@ document.querySelectorAll('.nav-item').forEach(item=>{
 });
 
 function todayKey(){ return new Date().toISOString().split('T')[0]; }
+function updateSyncTime(){
+  const ts=localStorage.getItem('pa_last_sync');
+  if(!ts){document.querySelectorAll('.sync-time-label').forEach(el=>el.textContent='');return;}
+  const mins=Math.round((Date.now()-new Date(ts).getTime())/60000);
+  const txt=mins<1?'synced just now':mins===1?'synced 1 min ago':mins<60?'synced '+mins+' mins ago':'synced '+Math.round(mins/60)+'h ago';
+  document.querySelectorAll('.sync-time-label').forEach(el=>el.textContent=txt);
+}
 function weeklyOutreach(){let t=0;for(let i=0;i<7;i++){const d=new Date();d.setDate(d.getDate()-i);t+=outreach[d.toISOString().split('T')[0]]||0;}return t;}
 function incrementOutreach(){const k=todayKey();outreach[k]=(outreach[k]||0)+1;localStorage.setItem('pa_outreach',JSON.stringify(outreach));renderDash();}
 function resetOutreachToday(){const k=todayKey();outreach[k]=0;localStorage.setItem('pa_outreach',JSON.stringify(outreach));renderDash();}
 
 function renderDash() {
   document.getElementById('dash-date').textContent = new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  updateSyncTime();
 
   const active = customers.filter(c=>c.status==='active');
   const revenue = active.reduce((s,c)=>s+(parseFloat(c.fee)||197),0);
-  const profit = Math.max(0, revenue - active.length*35 - 15);
+  const vapiC=parseFloat(document.getElementById('cost-vapi')?.value)||30;
+  const telC=parseFloat(document.getElementById('cost-telnyx')?.value)||1;
+  const othC=parseFloat(document.getElementById('cost-other')?.value)||5;
+  const cpc=vapiC+telC+othC;
+  const profit=Math.max(0,revenue-active.length*cpc);
+  const profitSubEl=document.getElementById('s-profit-sub');
+  if(profitSubEl) profitSubEl.textContent=active.length?'£'+cpc.toFixed(0)+'/client cost':'after costs';
   const emailActions = customers.filter(c=>c.status!=='inactive'&&(emailStage(c)==='new'||emailStage(c)==='setup')).length;
   document.getElementById('s-active').textContent = active.length;
   document.getElementById('s-revenue').textContent = '£'+revenue;
@@ -1708,13 +1729,37 @@ ${trimmedText}`
   }
 }
 
+function importData(event){
+  const file=event.target.files[0];
+  if(!file)return;
+  if(!confirm('This will overwrite your current customers, workflows and tasks with the backup. Continue?'))return;
+  const reader=new FileReader();
+  reader.onload=function(e){
+    try{
+      const data=JSON.parse(e.target.result);
+      if(data.customers){customers=data.customers;localStorage.setItem('pa_customers',JSON.stringify(customers));}
+      if(data.workflows){workflows=data.workflows;localStorage.setItem('pa_workflows',JSON.stringify(workflows));}
+      if(data.todos){todos=data.todos;localStorage.setItem('pa_todos',JSON.stringify(todos));}
+      if(data.archived){archived=data.archived;localStorage.setItem('pa_archived',JSON.stringify(archived));}
+      if(data.completed){completed=data.completed;localStorage.setItem('pa_completed',JSON.stringify(completed));}
+      if(data.outreach){outreach=data.outreach;localStorage.setItem('pa_outreach',JSON.stringify(outreach));}
+      renderAll();updateNavBadges();
+      notify('Backup restored — '+(data.customers||[]).length+' customers loaded!');
+    }catch(err){notify('Import failed — not a valid backup file');}
+  };
+  reader.readAsText(file);
+  event.target.value='';
+}
 function exportData(){
   const data={
     exported: new Date().toISOString(),
     customers,
     workflows,
     todos,
-    outreach
+    outreach,
+    archived,
+    completed,
+    knownIds:[...knownIds]
   };
   const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
   const url=URL.createObjectURL(blob);
@@ -1870,6 +1915,8 @@ function fetchFromSheet(url){
           added++;
         }
       });
+      localStorage.setItem('pa_last_sync',new Date().toISOString());
+      updateSyncTime();
       if(added>0){
         localStorage.setItem('pa_known_ids',JSON.stringify([...knownIds]));
         localStorage.setItem('pa_customers',JSON.stringify(customers));
@@ -1921,19 +1968,25 @@ function cmodalTab(name,el){
   if(name==='setup') renderCmodalSetup(c);
   if(name==='notes') renderCmodalNotes(c);
 }
-function infoCell(icon,label,val,isLink){
+function copyCell(val){
+  navigator.clipboard.writeText(val).then(()=>notify('Copied!')).catch(()=>{
+    const t=document.createElement('textarea');t.value=val;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);notify('Copied!');
+  });
+}
+function infoCell(icon,label,val,isLink,copyVal){
   if(!val)return'';
   const v=isLink?`<a href="${val}" target="_blank" style="color:var(--accent)">${val}</a>`:val;
-  return`<div class="info-cell"><div class="info-cell-label">${icon} ${label}</div><div class="info-cell-val">${v}</div></div>`;
+  const btn=copyVal?`<button onclick="copyCell(${JSON.stringify(copyVal)})" style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:11px;padding:0 0 0 5px;vertical-align:middle;" title="Copy">📋</button>`:'';
+  return`<div class="info-cell"><div class="info-cell-label">${icon} ${label}</div><div class="info-cell-val">${v}${btn}</div></div>`;
 }
 function renderCmodalInfo(c){
   const netLabels={ee:'EE',o2:'O2',vodafone:'Vodafone',three:'Three / iD Mobile',sky:'Sky / giffgaff',landline:'Landline / VoIP'};
   document.getElementById('cmodal-info').innerHTML=`
     <div class="info-grid">
-      ${infoCell('👤','Owner',c.name||'—')}
-      ${infoCell('📧','Email',c.email||'—')}
-      ${infoCell('📱','Mobile',c.phone||'—')}
-      ${infoCell('📞','Business Phone',c.bizPhone||'—')}
+      ${infoCell('👤','Owner',c.name||'—',false,c.name)}
+      ${infoCell('📧','Email',c.email||'—',false,c.email)}
+      ${infoCell('📱','Mobile',c.phone||'—',false,c.phone)}
+      ${infoCell('📞','Business Phone',c.bizPhone||'—',false,c.bizPhone)}
       ${infoCell('📡','Network',(c.network&&netLabels[c.network])||'Unknown')}
       ${infoCell('🎙️','Voice',(c.voice||'female').charAt(0).toUpperCase()+(c.voice||'female').slice(1))}
       ${infoCell('📍','City',c.city||'—')}
@@ -1980,7 +2033,7 @@ function renderCmodalSetup(c){
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><span style="font-size:12px;font-weight:600;">Progress</span><span style="font-size:12px;color:${pct===100?'var(--green)':'var(--muted)'};">${pct}%</span></div>
       <div style="background:var(--bg);border-radius:6px;height:6px;overflow:hidden;"><div style="height:100%;background:${pct===100?'var(--green)':'var(--accent)'};width:${pct}%;transition:width 0.3s"></div></div>
     </div>
-    ${wf.twilioNumber?`<div style="background:rgba(0,212,170,0.07);border:1px solid rgba(0,212,170,0.25);border-radius:8px;padding:10px 12px;margin-bottom:12px;"><div style="font-size:10px;color:var(--green);margin-bottom:3px;">🤖 AI Phone Number (Twilio)</div><div style="font-size:14px;font-weight:700;">${wf.twilioNumber}</div><button class="btn btn-ghost btn-sm" style="margin-top:6px" onclick="copyForwardingGuide('${c.id}')">📋 Copy Forwarding Guide</button></div>`:'<div style="background:rgba(255,179,71,0.08);border:1px solid rgba(255,179,71,0.25);border-radius:8px;padding:10px 12px;margin-bottom:12px;font-size:12px;color:var(--warn);">⚠️ No Twilio number yet — add it in step 3 below</div>'}
+    ${wf.twilioNumber?`<div style="background:rgba(0,212,170,0.07);border:1px solid rgba(0,212,170,0.25);border-radius:8px;padding:10px 12px;margin-bottom:12px;"><div style="font-size:10px;color:var(--green);margin-bottom:3px;">🤖 AI Phone Number (Telnyx/VAPI)</div><div style="font-size:14px;font-weight:700;">${wf.twilioNumber}</div><div style="display:flex;gap:6px;margin-top:6px;"><button class="btn btn-ghost btn-sm" onclick="copyForwardingGuide('${c.id}')">📋 Copy Forwarding Guide</button><button class="btn btn-ghost btn-sm" onclick="copyCell('${wf.twilioNumber}')" title="Copy number">📋 Copy Number</button></div></div>`:'<div style="background:rgba(255,179,71,0.08);border:1px solid rgba(255,179,71,0.25);border-radius:8px;padding:10px 12px;margin-bottom:12px;font-size:12px;color:var(--warn);">⚠️ No VAPI/Telnyx number yet — buy at telnyx.com, connect in VAPI, add it to this client\'s Voice Setup</div>'}
     <div style="display:flex;flex-direction:column;gap:6px;">
       ${WF_STEPS.map((step,i)=>`<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--surface2);border-radius:8px;cursor:pointer;" onclick="toggleWfStepModal('${wf.id}',${i})">
         <div style="width:18px;height:18px;border-radius:5px;border:2px solid ${wf.steps[i]?'var(--green)':'var(--border)'};background:${wf.steps[i]?'var(--green)':'transparent'};display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;color:#000;">${wf.steps[i]?'✓':''}</div>
