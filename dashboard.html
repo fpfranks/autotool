@@ -458,24 +458,55 @@
   <div id="page-revenue" class="page">
     <div class="page-header"><h1>Revenue</h1><p>Your monthly income breakdown</p></div>
     <div class="grid-4 mb-4">
-      <div class="stat"><div class="stat-label">Gross Revenue</div><div class="stat-value purple" id="r-gross">£0</div><div class="stat-sub">from all clients</div></div>
-      <div class="stat"><div class="stat-label">VAPI Costs</div><div class="stat-value orange" id="r-cost">£0</div><div class="stat-sub">~£35 per client</div></div>
-      <div class="stat"><div class="stat-label">Other Costs</div><div class="stat-value orange">~£10</div><div class="stat-sub">VAPI numbers + misc</div></div>
+      <div class="stat"><div class="stat-label">Gross Revenue</div><div class="stat-value purple" id="r-gross">£0</div><div class="stat-sub">from active clients</div></div>
+      <div class="stat"><div class="stat-label">Total Costs</div><div class="stat-value orange" id="r-cost">£0</div><div class="stat-sub" id="r-cost-sub">per client × 0</div></div>
       <div class="stat"><div class="stat-label">Net Profit</div><div class="stat-value green" id="r-profit">£0</div><div class="stat-sub">in your pocket</div></div>
+      <div class="stat"><div class="stat-label">Profit Margin</div><div class="stat-value green" id="r-margin">0%</div><div class="stat-sub">per client</div></div>
     </div>
-    <div class="card">
-      <div class="card-title">Client Breakdown</div>
-      <table class="table">
-        <thead><tr><th>Business</th><th>Monthly Fee</th><th>VAPI Cost</th><th>Your Profit</th><th>Status</th></tr></thead>
-        <tbody id="revenue-tbody"><tr><td colspan="5" class="empty">No active clients yet.</td></tr></tbody>
-      </table>
-      <div style="margin-top:16px;padding:14px;background:var(--surface2);border-radius:8px;font-size:13px;line-height:1.8;">
-        <strong>Scale targets:</strong><br>
-        5 clients → <span style="color:var(--green)">£795/mo profit</span> &nbsp;·&nbsp;
-        10 clients → <span style="color:var(--green)">£1,605/mo profit</span> &nbsp;·&nbsp;
-        20 clients → <span style="color:var(--green)">£3,225/mo profit</span> &nbsp;·&nbsp;
-        30 clients → <span style="color:var(--green)">£4,845/mo profit</span>
+
+    <!-- Cost settings -->
+    <div class="card" style="margin-bottom:18px;">
+      <div class="card-title">Cost Per Client (edit to match your actual usage)</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px;">
+        <div>
+          <label class="form-label">VAPI call costs /mo (£)</label>
+          <input class="form-input" id="cost-vapi" type="number" value="30" min="0" oninput="renderRevenue()"/>
+          <div style="font-size:10px;color:var(--muted);margin-top:4px;">~500 mins × £0.06/min avg</div>
+        </div>
+        <div>
+          <label class="form-label">Telnyx number /mo (£)</label>
+          <input class="form-input" id="cost-telnyx" type="number" value="1" min="0" oninput="renderRevenue()"/>
+          <div style="font-size:10px;color:var(--muted);margin-top:4px;">~$1.25/mo per UK number</div>
+        </div>
+        <div>
+          <label class="form-label">Other costs /mo (£)</label>
+          <input class="form-input" id="cost-other" type="number" value="5" min="0" oninput="renderRevenue()"/>
+          <div style="font-size:10px;color:var(--muted);margin-top:4px;">tools, misc per client</div>
+        </div>
       </div>
+      <div style="background:var(--surface2);border-radius:8px;padding:12px;display:flex;gap:24px;flex-wrap:wrap;font-size:12px;">
+        <div>💰 Fee per client: <strong style="color:var(--green)">£197/mo</strong></div>
+        <div>📉 Cost per client: <strong style="color:var(--warn)" id="r-per-cost">£36</strong></div>
+        <div>✅ Profit per client: <strong style="color:var(--green)" id="r-per-profit">£161</strong></div>
+        <div>📊 Margin: <strong style="color:var(--green)" id="r-per-margin">82%</strong></div>
+      </div>
+    </div>
+
+    <!-- Client table -->
+    <div class="card" style="margin-bottom:18px;">
+      <div class="card-title">Active Client Breakdown</div>
+      <div style="overflow-x:auto;">
+        <table class="table">
+          <thead><tr><th>Business</th><th>Fee</th><th>VAPI</th><th>Telnyx</th><th>Other</th><th>Total Cost</th><th>Profit</th></tr></thead>
+          <tbody id="revenue-tbody"><tr><td colspan="7" class="empty">No active clients yet.</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Scale targets -->
+    <div class="card">
+      <div class="card-title">Scale Targets</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;" id="r-scale"></div>
     </div>
   </div>
 
@@ -1244,15 +1275,65 @@ function renderTodos(){
 
 function renderRevenue(){
   const active=customers.filter(c=>c.status==='active');
+  const vapi=parseFloat(document.getElementById('cost-vapi')?.value)||30;
+  const telnyx=parseFloat(document.getElementById('cost-telnyx')?.value)||1;
+  const other=parseFloat(document.getElementById('cost-other')?.value)||5;
+  const costPerClient=vapi+telnyx+other;
   const gross=active.reduce((s,c)=>s+(parseFloat(c.fee)||197),0);
-  const vapiCost=active.length*35;
-  const profit=Math.max(0,gross-vapiCost-15);
+  const totalCost=active.length*costPerClient;
+  const profit=Math.max(0,gross-totalCost);
+  const margin=gross>0?Math.round((profit/gross)*100):0;
+
   document.getElementById('r-gross').textContent='£'+gross;
-  document.getElementById('r-cost').textContent='£'+vapiCost;
-  document.getElementById('r-profit').textContent='£'+profit;
+  document.getElementById('r-cost').textContent='£'+totalCost.toFixed(0);
+  const rCostSub=document.getElementById('r-cost-sub');
+  if(rCostSub) rCostSub.textContent='£'+costPerClient.toFixed(0)+' per client × '+active.length;
+  document.getElementById('r-profit').textContent='£'+profit.toFixed(0);
+  document.getElementById('r-margin').textContent=margin+'%';
+
+  // Per-client summary row
+  const avgFee=active.length?gross/active.length:197;
+  const perProfit=avgFee-costPerClient;
+  const perMargin=avgFee>0?Math.round((perProfit/avgFee)*100):0;
+  const perCostEl=document.getElementById('r-per-cost');
+  const perProfitEl=document.getElementById('r-per-profit');
+  const perMarginEl=document.getElementById('r-per-margin');
+  if(perCostEl) perCostEl.textContent='£'+costPerClient.toFixed(0);
+  if(perProfitEl) perProfitEl.textContent='£'+perProfit.toFixed(0);
+  if(perMarginEl) perMarginEl.textContent=perMargin+'%';
+
+  // Revenue table
   const tbody=document.getElementById('revenue-tbody');
-  if(!active.length){tbody.innerHTML='<tr><td colspan="5" class="empty">No active clients yet.</td></tr>';return;}
-  tbody.innerHTML=active.map(c=>`<tr><td><strong>${c.biz}</strong></td><td style="color:var(--green)">£${c.fee||197}</td><td style="color:var(--warn)">£35</td><td style="color:var(--green)">£${(parseFloat(c.fee)||197)-35}</td><td><span class="badge badge-active">active</span></td></tr>`).join('');
+  if(!active.length){tbody.innerHTML='<tr><td colspan="7" class="empty">No active clients yet.</td></tr>';return;}
+  tbody.innerHTML=active.map(c=>{
+    const fee=parseFloat(c.fee)||197;
+    const p=fee-costPerClient;
+    return `<tr>
+      <td><strong>${c.biz}</strong></td>
+      <td style="color:var(--green)">£${fee}</td>
+      <td style="color:var(--warn)">£${vapi.toFixed(0)}</td>
+      <td style="color:var(--warn)">£${telnyx.toFixed(2)}</td>
+      <td style="color:var(--warn)">£${other.toFixed(0)}</td>
+      <td style="color:var(--warn)">£${costPerClient.toFixed(0)}</td>
+      <td style="color:${p>=0?'var(--green)':'var(--red)'}"><strong>£${p.toFixed(0)}</strong></td>
+    </tr>`;
+  }).join('');
+
+  // Scale targets
+  const scaleEl=document.getElementById('r-scale');
+  if(scaleEl){
+    scaleEl.innerHTML=[5,10,20,50].map(n=>{
+      const g=n*avgFee;
+      const tc=n*costPerClient;
+      const p=g-tc;
+      const m=g>0?Math.round((p/g)*100):0;
+      return `<div class="stat" style="text-align:center">
+        <div class="stat-label">${n} Clients</div>
+        <div class="stat-value green" style="font-size:22px">£${p.toFixed(0)}</div>
+        <div class="stat-sub">£${g.toFixed(0)} gross · ${m}% margin</div>
+      </div>`;
+    }).join('');
+  }
 }
 
 // ── EMAILS / ONBOARDING PIPELINE ──
