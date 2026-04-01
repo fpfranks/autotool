@@ -1,152 +1,180 @@
 ========================================================
-AI LEAD REPLY BOT — LOOM DEMO VIDEO SCRIPT
-Target Length: 3 Minutes | Word-for-Word Script
+AI PHONE RECEPTIONIST — DEMO VIDEO SCRIPT
+Phillips Automates | Target: 2.5–3 Minutes | Word-for-Word
 ========================================================
 
 BEFORE YOU RECORD — SETUP CHECKLIST
 -------------------------------------
-[ ] Screen is clean — close all tabs except the ones listed below
-[ ] Have a test conversation ready in your AI bot (or use a staging version)
-[ ] Open tabs in this order: (1) a simple business website with a contact form, (2) your n8n or bot dashboard, (3) your WhatsApp on screen (use WhatsApp Web)
-[ ] Speak naturally — imperfections are fine. This should feel like a mate showing you something, not a corporate demo.
+[ ] Phone charged and ready — you'll use it to make the demo call
+[ ] Have your VAPI demo assistant set up ("Demo Plumbing Co" or similar)
+[ ] Have a demo Telnyx number connected to that assistant
+[ ] Screen is clean — close everything except what's listed below
+[ ] Open tabs: (1) phillipsautomates.co.uk, (2) your phone (for the call), (3) your messages app showing a "text notification" mock-up
+[ ] Face cam on — small corner. It builds trust.
 [ ] Record in 1080p minimum
-[ ] Keep your face cam on — it builds trust. Small, bottom corner is fine.
-[ ] Aim for 2.5–3.5 minutes total. Don't pad it.
+[ ] Speak like a mate showing someone something cool — not a corporate pitch
+[ ] Aim for 2.5–3 minutes. Don't pad it.
 
 ========================================================
 SECTION 1 — INTRO (0:00–0:15)
 ========================================================
 
-[SCREEN: Show your face cam only, or a simple branded title card with your name/logo]
+[SCREEN: Face cam only, or simple branded title card — "Phillips Automates"]
 
 SCRIPT:
-"Hey — I'm [YOUR NAME], and in the next three minutes I'm going to show you exactly how the AI Lead Reply Bot works, so you can see what it looks like in practice before you decide if it's right for your business.
+"Hey — I'm Frankie, and in the next three minutes I'm going to show you exactly
+how the AI phone receptionist works. You'll hear it answer a real call, handle
+the question, and then watch the text land on the business owner's phone.
 
-No fluff — let's get straight into it."
+No fluff — let's just show you."
 
-[SCREEN: Transition to your screen share — show the bot's landing page or your desktop]
+[SCREEN: Transition to your website — phillipsautomates.co.uk]
 
 ========================================================
-SECTION 2 — THE PROBLEM (0:15–0:45)
+SECTION 2 — THE PROBLEM (0:15–0:40)
 ========================================================
 
-[SCREEN: Show a typical local business website — ideally a garage, salon, or restaurant with a contact form. Point your cursor to the contact form.]
+[SCREEN: Point cursor to the hero headline on your sales page]
 
 SCRIPT:
-"So here's the situation most local businesses are in. You've got a website, you've got a contact form, maybe you've even paid for Google Ads or a Yell listing to drive traffic to it.
+"So here's the situation. You run a small business. You're a plumber, a salon owner,
+a garage — doesn't matter. Your phone rings while you're with a customer, under a
+car, mid-cut. You can't answer.
 
-Someone lands on your site at 9 o'clock on a Tuesday evening, fills in this form — asking about prices, asking about availability — and then... nothing happens until you open up the next morning.
+What happens? It goes to voicemail. And research shows most callers don't leave
+one — they just ring the next number they find on Google.
 
-By that point, they've already called someone else. Research shows 78% of customers go with whoever responds first. Not the best — the fastest.
+[Pause]
 
-[Pause and look at camera]
+UK small businesses miss up to 62% of inbound calls during the working day. Most
+of those are missed bookings and jobs that go to a competitor who happened to pick up.
 
-This is exactly the problem the AI Lead Reply Bot solves. Let me show you how."
-
-[SCREEN: Move cursor away from the contact form, begin navigating to your bot demo]
+That's the problem. Here's what we do about it."
 
 ========================================================
-SECTION 3 — LIVE DEMO WALKTHROUGH (0:45–2:15)
+SECTION 3 — LIVE DEMO (0:40–2:00)
 ========================================================
 
---- PART A: Showing an enquiry come in (0:45–1:15) ---
+--- PART A: Setting the scene (0:40–0:55) ---
 
-[SCREEN: Show the business website contact form. If possible, have a second browser window or phone ready to "send" a test enquiry.]
-
-SCRIPT:
-"So I'm going to pretend I'm a potential customer. It's 10:30pm, I need an MOT done this week and I've just found this garage's website.
-
-I fill in the form — name, email, quick message asking about slots this week."
-
-[SCREEN: Fill in the contact form with test details: Name "Sarah Mitchell", email "sarah.m@test.com", message: "Hi, do you have any MOT slots available this week? My car's due Friday — reg is AB21 XYZ. Thanks"]
+[SCREEN: Show your phone or describe what you're about to do]
 
 SCRIPT:
-"I hit send. Now, normally, this would just sit in someone's inbox overnight. But watch what happens."
+"I'm going to call the demo number right now. This is a real VAPI AI assistant
+I've set up as a demo — called Demo Plumbing Co. Imagine this is one of our clients.
 
---- PART B: Bot responds instantly (1:15–1:45) ---
+It's 10:30 at night. Pete the plumber is asleep. His phone is on silent.
+I'm ringing as a potential customer who needs an emergency tap repair."
 
-[SCREEN: Switch to your bot's outgoing message dashboard or email client showing the automated reply going out. If you're using n8n, you can show the workflow execution log. Alternatively, show the customer's inbox with the reply appearing.]
+--- PART B: Making the call (0:55–1:35) ---
+
+[ACTION: Dial the demo number — record the call audio clearly]
+[SCREEN: Show your phone screen with the call connecting]
+
+SCRIPT (while calling):
+"So I'm dialling now..."
+
+[AI answers — let it play out naturally. The AI should say something like:]
+AI: "Hello, thanks for calling Demo Plumbing Co! How can I help you today?"
+YOU: "Hi yeah — I've got a leaking tap, how much would that be to fix?"
+AI: "A tap repair is £65 including parts, or £85 for a full replacement.
+     Would you like to get booked in?"
+YOU: "Yeah that'd be great, how soon can you do it?"
+AI: "I'll take your name and number and Pete will call you back first thing to
+     confirm a slot. What's your name?"
+YOU: "It's Sarah Mitchell."
+AI: "Perfect, and the best number to reach you on?"
+YOU: "07700 900123."
+AI: "Got it — Sarah Mitchell, 07700 900123. Pete will be in touch first thing.
+     Is there anything else I can help with?"
+YOU: "No that's brilliant, thanks."
+AI: "Great — thanks for calling Demo Plumbing Co. Have a great evening!"
+
+[SCREEN: End the call]
 
 SCRIPT:
-"Within two seconds — literally two seconds — Sarah gets a reply. Let me show you what that looks like."
+"There you go. Friendly, professional, got everything it needed.
+Pete's asleep. That job is captured."
 
-[SCREEN: Open the test email inbox or WhatsApp showing the bot's response. Read the reply out loud, or highlight key parts with your cursor:]
+--- PART C: The text arrives (1:35–1:55) ---
 
-Example bot reply to read out:
-"Hi Sarah! Thanks for getting in touch with City Auto Centre — great timing. We've got MOT slots available on Thursday at 10am and Friday at 9am this week. Which works best for you? Just let us know and we'll get you booked in. We're on the high street in Wolverhampton. See you soon! — City Auto Centre"
-
-SCRIPT:
-"See that? It's friendly, it sounds like the garage owner wrote it, it's answered her question, it's given her two options, and it's moved her closer to booking — all automatically, in the middle of the night."
-
---- PART C: WhatsApp notification to the owner (1:45–2:00) ---
-
-[SCREEN: Switch to WhatsApp Web on your screen, or show your phone with the WhatsApp notification. Show the bot's notification message to the business owner.]
+[SCREEN: Show a phone notification / text message — real or mock-up — arriving]
 
 SCRIPT:
-"Meanwhile, on the business owner's phone — they get a WhatsApp notification. Something like this:"
+"And right now — while Pete is still asleep — this text arrives on his phone."
 
-[SCREEN: Highlight the WhatsApp message that reads something like: "NEW LEAD — Sarah Mitchell | MOT Enquiry | Reg: AB21 XYZ | Preferred slot: Friday 9am | Email: sarah.m@test.com | RESPONDED ✅"]
-
-SCRIPT:
-"They wake up, they see the notification, they know exactly who's coming in, what they need, and when. Job done — and they didn't have to do a thing."
-
---- PART D: What the business owner doesn't have to do (2:00–2:15) ---
-
-[SCREEN: Return to face cam, or show a simple slide that says "What You Don't Have to Do" with a few crossed-out items]
+[Show the text:]
+"📞 New call — Demo Plumbing Co
+Caller: Sarah Mitchell
+Number: 07700 900123
+Enquiry: tap repair, wants booking
+Ring her back to confirm slot."
 
 SCRIPT:
-"And here's what the garage owner didn't have to do: they didn't have to sit up until midnight. They didn't have to check their emails at 6am. They didn't have to chase the lead.
+"He wakes up, sees it, calls Sarah back at 8am. Job booked. Lead never lost."
 
-The bot handled it. They just showed up on Friday morning and did the MOT."
+--- PART D: What Pete didn't have to do (1:55–2:10) ---
+
+[SCREEN: Simple text slide or back to face cam]
+
+SCRIPT:
+"Here's what Pete didn't do: he didn't sit up waiting for calls. He didn't
+miss a booking. He didn't have to pay for an answering service or a receptionist.
+
+He just forwarded his calls to the AI number — took 30 seconds on his phone — and
+now every call he can't answer gets handled professionally, 24 hours a day."
 
 ========================================================
-SECTION 4 — RESULTS / SOCIAL PROOF (2:15–2:35)
+SECTION 4 — HOW IT WORKS / WHAT'S INCLUDED (2:10–2:35)
 ========================================================
 
-[SCREEN: Show a simple slide or text on screen — you can use a Canva graphic or just text overlaid on your screen. OR speak to camera.]
+[SCREEN: phillipsautomates.co.uk — scroll to the How It Works section]
 
 SCRIPT:
-"Now I know what you're thinking — does it actually work in the real world?
+"The setup is completely done for you. You fill in a short form, reply to one email
+with your prices and hours, and we build the whole thing — the AI voice, the phone
+number, everything. You get a 30-second guide to set up call forwarding on your
+phone. That's the only thing you ever do.
 
-I've had garage owners tell me they're picking up 3–4 extra bookings per week from this. Salon owners converting evening enquiries they'd previously lost completely. Restaurant owners getting private hire bookings confirmed before they even finish service.
+It's £197 a month. No setup fee, no contracts, cancel anytime with one email.
+And it's live within 24 hours of us getting your info.
 
-The setup is included in the £297 — I do all of it. And the monthly plan at £147 covers ongoing support, updates, and hosting. Most clients earn that back in the first week."
-
-[SCREEN: If you have a testimonial or screenshot, briefly show it here — even a WhatsApp message from a client works well]
+If this picks up even one extra booking a week — for most trades that's already
+more than the monthly cost."
 
 ========================================================
 SECTION 5 — CLOSE / CTA (2:35–2:50)
 ========================================================
 
-[SCREEN: Show your sales page URL on screen — either as a browser tab or as text overlaid. Make it easy to read.]
+[SCREEN: Scroll to the sign-up form or show the URL clearly]
 
 SCRIPT:
-"If this looks like something your business needs, the full details — including pricing and what's included — are on the page I'll link below this video.
+"If you want to see what it looks like for your business, head to the link below.
+Fill in the form, and within 24 hours you'll have an AI answering your calls
+while you get on with the work.
 
-Setup takes 48 hours, there's a 30-day money-back guarantee, and you don't need any technical knowledge. I handle everything.
+Thanks for watching — any questions, my email is on the page."
 
-Go have a look, and if you've got questions, my email's on the page too.
-
-Thanks for watching."
-
-[SCREEN: End on your sales page or a simple branded end card with the URL and your name]
+[SCREEN: End on phillipsautomates.co.uk or a simple branded end card]
 
 ========================================================
 POST-RECORDING CHECKLIST
 ========================================================
 
-Before uploading to Loom / publishing:
-[ ] Watch it back at 1.5x speed — does it make sense? Does it drag anywhere?
-[ ] Check your audio — is it clear? No background noise?
-[ ] Trim the start and end (most Loom editors let you do this)
-[ ] Add a thumbnail — your face or a screenshot of the bot reply works well
-[ ] Title your Loom: "AI Lead Reply Bot — 3 Minute Demo"
-[ ] Copy the share link and paste it into [YOUR_LOOM_VIDEO] on your sales page
+Before publishing:
+[ ] Watch back at 1.5x — does it drag anywhere? Cut anything over 3 mins
+[ ] Audio clear? No echo, no background noise?
+[ ] Trim dead air at start and end
+[ ] Add thumbnail — your face on the phone call works well
+[ ] Title: "AI Phone Receptionist — Live Demo | Phillips Automates"
+[ ] Copy share link — paste it onto your sales page where [LOOM_VIDEO] placeholder is
 
 OPTIONAL EXTRAS:
-- Record a B-roll of you on your phone sending the test enquiry — splice it in at Section 3A
-- Add light background music (Loom has this built in or use Epidemic Sound — "corporate lo-fi" works well)
-- Consider adding captions for people watching on mute (Loom can auto-generate these)
+- Record a separate close-up of the phone screen during the call and splice it in
+- Add captions for people watching on mute (Loom auto-generates these)
+- Light background music — "corporate lo-fi" on Epidemic Sound works well
+- Consider adding a second demo with a different business type (salon, garage) to
+  show versatility — you can cut between them in one video
 
 ========================================================
 END OF LOOM SCRIPT

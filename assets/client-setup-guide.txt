@@ -1,119 +1,156 @@
-CLIENT SETUP GUIDE — Phillips Automates
-========================================
-Hi [Client Name],
+========================================================
+CLIENT CALL FORWARDING GUIDE — Phillips Automates
+Send this to the client when their AI receptionist is ready
+========================================================
 
-Thanks for signing up to Phillips Automates! 🎉
+NOTE FOR FRANKIE: The dashboard auto-generates the correct forwarding codes
+for each client based on their phone network. Use the 📋 Copy Forwarding Guide
+button in the client's pipeline card — it creates a WhatsApp/SMS-ready message
+with their specific codes. Use this file as a reference only.
 
-To get your AI bot live within 24 hours we just need you
-to follow the steps below for the channels you selected.
-It takes around 10 minutes and you won't need to share
-any passwords.
+========================================================
+HOW CALL FORWARDING WORKS — EXPLAIN THIS TO THE CLIENT
+========================================================
 
-Once you're done just reply to this email and we'll take
-care of everything else.
+Call forwarding only activates when you don't answer. Your phone rings normally
+for 15–20 seconds. If you pick up — great, business as usual. If you can't answer,
+the call automatically diverts to your AI receptionist instead of going to voicemail.
 
-========================================
-STEP 1 — ALL CLIENTS (Required)
-========================================
+You don't change your existing business number. Callers still ring the same number
+they always have. The only difference is: now someone always answers.
 
-Add Frankie as an Admin on your Facebook Page. This lets
-us connect your accounts to the bot without needing your
-login details.
+To turn it off at any time, dial the cancel code below. It's instant.
 
-1. Go to your Facebook Page
-2. Click Manage → Page Access → Add New
-3. Search for: phillipsautomates@gmail.com
-4. Set role to: Admin
-5. Click Confirm
+========================================================
+FORWARDING CODES BY NETWORK
+========================================================
 
-That's the most important step. Everything else connects
-through this.
+These codes are dialled directly on your phone (like a normal call). Press the green
+Call button after each one. You'll hear a confirmation tone or message.
 
-========================================
-INSTAGRAM
-========================================
+────────────────────────────
+EE
+────────────────────────────
+Important: EE requires the AI number in international format (+44 not 07...).
+Your dashboard automatically formats this correctly.
 
-1. Open Instagram → go to your profile
-2. Tap the three lines (top right) → Settings
-3. Tap Account → Switch to Professional Account
-4. Choose Business (not Creator)
-5. Connect it to your Facebook Page when prompted
+No answer:  **61*+44XXXXXXXXXX*11*20#
+Busy:       **67*+44XXXXXXXXXX#
+Phone off:  **62*+44XXXXXXXXXX#
+Cancel all: ##61# then ##67# then ##62#
 
-That's it — once your Instagram is connected to your
-Facebook Page we can link it to the bot.
+────────────────────────────
+O2
+────────────────────────────
+No answer:  **61*XXXXXXXXXXX*11*20#
+Busy:       **67*XXXXXXXXXXX#
+Phone off:  **62*XXXXXXXXXXX#
+Cancel all: ##61# then ##67# then ##62#
 
-========================================
-FACEBOOK MESSENGER
-========================================
+────────────────────────────
+Vodafone
+────────────────────────────
+No answer:  **61*XXXXXXXXXXX*11*20#
+Busy:       **67*XXXXXXXXXXX#
+Phone off:  **62*XXXXXXXXXXX#
+Cancel all: ##61# then ##67# then ##62#
 
-Nothing extra needed. Once you've added us as Admin on
-your Facebook Page (Step 1) we can connect Messenger
-automatically.
+────────────────────────────
+Three / iD Mobile
+────────────────────────────
+No answer:  **61*XXXXXXXXXXX*11*20#
+Busy:       **67*XXXXXXXXXXX#
+Phone off:  **62*XXXXXXXXXXX#
+Cancel all: ##61# then ##67# then ##62#
 
-========================================
-WHATSAPP
-========================================
+────────────────────────────
+Sky / giffgaff / Talkmobile
+────────────────────────────
+No answer:  **61*XXXXXXXXXXX*11*20#
+Busy:       **67*XXXXXXXXXXX#
+Phone off:  **62*XXXXXXXXXXX#
+Cancel all: ##61# then ##67# then ##62#
 
-1. Download WhatsApp Business app (free on App Store /
-   Google Play) if you don't have it already
-2. Set it up with your business phone number
-3. Go to Settings → Business Tools → make sure your
-   business name and description are filled in
-4. Reply to this email with your WhatsApp Business number
-   and we'll connect it from our end
+────────────────────────────
+Landline / VoIP number
+────────────────────────────
+Landlines and VoIP numbers cannot use USSD codes. The client needs to:
+1. Log in to their phone provider's online account, OR
+2. Call their provider and ask them to set up "conditional call divert"
+   to the AI number when calls go unanswered.
 
-========================================
-TIKTOK
-========================================
+Most providers (BT, Virgin, Vonage, etc.) offer this as a free setting.
+It takes them about 10 minutes with their provider on the phone.
 
-1. Open TikTok → tap Profile → tap the three lines
-2. Go to Settings → Manage Account
-3. Tap Switch to Business Account
-4. Choose the category that best fits your business
-5. Reply to this email with your TikTok @username
+Send them this message:
+"Hi [NAME]! Your AI receptionist is ready. Because you have a landline/VoIP number,
+you'll need to set up call forwarding through your phone provider rather than dialling
+a code. Just ring them and ask to set up 'conditional call divert' to [AI NUMBER] —
+it's a standard free feature and takes about 10 minutes. Let me know when it's done
+and I'll test it from my end! — Frankie, Phillips Automates"
 
-========================================
-SMS / TEXT
-========================================
+========================================================
+WHAT TO SAY ON WHATSAPP WHEN SENDING THE GUIDE
+========================================================
 
-1. Reply to this email with the phone number you want
-   to receive texts on
-2. We'll set up a dedicated number that forwards to
-   your bot automatically
-3. You don't need to change your existing number
+(Dashboard generates this automatically — 📋 Copy Forwarding Guide button)
 
-========================================
-EMAIL
-========================================
+Template:
 
-1. Reply to this email with the email address you want
-   the bot to handle (e.g. hello@yourbusiness.co.uk)
-2. We'll send you a simple forwarding rule to set up
-   (takes 2 minutes in Gmail or Outlook)
+"Hi [NAME]! Your AI receptionist is ready. Here's how to activate it — takes 30
+seconds on your phone:
 
-========================================
-TELEGRAM
-========================================
+Your AI number: [TELNYX NUMBER]
 
-1. Download Telegram if you don't have it
-2. Reply to this email with your preferred
-   Telegram @username or business name
-3. We'll create and connect the bot for you
+Dial each of these on your phone then press Call:
+[NO ANSWER CODE]  ← for when you don't pick up
+[BUSY CODE]  ← for when you're on a call
+[PHONE OFF CODE]  ← for when your phone is off
 
-========================================
-ONCE YOU'VE DONE YOUR STEPS
-========================================
+That's it — you're live! Every missed call gets answered by your AI.
+To turn it off any time: [CANCEL CODE]
 
-Just reply to this email with:
-✅ Done — and list which channels you've set up
+Let me know when you've done it and I'll test it from my end!
+— Frankie, Phillips Automates"
 
-We'll take it from there and have your bot live within
-24 hours. We'll send you a confirmation email when
-everything is ready along with a short guide on how to
-view and manage your conversations in ManyChat.
+========================================================
+AFTER THE CLIENT ACTIVATES — YOUR CHECKLIST
+========================================================
 
-Any questions just reply to this email.
+[ ] Call their business number from a different phone — AI should answer
+[ ] Listen for professional greeting with correct business name
+[ ] Test: ask for prices — check AI gives correct info
+[ ] Test: ask to make a booking — check AI takes name/number correctly
+[ ] Mark client as Active in dashboard (Pipeline → their card → View → ✅ Mark Active)
+[ ] Send a WhatsApp the next day: "How's it going? Any feedback?"
+[ ] 2 weeks in: check in with a quick message
+[ ] 30 days in: ask for a Google or Trustpilot review
 
-Frankie
-Phillips Automates
-phillipsautomates@gmail.com
+========================================================
+TROUBLESHOOTING — COMMON CLIENT ISSUES
+========================================================
+
+"The codes aren't working"
+→ Check they're dialling correctly — no spaces, press Call after each
+→ Some phones need you to hold # until it connects — tell them to try that
+→ Ask what network they're on — different networks use slightly different codes
+→ EE: confirm the number starts with +44, not 07
+
+"It's going straight to voicemail still"
+→ The no-answer code sets a ring time. 20 seconds is default. Check code was dialled correctly.
+→ Ask them to test by calling from another phone and deliberately not answering
+
+"The AI isn't answering"
+→ Check the Telnyx number is connected to the VAPI assistant in the VAPI dashboard
+→ Check VAPI assistant is not paused or over usage limits
+→ Call the Telnyx number directly (not via forwarding) — if AI answers, the issue is the forwarding code
+→ If AI doesn't answer direct, the VAPI/Telnyx connection needs checking
+
+"The AI said something wrong"
+→ Update the VAPI system prompt with the corrected info
+→ Changes take effect immediately
+→ Reassure client — just email Frankie with what needs changing, done within 24 hours
+
+========================================================
+END OF CLIENT SETUP GUIDE
+========================================================

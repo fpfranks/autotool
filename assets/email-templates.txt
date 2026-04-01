@@ -1,57 +1,62 @@
 ========================================================
-AI REPLY BOT — COLD EMAIL TEMPLATES & FOLLOW-UP SEQUENCES
+AI PHONE RECEPTIONIST — COLD EMAIL TEMPLATES & FOLLOW-UP SEQUENCES
 UK Niches | British English | Ready to Send
-ManyChat Model | £47/month after first free month
+Phillips Automates | £197/month | No contracts
 ========================================================
 
 HOW TO USE THESE TEMPLATES
 ---------------------------
-- Replace [BUSINESS NAME] and [OWNER NAME] with real details from your research
-- Replace [YOUR_SALES_PAGE_URL] with your actual sales page URL
-- Keep subject lines short — they're written for high open rates
-- Send from a warmed-up Gmail address (see gmail-setup.txt)
-- Never bulk-send. Personalise each one slightly before hitting send.
-- Aim for 10–15 personalised sends per day maximum
+- Replace [BUSINESS NAME] and [OWNER NAME] with real details
+- Replace [YOUR_SALES_PAGE_URL] with: phillipsautomates.co.uk (or your GitHub Pages URL)
+- Personalise at least 2 things per email before sending — see checklist at the bottom
+- Send from a warmed-up Gmail (see gmail-setup.txt)
+- Never bulk send. 10 personalised emails a day beats 200 identical ones.
+- Always reply to the same thread on follow-ups so there's context
 
-PRICING REMINDER (single plan — keep it simple):
-- One plan: First month FREE, then £47/month
+PRICING REMINDER:
+- One plan: £197/month
 - No setup fee, no contracts, cancel anytime
-- Live within 24 hours — they don't do anything
-- Always lead with the free month — it removes all risk
+- Live within 24 hours — they don't touch a thing
+- Lead with the missed call angle — that's the pain point that lands
 
 ========================================================
-NICHE 1 — TAKEAWAY / RESTAURANT
+NICHE 1 — PLUMBER / BOILER ENGINEER
 ========================================================
 
 --- INITIAL EMAIL ---
 
-Subject: messages going unanswered on your Facebook page?
+Subject: missing jobs when you're under a boiler?
 
 Hi [OWNER NAME],
 
-Quick one — I came across [BUSINESS NAME] on Google and noticed you get enquiries through Facebook and Instagram.
+Found [BUSINESS NAME] on Google — you look like you stay busy.
 
-I've built an AI bot that instantly replies to every Facebook message and Instagram DM for small food businesses — "are you open tonight?", "do you do gluten free?", "can I pre-order?" — all answered in under 60 seconds, even at midnight on a Friday when you're flat out in the kitchen.
+Quick thing: research shows UK tradespeople miss up to 62% of inbound calls during the working day. After hours it's almost all of them. And when someone has a leaking pipe or a boiler out, they don't leave a voicemail — they ring the next number on Google.
 
-First month is completely free, then £47/month — live in 24 hours. Full details: [YOUR_SALES_PAGE_URL]
+I've built an AI phone receptionist that answers your calls 24/7 when you can't. It tells callers your prices, your hours, and takes a name and number if they want booking in. You get a text the moment the call ends. Nothing to install, no logins — your callers just forward to it.
+
+£197/month, live in 24 hours: [YOUR_SALES_PAGE_URL]
 
 Cheers,
 Frankie
+Phillips Automates
 phillipsautomates@gmail.com
 
 ---
 
 --- DAY 3 FOLLOW-UP ---
 
-Subject: Re: messages going unanswered on your Facebook page?
+Subject: Re: missing jobs when you're under a boiler?
 
 Hi [OWNER NAME],
 
-Just bumping this up — I know Friday and Saturday nights aren't exactly ideal reading time!
+Just bumping this up — I know you're probably on the tools most of the day!
 
-The busiest time for Facebook and Instagram enquiries to a takeaway is Friday evening — which is exactly when you're too slammed to reply. The bot handles all of that automatically so you never lose a customer who couldn't get an answer.
+The thing with emergency call-outs is that whoever picks up first gets the job. The AI receptionist makes sure [BUSINESS NAME] always picks up — even at 10pm on a Sunday when someone's boiler has gone out.
 
-First month free, then £47/month: [YOUR_SALES_PAGE_URL]
+It gives them your prices, takes their details, and texts you straight away. You call them back when you're free. Job's never lost.
+
+£197/month: [YOUR_SALES_PAGE_URL]
 
 Frankie
 phillipsautomates@gmail.com
@@ -60,15 +65,15 @@ phillipsautomates@gmail.com
 
 --- DAY 7 FOLLOW-UP ---
 
-Subject: one more thing — [BUSINESS NAME]
+Subject: thought this might be relevant — [BUSINESS NAME]
 
 Hi [OWNER NAME],
 
-Last proper message from me.
+Had a plumber from [AREA] sign up recently — he said within the first two weeks the AI had handled over 30 calls he'd have missed while on jobs. Several of those turned into boiler installs.
 
-The thing I keep hearing from takeaway owners is "I see the Facebook messages the next day and they've already ordered somewhere else." The bot replies within seconds so that never happens again.
+The call forwarding takes 30 seconds to set up on your phone. You don't change your existing number. And if you ever want it off, one email to me and it's done.
 
-30-day money-back guarantee, no contracts: [YOUR_SALES_PAGE_URL]
+30-day money-back guarantee: [YOUR_SALES_PAGE_URL]
 
 Frankie
 phillipsautomates@gmail.com
@@ -81,13 +86,14 @@ Subject: closing the loop — [BUSINESS NAME]
 
 Hi [OWNER NAME],
 
-Wrapping up — clearly not the right moment, and that's completely fine.
+Last one from me — clearly not the right time, and I completely respect that.
 
-If you ever want your Facebook and Instagram messages handled automatically so no order or enquiry slips through, the details are here: [YOUR_SALES_PAGE_URL]
+If you ever find yourself wondering how many jobs slipped through while you were on site, the full details are here: [YOUR_SALES_PAGE_URL]
 
-Hope the kitchen stays busy,
+Hope the work stays busy,
 Frankie
 phillipsautomates@gmail.com
+
 
 ========================================================
 NICHE 2 — HAIR SALON / BARBER
@@ -95,30 +101,33 @@ NICHE 2 — HAIR SALON / BARBER
 
 --- INITIAL EMAIL ---
 
-Subject: booking requests on Instagram you're seeing hours later?
+Subject: booking calls you're missing while you're mid-cut?
 
 Hi [OWNER NAME],
 
-Quick question about [BUSINESS NAME] — do you get booking requests or enquiries coming in on Instagram or Facebook?
+Came across [BUSINESS NAME] — great reviews.
 
-The problem most salon owners have is that messages come in while they're mid-cut, and by the time there's a free moment to reply, the client has already booked somewhere else. I've built an AI bot that replies to every Instagram DM and Facebook message within 60 seconds — it takes bookings, answers questions about availability, and sends your contact details automatically.
+Here's the thing: most salons miss a third of their inbound calls during the day — clients ringing to book while you're with someone, before you open, or after you've locked up. Those calls either go to voicemail (which most people hang up on) or just get missed entirely.
 
-First month completely free, then £47/month — we set it up in 24 hours. Details: [YOUR_SALES_PAGE_URL]
+I've built an AI phone receptionist that answers every call you can't. It gives callers your prices, your availability, takes their name and number, and texts you straight away. Professional voice, sounds like your business — not a robot.
+
+£197/month, live in 24 hours, no login details needed: [YOUR_SALES_PAGE_URL]
 
 Frankie
+Phillips Automates
 phillipsautomates@gmail.com
 
 ---
 
 --- DAY 3 FOLLOW-UP ---
 
-Subject: Re: booking requests on Instagram you're seeing hours later?
+Subject: Re: booking calls you're missing while you're mid-cut?
 
 Hi [OWNER NAME],
 
-Just a quick follow-up — I know you're probably fully booked on the floor most of the day!
+Quick follow-up — I know you're probably full on the floor most of the day!
 
-The clients most likely slipping through are the ones messaging after 7pm when you've finished for the day. The bot replies to those overnight so you wake up with bookings already waiting. First month is free.
+The calls most likely slipping away from [BUSINESS NAME] are the ones that come in during a busy Saturday morning when every chair is full, and the evening ones after you've closed up. The AI handles those automatically — gives your prices, takes their details, texts you.
 
 More info: [YOUR_SALES_PAGE_URL]
 
@@ -129,13 +138,13 @@ phillipsautomates@gmail.com
 
 --- DAY 7 FOLLOW-UP ---
 
-Subject: thought this might be useful — [BUSINESS NAME]
+Subject: one thing a salon owner told me last week
 
 Hi [OWNER NAME],
 
-Had a salon owner in Leeds get in touch recently — she said the bot picked up several new bookings in its first week, all from Instagram DMs that came in late evenings and Sundays when she wasn't checking her phone.
+Had a salon owner in Manchester tell me the AI picked up 11 calls in its first week that she'd have missed mid-appointment. Eight of those left their details for a callback. Six booked.
 
-£47/month after a free first month — if one booking is worth £40+, it more than pays for itself: [YOUR_SALES_PAGE_URL]
+£197/month. If one booking is worth £40+, it pays for itself in days: [YOUR_SALES_PAGE_URL]
 
 Frankie
 phillipsautomates@gmail.com
@@ -150,11 +159,12 @@ Hi [OWNER NAME],
 
 Wrapping up my follow-ups — clearly not the right fit right now.
 
-If you ever find yourself wishing Instagram DMs and Facebook messages could sort themselves out when you're busy, feel free to take a look: [YOUR_SALES_PAGE_URL]
+If you ever want someone answering your calls while you're with clients, this is the link: [YOUR_SALES_PAGE_URL]
 
 Hope the bookings are flying in,
 Frankie
 phillipsautomates@gmail.com
+
 
 ========================================================
 NICHE 3 — CAR GARAGE / MOT CENTRE
@@ -162,31 +172,34 @@ NICHE 3 — CAR GARAGE / MOT CENTRE
 
 --- INITIAL EMAIL ---
 
-Subject: missing enquiries when you're under a car?
+Subject: MOT enquiries you're missing when you're under a car?
 
 Hi [OWNER NAME],
 
-I was looking at [BUSINESS NAME] online — you're clearly keeping busy.
+Found [BUSINESS NAME] on Google — you're clearly doing well.
 
-The thing with garages is that people message on Facebook or Instagram asking about MOT slots and service bookings at all hours — and if there's no reply, they just book somewhere with a slot free. I've built an AI bot that replies to every Facebook and Instagram message instantly, 24/7 — it answers questions, takes booking requests, and sends your number so they can call to confirm.
+One thing I hear from garage owners all the time: people ring for MOT slots while you're under a car, and by the time you call back they've already booked elsewhere. It's not a service problem, it's a call answering problem.
 
-First month free, then £47/month, live in 24 hours: [YOUR_SALES_PAGE_URL]
+I've built an AI phone receptionist that answers your calls when you can't. It gives callers your MOT and service prices, your opening hours, takes their name and number, and texts you straight away so you can call them back when your hands are clean.
+
+£197/month, live in 24 hours: [YOUR_SALES_PAGE_URL]
 
 Cheers,
 Frankie
+Phillips Automates
 phillipsautomates@gmail.com
 
 ---
 
 --- DAY 3 FOLLOW-UP ---
 
-Subject: Re: missing enquiries when you're under a car?
+Subject: Re: MOT enquiries you're missing when you're under a car?
 
 Hi [OWNER NAME],
 
-Just bumping this up in case it got buried — totally understand you're busy on the tools.
+Just bumping this up in case it got buried — totally understand it's busy on the ramps.
 
-The thing I keep hearing from garage owners is "I was under a car and couldn't answer." That's exactly what this fixes — the bot handles the Facebook and Instagram messages automatically so you don't have to stop what you're doing.
+The AI doesn't replace you for complex questions — it just makes sure no one hangs up or rings a competitor because there was no answer. Gives your prices, takes their details, texts you immediately.
 
 Details here: [YOUR_SALES_PAGE_URL]
 
@@ -203,7 +216,7 @@ Hi [OWNER NAME],
 
 Last one from me, promise.
 
-Had a garage owner sign up recently — within the first week, the bot had handled over a dozen enquiries on Facebook that came in outside of opening hours. They'd have lost them all before.
+Had a garage owner sign up recently — in the first month the AI handled over 40 calls he'd have missed. He said the texts arriving while he was working meant he could call everyone back in order at lunchtime instead of playing catch-up all day.
 
 30-day money-back guarantee, no setup fee: [YOUR_SALES_PAGE_URL]
 
@@ -220,42 +233,46 @@ Hi [OWNER NAME],
 
 Closing out my messages — clearly not the right time, and I completely respect that.
 
-If it ever becomes relevant when things quieten down, full details are here: [YOUR_SALES_PAGE_URL]
+If it ever becomes relevant, full details are here: [YOUR_SALES_PAGE_URL]
 
-Wishing you a busy season,
+Wishing you a busy ramp,
 Frankie
 phillipsautomates@gmail.com
 
+
 ========================================================
-NICHE 4 — PLUMBER / ELECTRICIAN
+NICHE 4 — BEAUTY SALON / NAIL SALON
 ========================================================
 
 --- INITIAL EMAIL ---
 
-Subject: losing emergency jobs because no one replied?
+Subject: losing bookings when your hands are literally full?
 
 Hi [OWNER NAME],
 
-Found [BUSINESS NAME] on Google — looks like you cover [AREA].
+Found [BUSINESS NAME] online — the work looks brilliant.
 
-The thing with trades is that the best jobs (emergency call-outs, big installs) often come through Facebook or Instagram at antisocial hours. If there's no reply within a few minutes, the homeowner rings the next number on Google and you've lost it. I've built an AI bot that replies to every Facebook and Instagram message instantly — day and night — so your leads are captured before they go cold.
+Here's a problem I keep hearing from beauty salon owners: the phone rings while you're mid-treatment and you physically can't answer it. Clients looking to book don't leave voicemails — they just hang up and find another salon that picks up.
 
-First month completely free, then £47/month — live in 24 hours: [YOUR_SALES_PAGE_URL]
+I've built an AI phone receptionist that answers every call you can't. It gives callers your treatments and prices, your availability, takes their name and number, and texts you straight away. You call them back when you're free. No more lost bookings.
+
+£197/month, live in 24 hours, no login details needed: [YOUR_SALES_PAGE_URL]
 
 Frankie
+Phillips Automates
 phillipsautomates@gmail.com
 
 ---
 
 --- DAY 3 FOLLOW-UP ---
 
-Subject: Re: losing emergency jobs because no one replied?
+Subject: Re: losing bookings when your hands are literally full?
 
 Hi [OWNER NAME],
 
-Quick follow-up — I know you're likely on the tools most of the day.
+Quick follow-up — I know you're probably fully booked and then some!
 
-The bot doesn't replace your judgement on which jobs to take — it just makes sure the enquiry is caught on Facebook and Instagram and replied to while it's still warm. No more missed opportunities because you were mid-job.
+The calls slipping away from [BUSINESS NAME] are the ones coming in during your busiest hours and after closing. The AI catches every one of those — sounds professional, gives your prices, takes their details, texts you.
 
 More info: [YOUR_SALES_PAGE_URL]
 
@@ -266,217 +283,13 @@ phillipsautomates@gmail.com
 
 --- DAY 7 FOLLOW-UP ---
 
-Subject: thought this might be relevant — [BUSINESS NAME]
+Subject: thought this would land — [BUSINESS NAME]
 
 Hi [OWNER NAME],
 
-Had an electrician from the Midlands sign up recently — he said he hadn't realised how many people were messaging him on Facebook at 10–11pm asking about jobs. The bot handles all of those now and he books them in the next morning.
+Had a nail salon owner in Birmingham set this up — she said she'd had no idea how many calls were dropping during her afternoon rush until she started getting the texts from the AI. Dozens per week. Most of those are now booked in.
 
-£47/month after a free first month, 30-day guarantee: [YOUR_SALES_PAGE_URL]
-
-Frankie
-phillipsautomates@gmail.com
-
----
-
---- DAY 14 CLOSING THE LOOP ---
-
-Subject: closing the loop — [BUSINESS NAME]
-
-Hi [OWNER NAME],
-
-Last one from me — I appreciate you reading this far even if the timing's not right.
-
-If things ever slow down and you want to make sure every Facebook and Instagram enquiry counts, the full details are here: [YOUR_SALES_PAGE_URL]
-
-Best of luck,
-Frankie
-phillipsautomates@gmail.com
-
-========================================================
-NICHE 5 — ESTATE AGENT
-========================================================
-
---- INITIAL EMAIL ---
-
-Subject: valuation requests sitting unread over the weekend?
-
-Hi [OWNER NAME],
-
-Spotted [BUSINESS NAME] on Rightmove — great listings.
-
-The thing I notice with independent agents is that valuation requests coming in on Facebook or Instagram on Friday evenings sit unread until Monday — and by then the vendor has already booked with whoever replied first. I've built an AI bot that replies to every Facebook message and Instagram DM instantly, qualifies the lead, and books the appointment — 24/7.
-
-First month free, then £47/month: [YOUR_SALES_PAGE_URL]
-
-Best,
-Frankie
-phillipsautomates@gmail.com
-
----
-
---- DAY 3 FOLLOW-UP ---
-
-Subject: Re: valuation requests sitting unread over the weekend?
-
-Hi [OWNER NAME],
-
-Quick follow-up — I know it's a busy time in the market.
-
-The stat that sticks with me is that most vendors go with the first agent to properly respond to their enquiry. Independent agents often lose out purely on response speed, not on service quality. The bot fixes that across Facebook and Instagram for £47/month.
-
-Details: [YOUR_SALES_PAGE_URL]
-
-Frankie
-phillipsautomates@gmail.com
-
----
-
---- DAY 7 FOLLOW-UP ---
-
-Subject: the one edge the big agents have over independents
-
-Hi [OWNER NAME],
-
-Honestly, the main advantage bigger agencies have over independents isn't brand or budget — it's 24/7 responsiveness. Vendors feel heard immediately.
-
-The AI bot gives you that same instant response on Facebook and Instagram without the corporate feel — first month is free: [YOUR_SALES_PAGE_URL]
-
-Frankie
-phillipsautomates@gmail.com
-
----
-
---- DAY 14 CLOSING THE LOOP ---
-
-Subject: signing off — [BUSINESS NAME]
-
-Hi [OWNER NAME],
-
-Last one from me — clearly not on your radar right now and I completely respect that.
-
-If converting more valuations from Facebook and Instagram ever becomes a focus, you know where to find me: [YOUR_SALES_PAGE_URL]
-
-All the best,
-Frankie
-phillipsautomates@gmail.com
-
-========================================================
-NICHE 6 — DENTAL PRACTICE
-========================================================
-
---- INITIAL EMAIL ---
-
-Subject: new patient enquiries going cold on Facebook overnight?
-
-Hi [OWNER NAME / PRACTICE MANAGER],
-
-Came across [PRACTICE NAME] online — you've got some great reviews.
-
-New patient enquiries — especially for cosmetic treatments like Invisalign or whitening — often come in via Facebook or Instagram in the evenings. With no instant reply, patients compare a few practices and book wherever responds first. I've built an AI bot that replies to every Facebook message and Instagram DM within 60 seconds, 24/7 — qualifies the enquiry and books the appointment automatically.
-
-First month completely free, then £47/month: [YOUR_SALES_PAGE_URL]
-
-Best,
-Frankie
-phillipsautomates@gmail.com
-
----
-
---- DAY 3 FOLLOW-UP ---
-
-Subject: Re: new patient enquiries going cold on Facebook overnight?
-
-Hi [OWNER NAME],
-
-Brief follow-up — I know the practice is busy.
-
-Patients shopping for cosmetic treatments are usually comparing 3 or 4 practices at the same time. They go with whoever replies properly and quickly. The bot makes sure that's always your practice — across Facebook and Instagram, around the clock.
-
-Details: [YOUR_SALES_PAGE_URL]
-
-Frankie
-phillipsautomates@gmail.com
-
----
-
---- DAY 7 FOLLOW-UP ---
-
-Subject: one thing that's helped other practices — [PRACTICE NAME]
-
-Hi [OWNER NAME],
-
-Had a dental practice in Birmingham set this up recently — within a few weeks, their front desk noticed a real increase in new patient enquiries being converted from Facebook, because every message was being replied to straight away instead of the next morning.
-
-£47/month after a free first month, 30-day guarantee: [YOUR_SALES_PAGE_URL]
-
-Frankie
-phillipsautomates@gmail.com
-
----
-
---- DAY 14 CLOSING THE LOOP ---
-
-Subject: leaving you to it — [PRACTICE NAME]
-
-Hi [OWNER NAME],
-
-Last message — if it's not right for the practice at the moment, that's completely fine.
-
-If new patient acquisition from Facebook and Instagram ever becomes a focus, feel free to revisit: [YOUR_SALES_PAGE_URL]
-
-All the best,
-Frankie
-phillipsautomates@gmail.com
-
-========================================================
-NICHE 7 — PERSONAL TRAINER / GYM
-========================================================
-
---- INITIAL EMAIL ---
-
-Subject: losing sign-ups when you're mid-session?
-
-Hi [OWNER NAME],
-
-Came across [BUSINESS NAME] on Instagram — your content looks great.
-
-The thing with personal training is that potential clients often message after seeing a post at 9pm, full of motivation — and if there's no reply until the next morning, that motivation's gone and so are they. I've built an AI bot that replies to every Instagram DM and Facebook message within 60 seconds, 24/7 — so that impulse to get fit turns into a booking rather than being forgotten.
-
-First month free, then £47/month, live in 24 hours: [YOUR_SALES_PAGE_URL]
-
-Cheers,
-Frankie
-phillipsautomates@gmail.com
-
----
-
---- DAY 3 FOLLOW-UP ---
-
-Subject: Re: losing sign-ups when you're mid-session?
-
-Hi [OWNER NAME],
-
-Quick follow-up — the irony of messaging a PT about replying to messages while you're training isn't lost on me!
-
-The bot just makes sure no interested lead goes cold on Instagram or Facebook while you're on the gym floor. Enquiry in, details captured, you follow up when you're free.
-
-Full info: [YOUR_SALES_PAGE_URL]
-
-Frankie
-phillipsautomates@gmail.com
-
----
-
---- DAY 7 FOLLOW-UP ---
-
-Subject: January enquiries — worth being ready
-
-Hi [OWNER NAME],
-
-New Year's resolution season is always the biggest surge for PT enquiries — people messaging on Instagram at midnight full of motivation. The bot captures all of that energy before it fades — replies to Facebook and Instagram automatically, day and night.
-
-£47/month after a free month: [YOUR_SALES_PAGE_URL]
+£197/month. One extra booking a week more than covers it: [YOUR_SALES_PAGE_URL]
 
 Frankie
 phillipsautomates@gmail.com
@@ -491,45 +304,49 @@ Hi [OWNER NAME],
 
 Wrapping up — clearly not the right moment.
 
-If you ever want Instagram DMs and Facebook enquiries handled automatically while you're training, this is the link: [YOUR_SALES_PAGE_URL]
+If you ever want someone handling your calls while your hands are busy, the link is here: [YOUR_SALES_PAGE_URL]
 
-Keep up the great work,
+Keep up the brilliant work,
 Frankie
 phillipsautomates@gmail.com
 
+
 ========================================================
-NICHE 8 — LETTING AGENCY
+NICHE 5 — DENTIST / PHYSIO / CLINIC
 ========================================================
 
 --- INITIAL EMAIL ---
 
-Subject: tenant enquiries piling up over the weekend?
+Subject: new patient calls going to voicemail while you're in with someone?
 
-Hi [OWNER NAME],
+Hi [OWNER NAME / PRACTICE MANAGER],
 
-I noticed [BUSINESS NAME] has some listings on Rightmove — busy agency.
+Came across [PRACTICE NAME] online — some great reviews.
 
-The thing letting agents tell me is that tenant enquiries flood in on Saturday afternoons when the office is closed, and by Monday the best tenants have already committed to a different property. I've built an AI bot that replies to every Facebook message and Instagram DM instantly — qualifies the applicant, answers questions about the property, and books viewings.
+New patient calls — especially for cosmetic treatments or private appointments — often come in during clinical hours when reception is tied up. If the call goes to voicemail, most patients just ring the next practice. The one who answers first tends to get the booking.
 
-First month completely free, then £47/month: [YOUR_SALES_PAGE_URL]
+I've built an AI phone receptionist that answers your calls when reception can't. It gives callers your treatments, prices, and opening hours, takes their name and number, and texts the team straight away. Professional, friendly, and sounds like your practice — not a generic recording.
+
+£197/month, live in 24 hours, no technical setup from you: [YOUR_SALES_PAGE_URL]
 
 Best,
 Frankie
+Phillips Automates
 phillipsautomates@gmail.com
 
 ---
 
 --- DAY 3 FOLLOW-UP ---
 
-Subject: Re: tenant enquiries piling up over the weekend?
+Subject: Re: new patient calls going to voicemail while you're in with someone?
 
 Hi [OWNER NAME],
 
-Just following up — I know letting agencies are manic at the moment.
+Brief follow-up — I know the practice is busy.
 
-The bot is especially useful when you've got high-demand properties getting loads of Facebook and Instagram enquiries. It filters and qualifies them automatically so you only spend time on the serious applicants.
+Patients comparing treatments are usually ringing 2 or 3 practices at the same time. The AI makes sure [PRACTICE NAME] always picks up — gives your prices and availability, takes their details, and texts reception so no one falls through the cracks.
 
-More details: [YOUR_SALES_PAGE_URL]
+Details: [YOUR_SALES_PAGE_URL]
 
 Frankie
 phillipsautomates@gmail.com
@@ -538,13 +355,13 @@ phillipsautomates@gmail.com
 
 --- DAY 7 FOLLOW-UP ---
 
-Subject: works on the landlord side too — [BUSINESS NAME]
+Subject: one thing that's helped other practices — [PRACTICE NAME]
 
 Hi [OWNER NAME],
 
-One thing I forgot to mention — the bot can also handle landlord valuation enquiries coming in through Facebook and Instagram, not just tenant applications. So it's working across both revenue streams simultaneously.
+Had a physio clinic set this up recently — their receptionist said within the first month they'd stopped losing new patient enquiries during afternoon clinics because the AI was picking up every call they couldn't get to.
 
-Full details here: [YOUR_SALES_PAGE_URL]
+£197/month, 30-day guarantee: [YOUR_SALES_PAGE_URL]
 
 Frankie
 phillipsautomates@gmail.com
@@ -553,51 +370,125 @@ phillipsautomates@gmail.com
 
 --- DAY 14 CLOSING THE LOOP ---
 
-Subject: closing the loop — [BUSINESS NAME]
+Subject: leaving you to it — [PRACTICE NAME]
 
 Hi [OWNER NAME],
 
-Last email from me — clearly not a priority right now, and that's completely understandable.
+Last message — if it's not right for the practice at the moment, that's completely fine.
 
-If the lettings market picks up and you want to make sure no Facebook or Instagram enquiry falls through the cracks, the info's all here: [YOUR_SALES_PAGE_URL]
+If catching more new patient calls ever becomes a focus, feel free to revisit: [YOUR_SALES_PAGE_URL]
 
-Best of luck,
+All the best,
 Frankie
 phillipsautomates@gmail.com
+
+
+========================================================
+NICHE 6 — PERSONAL TRAINER
+========================================================
+
+--- INITIAL EMAIL ---
+
+Subject: losing sign-ups because you're mid-session when they call?
+
+Hi [OWNER NAME],
+
+Came across [BUSINESS NAME] — your content looks great.
+
+The thing with personal training is that potential clients work up the courage to ring while you're mid-session, and if there's no answer they talk themselves out of it by the time you call back. That's a paying client gone.
+
+I've built an AI phone receptionist that answers every call you can't. It gives callers your session types, your prices, and takes their details so you can call back when you're free. Professional, friendly, sounds like your business.
+
+£197/month, live in 24 hours: [YOUR_SALES_PAGE_URL]
+
+Cheers,
+Frankie
+Phillips Automates
+phillipsautomates@gmail.com
+
+---
+
+--- DAY 3 FOLLOW-UP ---
+
+Subject: Re: losing sign-ups because you're mid-session when they call?
+
+Hi [OWNER NAME],
+
+Quick follow-up — the irony of a missed call to a PT business isn't lost on me!
+
+The AI just makes sure no interested caller goes cold while you're working. Enquiry answered, details captured, you call back when you're done. Simple.
+
+Full info: [YOUR_SALES_PAGE_URL]
+
+Frankie
+phillipsautomates@gmail.com
+
+---
+
+--- DAY 7 FOLLOW-UP ---
+
+Subject: January is coming — worth being ready
+
+Hi [OWNER NAME],
+
+New Year's resolution season is the biggest surge for PT enquiries. People ring during their lunch break, full of motivation — and if there's no answer, that motivation goes cold fast. The AI catches every one of those calls and texts you straight away.
+
+£197/month: [YOUR_SALES_PAGE_URL]
+
+Frankie
+phillipsautomates@gmail.com
+
+---
+
+--- DAY 14 CLOSING THE LOOP ---
+
+Subject: all the best — [BUSINESS NAME]
+
+Hi [OWNER NAME],
+
+Wrapping up — clearly not the right moment.
+
+If you ever want your calls answered while you're training, this is the link: [YOUR_SALES_PAGE_URL]
+
+Keep up the great work,
+Frankie
+phillipsautomates@gmail.com
+
 
 ========================================================
 GENERAL TIPS FOR SENDING
 ========================================================
 
-SUBJECT LINE A/B TEST IDEAS (use these if open rates are low):
+SUBJECT LINE A/B TEST IDEAS (swap in if open rates are low):
 - "quick question about [BUSINESS NAME]"
-- "noticed something about your Facebook page"
-- "AI bot that replies to your Facebook messages?"
+- "calls you're missing without realising"
+- "AI that answers your phone when you can't"
 - "this might be worth 2 minutes — [BUSINESS NAME]"
-- "your Instagram DMs answered automatically?"
+- "how many calls are you missing per day?"
 
 TIMING:
-- Best sending times: Tuesday–Thursday, 8:30am–10:30am or 2:00pm–4:00pm
+- Best: Tuesday–Thursday, 8:30–10:30am or 2:00–4:00pm
 - Avoid: Mondays before 10am, Fridays after 2pm, weekends
 
-PERSONALISATION CHECKLIST (do at least 2 per email):
-[ ] Use their actual business name in the subject or opening line
-[ ] Reference the specific niche pain point from the template above
-[ ] Mention something real you noticed (their Google review count, an Instagram post, a service they offer)
+PERSONALISATION CHECKLIST (do at least 2 per email before sending):
+[ ] Use their actual business name in the opening line or subject
+[ ] Reference the specific pain point for their trade (mid-job, mid-cut, mid-treatment)
+[ ] Mention something real you noticed (review count, service they offer, area they cover)
 [ ] Vary the opening line slightly so it doesn't look copy-pasted
-[ ] If they're clearly active on Instagram, lead with Instagram. If Facebook, lead with that.
+[ ] Add [AREA] where relevant — local reference massively increases replies
 
 FOLLOW-UP RULES:
-- Never follow up more than 4 times total
-- Space out: Day 0 (initial) → Day 3 → Day 7 → Day 14
-- Reply to the same thread (hit Reply) so it shows context
-- If they reply negatively ("not interested") — reply politely, move on, mark as "closed" in your tracker
+- Max 4 emails total per person (initial + Day 3 + Day 7 + Day 14)
+- Reply to the same thread so there's context
+- If they reply saying not interested — be polite, mark as closed, move on
+- If they reply with a question — that's a warm lead. Reply personally, don't template it.
 
-THE PITCH IN EVERY EMAIL (keep it consistent):
-- AI bot that replies to Facebook and Instagram messages instantly
-- First month free, then £47/month
-- Set up in 24 hours — they don't do anything
-- No setup fee, cancel anytime
+THE CORE PITCH (every email should have this):
+- AI answers their phone 24/7 when they can't
+- Gives callers prices, hours, takes booking requests
+- Texts the owner immediately after each call
+- No login details, no technical setup — just forward their calls
+- £197/month, live in 24 hours, cancel anytime
 
 ========================================================
 END OF EMAIL TEMPLATES
