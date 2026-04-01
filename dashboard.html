@@ -158,6 +158,39 @@
   .modal-body { padding:20px; overflow-y:auto; flex:1; }
   .script-box { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:16px; font-family:'Courier New',monospace; font-size:12px; line-height:1.7; color:var(--text); white-space:pre-wrap; word-break:break-word; max-height:55vh; overflow-y:auto; }
   .modal-footer { padding:14px 20px; border-top:1px solid var(--border); display:flex; gap:10px; flex-shrink:0; align-items:center; }
+  /* View toggle */
+  .view-toggle { display:flex; border:1px solid var(--border); border-radius:8px; overflow:hidden; }
+  .view-toggle-btn { padding:6px 13px; font-size:11px; font-weight:600; cursor:pointer; border:none; background:var(--surface2); color:var(--muted); transition:all 0.15s; }
+  .view-toggle-btn.active { background:var(--accent); color:#fff; }
+  /* List view */
+  .lv-wrap { overflow-x:auto; }
+  .lv-row { display:grid; grid-template-columns:2fr 1.5fr 1.3fr 1fr 0.7fr 0.8fr auto; gap:0; align-items:center; padding:9px 14px; border-bottom:1px solid var(--border); font-size:13px; transition:background 0.1s; min-width:700px; }
+  .lv-row:last-child { border-bottom:none; }
+  .lv-row:hover { background:var(--surface2); }
+  .lv-row.lv-header { font-size:10px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); font-weight:600; padding:8px 14px; background:rgba(255,255,255,0.03); border-bottom:1px solid var(--border); min-width:700px; }
+  .lv-row.lv-header:hover { background:rgba(255,255,255,0.03); }
+  .lv-actions { display:flex; gap:5px; justify-content:flex-end; }
+  /* Pipe column pagination */
+  .pipe-more-btn { width:100%; margin-top:5px; padding:8px; background:none; border:1px dashed var(--border); border-radius:7px; font-size:11px; color:var(--muted); cursor:pointer; text-align:center; transition:all 0.15s; }
+  .pipe-more-btn:hover { border-color:var(--accent); color:var(--accent); }
+  /* Global search */
+  .gs-modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:20000; align-items:flex-start; justify-content:center; padding:70px 20px 20px; }
+  .gs-modal.open { display:flex; }
+  .gs-box { background:var(--surface); border:1px solid var(--border); border-radius:14px; width:100%; max-width:620px; overflow:hidden; box-shadow:0 24px 80px rgba(0,0,0,0.6); }
+  .gs-input-wrap { display:flex; align-items:center; padding:16px 18px; border-bottom:1px solid var(--border); gap:10px; }
+  .gs-input { flex:1; background:none; border:none; outline:none; color:var(--text); font-size:17px; font-family:inherit; }
+  .gs-results { max-height:380px; overflow-y:auto; }
+  .gs-result { display:flex; align-items:center; justify-content:space-between; padding:11px 18px; cursor:pointer; transition:background 0.1s; border-bottom:1px solid var(--border); }
+  .gs-result:last-child { border-bottom:none; }
+  .gs-result:hover,.gs-result.gs-selected { background:var(--surface2); }
+  .gs-result-left { display:flex; flex-direction:column; gap:3px; }
+  .gs-result-biz { font-size:13px; font-weight:700; }
+  .gs-result-meta { font-size:11px; color:var(--muted); }
+  .gs-empty { padding:28px; text-align:center; color:var(--muted); font-size:13px; }
+  .gs-hint { padding:8px 18px; font-size:10px; color:var(--muted); border-top:1px solid var(--border); display:flex; gap:18px; }
+  /* Search shortcut badge in sidebar */
+  .search-shortcut { display:flex; align-items:center; justify-content:space-between; padding:7px 14px; margin:0 6px 6px; border-radius:8px; border:1px solid var(--border); background:var(--surface2); cursor:pointer; font-size:12px; color:var(--muted); transition:all 0.15s; }
+  .search-shortcut:hover { border-color:var(--accent); color:var(--text); }
 </style>
 </head>
 <body>
@@ -167,6 +200,7 @@
     <h2>Phillips Automates</h2>
     <p>phillipsautomates@gmail.com</p>
   </div>
+  <div class="search-shortcut" onclick="openGlobalSearch()">🔍 Find customer <span style="font-size:9px;background:var(--surface);padding:2px 6px;border-radius:4px;border:1px solid var(--border);">Ctrl K</span></div>
   <div class="nav-item active" onclick="nav('dashboard',this)">📊 Dashboard</div>
   <div class="nav-item" onclick="nav('customers',this)">🚀 Pipeline <span class="nav-badge" id="badge-customers"></span></div>
   <div class="nav-item" onclick="nav('todo',this)">✅ To-Do List</div>
@@ -221,7 +255,11 @@
     <div class="page-header flex-between">
       <div><h1>Pipeline</h1><p id="pipe-sub">Customer journey — sign-up to live</p></div>
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-        <input class="form-input" id="c-search" placeholder="Search..." style="width:140px;padding:6px 10px" oninput="renderCustomers()"/>
+        <input class="form-input" id="c-search" placeholder="🔍 Search name, email, city..." style="width:210px;padding:6px 10px" oninput="renderCustomers()"/>
+        <div class="view-toggle">
+          <button class="view-toggle-btn active" id="view-kanban-btn" onclick="setPipelineView('kanban')">⬛ Kanban</button>
+          <button class="view-toggle-btn" id="view-list-btn" onclick="setPipelineView('list')">☰ List</button>
+        </div>
         <button class="btn btn-ghost" onclick="fetchFromSheet(localStorage.getItem('pa_gas_url'))">🔄 Sync</button>
         <button class="btn btn-primary" onclick="openCustomerForm()">+ Add</button>
       </div>
@@ -361,6 +399,32 @@
       </div>
 
     </div>
+
+    <!-- LIST VIEW -->
+    <div id="list-view-container" style="display:none;">
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:14px;">
+        <select class="form-select" id="lv-status-filter" onchange="renderCustomers()" style="width:170px;">
+          <option value="all">All Statuses</option>
+          <option value="pending">🔴 New Sign-ups</option>
+          <option value="welcomed">🟣 Awaiting Reply</option>
+          <option value="info-received">🔵 Info Received</option>
+          <option value="active">✅ Active / Live</option>
+          <option value="inactive">❌ Inactive</option>
+        </select>
+        <select class="form-select" id="lv-sort" onchange="renderCustomers()" style="width:160px;">
+          <option value="date-desc">Newest first</option>
+          <option value="date-asc">Oldest first</option>
+          <option value="biz-asc">Business A→Z</option>
+          <option value="biz-desc">Business Z→A</option>
+          <option value="fee-desc">Fee high→low</option>
+        </select>
+        <span id="lv-count" style="font-size:12px;color:var(--muted);"></span>
+      </div>
+      <div class="card" style="padding:0;overflow:hidden;">
+        <div class="lv-wrap"><div id="list-view-body"></div></div>
+      </div>
+    </div>
+
   </div>
 
   <!-- VOICE SETUP -->
@@ -698,6 +762,19 @@
 
 <div class="notif" id="notif"></div>
 
+<!-- GLOBAL SEARCH MODAL -->
+<div class="gs-modal" id="gs-modal" onclick="if(event.target===this)closeGlobalSearch()">
+  <div class="gs-box">
+    <div class="gs-input-wrap">
+      <span style="color:var(--muted);font-size:18px;">🔍</span>
+      <input class="gs-input" id="gs-input" placeholder="Search customers, emails, cities, types..." oninput="renderGlobalSearch()" onkeydown="gsKeyNav(event)" autocomplete="off" spellcheck="false"/>
+      <span style="font-size:11px;color:var(--muted);background:var(--surface2);padding:3px 8px;border-radius:5px;border:1px solid var(--border);cursor:pointer;flex-shrink:0;" onclick="closeGlobalSearch()">Esc</span>
+    </div>
+    <div class="gs-results" id="gs-results"><div class="gs-empty">Start typing to find any customer instantly</div></div>
+    <div class="gs-hint"><span>↑↓ navigate</span><span>↵ open customer</span><span>Esc close</span><span style="margin-left:auto;opacity:0.6">Ctrl+K to open</span></div>
+  </div>
+</div>
+
 <!-- MOBILE BOTTOM NAV -->
 <nav class="mobile-nav" id="mobile-nav">
   <div class="mobile-nav-item nav-item active" onclick="nav('dashboard',this)">📊<span>Home</span></div>
@@ -710,6 +787,9 @@
 <script>
 let customers = JSON.parse(localStorage.getItem('pa_customers')||'[]');
 let workflows  = JSON.parse(localStorage.getItem('pa_workflows')||'[]');
+let pipelineView = localStorage.getItem('pa_pipe_view') || 'kanban';
+const PIPE_PAGE_SIZE = 10;
+let pipeColPage = {new:1, welcomed:1, setup:1, live:1};
 // knownIds — every sheet ID ever imported; prevents re-import after delete/archive/complete
 let knownIds = new Set(JSON.parse(localStorage.getItem('pa_known_ids')||'[]'));
 let archived   = JSON.parse(localStorage.getItem('pa_archived')||'[]');
@@ -1160,19 +1240,151 @@ function renderPipeline(){
       ${wf?`<div style="margin-top:8px;border-top:1px solid var(--border);padding-top:7px;"><div style="font-size:10px;color:var(--muted);margin-bottom:4px;">Setup: ${wf.steps.filter(Boolean).length}/${wf.steps.length} steps</div><div style="background:var(--bg);border-radius:4px;height:4px;overflow:hidden;"><div style="height:100%;background:var(--accent);width:${Math.round(wf.steps.filter(Boolean).length/wf.steps.length*100)}%;transition:width 0.3s"></div></div></div>`:''}
     </div>`;
   }
+  // Reset pagination when search query changes
+  const currentQ=(document.getElementById('c-search')||{value:''}).value;
+  if(currentQ!==renderPipeline._lastQ){pipeColPage={new:1,welcomed:1,setup:1,live:1};}
+  renderPipeline._lastQ=currentQ;
+
   ['new','welcomed','setup','live'].forEach(col=>{
     const el=document.getElementById('pipe-'+col);
     const countEl=document.getElementById('pipe-count-'+col);
-    const list=col==='live'?[...cols.live,...inactive]:cols[col];
+    const fullList=col==='live'?[...cols.live,...inactive]:cols[col];
+    const pageCount=pipeColPage[col]||1;
+    const showCount=PIPE_PAGE_SIZE*pageCount;
+    const visible=fullList.slice(0,showCount);
+    const remaining=fullList.length-showCount;
     if(countEl) countEl.textContent=cols[col].length;
     if(!el) return;
-    el.innerHTML=list.length?list.map(card).join(''):`<div class="pipe-empty">${col==='live'?'No live clients yet':'Nothing here'}</div>`;
+    let html=visible.length?visible.map(card).join(''):`<div class="pipe-empty">${col==='live'?'No live clients yet':'Nothing here'}</div>`;
+    if(remaining>0) html+=`<button class="pipe-more-btn" onclick="loadMorePipe('${col}')">Show ${Math.min(remaining,PIPE_PAGE_SIZE)} more of ${remaining} remaining</button>`;
+    el.innerHTML=html;
   });
   const sub=document.getElementById('pipe-sub');
   if(sub){const total=customers.filter(c=>c.status!=='inactive').length;const active=customers.filter(c=>c.status==='active').length;sub.textContent=`${total} client${total===1?'':'s'} · ${active} live · £${active*197}/mo`;}
 }
 
-function renderCustomers(){renderPipeline();}
+function renderCustomers(){
+  if(pipelineView==='list') renderListView();
+  else renderPipeline();
+}
+
+function setPipelineView(v){
+  pipelineView=v;
+  localStorage.setItem('pa_pipe_view',v);
+  document.getElementById('view-kanban-btn').classList.toggle('active',v==='kanban');
+  document.getElementById('view-list-btn').classList.toggle('active',v==='list');
+  document.getElementById('pipeline-board').style.display=v==='kanban'?'':'none';
+  document.getElementById('list-view-container').style.display=v==='list'?'':'none';
+  renderCustomers();
+}
+
+function loadMorePipe(col){
+  pipeColPage[col]=(pipeColPage[col]||1)+1;
+  renderPipeline();
+}
+
+function renderListView(){
+  const q=(document.getElementById('c-search')||{value:''}).value.toLowerCase().trim();
+  const statusFilter=(document.getElementById('lv-status-filter')||{value:'all'}).value;
+  const sort=(document.getElementById('lv-sort')||{value:'date-desc'}).value;
+
+  let list=customers.filter(c=>{
+    const matchQ=!q||[c.biz,c.name,c.email,c.city,c.type,c.phone,c.bizPhone].some(f=>(f||'').toLowerCase().includes(q));
+    const matchS=statusFilter==='all'||c.status===statusFilter;
+    return matchQ&&matchS;
+  });
+
+  list.sort((a,b)=>{
+    if(sort==='date-asc')  return (Number(a.id)||0)-(Number(b.id)||0);
+    if(sort==='date-desc') return (Number(b.id)||0)-(Number(a.id)||0);
+    if(sort==='biz-asc')   return (a.biz||'').localeCompare(b.biz||'');
+    if(sort==='biz-desc')  return (b.biz||'').localeCompare(a.biz||'');
+    if(sort==='fee-desc')  return (parseFloat(b.fee)||197)-(parseFloat(a.fee)||197);
+    return 0;
+  });
+
+  const cnt=document.getElementById('lv-count');
+  if(cnt) cnt.textContent=list.length+' customer'+(list.length===1?'':'s');
+
+  const body=document.getElementById('list-view-body');
+  if(!body) return;
+  if(!list.length){body.innerHTML='<div class="empty">No customers match your filter</div>';return;}
+
+  const sb=s=>({pending:'<span class="badge badge-pending">New</span>',welcomed:'<span class="badge badge-welcomed">Sent</span>','info-received':'<span class="badge badge-info-received">Info In</span>',active:'<span class="badge badge-active">Live ✅</span>',inactive:'<span class="badge badge-inactive">Inactive</span>'}[s]||`<span class="badge">${s}</span>`);
+
+  body.innerHTML=`
+    <div class="lv-row lv-header">
+      <div>Business</div><div>Owner / Email</div><div>City · Type</div><div>Status</div><div>Fee</div><div>Joined</div><div></div>
+    </div>
+    ${list.map(c=>`
+    <div class="lv-row">
+      <div>
+        <strong>${c.biz}</strong>${c.isNew?'<span style="margin-left:5px;background:rgba(0,212,170,0.15);color:var(--green);font-size:9px;font-weight:700;padding:1px 5px;border-radius:8px;">NEW</span>':''}
+        ${c.bizPhone?`<br><span style="font-size:11px;color:var(--muted);">📞 ${c.bizPhone}</span>`:''}
+      </div>
+      <div>
+        <div>${c.name||'—'}</div>
+        <div style="font-size:11px;color:var(--muted);">${c.email||''}</div>
+      </div>
+      <div>
+        <div style="font-size:12px;">${c.city||'—'}</div>
+        <div style="font-size:11px;color:var(--muted);">${c.type||''}</div>
+      </div>
+      <div>${sb(c.status)}</div>
+      <div style="font-weight:700;color:var(--green);">£${c.fee||197}</div>
+      <div style="font-size:11px;color:var(--muted);">${c.date||''}</div>
+      <div class="lv-actions">
+        <button class="btn btn-ghost btn-sm" onclick="showCustomerModal('${c.id}')">👁 View</button>
+        <button class="btn btn-ghost btn-sm" onclick="editCustomer('${c.id}')">✏️</button>
+      </div>
+    </div>`).join('')}`;
+}
+
+// ── GLOBAL SEARCH ──
+let gsSelectedIdx=-1;
+function openGlobalSearch(){
+  document.getElementById('gs-modal').classList.add('open');
+  const inp=document.getElementById('gs-input');
+  inp.value='';
+  document.getElementById('gs-results').innerHTML='<div class="gs-empty">Start typing to find any customer instantly</div>';
+  gsSelectedIdx=-1;
+  setTimeout(()=>inp.focus(),40);
+}
+function closeGlobalSearch(){document.getElementById('gs-modal').classList.remove('open');}
+function renderGlobalSearch(){
+  const q=document.getElementById('gs-input').value.toLowerCase().trim();
+  const res=document.getElementById('gs-results');
+  gsSelectedIdx=-1;
+  if(!q){res.innerHTML='<div class="gs-empty">Start typing to find any customer instantly</div>';return;}
+  const pool=[...customers,...(archived||[]),...(completed||[])];
+  const matches=pool.filter(c=>[c.biz,c.name,c.email,c.city,c.type,c.phone,c.bizPhone].some(f=>(f||'').toLowerCase().includes(q))).slice(0,15);
+  if(!matches.length){res.innerHTML='<div class="gs-empty">No customers found</div>';return;}
+  const sb=s=>({pending:'<span class="badge badge-pending">New</span>',welcomed:'<span class="badge badge-welcomed">Welcomed</span>','info-received':'<span class="badge badge-info-received">Info In</span>',active:'<span class="badge badge-active">Live</span>',inactive:'<span class="badge badge-inactive">Inactive</span>'}[s]||'');
+  res.innerHTML=matches.map(c=>`
+    <div class="gs-result" data-id="${c.id}" onclick="gsOpenCustomer('${c.id}')">
+      <div class="gs-result-left">
+        <div class="gs-result-biz">${c.biz}${c.isNew?'<span style="margin-left:6px;background:rgba(0,212,170,0.15);color:var(--green);font-size:9px;font-weight:700;padding:1px 5px;border-radius:8px;">NEW</span>':''}</div>
+        <div class="gs-result-meta">${[c.name,c.email,c.city,c.type].filter(Boolean).join(' · ')}</div>
+      </div>
+      <div style="display:flex;gap:7px;align-items:center;">${sb(c.status)}<span style="font-size:11px;color:var(--muted);">£${c.fee||197}/mo</span></div>
+    </div>`).join('');
+}
+function gsOpenCustomer(id){
+  closeGlobalSearch();
+  const c=customers.find(x=>String(x.id)===String(id));
+  if(c){showCustomerModal(String(c.id));}
+  else{notify('Customer is in archive or completed — check those tabs');}
+}
+function gsKeyNav(e){
+  const items=document.querySelectorAll('.gs-result');
+  if(!items.length){if(e.key==='Escape')closeGlobalSearch();return;}
+  if(e.key==='ArrowDown'){e.preventDefault();gsSelectedIdx=Math.min(gsSelectedIdx+1,items.length-1);}
+  else if(e.key==='ArrowUp'){e.preventDefault();gsSelectedIdx=Math.max(gsSelectedIdx-1,0);}
+  else if(e.key==='Enter'&&gsSelectedIdx>=0){items[gsSelectedIdx].click();return;}
+  else if(e.key==='Escape'){closeGlobalSearch();return;}
+  items.forEach((el,i)=>el.classList.toggle('gs-selected',i===gsSelectedIdx));
+  if(gsSelectedIdx>=0)items[gsSelectedIdx].scrollIntoView({block:'nearest'});
+}
 
 const WF_STEPS = [
   'Business info received (hours, pricing, booking link)',
@@ -2249,6 +2461,13 @@ function notify(msg){const n=document.getElementById('notif');n.textContent=msg;
   setInterval(()=>{ const u=localStorage.getItem('pa_gas_url'); if(u) fetchFromSheet(u); }, 60000);
   // Re-sync when switching back to this tab
   document.addEventListener('visibilitychange',()=>{ if(!document.hidden){ const u=localStorage.getItem('pa_gas_url'); if(u) fetchFromSheet(u); } });
+  // Restore pipeline view
+  setPipelineView(pipelineView);
+  // Global search shortcut
+  document.addEventListener('keydown',e=>{
+    if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();openGlobalSearch();}
+    if(e.key==='Escape'&&document.getElementById('gs-modal').classList.contains('open')){closeGlobalSearch();}
+  });
 })();
 </script>
 </body>
