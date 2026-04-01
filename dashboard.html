@@ -1579,35 +1579,59 @@ function emailStage(c){
 }
 
 function buildWelcomeBody(c){
-  return `Hi ${c.name||c.biz},
+  const firstName = (c.name||c.biz).split(' ')[0];
+  const bizLine = c.type ? `${c.biz} (${c.type})` : c.biz;
+  const cityLine = c.city ? ` in ${c.city}` : '';
+  const hasHours    = c.hours    && c.hours.trim();
+  const hasServices = c.services && c.services.trim();
+  const hasBooking  = c.booking  && c.booking.trim();
+  const allFilled   = hasHours && hasServices;
 
-Welcome to Phillips Automates! Your AI phone receptionist will be live within 24 hours — your callers will never hit voicemail again.
-
-To get it set up I just need 3 quick things from you. No passwords, no logins — just hit reply and paste these in:
-
-────────────────────────────
-1. YOUR OPENING HOURS
-────────────────────────────
-
-e.g. Mon-Fri 8am-6pm, Saturday 9am-1pm, Sunday Closed
-
-────────────────────────────
-2. YOUR SERVICES & PRICING
-────────────────────────────
-
-List your main services and prices. A photo of a price list, menu board, or your website pricing page is perfect — no need to type it all out.
+  let infoSection;
+  if(allFilled){
+    infoSection =
+`I've already pulled some details from your website — just check these are correct and let me know if anything needs updating:
 
 ────────────────────────────
-3. YOUR BOOKING LINK (if you have one)
+OPENING HOURS (confirm or correct)
+────────────────────────────
+${c.hours}
+
+────────────────────────────
+SERVICES & PRICING (confirm or correct)
+────────────────────────────
+${c.services}
+${hasBooking?`
+────────────────────────────
+BOOKING LINK
+────────────────────────────
+${c.booking}
+`:''}
 ────────────────────────────
 
-e.g. a Fresha, Booksy, or Calendly link. If you don't have one, the AI will take a name and number and we'll let callers know you'll call them back — no problem at all.
-
+If any of the above is wrong or out of date, just reply with the corrections. Otherwise just reply "all correct" and I'll get started.`;
+  } else {
+    const need1 = !hasHours    ? `────────────────────────────\n1. YOUR OPENING HOURS\n────────────────────────────\n\ne.g. Mon-Fri 8am-6pm, Saturday 9am-1pm, Sunday Closed\n` : '';
+    const need2 = !hasServices ? `\n────────────────────────────\n${!hasHours?'2':'1'}. YOUR SERVICES & PRICING\n────────────────────────────\n\nList your main services and prices. A photo of a price list, menu board, or website screenshot is perfect — no need to type it all out.\n` : '';
+    const need3 = !hasBooking  ? `\n────────────────────────────\n${(!hasHours&&!hasServices)?'3':(!hasHours||!hasServices)?'2':'1'}. BOOKING LINK (if you have one)\n────────────────────────────\n\ne.g. Fresha, Booksy, or Calendly link. If you don't have one, no problem — the AI will take a caller's name and number and let them know you'll call back.\n` : '';
+    infoSection = need1 + need2 + need3 +
+`
 ────────────────────────────
 
-That's genuinely it. Once you reply with those I'll build your AI receptionist, run test calls to make sure it sounds right, and send you back a simple 30-second guide to set up call forwarding on your phone.
+Just hit reply and paste them in — no logins, no forms, nothing complicated.`;
+  }
 
-Any questions just reply to this email.
+  return `Hi ${firstName},
+
+Great news — your payment is confirmed and I'm setting up your AI phone receptionist for ${bizLine}${cityLine} now.
+
+It'll be live within 24 hours. To get it built I just need${allFilled?' you to confirm the details below — I\'ve already pulled them from your website:':' a few quick things from you:'}
+
+${infoSection}
+
+Once I have everything I'll build your AI receptionist, run test calls to make sure it answers correctly, then send you a simple 30-second guide to set up call forwarding on your phone. That's the only thing you'll ever need to do.
+
+Any questions just reply to this email — I'll come straight back to you.
 
 Frankie
 Phillips Automates
@@ -1707,7 +1731,7 @@ function openMailto(to, subject, body){
 function sendWelcomeEmail(id){
   const c=customers.find(x=>String(x.id)===String(id));
   if(!c||!c.email){notify('No email address for this customer');return;}
-  openMailto(c.email,'Welcome to Phillips Automates — I just need 3 quick things',buildWelcomeBody(c));
+  openMailto(c.email,'Your AI receptionist for '+c.biz+' — quick details needed',buildWelcomeBody(c));
   c.emailWelcome=new Date().toISOString();
   localStorage.setItem('pa_customers',JSON.stringify(customers));
   renderAll();notify('Welcome email opened — send it from Gmail!');
