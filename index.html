@@ -147,12 +147,6 @@
     @keyframes msgfadein { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
     @keyframes smsslide { from{opacity:0;transform:translateX(18px)} to{opacity:1;transform:translateX(0)} }
     /* Testimonials */
-    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
-    .testimonial-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 24px; display: flex; flex-direction: column; gap: 14px; }
-    .testimonial-stars { color: #f5c842; font-size: 1rem; letter-spacing: 2px; }
-    .testimonial-text { font-size: 0.93rem; color: var(--text); line-height: 1.7; font-style: italic; flex: 1; }
-    .testimonial-author { font-size: 0.82rem; font-weight: 700; color: var(--text-muted); }
-    .testimonial-author span { display: block; color: var(--accent-light); font-weight: 600; margin-top: 2px; }
 
     /* Sticky mobile CTA bar */
     .mobile-cta-bar { display: none; }
@@ -171,7 +165,6 @@
       .section { padding: 64px 20px; }
       .sf-row { grid-template-columns: 1fr; }
       .demo-split { grid-template-columns: 1fr; gap: 28px; }
-      .testimonials-grid { grid-template-columns: 1fr; }
       .mobile-cta-bar { display: block; position: fixed; bottom: 0; left: 0; right: 0; z-index: 200; padding: 12px 16px 20px; background: rgba(13,13,20,0.97); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-top: 1px solid var(--border); }
       .mobile-cta-bar a { display: block; background: linear-gradient(135deg, var(--accent), #9b6bff); color: #fff; text-align: center; padding: 16px; border-radius: 12px; font-weight: 800; font-size: 1rem; text-decoration: none; box-shadow: 0 4px 20px rgba(108,99,255,0.4); }
       body { padding-bottom: 90px; }
@@ -481,29 +474,31 @@
 </section>
 
 <!-- ═══════════════════════════════════════════
-     TESTIMONIALS
+     EARLY ADOPTER
 ════════════════════════════════════════════ -->
 <section class="section alt">
-  <div class="container">
-    <div class="section-label">What Clients Say</div>
-    <h2>Real businesses. Real results.</h2>
-    <div class="testimonials-grid">
-      <div class="testimonial-card">
-        <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">"Been running my plumbing business for 12 years and always missed calls when I was under someone's sink. Had it set up in less than a day. Clients get answered, I get a text — sorted."</p>
-        <div class="testimonial-author">Steve M.<span>Plumber · Manchester</span></div>
+  <div class="container" style="text-align:center;">
+    <div class="section-label">Founding Clients</div>
+    <h2>We're just getting started — and that's good for you.</h2>
+    <p class="muted" style="margin-top:16px;max-width:560px;margin-left:auto;margin-right:auto;">Phillips Automates is newly launched and taking on our first clients now. That means you get direct access to Frankie, fast setup, and a service built around getting you real results — not managing thousands of accounts.</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px;max-width:780px;margin-left:auto;margin-right:auto;">
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px 20px;">
+        <div style="font-size:28px;margin-bottom:10px;">⚡</div>
+        <div style="font-weight:700;margin-bottom:8px;">Fast, personal setup</div>
+        <div style="font-size:0.88rem;color:var(--text-muted);line-height:1.6;">You deal directly with Frankie — not a support ticket. Your AI is live within 24 hours of sending us your info.</div>
       </div>
-      <div class="testimonial-card">
-        <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">"My old voicemail got about 1 in 5 people leaving a message. Now every caller gets answered and I get the details texted straight to me. Worth every penny."</p>
-        <div class="testimonial-author">Kelly B.<span>Hair Studio Owner · Leeds</span></div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px 20px;">
+        <div style="font-size:28px;margin-bottom:10px;">🔒</div>
+        <div style="font-weight:700;margin-bottom:8px;">30-day money-back</div>
+        <div style="font-size:0.88rem;color:var(--text-muted);line-height:1.6;">If it's not working for you after 30 days, email us and we'll refund in full. No questions, no awkward calls.</div>
       </div>
-      <div class="testimonial-card">
-        <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">"Was worried it'd sound robotic but it sounds proper professional. A couple of my regulars mentioned the 'girl on the phone' — they didn't even know it was AI."</p>
-        <div class="testimonial-author">Dave H.<span>Car Garage Owner · Birmingham</span></div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px 20px;">
+        <div style="font-size:28px;margin-bottom:10px;">🎙️</div>
+        <div style="font-weight:700;margin-bottom:8px;">Hear it yourself first</div>
+        <div style="font-size:0.88rem;color:var(--text-muted);line-height:1.6;">Before you sign up, email us at phillipsautomates@gmail.com and we'll send you a live demo number to call and hear the AI in action.</div>
       </div>
     </div>
+    <p style="margin-top:32px;font-size:0.9rem;color:var(--text-muted);">Questions before signing up? Email <a href="mailto:phillipsautomates@gmail.com" style="color:var(--accent-light);">phillipsautomates@gmail.com</a> — Frankie replies personally.</p>
   </div>
 </section>
 
@@ -849,6 +844,7 @@
 <footer>
   <p>© 2026 Phillips Automates &nbsp;|&nbsp; <a href="mailto:phillipsautomates@gmail.com">phillipsautomates@gmail.com</a></p>
   <p style="margin-top:8px; font-size:0.78rem;">UK-based &nbsp;·&nbsp; Sole trader friendly &nbsp;·&nbsp; No jargon, no contracts</p>
+  <p style="margin-top:10px; font-size:0.75rem;"><a href="privacy.html">Privacy Policy</a></p>
 </footer>
 
 <!-- STICKY MOBILE CTA -->
