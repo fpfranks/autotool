@@ -309,17 +309,28 @@
       </div>
       <div class="form-group"><label class="form-label">🕐 Opening Hours</label><textarea class="form-textarea" id="c-hours" placeholder="e.g. Mon-Fri 8am-6pm, Sat 9am-1pm, Sunday Closed" style="min-height:60px;"></textarea></div>
       <div class="form-group"><label class="form-label">💷 Services &amp; Pricing</label><textarea class="form-textarea" id="c-services" placeholder="List all services and prices — e.g. Tap repair £65, Boiler service £85, Emergency call-out from £120"></textarea></div>
-      <div style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.5px;margin:14px 0 10px;">Other Details</div>
+      <div style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.5px;margin:14px 0 10px;">Location &amp; Coverage</div>
       <div class="form-row">
+        <div class="form-group"><label class="form-label">📍 Business Address <span style="font-weight:400;color:var(--muted)">(callers who ask "where are you?")</span></label><input class="form-input" id="c-address" placeholder="e.g. 12 High Street, Manchester, M1 1AA"/></div>
+        <div class="form-group"><label class="form-label">🗺️ Service Area / Postcodes <span style="font-weight:400;color:var(--muted)">(trades esp.)</span></label><input class="form-input" id="c-area" placeholder="e.g. All of Greater Manchester — M, SK, OL, BL postcodes"/></div>
+      </div>
+      <div style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.5px;margin:14px 0 10px;">Policies &amp; Practicalities</div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">💳 Payment Methods Accepted</label><input class="form-input" id="c-payment" placeholder="e.g. Cash, card, bank transfer — card preferred"/></div>
+        <div class="form-group"><label class="form-label">⚡ Emergency / Out-of-Hours</label><input class="form-input" id="c-emergency" placeholder="e.g. Emergency call-outs 24/7 — £120 call-out fee applies"/></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">⏱️ Response / Turnaround Time</label><input class="form-input" id="c-response" placeholder="e.g. Same-day emergencies, 2–3 days routine jobs"/></div>
         <div class="form-group"><label class="form-label">🌐 Website URL</label>
           <div style="display:flex;gap:8px;">
             <input class="form-input" id="c-website" placeholder="https://yourbusiness.co.uk" type="url" style="flex:1"/>
-            <button type="button" class="btn btn-ghost" id="scrape-btn" onclick="scrapeWebsite()" style="white-space:nowrap;flex-shrink:0;">🔍 Scrape Site</button>
+            <button type="button" class="btn btn-ghost" id="scrape-btn" onclick="scrapeWebsite()" style="white-space:nowrap;flex-shrink:0;">🔍 Scrape</button>
           </div>
           <div id="scrape-status" style="font-size:11px;color:var(--muted);margin-top:5px;display:none;"></div>
         </div>
-        <div class="form-group"><label class="form-label">📝 Special Instructions</label><input class="form-input" id="c-notes" placeholder="Anything the AI should know — parking, FAQs, etc."/></div>
       </div>
+      <div class="form-group"><label class="form-label">❓ Common FAQs <span style="font-weight:400;color:var(--muted)">(one per line: Q: ... / A: ...)</span></label><textarea class="form-textarea" id="c-faq" placeholder="Q: Do you guarantee your work?&#10;A: Yes — all work guaranteed for 12 months.&#10;&#10;Q: Do you charge a call-out fee?&#10;A: No call-out charge for jobs within our area." style="min-height:90px;"></textarea></div>
+      <div class="form-group"><label class="form-label">📝 Additional Notes <span style="font-weight:400;color:var(--muted)">(anything else the AI should know)</span></label><textarea class="form-textarea" id="c-notes" placeholder="Parking info, staff names, anything a caller might ask not covered above..." style="min-height:55px;"></textarea></div>
       <div class="form-row">
         <div class="form-group">
           <label class="form-label">Status</label>
@@ -906,8 +917,8 @@ function renderDash() {
     actions.push(actionRow('var(--red)',`<strong>${c.biz}</strong> — info received, build VAPI script then send live email`,'🚀 Go Live',`sendLiveEmail('${c.id}')`));
   });
   customers.filter(c=>c.status!=='inactive'&&emailStage(c)==='welcomed').forEach(c=>{
-    if(c.emailWelcome&&!c.emailNudge&&(Date.now()-new Date(c.emailWelcome).getTime())>86400000)
-      actions.push(actionRow('var(--warn)',`<strong>${c.biz}</strong> — no reply in 24hrs`,'🔔 Nudge',`sendNudgeEmail('${c.id}')`));
+    if(c.emailWelcome&&!c.emailNudge&&(Date.now()-new Date(c.emailWelcome).getTime())>172800000)
+      actions.push(actionRow('var(--warn)',`<strong>${c.biz}</strong> — no reply in 48hrs`,'🔔 Nudge',`sendNudgeEmail('${c.id}')`));
   });
   const incompleteFl=workflows.filter(w=>w.steps.filter(Boolean).length<WF_STEPS.length);
   if(incompleteFl.length) actions.push(actionRow('var(--warn)',`${incompleteFl.length} voice setup${incompleteFl.length>1?'s':''} not fully complete — open Pipeline to build`,'📋 Pipeline',`nav('customers',document.querySelector('[onclick*=customers]'))`));
@@ -984,7 +995,7 @@ function openCustomerForm(){
 function closeCustomerForm(){
   editingCustomerId=null;
   document.getElementById('customer-form').style.display='none';
-  ['c-biz','c-name','c-email','c-phone','c-type','c-city','c-bizphone','c-booking','c-hours','c-services','c-website','c-notes'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  ['c-biz','c-name','c-email','c-phone','c-type','c-city','c-bizphone','c-booking','c-hours','c-services','c-address','c-area','c-payment','c-emergency','c-response','c-website','c-faq','c-notes'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   document.getElementById('c-fee').value='197';
   document.getElementById('c-status').value='pending';
   document.getElementById('c-voice').value='female';
@@ -1000,16 +1011,22 @@ function getFormData(existingId){
     type:     document.getElementById('c-type').value,
     city:     document.getElementById('c-city').value,
     bizPhone: document.getElementById('c-bizphone').value,
-    booking:  document.getElementById('c-booking').value,
-    hours:    document.getElementById('c-hours').value,
-    services: document.getElementById('c-services').value,
-    website:  document.getElementById('c-website').value,
-    notes:    document.getElementById('c-notes').value,
-    voice:    document.getElementById('c-voice').value,
-    network:  document.getElementById('c-network').value,
-    status:   document.getElementById('c-status').value,
-    fee:      document.getElementById('c-fee').value,
-    date:     new Date().toLocaleDateString('en-GB')
+    booking:   document.getElementById('c-booking').value,
+    hours:     document.getElementById('c-hours').value,
+    services:  document.getElementById('c-services').value,
+    address:   document.getElementById('c-address').value,
+    area:      document.getElementById('c-area').value,
+    payment:   document.getElementById('c-payment').value,
+    emergency: document.getElementById('c-emergency').value,
+    response:  document.getElementById('c-response').value,
+    website:   document.getElementById('c-website').value,
+    faq:       document.getElementById('c-faq').value,
+    notes:     document.getElementById('c-notes').value,
+    voice:     document.getElementById('c-voice').value,
+    network:   document.getElementById('c-network').value,
+    status:    document.getElementById('c-status').value,
+    fee:       document.getElementById('c-fee').value,
+    date:      new Date().toLocaleDateString('en-GB')
   };
 }
 function editCustomer(id){
@@ -1028,7 +1045,13 @@ function editCustomer(id){
   document.getElementById('c-booking').value=c.booking||'';
   document.getElementById('c-hours').value=c.hours||'';
   document.getElementById('c-services').value=c.services||'';
+  document.getElementById('c-address').value=c.address||'';
+  document.getElementById('c-area').value=c.area||'';
+  document.getElementById('c-payment').value=c.payment||'';
+  document.getElementById('c-emergency').value=c.emergency||'';
+  document.getElementById('c-response').value=c.response||'';
   document.getElementById('c-website').value=c.website||'';
+  document.getElementById('c-faq').value=c.faq||'';
   document.getElementById('c-notes').value=c.notes||'';
   document.getElementById('c-voice').value=c.voice||'female';
   document.getElementById('c-network').value=c.network||'';
@@ -1263,6 +1286,16 @@ function renderPipeline(){
   if(sub){const total=customers.filter(c=>c.status!=='inactive').length;const active=customers.filter(c=>c.status==='active').length;sub.textContent=`${total} client${total===1?'':'s'} · ${active} live · £${active*197}/mo`;}
 }
 
+function statusBadge(s){
+  return ({
+    pending:        '<span class="badge badge-pending">New</span>',
+    welcomed:       '<span class="badge badge-welcomed">Welcomed</span>',
+    'info-received':'<span class="badge badge-info-received">Info In</span>',
+    active:         '<span class="badge badge-active">Live ✅</span>',
+    inactive:       '<span class="badge badge-inactive">Inactive</span>'
+  })[s]||`<span class="badge">${s}</span>`;
+}
+
 function renderCustomers(){
   if(pipelineView==='list') renderListView();
   else renderPipeline();
@@ -1310,8 +1343,6 @@ function renderListView(){
   if(!body) return;
   if(!list.length){body.innerHTML='<div class="empty">No customers match your filter</div>';return;}
 
-  const sb=s=>({pending:'<span class="badge badge-pending">New</span>',welcomed:'<span class="badge badge-welcomed">Sent</span>','info-received':'<span class="badge badge-info-received">Info In</span>',active:'<span class="badge badge-active">Live ✅</span>',inactive:'<span class="badge badge-inactive">Inactive</span>'}[s]||`<span class="badge">${s}</span>`);
-
   body.innerHTML=`
     <div class="lv-row lv-header">
       <div>Business</div><div>Owner / Email</div><div>City · Type</div><div>Status</div><div>Fee</div><div>Joined</div><div></div>
@@ -1330,7 +1361,7 @@ function renderListView(){
         <div style="font-size:12px;">${c.city||'—'}</div>
         <div style="font-size:11px;color:var(--muted);">${c.type||''}</div>
       </div>
-      <div>${sb(c.status)}</div>
+      <div>${statusBadge(c.status)}</div>
       <div style="font-weight:700;color:var(--green);">£${c.fee||197}</div>
       <div style="font-size:11px;color:var(--muted);">${c.date||''}</div>
       <div class="lv-actions">
@@ -1359,14 +1390,13 @@ function renderGlobalSearch(){
   const pool=[...customers,...(archived||[]),...(completed||[])];
   const matches=pool.filter(c=>[c.biz,c.name,c.email,c.city,c.type,c.phone,c.bizPhone].some(f=>(f||'').toLowerCase().includes(q))).slice(0,15);
   if(!matches.length){res.innerHTML='<div class="gs-empty">No customers found</div>';return;}
-  const sb=s=>({pending:'<span class="badge badge-pending">New</span>',welcomed:'<span class="badge badge-welcomed">Welcomed</span>','info-received':'<span class="badge badge-info-received">Info In</span>',active:'<span class="badge badge-active">Live</span>',inactive:'<span class="badge badge-inactive">Inactive</span>'}[s]||'');
   res.innerHTML=matches.map(c=>`
     <div class="gs-result" data-id="${c.id}" onclick="gsOpenCustomer('${c.id}')">
       <div class="gs-result-left">
         <div class="gs-result-biz">${c.biz}${c.isNew?'<span style="margin-left:6px;background:rgba(0,212,170,0.15);color:var(--green);font-size:9px;font-weight:700;padding:1px 5px;border-radius:8px;">NEW</span>':''}</div>
         <div class="gs-result-meta">${[c.name,c.email,c.city,c.type].filter(Boolean).join(' · ')}</div>
       </div>
-      <div style="display:flex;gap:7px;align-items:center;">${sb(c.status)}<span style="font-size:11px;color:var(--muted);">£${c.fee||197}/mo</span></div>
+      <div style="display:flex;gap:7px;align-items:center;">${statusBadge(c.status)}<span style="font-size:11px;color:var(--muted);">£${c.fee||197}/mo</span></div>
     </div>`).join('');
 }
 function gsOpenCustomer(id){
@@ -2310,31 +2340,38 @@ function toggleWfStepModal(wfId,i){
 
 // ── VAPI SCRIPT GENERATOR ──
 function generateVapiScript(c){
-  const biz     = c.biz     || 'this business';
-  const type    = c.type    || 'local business';
-  const hours   = c.hours   || 'Please contact us for opening hours.';
-  const services= c.services|| 'Please contact us for service and pricing information.';
-  const booking = c.booking || '';
-  const phone   = c.bizPhone|| c.phone || '';
-  const voice   = (c.voice  || 'female');
-  const notes   = c.notes   || '';
+  const biz       = c.biz       || 'this business';
+  const type      = c.type      || 'local business';
+  const hours     = c.hours     || 'Please contact us for opening hours.';
+  const services  = c.services  || 'Please contact us for service and pricing information.';
+  const booking   = c.booking   || '';
+  const phone     = c.bizPhone  || c.phone || '';
+  const voice     = c.voice     || 'female';
+  const address   = c.address   || '';
+  const area      = c.area      || '';
+  const payment   = c.payment   || '';
+  const emergency = c.emergency || '';
+  const response  = c.response  || '';
+  const faq       = c.faq       || '';
+  const notes     = c.notes     || '';
+  const ownerFirst= (c.name||'the team').split(' ')[0];
 
   const bookingFlow = booking
     ? `When a caller wants to book or make an appointment:
 
 1. First offer the online booking link:
-   "I can give you our online booking link — it's ${booking}
+   "I can send you our online booking link — it's ${booking}
    You can pick a time there directly. Would that work for you?"
 
-2. If they'd prefer to book over the phone:
-   Take their name and phone number, then say:
-   "Perfect — I've noted that down. Someone from ${biz} will call you back shortly to confirm your booking."`
+2. If they'd prefer to book over the phone or can't use the link:
+   Take their full name and best phone number, then say:
+   "Perfect — I've noted that down. ${ownerFirst} will call you back shortly to confirm your slot."`
     : `When a caller wants to book or make an appointment:
 
-Take their full name and phone number, then say:
-"Perfect — I've noted that down. Someone from ${biz} will call you back shortly to confirm your booking."
+Take their full name and best phone number, then say:
+"Perfect — I've noted that down. ${ownerFirst} will call you back shortly to confirm a time."
 
-Do NOT try to confirm specific times — you don't have access to the live calendar.`;
+Do NOT try to confirm specific times or slots — you don't have access to the live calendar.`;
 
   return `# AI RECEPTIONIST — SYSTEM PROMPT
 # Business: ${biz}
@@ -2352,22 +2389,22 @@ Do NOT try to confirm specific times — you don't have access to the live calen
 
 ## ROLE & PURPOSE
 
-You are an AI receptionist for ${biz}, a ${type}. You answer incoming calls professionally, handle common questions about services and pricing, and take booking requests so the team can call back to confirm.
+You are an AI receptionist for ${biz}, a ${type}${c.city?` based in ${c.city}`:''}. You answer incoming calls professionally, handle common questions about services and pricing, and capture booking requests so the team can call back to confirm.
 
-You are an AI assistant — if a caller directly asks whether they're speaking to a person, you can say:
-"I'm ${biz}'s AI assistant — I'm here to help with any questions and can take your details for the team."
+You are an AI assistant — if a caller sincerely asks whether they're speaking to a person, say:
+"I'm ${biz}'s AI receptionist — I'm here to help with any questions and can take your details for the team."
 
-Never pretend to be a human if sincerely asked.
+Never claim to be human if sincerely asked.
 
 
 ## VOICE & PERSONALITY
 
 - Warm, friendly, and professional at all times
-- Speak naturally using contractions ("I'll", "you're", "that's", "we're")
+- Speak naturally — use contractions ("I'll", "you're", "that's", "we're")
 - Be patient and clear — some callers may be elderly or less familiar with AI
-- If you mishear something: "I'm sorry, I didn't quite catch that — could you say that again for me?"
+- If you mishear something: "I'm sorry, I didn't quite catch that — could you say that again?"
 - Never sound rushed or dismissive
-- If you genuinely don't know an answer, be honest rather than making something up
+- If you genuinely don't know an answer, be honest — don't make things up
 
 
 ## GREETING
@@ -2376,7 +2413,7 @@ Start every call with:
 "Hello, thanks for calling ${biz}! How can I help you today?"
 
 If it's clearly outside opening hours:
-"Hi, thanks for calling ${biz}! We're not open right now, but I'd be happy to take your details and make sure someone calls you back."
+"Hi, thanks for calling ${biz}! We're not open right now, but I can take your details and make sure ${ownerFirst} calls you back."
 
 
 ## WHAT YOU CAN HELP WITH
@@ -2384,70 +2421,101 @@ If it's clearly outside opening hours:
 
 ### 1. SERVICES & PRICING
 
-When asked about services, prices, or what you offer, use the following information:
+When asked about services, prices, or what you offer:
 
 ${services}
 
-If asked about something not listed above:
-"I don't have the exact details on that one — let me take your name and number and get someone to call you back with the right information."
+If asked about something not listed:
+"I don't have the exact details on that — let me take your name and number and get ${ownerFirst} to call you back with the right information."
 
 
 ### 2. OPENING HOURS
 
-When asked when you're open or about your hours:
+When asked about opening times:
 
 ${hours}
 
-If called outside of these hours:
-"We're not open right now — our hours are ${hours.split('\n')[0]}. I can take your details and make sure someone calls you back when we're next open."
+If called outside those hours:
+"We're closed at the moment — our hours are ${hours.split('\n')[0]}. I can take your details and make sure someone calls you back when we're next open."
+${address ? `
+
+### 3. LOCATION & DIRECTIONS
+
+When asked where you're based or for the address:
+
+${biz} is located at: ${address}
+${area ? `\nService area: ${area}` : ''}
+
+If asked whether you cover a particular area:
+${area ? `"We cover ${area} — if you're outside that area, I can still take your details and someone will let you know."`:'Check whether the location falls within the service area. If unsure, say: "I\'ll take your details and someone will confirm whether we cover your area."'}` : ''}
 
 
-### 3. BOOKING AN APPOINTMENT
+### ${address ? '4' : '3'}. BOOKING AN APPOINTMENT
 
 ${bookingFlow}
 
 
-### 4. TAKING A MESSAGE / SPEAKING TO SOMEONE
+### ${address ? '5' : '4'}. TAKING A MESSAGE
 
-If a caller has a question you can't answer, or wants to speak to a real person:
-"Of course — let me take your name and number so someone can get back to you."
+If a caller has a question you can't answer, or wants to speak to someone directly:
+"Of course — let me take your name and number and ${ownerFirst} will get back to you."
 
-Collect:
+Always collect:
 - Full name
-- Phone number
+- Best phone number
 - Brief reason for calling (1 sentence)
 
-Then say:
-"Got that — I'll make sure someone from the team calls you back shortly."
+Then say: "Got that — ${ownerFirst} will be in touch shortly."
+${payment ? `
+
+### PAYMENT
+
+When asked about payment methods:
+"We accept ${payment}."` : ''}
+${emergency ? `
+
+### EMERGENCIES & OUT-OF-HOURS
+
+When asked about emergency or out-of-hours work:
+"${emergency}"` : ''}
+${response ? `
+
+### RESPONSE TIMES
+
+When asked how quickly you can come out or how long jobs take:
+"${response}"` : ''}
+${faq ? `
+
+### COMMON QUESTIONS
+
+${faq}` : ''}
 
 
 ## WHAT NOT TO DO
 
-- Do NOT confirm specific appointment times — you don't have live calendar access
+- Do NOT confirm specific appointment times or availability — you don't have live calendar access
 - Do NOT give medical, legal, or professional advice
 - Do NOT invent prices or services not listed in this prompt
-- Do NOT say "please hold" — you're a voice AI and cannot place callers on hold
-- Do NOT end the call without asking "Is there anything else I can help with today?"
+- Do NOT say "please hold" — you're a voice AI
+- Do NOT end the call without asking "Is there anything else I can help with?"
 
 
 ## CLOSING THE CALL
 
 If you've answered their question:
-"Great — is there anything else I can help you with today?"
+"Is there anything else I can help you with today?"
 Then: "Thanks for calling ${biz} — have a great day!"
 
 If you've taken their details:
-"We'll be in touch soon. Thanks for calling ${biz} — take care!"
+"${ownerFirst} will be in touch shortly. Thanks for calling ${biz} — take care!"
 
 
-## KEY FACTS
+## REFERENCE
 
-- Business name: ${biz}
-- Business type: ${type}${phone ? `\n- Phone number: ${phone}` : ''}${booking ? `\n- Online booking: ${booking}` : ''}
-- City/location: ${c.city || 'not specified'}
-${notes ? `\n## ADDITIONAL INFORMATION\n\nUse the following to answer any other questions callers may have:\n\n${notes}` : ''}
-
-Always refer to the business as "${biz}" — never as "the company" or "the business".`;
+- Business: ${biz}${c.city ? ` · ${c.city}` : ''}
+- Type: ${type}${phone ? `\n- Business phone: ${phone}` : ''}${booking ? `\n- Booking link: ${booking}` : ''}${address ? `\n- Address: ${address}` : ''}${area ? `\n- Covers: ${area}` : ''}${payment ? `\n- Payment: ${payment}` : ''}
+${notes ? `\n## ADDITIONAL NOTES FOR THE AI\n\n${notes}` : ''}
+Always refer to this business as "${biz}".`;
 }
 
 function showVapiScript(id){
