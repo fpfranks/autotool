@@ -158,7 +158,6 @@ function doPost(e) {
             'have it live within 24 hours.\n\n' +
             'Any questions in the meantime, just reply to this email.\n\n' +
             'Speak soon,\n' +
-            'Frankie\n' +
             'Phillips Automates\n' +
             'phillipsautomates@gmail.com'
         });

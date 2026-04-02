@@ -730,7 +730,7 @@
 
         <div style="background:var(--surface2);border-radius:8px;padding:14px;border-left:3px solid var(--green);">
           <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px;">"Can I try it first?"</div>
-          <div style="font-size:12px;color:var(--muted);line-height:1.7;">Yes — offer them a <strong style="color:var(--text)">demo call</strong> so they can hear the AI live. And remind them about the <strong style="color:var(--green)">30-day money-back guarantee</strong>. Zero risk on their side.</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.7;">Yes — offer them a <strong style="color:var(--text)">demo call</strong> so they can hear the AI live. And remind them that they can <strong style="color:var(--green)">cancel anytime with one email</strong>. No lock-in, zero risk on their side.</div>
         </div>
 
       </div>
@@ -1712,7 +1712,6 @@ Once I have everything I'll build your AI receptionist, run test calls to make s
 
 Any questions just reply to this email — I'll come straight back to you.
 
-Frankie
 Phillips Automates
 phillipsautomates@gmail.com`;
 }
@@ -1724,7 +1723,7 @@ Just checking in — did you get a chance to send over your hours and pricing? I
 
 If you got stuck anywhere just reply and I'll help.
 
-Frankie
+Phillips Automates
 phillipsautomates@gmail.com`;
 }
 
@@ -1799,7 +1798,7 @@ If your prices, hours, or services change, just email phillipsautomates@gmail.co
 
 Thanks for choosing Phillips Automates!
 
-Frankie
+Phillips Automates
 phillipsautomates@gmail.com`;
 }
 
@@ -1858,7 +1857,6 @@ Common updates I can make:
 
 Just hit reply with whatever needs changing.
 
-Frankie
 Phillips Automates
 phillipsautomates@gmail.com`;
 }
@@ -1940,10 +1938,10 @@ function copyForwardingGuide(id){
   const network=c.network||'';
   let msg='';
   if(network==='landline'){
-    msg=`Hi ${c.name||c.biz}! Your AI receptionist is ready.\n\nYour AI number: ${twilioNum}\n\nTo activate, contact your phone provider and ask them to forward unanswered calls to ${twilioNum}. Takes ~10 mins.\n\nAny questions just reply! — Frankie, Phillips Automates`;
+    msg=`Hi ${c.name||c.biz}! Your AI receptionist is ready.\n\nYour AI number: ${twilioNum}\n\nTo activate, contact your phone provider and ask them to forward unanswered calls to ${twilioNum}. Takes ~10 mins.\n\nAny questions just reply! — Phillips Automates`;
   } else {
     const codes=getForwardingCodes(network,twilioNum);
-    msg=`Hi ${c.name||c.biz}! Your AI receptionist is ready.\n\nYour AI number: ${twilioNum}\n\nTo activate (30 seconds):\nDial on your phone:\n${codes.noAnswer} (no answer)\n${codes.busy} (busy)\n${codes.off} (phone off)\n\nThat's it — you're live! To turn off: ${codes.cancel}\n\n— Frankie, Phillips Automates`;
+    msg=`Hi ${c.name||c.biz}! Your AI receptionist is ready.\n\nYour AI number: ${twilioNum}\n\nTo activate (30 seconds):\nDial on your phone:\n${codes.noAnswer} (no answer)\n${codes.busy} (busy)\n${codes.off} (phone off)\n\nThat's it — you're live! To turn off: ${codes.cancel}\n\n— Phillips Automates`;
   }
   navigator.clipboard.writeText(msg).then(()=>notify('Forwarding guide copied — paste into WhatsApp/SMS!')).catch(()=>notify('Copy failed — try selecting manually'));
 }
