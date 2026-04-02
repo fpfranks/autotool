@@ -158,6 +158,7 @@
       .topbar-hide { display: none; }
       #hero { padding: 60px 20px 50px; }
       .handles-grid, .steps-grid { grid-template-columns: 1fr; }
+      .handles-grid .handle-card[style*="grid-column"] { grid-column: 1 !important; }
       .who-grid { grid-template-columns: repeat(2, 1fr); }
       .pricing-card { padding: 36px 18px; margin-top: 24px; }
       .problem-box { padding: 28px 24px; font-size: 1.05rem; }
@@ -175,7 +176,7 @@
 
 <!-- TOPBAR -->
 <div class="topbar">
-  🔒 No login details ever needed<span class="topbar-hide"> &nbsp;|&nbsp; Live in 24 hours &nbsp;|&nbsp; Cancel anytime</span>
+  🔒 No login details ever needed<span class="topbar-hide"> &nbsp;|&nbsp; Flat rate — no per-minute fees &nbsp;|&nbsp; Live in 24 hours &nbsp;|&nbsp; Cancel anytime</span>
 </div>
 
 <!-- NAV -->
@@ -191,13 +192,15 @@
   <div class="container">
     <div class="section-label">AI Phone Receptionist for UK Small Businesses</div>
     <h1>Every missed call is<br><span class="accent-text">a missed customer.</span></h1>
-    <p class="sub">An AI receptionist that answers your phone 24/7 — handles pricing, opening hours, and bookings — even when you're with someone, driving, or asleep. No login details ever needed. Just forward your calls.</p>
+    <p class="sub">An AI receptionist that answers your phone 24/7 — handles pricing, opening hours, and bookings — and sends you a written summary after every call. No voicemail. No missed leads. No login details ever needed.</p>
     <a href="#pricing" class="btn-primary">Get Started — £197/mo ›</a>
     <p class="hero-price-note">£197/month &nbsp;·&nbsp; Cancel anytime &nbsp;·&nbsp; No contracts</p>
     <div class="badges">
       <div class="badge">🔒 No login details needed</div>
       <div class="badge">⚡ Live in 24 hours</div>
       <div class="badge">📞 24/7 call answering</div>
+      <div class="badge">💷 Flat rate — no per-minute fees</div>
+      <div class="badge">📝 Written summary after every call</div>
       <div class="badge">🇬🇧 UK-based</div>
     </div>
   </div>
@@ -211,7 +214,7 @@
     <div class="section-label">The Problem</div>
     <h2>Small businesses miss more calls than they realise.</h2>
     <div class="problem-box" style="margin-top:32px;">
-      You're mid-job, with a customer, or it's Sunday evening. Your phone rings. You miss it. <strong>That caller doesn't leave a voicemail — they just ring someone else.</strong> UK research shows small businesses miss up to 62% of inbound calls during working hours alone. After hours? Nearly all of them.
+      You're mid-job, with a customer, or it's Sunday evening. Your phone rings. You miss it. <strong>That caller doesn't leave a voicemail — 72% of callers never do. They just ring the next number on Google.</strong> UK trades lose an estimated <strong>£24,000 a year</strong> on average from missed calls. Over 40% of trade enquiries come in outside 9–5, when you're least likely to answer.
       <em>It's not your fault — you can't always stop what you're doing to answer. But that doesn't mean you have to lose the business every time your phone goes unanswered.</em>
     </div>
   </div>
@@ -223,7 +226,7 @@
 <section class="section">
   <div class="container">
     <div class="section-label">The Solution</div>
-    <h2>An AI that answers your calls and handles the 4 things every caller wants to know.</h2>
+    <h2>An AI that answers your calls and handles the 5 things every caller wants to know.</h2>
     <p class="muted" style="margin-top:14px; max-width:580px;">
       Not a robotic phone menu. Not a voicemail. A real conversational AI that talks to your callers, answers their questions, and takes their details — in a friendly, professional voice.
     </p>
@@ -244,9 +247,14 @@
         <p>Collects the caller's name and number and lets them know you'll call back to confirm — or sends them straight to your booking link if you have one. No enquiry goes missing.</p>
       </div>
       <div class="handle-card">
-        <span class="handle-icon">💬</span>
-        <h3>"I need to speak to someone"</h3>
-        <p>If a caller needs a real person, the AI takes a message and texts you straight away — name, number, and what it's about. You call them back when you're free. Nothing urgent slips through.</p>
+        <span class="handle-icon">📝</span>
+        <h3>Written summary — no more voicemail</h3>
+        <p>Every call ends with a written summary texted straight to your phone — caller name, number, and exactly what they wanted. No listening to crackly voicemails, no missed details. Just read, call back, book the job.</p>
+      </div>
+      <div class="handle-card" style="grid-column:1/-1;">
+        <span class="handle-icon">🚨</span>
+        <h3>"It's an emergency — I need someone now"</h3>
+        <p>The AI recognises urgent calls and handles them differently. It gets their name and number, explains when you'll be reachable, and texts you immediately flagged as urgent. At 2am when someone's boiler has gone, they still get a professional response — and you get the lead before they call a competitor.</p>
       </div>
     </div>
   </div>
@@ -354,7 +362,7 @@
             <div style="width:72px;height:4px;background:rgba(0,0,0,0.12);border-radius:2px;"></div>
           </div>
         </div>
-        <p style="font-size:13px;color:var(--text-muted);margin-top:16px;line-height:1.7;text-align:center;">Text arrives the moment the call ends.<br>Call back when you're free — the lead is never lost.</p>
+        <p style="font-size:13px;color:var(--text-muted);margin-top:16px;line-height:1.7;text-align:center;">Written summary arrives the moment the call ends.<br>No voicemail. No missed details. Call back when you're free.</p>
       </div>
     </div>
 
@@ -509,15 +517,16 @@
   <div class="container">
     <div class="section-label">How It Compares</div>
     <h2>AI receptionist vs the alternatives.</h2>
-    <p class="muted" style="margin-top:14px;max-width:520px;">Most businesses rely on voicemail — or pay thousands a month for a human. There's a better option.</p>
+    <p class="muted" style="margin-top:14px;max-width:560px;">Most businesses rely on voicemail. Some try per-minute answering services — and get a nasty surprise on the bill. There's a better option.</p>
     <div class="compare-wrap">
       <table class="compare-table">
         <thead>
           <tr>
-            <th style="width:38%"></th>
-            <th class="col-us">🤖 AI Receptionist<br><span style="font-weight:500;font-size:12px;color:var(--green);">Phillips Automates</span></th>
+            <th style="width:30%"></th>
+            <th class="col-us">🤖 Phillips Automates<br><span style="font-weight:500;font-size:12px;color:var(--green);">AI Receptionist</span></th>
             <th style="color:var(--text-muted);">📼 Voicemail</th>
             <th style="color:var(--text-muted);">👤 Human Receptionist</th>
+            <th style="color:var(--text-muted);">🔁 Other AI / Answering<br><span style="font-weight:400;font-size:11px;">(Moneypenny, Voco etc.)</span></th>
           </tr>
         </thead>
         <tbody>
@@ -526,46 +535,93 @@
             <td class="col-us"><span class="tick">✓</span> Always on</td>
             <td><span class="tick">✓</span> Records message</td>
             <td><span class="cross">✗</span> Office hours only</td>
+            <td><span class="tick">✓</span></td>
           </tr>
           <tr>
             <td>Gives callers your prices instantly</td>
             <td class="col-us"><span class="tick">✓</span> Full price list</td>
             <td><span class="cross">✗</span> Can't</td>
             <td><span class="tick">✓</span> If trained</td>
+            <td><span class="partial">~ Basic only</span></td>
           </tr>
           <tr>
             <td>Takes booking requests</td>
             <td class="col-us"><span class="tick">✓</span> Name &amp; number every time</td>
             <td><span class="partial">~ Most callers hang up</span></td>
             <td><span class="tick">✓</span></td>
+            <td><span class="tick">✓</span></td>
           </tr>
           <tr>
-            <td>Texts you immediately after every call</td>
-            <td class="col-us"><span class="tick">✓</span> Instant</td>
-            <td><span class="cross">✗</span></td>
-            <td><span class="cross">✗</span></td>
+            <td>Written summary texted after every call (no voicemail)</td>
+            <td class="col-us"><span class="tick">✓</span> Instant, every call</td>
+            <td><span class="cross">✗</span> Audio only</td>
+            <td><span class="cross">✗</span> Manual notes</td>
+            <td><span class="partial">~ Some do</span></td>
           </tr>
           <tr>
             <td>No login details or account access needed</td>
             <td class="col-us"><span class="tick">✓</span> Never</td>
             <td><span class="tick">✓</span></td>
             <td><span class="partial">~ Varies</span></td>
+            <td><span class="cross">✗</span> Portal required</td>
           </tr>
           <tr>
             <td>Live in 24 hours</td>
             <td class="col-us"><span class="tick">✓</span></td>
             <td><span class="tick">✓</span></td>
             <td><span class="cross">✗</span> Weeks to hire</td>
+            <td><span class="partial">~ 48hrs+ typically</span></td>
+          </tr>
+          <tr>
+            <td>UK-based service</td>
+            <td class="col-us"><span class="tick">✓</span> UK sole trader</td>
+            <td>—</td>
+            <td><span class="partial">~ Varies</span></td>
+            <td><span class="partial">~ Some US-only</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Pricing model</td>
+            <td class="col-us" style="color:var(--green);font-weight:700;">Flat rate — no surprises</td>
+            <td style="color:var(--text-muted);">Free</td>
+            <td style="color:var(--text-muted);">£800 – £2,000+/mo</td>
+            <td style="color:#ff4d6a;font-size:12.5px;">Per-minute or per-call — bills spike as you get busier</td>
           </tr>
           <tr>
             <td style="font-weight:600;">Monthly cost</td>
             <td class="col-us" style="color:var(--green);font-size:15px;font-weight:800;">£197/mo</td>
             <td style="color:var(--text-muted);">Free</td>
             <td style="color:var(--text-muted);">£800 – £2,000+/mo</td>
+            <td style="color:var(--text-muted);">£160 – £500+/mo<br><span style="font-size:11px;color:#ff4d6a;">+ overage charges</span></td>
           </tr>
         </tbody>
       </table>
     </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     ROI — THE MATHS
+════════════════════════════════════════════ -->
+<section class="section">
+  <div class="container" style="text-align:center;">
+    <div class="section-label">The Maths</div>
+    <h2>One extra job a week pays for itself.</h2>
+    <p class="muted" style="margin-top:14px;max-width:520px;margin-left:auto;margin-right:auto;">For most trades, a single booking that would otherwise have gone to voicemail covers the monthly cost.</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:40px;max-width:820px;margin-left:auto;margin-right:auto;">
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:32px 24px;">
+        <div style="font-size:2.4rem;font-weight:900;color:var(--green);letter-spacing:-1px;">£300</div>
+        <div style="font-size:0.88rem;color:var(--text-muted);margin-top:8px;line-height:1.5;">Average emergency plumbing call-out — one job covers 1.5 months</div>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:32px 24px;">
+        <div style="font-size:2.4rem;font-weight:900;color:var(--green);letter-spacing:-1px;">£160</div>
+        <div style="font-size:0.88rem;color:var(--text-muted);margin-top:8px;line-height:1.5;">One hair or beauty booking per week — that's over £640/mo captured from missed calls</div>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:32px 24px;">
+        <div style="font-size:2.4rem;font-weight:900;color:var(--green);letter-spacing:-1px;">£500+</div>
+        <div style="font-size:0.88rem;color:var(--text-muted);margin-top:8px;line-height:1.5;">One garage repair or boiler service — that's 2–3 months of the AI covered in a single job</div>
+      </div>
+    </div>
+    <p style="margin-top:28px;font-size:0.88rem;color:var(--text-muted);max-width:480px;margin-left:auto;margin-right:auto;">UK trades miss an estimated <strong style="color:var(--text);">£24,000 a year</strong> from unanswered calls. The AI costs £197/month. The question isn't whether it pays — it's how fast.</p>
   </div>
 </section>
 
@@ -693,15 +749,17 @@
       <ul class="pricing-features">
         <li>AI answers your calls 24/7 — evenings, weekends, bank holidays</li>
         <li>Gives callers your exact prices and opening hours</li>
-        <li>Collects booking requests and texts you the details instantly</li>
+        <li>Written summary texted after every call — no more listening to voicemails</li>
+        <li>Handles emergency calls — flags urgent enquiries straight to you</li>
+        <li>Flat rate — no per-minute fees, no matter how busy it gets</li>
         <li>Live in 24 hours — no technical work from you</li>
         <li>No login details or account access ever required</li>
         <li>Updates to prices or hours done within 24 hours — just email us</li>
-        <li>Cancel anytime with one email — no fuss</li>
+        <li>30-day money-back guarantee — cancel anytime after that</li>
       </ul>
 
       <button class="pricing-cta" onclick="handleGetStarted()">Get Started — £197/mo ›</button>
-      <p class="pricing-sub">No setup fee &nbsp;·&nbsp; No contract &nbsp;·&nbsp; Cancel anytime</p>
+      <p class="pricing-sub">No setup fee &nbsp;·&nbsp; No contract &nbsp;·&nbsp; 30-day money-back guarantee</p>
     </div>
 
     <!-- Confirmation panel -->
@@ -764,11 +822,11 @@
 ════════════════════════════════════════════ -->
 <section class="section alt">
   <div class="container">
-    <div class="section-label" style="display:block; text-align:center; margin-bottom:32px;">Guarantee</div>
+    <div class="section-label" style="display:block; text-align:center; margin-bottom:32px;">Risk-Free Guarantee</div>
     <div class="guarantee-box">
       <div class="guarantee-icon">🛡️</div>
-      <h2>Cancel Anytime</h2>
-      <p>Not happy? Cancel anytime with one email to phillipsautomates@gmail.com. No contracts, no lock-in, no awkward calls. We'll cancel the same day.</p>
+      <h2>30-Day Money-Back Guarantee</h2>
+      <p>If you're not happy within the first 30 days, email <a href="mailto:phillipsautomates@gmail.com" style="color:var(--green);">phillipsautomates@gmail.com</a> and we'll refund you in full — no questions asked. After that, cancel anytime with one email. No contracts, no lock-in, no awkward calls.</p>
     </div>
   </div>
 </section>
@@ -822,6 +880,26 @@
         <div class="faq-a">One email to phillipsautomates@gmail.com and we'll cancel the same day. No notice period, no cancellation fee, no being put on hold. Done.</div>
       </div>
 
+      <div class="faq-item">
+        <div class="faq-q">Why not use a cheaper answering service instead?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Most cheaper services — like Moneypenny, AnswerConnect, or Voco — charge per minute or per call. That sounds fine at the start, but as you get busier the bill goes up unpredictably. We've seen businesses quoted £160/month that ended up paying £400+ once call volume picked up. We charge £197/month flat. No matter how many calls your AI takes, the price never changes. What you see is what you pay.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Can I hear the AI before I sign up?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Yes — email phillipsautomates@gmail.com and ask for a demo call. We'll set up a quick test so you can hear exactly what your callers would hear before you commit to anything.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What happens to voicemail? Do I still get them?<span class="faq-icon">+</span></div>
+        <div class="faq-a">No — that's the whole point. Instead of a voicemail you have to remember to check, you get a clean written summary texted to your phone the moment the call ends. It tells you who called, their number, and exactly what they wanted. No listening to crackly messages, no information lost. Just read it, call them back, book the job.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Is this different from the call management tools like Tradify or Fergus?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Yes — completely different products. Those are job management and invoicing platforms for organising your existing work. We specifically solve the problem of missed calls — making sure every call gets answered and no enquiry slips through. We don't replace your job management tool; we make sure you never lose a lead before it ever reaches you.</div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -831,12 +909,12 @@
 ════════════════════════════════════════════ -->
 <section class="section alt" style="text-align:center;">
   <div class="container">
-    <h2>Stop losing customers to missed calls.</h2>
-    <p class="muted" style="margin-top:14px; margin-bottom:36px; max-width:480px; margin-left:auto; margin-right:auto;">
-      We set everything up in 24 hours. You forward your calls. Every caller gets answered — even when you can't.
+    <h2>Stop losing jobs to missed calls.</h2>
+    <p class="muted" style="margin-top:14px; margin-bottom:36px; max-width:520px; margin-left:auto; margin-right:auto;">
+      Every call answered. Every lead captured in a written summary. Set up in 24 hours. No voicemail. No missed jobs.
     </p>
     <a href="#pricing" class="btn-primary">Get Started — £197/mo ›</a>
-    <p style="margin-top:16px; font-size:0.82rem; color:var(--text-muted);">£197/month &nbsp;·&nbsp; Cancel anytime &nbsp;·&nbsp; No contracts</p>
+    <p style="margin-top:16px; font-size:0.82rem; color:var(--text-muted);">£197/month &nbsp;·&nbsp; 30-day money-back &nbsp;·&nbsp; No contracts</p>
   </div>
 </section>
 
