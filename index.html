@@ -562,8 +562,11 @@
           <label>City / Town *</label>
           <input id="sf-city" type="text" placeholder="e.g. Manchester">
         </div>
+        <div style="display:flex;align-items:flex-start;gap:10px;margin-top:14px;">
+          <input type="checkbox" id="sf-consent" style="margin-top:3px;accent-color:#6c63ff;flex-shrink:0;width:15px;height:15px;cursor:pointer;">
+          <label for="sf-consent" style="font-size:0.72rem;color:var(--text-muted);line-height:1.6;cursor:pointer;">I confirm I have an existing trading relationship with the clients in my list and am permitted to contact them by SMS. I agree to the <a href="terms.html" target="_blank" style="color:#6c63ff;">Terms of Service</a> and <a href="privacy.html" target="_blank" style="color:#6c63ff;">Privacy Policy</a>.</label>
+        </div>
         <div id="sf-warning" class="sf-warning"></div>
-        <p style="font-size:0.72rem;color:var(--text-muted);margin-top:10px;line-height:1.55;">🔒 Your details are used only to set up your retention sequences. Never sold or shared. By submitting you agree to us contacting you to complete your setup.</p>
       </div>
 
       <ul class="pricing-features">
@@ -604,9 +607,10 @@
       const platform = document.getElementById('sf-platform').value;
       const city     = document.getElementById('sf-city').value.trim();
       const emailOk  = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-      if (!biz || !name || !email || !phone || !type || !platform || !city || !emailOk) {
+      const consent  = document.getElementById('sf-consent').checked;
+      if (!biz || !name || !email || !phone || !type || !platform || !city || !emailOk || !consent) {
         const w = document.getElementById('sf-warning');
-        w.textContent = !emailOk && email ? 'Please enter a valid email address.' : 'Please fill in all required fields (marked *).';
+        w.textContent = !emailOk && email ? 'Please enter a valid email address.' : !consent ? 'Please confirm you agree to the Terms of Service before continuing.' : 'Please fill in all required fields (marked *).';
         w.style.display = 'block';
         document.querySelector('.pricing-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;
@@ -706,7 +710,7 @@
 <footer>
   <p>© 2026 Phillips Automates &nbsp;|&nbsp; <a href="mailto:phillipsautomates@gmail.com">phillipsautomates@gmail.com</a></p>
   <p style="margin-top:8px;font-size:0.78rem;">UK-based &nbsp;·&nbsp; Built for hair, beauty &amp; barbering &nbsp;·&nbsp; Works with Booksy, Fresha &amp; Treatwell</p>
-  <p style="margin-top:10px;font-size:0.75rem;"><a href="privacy.html">Privacy Policy</a></p>
+  <p style="margin-top:10px;font-size:0.75rem;"><a href="privacy.html">Privacy Policy</a> &nbsp;·&nbsp; <a href="terms.html">Terms of Service</a></p>
 </footer>
 
 <div class="mobile-cta-bar">
