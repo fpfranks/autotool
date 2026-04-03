@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Export Your Client List — Phillips Automates</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0a0a0f; color: #e8e8f0; line-height: 1.7; font-size: 15px; }
+  .wrap { max-width: 780px; margin: 0 auto; padding: 60px 24px 80px; }
+  .back { display: inline-block; margin-bottom: 36px; font-size: 13px; color: #6b6b8a; text-decoration: none; }
+  .back:hover { color: #6c63ff; }
+  h1 { font-size: 26px; font-weight: 800; margin-bottom: 8px; }
+  .intro { font-size: 14px; color: #8888aa; margin-bottom: 48px; line-height: 1.7; max-width: 600px; }
+  .intro strong { color: #e8e8f0; }
+
+  /* Platform nav */
+  .platform-nav { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 48px; }
+  .pnav-btn { padding: 8px 18px; border-radius: 8px; font-size: 13px; font-weight: 600; border: 1px solid #2a2a3d; background: #12121a; color: #8888aa; cursor: pointer; text-decoration: none; transition: all 0.15s; }
+  .pnav-btn:hover { border-color: #6c63ff; color: #e8e8f0; }
+
+  /* Platform section */
+  .platform-section { margin-bottom: 64px; scroll-margin-top: 24px; }
+  .platform-header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #2a2a3d; }
+  .platform-icon { font-size: 2rem; }
+  .platform-name { font-size: 22px; font-weight: 800; }
+  .platform-sub { font-size: 13px; color: #8888aa; margin-top: 2px; }
+
+  /* Steps */
+  .steps { display: flex; flex-direction: column; gap: 14px; }
+  .step { display: flex; gap: 16px; align-items: flex-start; background: #12121a; border: 1px solid #2a2a3d; border-radius: 10px; padding: 16px 18px; }
+  .step-num { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, #6c63ff, #9b6bff); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: #fff; flex-shrink: 0; margin-top: 1px; }
+  .step-content { flex: 1; }
+  .step-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .step-desc { font-size: 13px; color: #8888aa; line-height: 1.6; }
+  .step-desc strong { color: #e8e8f0; }
+  .step-desc code { background: #1a1a28; border: 1px solid #2a2a3d; border-radius: 4px; padding: 1px 6px; font-size: 12px; color: #8b85ff; font-family: monospace; }
+
+  /* Note / warning boxes */
+  .note { background: rgba(108,99,255,0.08); border: 1px solid rgba(108,99,255,0.25); border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #c8c8d8; margin-top: 16px; line-height: 1.6; }
+  .note strong { color: #8b85ff; }
+  .warn { background: rgba(255,179,71,0.08); border: 1px solid rgba(255,179,71,0.25); border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #c8c8d8; margin-top: 16px; line-height: 1.6; }
+  .warn strong { color: #ffb347; }
+  .success { background: rgba(0,212,170,0.08); border: 1px solid rgba(0,212,170,0.2); border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #c8c8d8; margin-top: 16px; line-height: 1.6; }
+  .success strong { color: #00d4aa; }
+
+  /* What the CSV should have */
+  .csv-columns { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin-top: 16px; }
+  .csv-col { background: #1a1a28; border: 1px solid #2a2a3d; border-radius: 8px; padding: 10px 14px; }
+  .csv-col-name { font-size: 12px; font-weight: 700; color: #8b85ff; margin-bottom: 3px; }
+  .csv-col-example { font-size: 11px; color: #6b6b8a; }
+  .csv-col.required .csv-col-name::after { content: ' *'; color: #00d4aa; }
+
+  /* Divider */
+  .divider { border: none; border-top: 1px solid #1a1a28; margin: 48px 0; }
+
+  /* CTA */
+  .cta-box { background: linear-gradient(135deg, rgba(108,99,255,0.1), rgba(0,212,170,0.06)); border: 1px solid rgba(108,99,255,0.25); border-radius: 12px; padding: 28px 32px; text-align: center; margin-top: 48px; }
+  .cta-box h3 { font-size: 18px; margin-bottom: 8px; }
+  .cta-box p { font-size: 13px; color: #8888aa; margin-bottom: 18px; }
+  .cta-btn { display: inline-block; background: linear-gradient(135deg, #6c63ff, #9b6bff); color: #fff; padding: 12px 28px; border-radius: 8px; font-weight: 700; font-size: 14px; text-decoration: none; }
+
+  @media (max-width: 600px) {
+    .wrap { padding: 40px 16px 60px; }
+    h1 { font-size: 22px; }
+    .platform-name { font-size: 18px; }
+    .csv-columns { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a href="index.html" class="back">← Back to home</a>
+  <h1>How to Export Your Client List</h1>
+  <p class="intro">This is the only technical step you need to do. Follow the guide for your platform below — it takes about 60 seconds. Once you've downloaded the file, <strong>just reply to your welcome email with it attached</strong> and we'll handle everything else.</p>
+
+  <!-- Quick nav -->
+  <div class="platform-nav">
+    <a class="pnav-btn" href="#booksy">📅 Booksy</a>
+    <a class="pnav-btn" href="#fresha">📅 Fresha</a>
+    <a class="pnav-btn" href="#treatwell">📅 Treatwell</a>
+    <a class="pnav-btn" href="#square">📅 Square</a>
+    <a class="pnav-btn" href="#vagaro">📅 Vagaro</a>
+    <a class="pnav-btn" href="#manual">📋 Spreadsheet</a>
+  </div>
+
+  <!-- BOOKSY -->
+  <div class="platform-section" id="booksy">
+    <div class="platform-header">
+      <div class="platform-icon">📅</div>
+      <div>
+        <div class="platform-name">Booksy</div>
+        <div class="platform-sub">booksy.com · Booksy for Business app</div>
+      </div>
+    </div>
+
+    <p style="font-size:13px;color:#8888aa;margin-bottom:20px;">You can export from either the mobile app or the web dashboard — both give the same file.</p>
+
+    <div style="font-size:12px;font-weight:700;color:#6c63ff;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:12px;">From the mobile app</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Open the Booksy for Business app</div>
+          <div class="step-desc">Log in with your business account. Make sure you're on the <strong>business</strong> version of the app, not the customer app.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Tap the Clients tab</div>
+          <div class="step-desc">Tap <strong>Clients</strong> in the bottom navigation bar. You'll see your full client list.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Tap the Export icon</div>
+          <div class="step-desc">In the top-right corner of the Clients screen, tap the <strong>export icon</strong> (an arrow pointing upward, or three dots → Export).</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">Choose "Export to CSV" and confirm</div>
+          <div class="step-desc">Tap <strong>Export to CSV</strong>. Booksy will prepare the file and either download it to your phone or ask where to save it.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <div class="step-title">Email the file to us</div>
+          <div class="step-desc">Find the CSV in your Downloads folder or Files app. Attach it to your reply email. That's it.</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="font-size:12px;font-weight:700;color:#6c63ff;text-transform:uppercase;letter-spacing:0.8px;margin:24px 0 12px;">From the web (booksy.com)</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Log in at booksy.com</div>
+          <div class="step-desc">Go to <code>booksy.com</code> and log in with your business account. Click your business name in the top-right.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Go to Clients in the left sidebar</div>
+          <div class="step-desc">Click <strong>Clients</strong> in the left-hand navigation menu.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Click Export</div>
+          <div class="step-desc">Click the <strong>Export</strong> button above the client list (top-right area). Select CSV format if asked.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">The file downloads automatically</div>
+          <div class="step-desc">It'll download to your Downloads folder. Attach it to your reply email.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="success"><strong>✓ What Booksy includes:</strong> Client name, mobile number, email, last visit date, total visits, services booked. All the columns we need.</div>
+    <div class="note"><strong>Note:</strong> Don't filter or delete any columns before sending — just send the raw export file and we'll handle it.</div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- FRESHA -->
+  <div class="platform-section" id="fresha">
+    <div class="platform-header">
+      <div class="platform-icon">📅</div>
+      <div>
+        <div class="platform-name">Fresha</div>
+        <div class="platform-sub">partners.fresha.com</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Log into Fresha Partners</div>
+          <div class="step-desc">Go to <code>partners.fresha.com</code> and log in with your business credentials.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Click "Clients" in the left sidebar</div>
+          <div class="step-desc">You'll see your full client list with names, numbers, and visit history.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Click the Export button</div>
+          <div class="step-desc">In the top-right corner of the client list, click <strong>Export</strong>. A dropdown may appear — select <strong>Export clients</strong> or <strong>Download CSV</strong>.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">Select "All clients"</div>
+          <div class="step-desc">Make sure you're exporting <strong>all clients</strong>, not just a filtered view. You want the full history, not just recent clients.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <div class="step-title">Download and send</div>
+          <div class="step-desc">The CSV downloads to your computer. Attach it to your reply email.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="success"><strong>✓ What Fresha includes:</strong> Client name, phone, email, last appointment date, total visits, total spend. Excellent data — powers all four of our automations.</div>
+    <div class="warn"><strong>Common mistake:</strong> Fresha sometimes defaults to showing only "recent" clients. Make sure the export includes your full list — check the record count matches what you expect.</div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- TREATWELL -->
+  <div class="platform-section" id="treatwell">
+    <div class="platform-header">
+      <div class="platform-icon">📅</div>
+      <div>
+        <div class="platform-name">Treatwell</div>
+        <div class="platform-sub">connect.treatwell.co.uk</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Log into Treatwell Connect</div>
+          <div class="step-desc">Go to <code>connect.treatwell.co.uk</code> and sign in with your business account.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Go to Reports</div>
+          <div class="step-desc">Click <strong>Reports</strong> in the left-hand navigation menu.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Select "Client Report"</div>
+          <div class="step-desc">From the reports list, choose <strong>Client Report</strong> (sometimes listed as "Customer Report").</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">Set date range to "All time"</div>
+          <div class="step-desc">Change the date filter to <strong>All time</strong> — this ensures you get your complete client history, not just recent appointments.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <div class="step-title">Click Export / Download CSV</div>
+          <div class="step-desc">Click the <strong>Export</strong> or <strong>Download</strong> button and select CSV format.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-content">
+          <div class="step-title">Send us the file</div>
+          <div class="step-desc">Attach the downloaded CSV to your reply email.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="success"><strong>✓ What Treatwell includes:</strong> Client name, phone, email, appointment history, and visit dates.</div>
+    <div class="note"><strong>Note:</strong> Treatwell's export may not always include a "total visits" column — that's fine, just send what you get. We can calculate it from the appointment history.</div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- SQUARE -->
+  <div class="platform-section" id="square">
+    <div class="platform-header">
+      <div class="platform-icon">📅</div>
+      <div>
+        <div class="platform-name">Square Appointments</div>
+        <div class="platform-sub">squareup.com/dashboard</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Log into your Square Dashboard</div>
+          <div class="step-desc">Go to <code>squareup.com/dashboard</code> and log in.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Click "Customers" in the left menu</div>
+          <div class="step-desc">You'll see your full customer directory with visit history.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Click the Export button</div>
+          <div class="step-desc">In the top-right corner of the customer list, click <strong>Export</strong>.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">Select "Export all customers" as CSV</div>
+          <div class="step-desc">Choose <strong>All customers</strong> (not a filtered group) and select <strong>CSV</strong> as the format.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <div class="step-title">Click Export and download the file</div>
+          <div class="step-desc">Square will send the CSV to your registered email address, or download it directly. Attach it to your reply.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="success"><strong>✓ What Square includes:</strong> Customer name, phone, email, last visit date, total visits, and total spend.</div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- VAGARO -->
+  <div class="platform-section" id="vagaro">
+    <div class="platform-header">
+      <div class="platform-icon">📅</div>
+      <div>
+        <div class="platform-name">Vagaro</div>
+        <div class="platform-sub">vagaro.com</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Log into Vagaro</div>
+          <div class="step-desc">Go to <code>vagaro.com</code> and log in with your business account.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Go to Reports</div>
+          <div class="step-desc">Click <strong>Reports</strong> in the top navigation bar.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Open Customer Reports → Customer List</div>
+          <div class="step-desc">Click <strong>Customer Reports</strong> from the left panel, then select <strong>Customer List</strong>.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">Set the date filter to "All time"</div>
+          <div class="step-desc">Change the date range to <strong>All time</strong> so you capture all clients, not just recent ones.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <div class="step-title">Click Export → CSV</div>
+          <div class="step-desc">Click the <strong>Export</strong> button and select <strong>CSV</strong> format. The file will download.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-content">
+          <div class="step-title">Send us the file</div>
+          <div class="step-desc">Attach the CSV to your reply email.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="success"><strong>✓ What Vagaro includes:</strong> Client name, phone, email, last visit date, total visits, and services history.</div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- MANUAL / SPREADSHEET -->
+  <div class="platform-section" id="manual">
+    <div class="platform-header">
+      <div class="platform-icon">📋</div>
+      <div>
+        <div class="platform-name">Manual / Spreadsheet</div>
+        <div class="platform-sub">Excel, Google Sheets, or a paper list</div>
+      </div>
+    </div>
+
+    <p style="font-size:13px;color:#8888aa;margin-bottom:20px;">If you manage your clients in a spreadsheet or paper book, here's exactly how to format the file so we can work with it.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Open a new spreadsheet</div>
+          <div class="step-desc">Use Excel, Google Sheets, or any spreadsheet app. Create a new blank sheet.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Set up these column headers in row 1</div>
+          <div class="step-desc">
+            Type these exact headings across the top row:<br><br>
+            <code>First Name</code> &nbsp; <code>Last Name</code> &nbsp; <code>Mobile</code> &nbsp; <code>Last Visit</code> &nbsp; <code>Total Visits</code>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Fill in your client data from row 2 down</div>
+          <div class="step-desc">
+            One client per row. Mobile format: <code>07700 900000</code>. Date format: <code>DD/MM/YYYY</code>. Total visits: just a number like <code>4</code>.<br><br>
+            Total visits is your best guess — even approximate is fine. "2-3 times" → put <code>2</code>.
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">Save as CSV</div>
+          <div class="step-desc">
+            <strong>Excel:</strong> File → Save As → choose "CSV (Comma delimited) (.csv)"<br>
+            <strong>Google Sheets:</strong> File → Download → Comma-separated values (.csv)
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <div class="step-title">Send us the CSV file</div>
+          <div class="step-desc">Attach the .csv file to your reply email. Even 20–30 clients is enough to start — you can send an updated version anytime.</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:20px;">
+      <div style="font-size:13px;font-weight:700;color:#e8e8f0;margin-bottom:12px;">Your columns should look like this:</div>
+      <div class="csv-columns">
+        <div class="csv-col required">
+          <div class="csv-col-name">First Name</div>
+          <div class="csv-col-example">e.g. Sarah</div>
+        </div>
+        <div class="csv-col required">
+          <div class="csv-col-name">Last Name</div>
+          <div class="csv-col-example">e.g. Johnson</div>
+        </div>
+        <div class="csv-col required">
+          <div class="csv-col-name">Mobile</div>
+          <div class="csv-col-example">e.g. 07700 900000</div>
+        </div>
+        <div class="csv-col required">
+          <div class="csv-col-name">Last Visit</div>
+          <div class="csv-col-example">e.g. 15/02/2026</div>
+        </div>
+        <div class="csv-col">
+          <div class="csv-col-name">Total Visits</div>
+          <div class="csv-col-example">e.g. 4</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:#6b6b8a;margin-top:10px;">* = required &nbsp;·&nbsp; Total Visits is used for the new client nudge — approximate is fine</div>
+    </div>
+
+    <div class="warn"><strong>Important:</strong> Mobile numbers must be in UK format (07xxx xxxxxx or +447xxx xxxxxx). Numbers in any other format won't receive messages.</div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- STUCK? -->
+  <div style="background:#12121a;border:1px solid #2a2a3d;border-radius:12px;padding:28px 28px;">
+    <div style="font-size:16px;font-weight:700;margin-bottom:10px;">🤔 Stuck or can't find the export button?</div>
+    <p style="font-size:13px;color:#8888aa;line-height:1.7;">Just reply to your welcome email and tell us which screen you're stuck on — we'll send you the exact steps, usually within a couple of hours. Or email us directly at <a href="mailto:phillipsautomates@gmail.com" style="color:#6c63ff;">phillipsautomates@gmail.com</a>.</p>
+  </div>
+
+  <div class="cta-box">
+    <h3>Got your CSV? 🎉</h3>
+    <p>Just reply to your welcome email with it attached — we'll handle everything from here and have your sequences live within 24 hours.</p>
+    <a href="mailto:phillipsautomates@gmail.com" class="cta-btn">Email it to us →</a>
+  </div>
+
+  <p style="margin-top:32px;font-size:12px;color:#6b6b8a;text-align:center;"><a href="index.html" style="color:#6b6b8a;">← Back to phillipsautomates.com</a> &nbsp;·&nbsp; <a href="privacy.html" style="color:#6b6b8a;">Privacy Policy</a></p>
+</div>
+</body>
+</html>

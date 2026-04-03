@@ -1660,11 +1660,96 @@ function emailStage(c){
   return 'new';
 }
 
+function csvExportSteps(platform){
+  const p = (platform||'').toLowerCase();
+  if(p.includes('booksy')) return `Here are the exact steps for Booksy:
+
+  1. Open the Booksy for Business app (or go to booksy.com and log in)
+  2. Tap the Clients tab at the bottom of the screen
+  3. Tap the Export icon in the top-right corner (looks like an arrow pointing up)
+  4. Choose "Export to CSV" and confirm
+  5. The file will download or email to you — it includes client name, phone, email, last visit date, and total visits
+  6. Reply to this email with the CSV attached
+
+  IMPORTANT: Don't remove or rearrange any columns — send the file exactly as Booksy exports it.`;
+
+  if(p.includes('fresha')) return `Here are the exact steps for Fresha:
+
+  1. Log into Fresha at partners.fresha.com
+  2. Click "Clients" in the left-hand sidebar
+  3. Click the "Export" button in the top-right corner of the client list
+  4. Select "All clients" (not filtered)
+  5. Choose CSV format and click Download
+  6. The file includes: name, phone, email, last appointment date, total visits, and total spend
+  7. Reply to this email with the CSV attached
+
+  IMPORTANT: Make sure you export ALL clients, not just recent ones.`;
+
+  if(p.includes('treatwell')) return `Here are the exact steps for Treatwell:
+
+  1. Log into Treatwell Connect at connect.treatwell.co.uk
+  2. Click "Reports" in the left-hand menu
+  3. Select "Client Report" from the reports list
+  4. Set the date range to "All time" so you get your full client history
+  5. Click "Export" or "Download as CSV"
+  6. The file includes: client name, phone, email, and appointment history
+  7. Reply to this email with the CSV attached
+
+  NOTE: If Treatwell doesn't show visit count, just send what you have — we'll work with it.`;
+
+  if(p.includes('square')) return `Here are the exact steps for Square Appointments:
+
+  1. Log into your Square Dashboard at squareup.com/dashboard
+  2. Click "Customers" in the left-hand navigation
+  3. Click the "Export" button in the top-right corner
+  4. Select "Export all customers" and choose CSV
+  5. Click Export — the file will download to your device
+  6. The file includes: name, phone, email, last visit date, and number of visits
+  7. Reply to this email with the CSV attached`;
+
+  if(p.includes('vagaro')) return `Here are the exact steps for Vagaro:
+
+  1. Log into your Vagaro account at vagaro.com
+  2. Go to Reports in the top navigation
+  3. Click "Customer Reports" then select "Customer List"
+  4. Set the date filter to "All time"
+  5. Click "Export" and choose CSV
+  6. The file includes: name, phone, email, last visit, and total visits
+  7. Reply to this email with the CSV attached`;
+
+  if(p.includes('spreadsheet') || p.includes('manual') || p.includes('excel')) return `Since you manage your clients manually, here's exactly how to format the file:
+
+  Create a spreadsheet (Excel or Google Sheets) with these columns in this order:
+  • Column A: First Name
+  • Column B: Last Name
+  • Column C: Mobile Number (format: 07700 900000)
+  • Column D: Last Visit Date (format: DD/MM/YYYY)
+  • Column E: Total Number of Visits (just a number, e.g. 4)
+
+  Once filled in:
+  • Excel: File → Save As → choose "CSV (Comma delimited)"
+  • Google Sheets: File → Download → Comma-separated values (.csv)
+
+  Reply to this email with the CSV attached.`;
+
+  // Generic fallback
+  return `Here's how to export from ${platform||'your booking platform'}:
+
+  Most platforms follow the same pattern:
+  1. Go to your Clients or Customers section
+  2. Look for an Export button (usually top-right of the client list)
+  3. Choose CSV format
+  4. Download the file — it should include names, phone numbers, and last visit dates
+
+  If you get stuck, just reply and tell me which screen you're on — I'll send you the exact steps.`;
+}
+
 function buildWelcomeBody(c){
   const firstName = (c.name||c.biz).split(' ')[0];
   const platform = c.platform || 'your booking platform';
   const hasBooking = c.booking && c.booking.trim();
   const hasReview  = c.reviewlink && c.reviewlink.trim();
+  const exportSteps = csvExportSteps(c.platform);
 
   return `Hi ${firstName},
 
@@ -1673,15 +1758,14 @@ Great news — your payment is confirmed and I'm setting up your automated clien
 Everything will be live within 24 hours. To get started I just need a few things from you:
 
 ────────────────────────────
-1. YOUR CLIENT LIST (CSV EXPORT)
+1. YOUR CLIENT LIST (CSV EXPORT FROM ${platform.toUpperCase()})
 ────────────────────────────
 
-Export your client list from ${platform}:
-• Booksy: Dashboard → Clients → Export
-• Fresha: Clients → Export Clients → CSV
-• Treatwell: Reports → Clients → Download
+${exportSteps}
 
-The file needs: client name, mobile number, last appointment date, and visit count (total number of visits). All of these are included in a standard export — just make sure you don't untick any columns when downloading. Reply to this email with the CSV attached.
+📖 Full step-by-step export guide (with screenshots): https://fpfranks.github.io/autotool/export-guide.html
+
+The CSV needs to include: client name, mobile number, last visit date, and total visit count. Don't worry about formatting — just send it exactly as the platform exports it and I'll handle the rest.
 
 ────────────────────────────
 2. YOUR BOOKING LINK${hasBooking?' ✓ (we have this — just confirm it\'s correct)':''}
@@ -1716,7 +1800,9 @@ function buildNudgeBody(c){
 
 Just checking in — did you get a chance to export your client list from ${c.platform||'your booking platform'}? That's the only thing we need to get your sequences running.
 
-If you got stuck on the export, just let us know which platform you're on and we'll send you the exact steps.
+If you got stuck on the export, here's the full step-by-step guide: https://fpfranks.github.io/autotool/export-guide.html
+
+Or just let us know which platform you're on and we'll walk you through it.
 
 Phillips Automates
 phillipsautomates@gmail.com`;
