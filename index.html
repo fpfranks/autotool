@@ -292,10 +292,10 @@
       </div>
 
       <div class="feature-card">
-        <span class="feature-icon">🎂</span>
-        <h3>Birthday Texts</h3>
-        <p>We pull your clients' birthdays from the CSV and automatically send a personal birthday message on the day — with a small offer and their booking link. Clients love it. Zero effort from you, and it brings people in during their birthday week when they're already spending.</p>
-        <span class="feature-tag">100% automatic</span>
+        <span class="feature-icon">🆕</span>
+        <h3>New Client Second-Visit Nudge</h3>
+        <p>Your Booksy CSV shows who's only visited once. Two weeks after a first visit, they automatically get a friendly text encouraging them to come back. Industry data shows 50% of first-timers never return — this sequence turns one-time visitors into regulars before they drift.</p>
+        <span class="feature-tag">Highest ROI</span>
       </div>
 
     </div>
@@ -316,7 +316,7 @@
       <div class="step-card">
         <div class="step-number">2</div>
         <h3>We set up your sequences</h3>
-        <p>Send us the CSV and tell us your quiet days, your Google review link, and the tone you want (casual, professional, friendly). We configure everything — your lapsed client messages, slot-filling texts, birthday texts and review requests — within 24 hours.</p>
+        <p>Send us the CSV and tell us your quiet days, your Google review link, and the tone you want (casual, professional, friendly). We configure everything — lapsed client messages, slot-filling texts, new client nudges and review requests — within 24 hours.</p>
       </div>
       <div class="step-card">
         <div class="step-number">3</div>
@@ -397,13 +397,13 @@
       </div>
 
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;">
-        <div style="font-size:10px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;">🎂 Birthday Text — on the day</div>
+        <div style="font-size:10px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;">🆕 New Client — 14 days after first visit</div>
         <div class="sms-bubble-wrap">
-          <div class="sms-time">Today — their birthday</div>
-          <div class="sms-msg" id="demo-bday">Happy birthday Sarah! 🎂 Hope you're having a great day. Treat yourself — book this week and mention this text for £5 off. [link] — Fade Republic</div>
+          <div class="sms-time">14 days after first visit</div>
+          <div class="sms-msg" id="demo-newclient">Loved having you at Fade Republic for the first time Sarah! 🙌 Ready to make it a regular thing? Book your next visit here: [link] — reply STOP to opt out</div>
           <div class="sms-stop">✓✓ Delivered</div>
         </div>
-        <div style="margin-top:10px;font-size:11px;color:var(--text-muted);">Automatic on their birthday · Pulled from your CSV · Zero effort from you</div>
+        <div style="margin-top:10px;font-size:11px;color:var(--text-muted);">Fires 14 days after first visit · 50% of first-timers never return without a nudge · Turns one-offs into regulars</div>
       </div>
 
     </div>
@@ -570,7 +570,7 @@
         <li>Lapsed client recovery — auto SMS at 5, 8 &amp; 12 weeks</li>
         <li>Empty slot filler — texts go out on your quiet days automatically</li>
         <li>Automatic review requests — fires after every appointment</li>
-        <li>Birthday texts — personal message sent on their birthday</li>
+        <li>New client nudge — second-visit text fires 14 days after first visit</li>
         <li>Unlimited SMS for your full client list — no per-message charges</li>
         <li>GDPR-compliant — opt-outs handled automatically</li>
         <li>Works with Booksy, Fresha, Treatwell &amp; more</li>
@@ -734,8 +734,8 @@
       'Hey ' + client + '! Last-minute slot just opened up at ' + biz + ' \u2014 Monday 2pm. First come, first served. Grab it: [link] \u2014 reply STOP to opt out';
     document.getElementById('demo-review').textContent =
       'Thanks for coming in today ' + client + '! \uD83D\uDE4F If you have 30 seconds, a Google review means the world to us \u2014 [review link] \u2014 ' + biz;
-    document.getElementById('demo-bday').textContent =
-      'Happy birthday ' + client + '! \uD83C\uDF82 Hope you\u2019re having a great day. Treat yourself \u2014 book this week and mention this text for \u00A35 off. [link] \u2014 ' + biz;
+    document.getElementById('demo-newclient').textContent =
+      'Loved having you at ' + biz + ' for the first time ' + client + '! \uD83D\uDE4C Ready to make it a regular thing? Book your next visit here: [link] \u2014 reply STOP to opt out';
   }
 
   // ROI calculator

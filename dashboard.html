@@ -1681,7 +1681,7 @@ Export your client list from ${platform}:
 • Fresha: Clients → Export Clients → CSV
 • Treatwell: Reports → Clients → Download
 
-The file needs: client name, mobile number, and last appointment date. Reply to this email with the CSV attached.
+The file needs: client name, mobile number, last appointment date, and visit count (total number of visits). All of these are included in a standard export — just make sure you don't untick any columns when downloading. Reply to this email with the CSV attached.
 
 ────────────────────────────
 2. YOUR BOOKING LINK${hasBooking?' ✓ (we have this — just confirm it\'s correct)':''}
@@ -1741,13 +1741,16 @@ On your quiet days (${c.quietdays||'the days you told us about'}), a targeted te
 ✅ REVIEW REQUESTS
 Two hours after each appointment, clients receive a text asking for a Google review.
 
+✅ NEW CLIENT SECOND-VISIT NUDGE
+Anyone who visited for the first time gets a friendly text 14 days later encouraging them to rebook. First-timers who come back twice become regulars — this is the highest-ROI sequence we run.
+
 ────────────────────────────
 WHAT YOU NEED TO DO
 ────────────────────────────
 
 Nothing — it all runs automatically.
 
-The one thing that keeps it accurate: send us a fresh CSV export from ${c.platform||'your booking platform'} once a month (or whenever you remember). That keeps the client list up to date.
+The one thing that keeps it accurate: send us a fresh CSV export from ${c.platform||'your booking platform'} once a month (or whenever you remember). The CSV visit count column is what powers the new client nudge — the more up to date it is, the better.
 
 ────────────────────────────
 UPDATING YOUR SEQUENCES
@@ -1789,7 +1792,7 @@ function generateSmsTemplates(c){
   const review  = c.reviewlink || '[REVIEW LINK]';
   const tone = c.tone || 'friendly';
 
-  let lapsedShort, lapsedMedium, lapsedLong, slotFill, reviewReq, birthday;
+  let lapsedShort, lapsedMedium, lapsedLong, slotFill, reviewReq, newClient;
 
   if(tone === 'professional'){
     lapsedShort  = `Hi {name}, we noticed it's been a little while since your last visit to ${biz}. We'd love to welcome you back — book your next appointment here: ${booking} · Reply STOP to opt out`;
@@ -1797,21 +1800,21 @@ function generateSmsTemplates(c){
     lapsedLong   = `Hi {name}, we miss seeing you at ${biz}. It's been a while — whenever you're ready, we're here: ${booking} · Reply STOP to opt out`;
     slotFill     = `Hi {name}, we have a last-minute appointment available ${c.quietdays ? 'on ' + c.quietdays.split(',')[0] : 'this week'} at ${biz}. Interested? Book here: ${booking} · Reply STOP to opt out`;
     reviewReq    = `Hi {name}, thank you for visiting ${biz} today. If you have a moment, we'd really appreciate a Google review — it only takes 30 seconds: ${review} · ${biz}`;
-    birthday     = `Hi {name}, happy birthday from all of us at ${biz}! 🎂 Hope you have a wonderful day. As a little gift, mention this message when you book and we'll take care of you. Book here: ${booking} · Reply STOP to opt out`;
+    newClient    = `Hi {name}, it was great to have you visit ${biz} for the first time. We'd love to see you again — book your next appointment here: ${booking} · Reply STOP to opt out`;
   } else if(tone === 'fun'){
     lapsedShort  = `Hey {name}! 👋 Your chair at ${biz} is missing you — it's been a few weeks! Ready for a fresh cut? Book here: ${booking} · Reply STOP to opt out`;
     lapsedMedium = `Hey {name}! 😄 It's been a while at ${biz} — the team has been asking after you! Come back and treat yourself: ${booking} · Reply STOP to opt out`;
     lapsedLong   = `Hey {name}! Long time no see 👀 We miss you at ${biz}! Your usual's waiting whenever you're ready: ${booking} · Reply STOP to opt out`;
     slotFill     = `Hey {name}! 🔥 Last-minute slot just dropped at ${biz} — ${c.quietdays ? c.quietdays.split(',')[0] : 'this week'}! First to grab it wins 😄 Book here: ${booking} · Reply STOP to opt out`;
     reviewReq    = `Hey {name}! Thanks for coming in today 🙌 If you loved it, a quick Google review would mean SO much to us — takes 30 seconds: ${review} · ${biz}`;
-    birthday     = `Happy birthday {name}! 🎂🎉 Hope your day is amazing! Treat yourself — book in this week and mention this text for a little birthday treat on us. ${booking} — ${biz} · Reply STOP to opt out`;
+    newClient    = `Hey {name}! 👋 So great to have you at ${biz} for the first time! Don't be a stranger — come back and let's make it a regular thing 😄 Book here: ${booking} · Reply STOP to opt out`;
   } else {
     lapsedShort  = `Hey {name}, it's been a little while since your last visit to ${biz}! We'd love to see you back — book here whenever you're ready: ${booking} · Reply STOP to opt out`;
     lapsedMedium = `Hey {name} 👋 It's been a couple of months at ${biz} — hope you're well! Your usual slot might still be free: ${booking} · Reply STOP to opt out`;
     lapsedLong   = `Hey {name}, we haven't seen you in a while at ${biz} and wanted to reach out! Whenever you're ready to come back: ${booking} · Reply STOP to opt out`;
     slotFill     = `Hey {name}! We've got a last-minute slot available ${c.quietdays ? 'on ' + c.quietdays.split(',')[0] : 'this week'} at ${biz} — interested? Book here: ${booking} · Reply STOP to opt out`;
     reviewReq    = `Hey {name}, thanks so much for coming in today! 🙏 If you have 30 seconds, a Google review would really help us out: ${review} · ${biz}`;
-    birthday     = `Happy birthday {name}! 🎂 Hope you have a great day. Treat yourself — book this week and mention this text for £5 off your next visit. ${booking} — ${biz} · Reply STOP to opt out`;
+    newClient    = `Hey {name}! Loved having you at ${biz} for the first time 🙌 Ready to make it a regular thing? Book your next visit here: ${booking} · Reply STOP to opt out`;
   }
 
   return `SMS TEMPLATES FOR: ${biz.toUpperCase()}
@@ -1853,18 +1856,19 @@ ${reviewReq}
 Character count: ${reviewReq.length} / 160
 
 ──────────────────────────────────────────────────
-BIRTHDAY TEXT (sends automatically on their birthday)
+NEW CLIENT — SECOND VISIT NUDGE (fires 14 days after first visit)
 ──────────────────────────────────────────────────
-${birthday}
+${newClient}
 
-Character count: ${birthday.length} / 160
-Note: Twilio — set trigger on client DOB field. CSV from Booksy/Fresha includes DOB column.
+Character count: ${newClient.length} / 160
+Note: Twilio — filter by visit_count = 1 in your CSV. Trigger fires 14 days after first_visit_date.
 
 ──────────────────────────────────────────────────
 SETUP NOTES
 • Replace {name} with merge tag from your SMS platform
 • Twilio: use {{name}} | SimpleTexting: use {first_name}
 • Quiet days for slot-fill: ${c.quietdays||'[not set — update customer record]'}
+• New client nudge: filter CSV for visit_count = 1, trigger 14 days after first visit date
 • Client count: ${c.clientcount||'?'} | Est. monthly SMS: ~${Math.round((parseInt(c.clientcount)||100)*0.15)} sends/mo
 • At Twilio pricing (~£0.04/SMS): est. £${(Math.round((parseInt(c.clientcount)||100)*0.15)*0.04).toFixed(2)}/mo in costs`;
 }
