@@ -222,7 +222,7 @@
       </div>
     </div>
     <div class="grid-4">
-      <div class="stat"><div class="stat-label">Active Clients</div><div class="stat-value green" id="s-active">0</div><div class="stat-sub">paying £39/mo</div></div>
+      <div class="stat"><div class="stat-label">Active Clients</div><div class="stat-value green" id="s-active">0</div><div class="stat-sub">paying £19/mo</div></div>
       <div class="stat"><div class="stat-label">Monthly Revenue</div><div class="stat-value purple" id="s-revenue">£0</div><div class="stat-sub">recurring</div></div>
       <div class="stat"><div class="stat-label">Monthly Profit</div><div class="stat-value green" id="s-profit">£0</div><div class="stat-sub" id="s-profit-sub">after costs</div></div>
       <div class="stat"><div class="stat-label">Actions Needed</div><div class="stat-value orange" id="s-email-action">0</div><div class="stat-sub" id="s-email-sub">all up to date</div></div>
@@ -403,7 +403,7 @@
             <li>After 30 days: ask for a Google review from them</li>
             <li>Monthly: remind them to send an updated CSV</li>
           </ol>
-          <div style="font-size:10px;color:var(--muted);padding:7px 9px;background:rgba(0,212,170,0.06);border-radius:6px;margin-bottom:10px;line-height:1.7;">💰 Each active client = £39/mo recurring. Keep them happy and they'll refer other barbers/salons. Click <strong style="color:var(--green);">⭐ Complete</strong> to archive when finished.</div>
+          <div style="font-size:10px;color:var(--muted);padding:7px 9px;background:rgba(0,212,170,0.06);border-radius:6px;margin-bottom:10px;line-height:1.7;">💰 Each active client = £19/mo recurring. Keep them happy and they'll refer other barbers/salons. Click <strong style="color:var(--green);">⭐ Complete</strong> to archive when finished.</div>
         </div>
         <div class="pipe-col-body" id="pipe-live"></div>
       </div>
@@ -562,7 +562,7 @@
         </div>
       </div>
       <div style="background:var(--surface2);border-radius:8px;padding:12px;display:flex;gap:24px;flex-wrap:wrap;font-size:12px;">
-        <div>💰 Fee per client: <strong style="color:var(--green)">£39/mo</strong></div>
+        <div>💰 Fee per client: <strong style="color:var(--green)">£19/mo</strong></div>
         <div>📉 Cost per client: <strong style="color:var(--warn)" id="r-per-cost">£6</strong></div>
         <div>✅ Profit per client: <strong style="color:var(--green)" id="r-per-profit">£33</strong></div>
         <div>📊 Margin: <strong style="color:var(--green)" id="r-per-margin">82%</strong></div>
@@ -723,7 +723,7 @@
         </div>
 
         <div style="background:var(--surface2);border-radius:8px;padding:14px;border-left:3px solid var(--green);">
-          <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px;">"Is £39/month worth it?"</div>
+          <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px;">"Is £19/month worth it?"</div>
           <div style="font-size:12px;color:var(--muted);line-height:1.7;">If you have 150 clients and recover just <strong style="color:var(--text)">2 lapsed clients per month</strong> at £40 a visit, that's £80/mo back — more than double the cost. Most salons we've modelled recover 5–10 clients in the first 30 days. The tool pays for itself in the first week.</div>
         </div>
 
@@ -735,7 +735,7 @@
       </div>
 
       <div style="margin-top:14px;padding:12px;background:rgba(108,99,255,0.07);border-radius:8px;font-size:11px;color:var(--muted);line-height:1.6;">
-        <strong style="color:var(--accent);">Key context:</strong> Booksy/Fresha/Treatwell reminders only fire before existing bookings — not for lapsed clients. Their bulk marketing tools aren't targeted by absence. We fill that gap with <strong style="color:var(--text)">personalised absence-triggered SMS</strong>: lapsed recovery + slot fill + review requests. £39/mo flat, no commission, setup in 24hrs.
+        <strong style="color:var(--accent);">Key context:</strong> Booksy/Fresha/Treatwell reminders only fire before existing bookings — not for lapsed clients. Their bulk marketing tools aren't targeted by absence. We fill that gap with <strong style="color:var(--text)">personalised absence-triggered SMS</strong>: lapsed recovery + slot fill + review requests. £19/mo flat, no commission, setup in 24hrs.
       </div>
     </div>
   </div>
@@ -863,7 +863,7 @@ let todos = JSON.parse(localStorage.getItem('pa_todos')||'null') || [
   // ── ONE-TIME SETUP ──
   {id:1,  text:'Sign up to Twilio (twilio.com) — free trial, this is where you send SMS sequences for clients', cat:'Setup', done:false},
   {id:2,  text:'Sign up to Stripe and verify your account — stripe.com', cat:'Setup', done:false},
-  {id:3,  text:'Create a Stripe payment link at £39/month recurring (Products → Payment Links)', cat:'Setup', done:false},
+  {id:3,  text:'Create a Stripe payment link at £19/month recurring (Products → Payment Links)', cat:'Setup', done:false},
   {id:4,  text:'Update Stripe link in index.html if you create a new one, then push to GitHub', cat:'Setup', done:false},
   {id:5,  text:'Connect Google Apps Script to dashboard — paste GAS URL in Settings', cat:'Setup', done:false},
   {id:6,  text:'Test sign-up form end-to-end — submit a test entry and confirm it appears in dashboard', cat:'Setup', done:false},
@@ -921,7 +921,7 @@ function renderDash() {
   updateSyncTime();
 
   const active = customers.filter(c=>c.status==='active');
-  const revenue = active.reduce((s,c)=>s+(parseFloat(c.fee)||39),0);
+  const revenue = active.reduce((s,c)=>s+(parseFloat(c.fee)||19),0);
   const vapiC=parseFloat(document.getElementById('cost-vapi')?.value)||3;
   const telC=parseFloat(document.getElementById('cost-telnyx')?.value)||1;
   const othC=parseFloat(document.getElementById('cost-other')?.value)||2;
@@ -1036,7 +1036,7 @@ function closeCustomerForm(){
   editingCustomerId=null;
   document.getElementById('customer-form').style.display='none';
   ['c-biz','c-name','c-email','c-phone','c-type','c-city','c-booking','c-reviewlink','c-quietdays','c-website','c-notes','c-clientcount'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  document.getElementById('c-fee').value='39';
+  document.getElementById('c-fee').value='19';
   document.getElementById('c-status').value='pending';
   document.getElementById('c-platform').value='';
   document.getElementById('c-tone').value='friendly';
@@ -1310,7 +1310,7 @@ function renderPipeline(){
     el.innerHTML=html;
   });
   const sub=document.getElementById('pipe-sub');
-  if(sub){const total=customers.filter(c=>c.status!=='inactive').length;const active=customers.filter(c=>c.status==='active');const rev=active.reduce((s,c)=>s+(parseFloat(c.fee)||39),0);sub.textContent=`${total} client${total===1?'':'s'} · ${active.length} live · £${rev}/mo`;}
+  if(sub){const total=customers.filter(c=>c.status!=='inactive').length;const active=customers.filter(c=>c.status==='active');const rev=active.reduce((s,c)=>s+(parseFloat(c.fee)||19),0);sub.textContent=`${total} client${total===1?'':'s'} · ${active.length} live · £${rev}/mo`;}
 }
 
 function statusBadge(s){
@@ -1359,7 +1359,7 @@ function renderListView(){
     if(sort==='date-desc') return (Number(b.id)||0)-(Number(a.id)||0);
     if(sort==='biz-asc')   return (a.biz||'').localeCompare(b.biz||'');
     if(sort==='biz-desc')  return (b.biz||'').localeCompare(a.biz||'');
-    if(sort==='fee-desc')  return (parseFloat(b.fee)||39)-(parseFloat(a.fee)||39);
+    if(sort==='fee-desc')  return (parseFloat(b.fee)||19)-(parseFloat(a.fee)||19);
     return 0;
   });
 
@@ -1569,7 +1569,7 @@ function renderRevenue(){
   const telnyx=parseFloat(document.getElementById('cost-telnyx')?.value)||1;
   const other=parseFloat(document.getElementById('cost-other')?.value)||2;
   const costPerClient=vapi+telnyx+other;
-  const gross=active.reduce((s,c)=>s+(parseFloat(c.fee)||39),0);
+  const gross=active.reduce((s,c)=>s+(parseFloat(c.fee)||19),0);
   const totalCost=active.length*costPerClient;
   const profit=Math.max(0,gross-totalCost);
   const margin=gross>0?Math.round((profit/gross)*100):0;
@@ -1764,7 +1764,7 @@ function generateSmsTemplates(c){
   const review  = c.reviewlink || '[REVIEW LINK]';
   const tone = c.tone || 'friendly';
 
-  let lapsedShort, lapsedMedium, lapsedLong, slotFill, reviewReq;
+  let lapsedShort, lapsedMedium, lapsedLong, slotFill, reviewReq, birthday;
 
   if(tone === 'professional'){
     lapsedShort  = `Hi {name}, we noticed it's been a little while since your last visit to ${biz}. We'd love to welcome you back — book your next appointment here: ${booking} · Reply STOP to opt out`;
@@ -1772,18 +1772,21 @@ function generateSmsTemplates(c){
     lapsedLong   = `Hi {name}, we miss seeing you at ${biz}. It's been a while — whenever you're ready, we're here: ${booking} · Reply STOP to opt out`;
     slotFill     = `Hi {name}, we have a last-minute appointment available ${c.quietdays ? 'on ' + c.quietdays.split(',')[0] : 'this week'} at ${biz}. Interested? Book here: ${booking} · Reply STOP to opt out`;
     reviewReq    = `Hi {name}, thank you for visiting ${biz} today. If you have a moment, we'd really appreciate a Google review — it only takes 30 seconds: ${review} · ${biz}`;
+    birthday     = `Hi {name}, happy birthday from all of us at ${biz}! 🎂 Hope you have a wonderful day. As a little gift, mention this message when you book and we'll take care of you. Book here: ${booking} · Reply STOP to opt out`;
   } else if(tone === 'fun'){
     lapsedShort  = `Hey {name}! 👋 Your chair at ${biz} is missing you — it's been a few weeks! Ready for a fresh cut? Book here: ${booking} · Reply STOP to opt out`;
     lapsedMedium = `Hey {name}! 😄 It's been a while at ${biz} — the team has been asking after you! Come back and treat yourself: ${booking} · Reply STOP to opt out`;
     lapsedLong   = `Hey {name}! Long time no see 👀 We miss you at ${biz}! Your usual's waiting whenever you're ready: ${booking} · Reply STOP to opt out`;
     slotFill     = `Hey {name}! 🔥 Last-minute slot just dropped at ${biz} — ${c.quietdays ? c.quietdays.split(',')[0] : 'this week'}! First to grab it wins 😄 Book here: ${booking} · Reply STOP to opt out`;
     reviewReq    = `Hey {name}! Thanks for coming in today 🙌 If you loved it, a quick Google review would mean SO much to us — takes 30 seconds: ${review} · ${biz}`;
+    birthday     = `Happy birthday {name}! 🎂🎉 Hope your day is amazing! Treat yourself — book in this week and mention this text for a little birthday treat on us. ${booking} — ${biz} · Reply STOP to opt out`;
   } else {
     lapsedShort  = `Hey {name}, it's been a little while since your last visit to ${biz}! We'd love to see you back — book here whenever you're ready: ${booking} · Reply STOP to opt out`;
     lapsedMedium = `Hey {name} 👋 It's been a couple of months at ${biz} — hope you're well! Your usual slot might still be free: ${booking} · Reply STOP to opt out`;
     lapsedLong   = `Hey {name}, we haven't seen you in a while at ${biz} and wanted to reach out! Whenever you're ready to come back: ${booking} · Reply STOP to opt out`;
     slotFill     = `Hey {name}! We've got a last-minute slot available ${c.quietdays ? 'on ' + c.quietdays.split(',')[0] : 'this week'} at ${biz} — interested? Book here: ${booking} · Reply STOP to opt out`;
     reviewReq    = `Hey {name}, thanks so much for coming in today! 🙏 If you have 30 seconds, a Google review would really help us out: ${review} · ${biz}`;
+    birthday     = `Happy birthday {name}! 🎂 Hope you have a great day. Treat yourself — book this week and mention this text for £5 off your next visit. ${booking} — ${biz} · Reply STOP to opt out`;
   }
 
   return `SMS TEMPLATES FOR: ${biz.toUpperCase()}
@@ -1818,11 +1821,19 @@ ${slotFill}
 Character count: ${slotFill.length} / 160
 
 ──────────────────────────────────────────────────
-REVIEW REQUEST (sent 2hrs after appointment)
+REVIEW REQUEST (fires after appointment)
 ──────────────────────────────────────────────────
 ${reviewReq}
 
 Character count: ${reviewReq.length} / 160
+
+──────────────────────────────────────────────────
+BIRTHDAY TEXT (sends automatically on their birthday)
+──────────────────────────────────────────────────
+${birthday}
+
+Character count: ${birthday.length} / 160
+Note: Twilio — set trigger on client DOB field. CSV from Booksy/Fresha includes DOB column.
 
 ──────────────────────────────────────────────────
 SETUP NOTES
@@ -2305,7 +2316,7 @@ function renderCmodalInfo(c){
       ${infoCell('📲','Booking Platform',c.platform||'—')}
       ${infoCell('👥','Approx. Clients',c.clientcount||'—')}
       ${infoCell('💬','Message Tone',toneLabels[c.tone]||c.tone||'Friendly & casual')}
-      ${infoCell('💷','Monthly Fee','£'+(c.fee||39)+'/mo')}
+      ${infoCell('💷','Monthly Fee','£'+(c.fee||19)+'/mo')}
       ${infoCell('📅','Since',c.date||'—')}
       ${c.website?infoCell('🌐','Website',c.website,true):''}
       ${c.booking?infoCell('📅','Booking Link',c.booking,true,c.booking):''}

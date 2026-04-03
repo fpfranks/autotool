@@ -134,7 +134,7 @@ function doPost(e) {
       data.tone        || 'friendly',
       data.website     || '',
       'pending',
-      data.fee         || 39,
+      data.fee         || 19,
       new Date().toLocaleDateString('en-GB')
     ]);
 
@@ -183,7 +183,7 @@ function doPost(e) {
           'Platform:  ' + (data.platform    || '—') + '\n' +
           'Clients:   ' + (data.clientcount || '—') + '\n' +
           'Website:   ' + (data.website     || '—') + '\n' +
-          'Fee:       £' + (data.fee        || 39) + '/mo\n\n' +
+          'Fee:       £' + (data.fee        || 19) + '/mo\n\n' +
           '✅ Holding email already sent to client automatically.\n' +
           '📋 Next: confirm payment in Stripe, then send welcome email.\n\n' +
           'Dashboard → ' + DASHBOARD_URL
@@ -230,7 +230,7 @@ function doGet(e) {
         tone:        r['Tone']         || 'friendly',
         website:     r['Website']      || '',
         status:      r['Status']       || 'pending',
-        fee:         r['Fee']          || 39,
+        fee:         r['Fee']          || 19,
         date:        r['Date']         || '',
         fromSheet:   true
       };
@@ -273,7 +273,7 @@ function dailyDigest() {
   const welcomed = customers.filter(c => c['Status'] === 'welcomed');
   const building = customers.filter(c => c['Status'] === 'info-received');
   const active   = customers.filter(c => c['Status'] === 'active');
-  const revenue  = active.reduce((s, c) => s + (parseFloat(c['Fee']) || 39), 0);
+  const revenue  = active.reduce((s, c) => s + (parseFloat(c['Fee']) || 19), 0);
 
   // Only send if there's something to action
   if (pending.length === 0 && welcomed.length === 0 && building.length === 0) return;
