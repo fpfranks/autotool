@@ -800,12 +800,14 @@
       <div class="cmodal-tab" onclick="cmodalTab('emails',this)" style="flex:1;text-align:center;padding:11px;font-size:12px;font-weight:600;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;">📧 Emails</div>
       <div class="cmodal-tab" onclick="cmodalTab('setup',this)" style="flex:1;text-align:center;padding:11px;font-size:12px;font-weight:600;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;">📞 Setup</div>
       <div class="cmodal-tab" onclick="cmodalTab('notes',this)" style="flex:1;text-align:center;padding:11px;font-size:12px;font-weight:600;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;">📝 Notes</div>
+      <div class="cmodal-tab" onclick="cmodalTab('csv',this)" style="flex:1;text-align:center;padding:11px;font-size:12px;font-weight:600;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;">📊 CSV</div>
     </div>
     <div class="modal-body">
       <div id="cmodal-info"></div>
       <div id="cmodal-emails" style="display:none;"></div>
       <div id="cmodal-setup" style="display:none;"></div>
       <div id="cmodal-notes" style="display:none;"></div>
+      <div id="cmodal-csv" style="display:none;"></div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" id="cmodal-edit-btn">✏️ Edit</button>
@@ -2400,13 +2402,14 @@ function closeCustomerModal(){
 function cmodalTab(name,el){
   document.querySelectorAll('.cmodal-tab').forEach(t=>{t.classList.remove('active');t.style.color='var(--muted)';t.style.borderBottomColor='transparent';});
   if(el){el.classList.add('active');el.style.color='var(--accent)';el.style.borderBottomColor='var(--accent)';}
-  ['info','emails','setup','notes'].forEach(n=>document.getElementById('cmodal-'+n).style.display=n===name?'block':'none');
+  ['info','emails','setup','notes','csv'].forEach(n=>document.getElementById('cmodal-'+n).style.display=n===name?'block':'none');
   const c=customers.find(x=>String(x.id)===String(currentModalId));
   if(!c)return;
   if(name==='info') renderCmodalInfo(c);
   if(name==='emails') renderCmodalEmails(c);
   if(name==='setup') renderCmodalSetup(c);
   if(name==='notes') renderCmodalNotes(c);
+  if(name==='csv') renderCmodalCSV(c);
 }
 function copyCell(val){
   navigator.clipboard.writeText(val).then(()=>notify('Copied!')).catch(()=>{
@@ -2503,6 +2506,205 @@ function addCmodalNote(id,text){
   document.getElementById('cmodal-notes-list').innerHTML=renderCustomerNotes(c);
   notify('Note added');
 }
+// ── CSV HISTORY & RETENTION TRACKER ──────────────────────────────────────────
+// Stores up to 12 monthly CSV snapshots per customer in localStorage.
+// Each upload is parsed, diffed against the previous, and summarised:
+//   • New clients      — mobile not seen before (first-timers to track)
+//   • Returned clients — visit count increased (confirms retention working)
+//   • Lapsed clients   — last visit date unchanged across two uploads
+
+function csvStorageKey(id){ return 'pa_csv_' + String(id); }
+
+function loadCsvHistory(id){
+  try{ return JSON.parse(localStorage.getItem(csvStorageKey(id))||'[]'); }
+  catch(e){ return []; }
+}
+function saveCsvHistory(id, history){
+  // keep last 12 snapshots
+  localStorage.setItem(csvStorageKey(id), JSON.stringify(history.slice(0,12)));
+}
+
+// Flexible CSV parser — handles Booksy, Fresha, Treatwell, Square, Vagaro, manual
+function parseClientCSV(text){
+  const lines = text.trim().split(/\r?\n/);
+  if(lines.length < 2) return null;
+
+  // Detect delimiter (comma or semicolon)
+  const delim = (lines[0].split(';').length > lines[0].split(',').length) ? ';' : ',';
+
+  const splitRow = row => {
+    const result = []; let inQ = false, cur = '';
+    for(let ch of row){
+      if(ch==='"'){ inQ=!inQ; }
+      else if(ch===delim && !inQ){ result.push(cur.trim()); cur=''; }
+      else { cur+=ch; }
+    }
+    result.push(cur.trim()); return result;
+  };
+
+  const headers = splitRow(lines[0]).map(h=>h.replace(/^"|"$/g,'').toLowerCase().trim());
+
+  // Column index detection with common platform variations
+  const find = (...names) => { for(const n of names){ const i=headers.indexOf(n); if(i>-1)return i; } return -1; };
+  const colFirst   = find('first name','firstname','first','given name');
+  const colLast    = find('last name','lastname','surname','family name');
+  const colName    = find('name','client name','customer name','full name');
+  const colMobile  = find('mobile','phone','mobile number','phone number','cell','telephone','mobile/phone');
+  const colVisits  = find('total visits','visit count','visits','no. of visits','number of visits','total bookings','bookings');
+  const colLast_v  = find('last visit','last visit date','last appointment','last booking','last seen','most recent visit');
+
+  if(colMobile===-1) return null; // mobile is required
+
+  const clients = [];
+  for(let i=1;i<lines.length;i++){
+    const row = splitRow(lines[i]);
+    if(row.every(c=>!c)) continue;
+
+    let name = '';
+    if(colFirst>-1 && colLast>-1){
+      name = ((row[colFirst]||'') + ' ' + (row[colLast]||'')).trim();
+    } else if(colName>-1){
+      name = (row[colName]||'').trim();
+    } else if(colFirst>-1){
+      name = (row[colFirst]||'').trim();
+    }
+
+    const rawMobile = (row[colMobile]||'').replace(/\s/g,'').replace(/^(\+44|0044)/,'0');
+    if(!rawMobile || rawMobile.length < 7) continue;
+
+    const visits   = colVisits>-1  ? parseInt(row[colVisits])||0   : 0;
+    const lastVisit= colLast_v>-1  ? (row[colLast_v]||'').trim()  : '';
+
+    clients.push({ name, mobile: rawMobile, visits, lastVisit });
+  }
+  return clients.length ? clients : null;
+}
+
+function diffCSV(prev, curr){
+  const prevMap = {};
+  prev.forEach(c=>{ prevMap[c.mobile]=c; });
+  const currMap = {};
+  curr.forEach(c=>{ currMap[c.mobile]=c; });
+
+  const newClients      = curr.filter(c=>!prevMap[c.mobile]);
+  const returned        = curr.filter(c=>prevMap[c.mobile] && c.visits > prevMap[c.mobile].visits);
+  const lapsed          = prev.filter(c=>{ const n=currMap[c.mobile]; return n && n.lastVisit===c.lastVisit && n.visits===c.visits; });
+  const disappeared     = prev.filter(c=>!currMap[c.mobile]);
+
+  return { newClients, returned, lapsed, disappeared };
+}
+
+function renderCmodalCSV(c){
+  const history = loadCsvHistory(c.id);
+  const wrap = document.getElementById('cmodal-csv');
+
+  const uploadArea = `
+    <div id="csv-drop-area" onclick="document.getElementById('csv-file-input-${c.id}').click()"
+      ondragover="event.preventDefault();this.style.borderColor='var(--accent)'"
+      ondragleave="this.style.borderColor='var(--border)'"
+      ondrop="event.preventDefault();this.style.borderColor='var(--border)';handleCSVDrop(event,'${c.id}')"
+      style="border:2px dashed var(--border);border-radius:10px;padding:28px 20px;text-align:center;cursor:pointer;transition:border-color 0.2s;margin-bottom:16px;">
+      <div style="font-size:24px;margin-bottom:8px;">📂</div>
+      <div style="font-size:13px;font-weight:600;color:var(--text);">Drop CSV here or click to upload</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:6px;">Booksy · Fresha · Treatwell · Square · Vagaro · any CSV</div>
+    </div>
+    <input type="file" id="csv-file-input-${c.id}" accept=".csv,.txt" style="display:none" onchange="handleCSVFile(event,'${c.id}')"/>`;
+
+  if(!history.length){
+    wrap.innerHTML = `
+      <div style="margin-bottom:10px;">
+        <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;">Client CSV History</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.6;">Upload their CSV each month to track new clients, returning clients, and anyone who's lapsed. First upload establishes the baseline.</div>
+      </div>
+      ${uploadArea}`;
+    return;
+  }
+
+  const latest = history[0];
+  const prev   = history[1];
+  let diffHtml = '';
+
+  if(prev){
+    const diff = diffCSV(prev.clients, latest.clients);
+    const pill = (col,emoji,label,count) => count>0?`<div style="display:inline-flex;align-items:center;gap:6px;padding:7px 13px;background:${col}22;border:1px solid ${col}44;border-radius:20px;font-size:12px;font-weight:600;color:${col};margin:3px;">${emoji} ${count} ${label}</div>`:'';
+    diffHtml = `
+      <div style="background:var(--surface2);border-radius:10px;padding:14px;margin-bottom:14px;">
+        <div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px;">vs ${prev.uploadedAt}</div>
+        <div style="display:flex;flex-wrap:wrap;gap:0;">
+          ${pill('#4ade80','🆕','new clients',diff.newClients.length)}
+          ${pill('#6c63ff','🔄','returned',diff.returned.length)}
+          ${pill('#facc15','😴','lapsed',diff.lapsed.length)}
+          ${pill('#f87171','👻','not in CSV',diff.disappeared.length)}
+        </div>
+        ${diff.newClients.length?`<div style="margin-top:10px;font-size:11px;color:var(--muted);">New this month: ${diff.newClients.slice(0,5).map(x=>x.name||x.mobile).join(', ')}${diff.newClients.length>5?' + '+(diff.newClients.length-5)+' more':''}</div>`:''}
+        ${diff.returned.length?`<div style="margin-top:4px;font-size:11px;color:#6c63ff;">Came back: ${diff.returned.slice(0,5).map(x=>x.name||x.mobile).join(', ')}${diff.returned.length>5?' + '+(diff.returned.length-5)+' more':''}</div>`:''}
+        ${diff.lapsed.length?`<div style="margin-top:4px;font-size:11px;color:#facc15;">Still lapsed (no new visit): ${diff.lapsed.slice(0,5).map(x=>x.name||x.mobile).join(', ')}${diff.lapsed.length>5?' + '+(diff.lapsed.length-5)+' more':''}</div>`:''}
+      </div>`;
+  }
+
+  const historyRows = history.map((snap,i)=>`
+    <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--surface2);border-radius:8px;margin-bottom:6px;">
+      <div style="font-size:18px;">${i===0?'📊':'📁'}</div>
+      <div style="flex:1;">
+        <div style="font-size:12px;font-weight:600;color:var(--text);">${snap.uploadedAt}</div>
+        <div style="font-size:11px;color:var(--muted);">${snap.clientCount} clients · ${snap.filename||'CSV upload'}</div>
+      </div>
+      ${i===0?'<span style="font-size:10px;color:var(--green);font-weight:700;">LATEST</span>':''}
+      <button onclick="deleteCsvSnapshot('${c.id}',${i})" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:12px;padding:2px 6px;" title="Remove this snapshot">✕</button>
+    </div>`).join('');
+
+  wrap.innerHTML = `
+    <div style="margin-bottom:12px;">
+      <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px;">Client CSV History — ${c.biz}</div>
+      <div style="font-size:11px;color:var(--muted);">Latest: ${latest.uploadedAt} · ${latest.clientCount} clients</div>
+    </div>
+    ${diffHtml}
+    ${uploadArea}
+    <div style="margin-top:4px;">
+      <div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px;">Upload History</div>
+      ${historyRows}
+    </div>`;
+}
+
+function handleCSVFile(event, customerId){
+  const file = event.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e => processCSVUpload(e.target.result, file.name, customerId);
+  reader.readAsText(file);
+  event.target.value = '';
+}
+function handleCSVDrop(event, customerId){
+  const file = event.dataTransfer.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e => processCSVUpload(e.target.result, file.name, customerId);
+  reader.readAsText(file);
+}
+function processCSVUpload(text, filename, customerId){
+  const clients = parseClientCSV(text);
+  if(!clients){
+    notify('Could not read CSV — check it has a mobile/phone column and try again');
+    return;
+  }
+  const history = loadCsvHistory(customerId);
+  const today = new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+  history.unshift({ uploadedAt: today, filename, clientCount: clients.length, clients });
+  saveCsvHistory(customerId, history);
+  const c = customers.find(x=>String(x.id)===String(customerId));
+  if(c) renderCmodalCSV(c);
+  notify(clients.length + ' clients loaded from CSV');
+}
+function deleteCsvSnapshot(customerId, index){
+  if(!confirm('Remove this CSV snapshot?')) return;
+  const history = loadCsvHistory(customerId);
+  history.splice(index,1);
+  saveCsvHistory(customerId, history);
+  const c = customers.find(x=>String(x.id)===String(customerId));
+  if(c) renderCmodalCSV(c);
+  notify('Snapshot removed');
+}
+
 function toggleWfStepModal(wfId,i){
   const wf=workflows.find(w=>String(w.id)===String(wfId));
   if(!wf)return;
