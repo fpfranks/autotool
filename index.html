@@ -79,11 +79,6 @@
     .works-with { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-top: 36px; }
     .platform-pill { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px 24px; font-size: 0.9rem; font-weight: 700; color: var(--text); display: flex; align-items: center; gap: 10px; }
 
-    .roi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 40px; }
-    .roi-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 30px 24px; text-align: center; }
-    .roi-amount { font-size: 2.4rem; font-weight: 900; color: var(--green); letter-spacing: -1px; }
-    .roi-label { font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; line-height: 1.5; }
-
     .pricing-card { background: var(--bg3); border: 2px solid var(--accent); border-radius: 20px; padding: 52px 48px; max-width: 520px; margin: 48px auto 0; text-align: center; box-shadow: 0 0 60px rgba(108,99,255,0.18); position: relative; }
     .pricing-badge { position: absolute; top: -16px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--accent), var(--green)); color: #fff; padding: 6px 22px; border-radius: 999px; font-size: 12.5px; font-weight: 700; letter-spacing: 0.5px; white-space: nowrap; }
     .pricing-main { font-size: clamp(2.8rem, 8vw, 4rem); font-weight: 900; color: #fff; line-height: 1; letter-spacing: -2px; }
@@ -123,17 +118,57 @@
 
     .mobile-cta-bar { display: none; }
 
-    /* SMS preview mockup */
-    .sms-preview { background: #f2f2f7; border-radius: 24px; max-width: 300px; margin: 0 auto; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
-    .sms-bubble { background: #34c759; color: #fff; border-radius: 18px 18px 4px 18px; padding: 12px 16px; font-size: 13px; line-height: 1.6; max-width: 85%; margin-left: auto; margin-right: 10px; }
-    .sms-bubble.grey { background: #e9e9eb; color: #111; border-radius: 18px 18px 18px 4px; margin-left: 10px; margin-right: auto; }
+    /* SMS channel stats bar */
+    .sms-stats-bar { display: flex; flex-wrap: wrap; justify-content: center; gap: 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg2); padding: 0; }
+    .sms-stat-item { flex: 1; min-width: 160px; padding: 22px 20px; text-align: center; border-right: 1px solid var(--border); }
+    .sms-stat-item:last-child { border-right: none; }
+    .sms-stat-num { font-size: 1.8rem; font-weight: 900; color: var(--green); letter-spacing: -1px; line-height: 1; }
+    .sms-stat-label { font-size: 0.75rem; color: var(--text-muted); margin-top: 5px; line-height: 1.4; }
+
+    /* Interactive demo */
+    .demo-inputs { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px; }
+    .demo-input-wrap { display: flex; flex-direction: column; gap: 6px; }
+    .demo-input-wrap label { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px; }
+    .demo-input { background: rgba(255,255,255,0.06); border: 1px solid rgba(108,99,255,0.4); border-radius: 10px; padding: 11px 16px; color: var(--text); font-size: 0.95rem; font-family: inherit; outline: none; width: 220px; transition: border-color 0.15s; }
+    .demo-input:focus { border-color: var(--accent); }
+    .demo-hint { text-align: center; font-size: 0.82rem; color: var(--accent-light); margin-bottom: 28px; }
+    .sms-bubble-wrap { background: #f2f2f7; border-radius: 20px; padding: 18px 16px; font-size: 13px; line-height: 1.6; color: #111; position: relative; }
+    .sms-time { font-size: 10px; color: #888; text-align: center; margin-bottom: 10px; }
+    .sms-msg { background: #34c759; color: #fff; border-radius: 18px 18px 4px 18px; padding: 12px 16px; max-width: 88%; margin-left: auto; margin-right: 6px; word-break: break-word; }
+    .sms-stop { font-size: 10px; color: #999; text-align: right; margin-top: 6px; margin-right: 6px; }
+
+    /* ROI calculator */
+    .roi-calc { background: linear-gradient(135deg, rgba(0,212,170,0.07), rgba(108,99,255,0.05)); border: 1px solid rgba(0,212,170,0.2); border-radius: var(--radius); padding: 40px 44px; max-width: 640px; margin: 40px auto 0; }
+    .roi-slider { width: 100%; -webkit-appearance: none; height: 6px; border-radius: 3px; background: var(--bg3); outline: none; margin: 14px 0 6px; }
+    .roi-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: var(--green); cursor: pointer; box-shadow: 0 0 8px rgba(0,212,170,0.5); }
+    .roi-slider::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: var(--green); cursor: pointer; border: none; }
+    .roi-result { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-top: 24px; }
+    .roi-box { background: var(--bg3); border-radius: 12px; padding: 16px; text-align: center; }
+    .roi-box-num { font-size: 1.6rem; font-weight: 900; letter-spacing: -0.5px; }
+    .roi-box-label { font-size: 0.75rem; color: var(--text-muted); margin-top: 5px; line-height: 1.4; }
+
+    /* Comparison table */
+    .comp-table { width: 100%; border-collapse: collapse; margin-top: 32px; }
+    .comp-table th { padding: 14px 18px; font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+    .comp-table th:first-child { text-align: left; color: var(--text-muted); }
+    .comp-table th:nth-child(2) { background: rgba(255,255,255,0.03); color: var(--text-muted); border-radius: 12px 12px 0 0; }
+    .comp-table th:nth-child(3) { background: rgba(108,99,255,0.12); color: var(--accent-light); border-radius: 12px 12px 0 0; }
+    .comp-table td { padding: 13px 18px; font-size: 0.88rem; border-top: 1px solid var(--border); }
+    .comp-table td:first-child { color: var(--text-muted); }
+    .comp-table td:nth-child(2) { text-align: center; background: rgba(255,255,255,0.02); }
+    .comp-table td:nth-child(3) { text-align: center; background: rgba(108,99,255,0.07); }
+    .comp-table tr:last-child td:nth-child(2) { border-radius: 0 0 0 0; }
+    .comp-table tr:last-child td:nth-child(3) { border-radius: 0 0 12px 12px; }
+    .comp-check { color: var(--green); font-weight: 800; font-size: 1rem; }
+    .comp-cross { color: #ff4d6a; font-weight: 800; }
+    .comp-meh { color: var(--text-muted); }
 
     @media (max-width: 700px) {
       nav { padding: 12px 20px; }
       .topbar { font-size: 12px; padding: 8px 16px; }
       .topbar-hide { display: none; }
       #hero { padding: 60px 20px 50px; }
-      .features-grid, .steps-grid, .stats-row, .roi-grid { grid-template-columns: 1fr; }
+      .features-grid, .steps-grid, .stats-row { grid-template-columns: 1fr; }
       .pricing-card { padding: 36px 18px; margin-top: 24px; }
       .problem-box { padding: 28px 24px; font-size: 1rem; }
       .guarantee-box { padding: 32px 24px; }
@@ -142,6 +177,13 @@
       .mobile-cta-bar { display: block; position: fixed; bottom: 0; left: 0; right: 0; z-index: 200; padding: 12px 16px 20px; background: rgba(13,13,20,0.97); backdrop-filter: blur(16px); border-top: 1px solid var(--border); }
       .mobile-cta-bar button { display: block; width: 100%; background: linear-gradient(135deg, var(--accent), #9b6bff); color: #fff; text-align: center; padding: 16px; border-radius: 12px; font-weight: 800; font-size: 1rem; border: none; font-family: inherit; }
       body { padding-bottom: 90px; }
+      .roi-calc { padding: 28px 20px; }
+      .roi-result { grid-template-columns: 1fr 1fr; }
+      .sms-stats-bar { flex-direction: row; }
+      .sms-stat-item { min-width: 120px; }
+      .demo-input { width: 100%; }
+      .comp-table { font-size: 0.8rem; }
+      .comp-table th, .comp-table td { padding: 10px 10px; }
     }
   </style>
 </head>
@@ -166,13 +208,33 @@
     <p class="hero-price-note">£19/month &nbsp;·&nbsp; No contracts &nbsp;·&nbsp; Cancel anytime</p>
     <div class="badges">
       <div class="badge">📲 SMS — no app needed</div>
-      <div class="badge">⚡ Set up in 24 hours</div>
+      <div class="badge">⚡ Live in 24 hours</div>
       <div class="badge">📋 Works with any CSV export</div>
-      <div class="badge">💷 Flat rate — no per-message fees</div>
+      <div class="badge">💷 One flat price — we cover all sending costs</div>
       <div class="badge">🇬🇧 UK-based</div>
     </div>
   </div>
 </section>
+
+<!-- SMS STATS BAR -->
+<div class="sms-stats-bar">
+  <div class="sms-stat-item">
+    <div class="sms-stat-num">98%</div>
+    <div class="sms-stat-label">of SMS messages<br>are opened</div>
+  </div>
+  <div class="sms-stat-item">
+    <div class="sms-stat-num">3 min</div>
+    <div class="sms-stat-label">average time<br>to read an SMS</div>
+  </div>
+  <div class="sms-stat-item">
+    <div class="sms-stat-num">45%</div>
+    <div class="sms-stat-label">SMS response rate<br>vs 6% for email</div>
+  </div>
+  <div class="sms-stat-item">
+    <div class="sms-stat-num">£0</div>
+    <div class="sms-stat-label">effort from you —<br>runs automatically</div>
+  </div>
+</div>
 
 <!-- PROBLEM -->
 <section class="section alt">
@@ -186,11 +248,11 @@
     <div class="stats-row">
       <div class="stat-card">
         <div class="stat-num">1 in 4</div>
-        <div class="stat-label">clients don't rebook within 12 weeks — most of them won't come back unless you reach out</div>
+        <div class="stat-label">clients don't rebook within 12 weeks — most won't come back unless you reach out</div>
       </div>
       <div class="stat-card">
         <div class="stat-num">£4,500+</div>
-        <div class="stat-label">lost per year from just 3 empty slots a week — for a busy barber or salon that's a holiday and a half</div>
+        <div class="stat-label">lost per year from just 3 empty slots a week — that's a holiday and a half</div>
       </div>
       <div class="stat-card">
         <div class="stat-num">78%</div>
@@ -211,7 +273,7 @@
       <div class="feature-card">
         <span class="feature-icon">🔄</span>
         <h3>Lapsed Client Recovery</h3>
-        <p>We track how long it's been since each client visited. When someone hits 5, 8, or 12 weeks without a rebook, they get a personalised SMS — friendly, not pushy. "Hey Sarah, it's been a while — your usual slot's free this Thursday." Most book on the spot.</p>
+        <p>We track how long it's been since each client visited. When someone hits 5, 8, or 12 weeks without a rebook, they get a personalised SMS — friendly, not pushy. "Hey Sarah, it's been a while — your usual Thursday slot's free this week." Most book on the spot.</p>
         <span class="feature-tag">Most popular</span>
       </div>
 
@@ -225,14 +287,14 @@
       <div class="feature-card">
         <span class="feature-icon">⭐</span>
         <h3>Automatic Review Requests</h3>
-        <p>Two hours after an appointment ends, your client gets a text asking for a Google review. One tap, 30 seconds. Most salons get more reviews in their first month with us than in the previous year combined. More reviews = more walk-ins from Google.</p>
+        <p>Two hours after an appointment ends, your client gets a text asking for a Google review. One tap, 30 seconds. More reviews means more walk-ins from Google — customers search "barber near me" and pick whoever has the most and best reviews.</p>
         <span class="feature-tag">More Google reviews</span>
       </div>
 
       <div class="feature-card">
         <span class="feature-icon">🎂</span>
         <h3>Birthday Texts</h3>
-        <p>We pull your clients' birthdays from the CSV and automatically send a personal birthday message on the day — with a small offer and their booking link. Clients love it. It takes zero effort from you and brings people in during their birthday week.</p>
+        <p>We pull your clients' birthdays from the CSV and automatically send a personal birthday message on the day — with a small offer and their booking link. Clients love it. Zero effort from you, and it brings people in during their birthday week when they're already spending.</p>
         <span class="feature-tag">100% automatic</span>
       </div>
 
@@ -249,17 +311,17 @@
       <div class="step-card">
         <div class="step-number">1</div>
         <h3>Export from Booksy</h3>
-        <p>Go to your Booksy account, download your client list as a CSV — takes about 30 seconds. We accept exports from Booksy, Fresha, Treatwell, Square, Vagaro, or any spreadsheet with names, numbers, and last visit dates.</p>
+        <p>Go to your Booksy account and download your client list as a CSV — takes about 30 seconds. We accept exports from Booksy, Fresha, Treatwell, Square, Vagaro, or any spreadsheet with names, numbers, and last visit dates.</p>
       </div>
       <div class="step-card">
         <div class="step-number">2</div>
         <h3>We set up your sequences</h3>
-        <p>Send us the CSV and tell us your quiet days, your Google review link, and the tone you want (casual, professional, friendly). We configure everything — your lapsed client messages, slot-filling texts, and review requests — within 24 hours.</p>
+        <p>Send us the CSV and tell us your quiet days, your Google review link, and the tone you want (casual, professional, friendly). We configure everything — your lapsed client messages, slot-filling texts, birthday texts and review requests — within 24 hours.</p>
       </div>
       <div class="step-card">
         <div class="step-number">3</div>
         <h3>SMS go out automatically</h3>
-        <p>From that point on, messages go out in the background based on your live client data. Upload a fresh CSV weekly or monthly and we update who gets what. You just watch the bookings come in.</p>
+        <p>From that point on, messages fire in the background based on your client data. Send us a fresh CSV weekly or monthly to keep it updated. You just watch the bookings come in and the reviews stack up.</p>
       </div>
     </div>
   </div>
@@ -283,48 +345,69 @@
   </div>
 </section>
 
-<!-- SMS DEMO -->
-<section class="section alt">
+<!-- INTERACTIVE SMS DEMO -->
+<section class="section alt" id="demo">
   <div class="container">
-    <div class="section-label">See It In Action</div>
-    <h2>What your clients actually receive.</h2>
-    <p class="muted" style="margin-top:14px;max-width:520px;">Real SMS messages, personalised to each client. Not spammy, not generic — specific to how long it's been and what they usually book.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px;margin-top:40px;">
+    <div class="section-label" style="display:block;text-align:center;">Live Demo</div>
+    <h2 style="text-align:center;">See exactly what your clients receive.</h2>
+    <p class="muted" style="margin-top:14px;max-width:520px;margin-left:auto;margin-right:auto;text-align:center;">Type your business name and a client's name below — the messages update live so you can see exactly what gets sent.</p>
 
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;">
-        <div style="font-size:11px;font-weight:700;color:var(--accent-light);text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;">Lapsed client — 6 weeks</div>
-        <div style="background:#f2f2f7;border-radius:18px;padding:16px;font-size:13px;line-height:1.6;color:#111;">
-          Hey Sarah 👋 It's been a while since your last visit at Fade Republic. We'd love to see you back — your usual Thursday slot is free this week. Book here: [link] — reply STOP to opt out
+    <div class="demo-inputs" style="margin-top:32px;">
+      <div class="demo-input-wrap">
+        <label>Your Business Name</label>
+        <input class="demo-input" id="demo-biz" value="Fade Republic" oninput="updateDemo()" placeholder="e.g. Fade Republic" />
+      </div>
+      <div class="demo-input-wrap">
+        <label>A Client's First Name</label>
+        <input class="demo-input" id="demo-client" value="Sarah" oninput="updateDemo()" placeholder="e.g. Sarah" />
+      </div>
+    </div>
+    <p class="demo-hint">✏️ Edit above — all four messages update instantly</p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px;">
+
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;">
+        <div style="font-size:10px;font-weight:700;color:var(--accent-light);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;">🔄 Lapsed Client — 6 weeks</div>
+        <div class="sms-bubble-wrap">
+          <div class="sms-time">Today 10:14 AM</div>
+          <div class="sms-msg" id="demo-lapsed">Hey Sarah 👋 It's been a while since your last visit at Fade Republic. We'd love to see you back — your usual Thursday slot is free this week. Book here: [link] — reply STOP to opt out</div>
+          <div class="sms-stop">✓✓ Delivered</div>
         </div>
-        <div style="margin-top:12px;font-size:11px;color:var(--text-muted);">Sends automatically at 6 weeks · Personalised with name &amp; usual day</div>
+        <div style="margin-top:10px;font-size:11px;color:var(--text-muted);">Sends automatically at 6 weeks · Personalised with name &amp; usual day</div>
       </div>
 
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;">
-        <div style="font-size:11px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;">Empty slot — Monday 2pm</div>
-        <div style="background:#f2f2f7;border-radius:18px;padding:16px;font-size:13px;line-height:1.6;color:#111;">
-          Hey Jordan! Last-minute slot just opened up at Fade Republic — Monday 2pm. First come first served. Grab it here: [link] — reply STOP to opt out
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;">
+        <div style="font-size:10px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;">📅 Empty Slot — Monday 2pm</div>
+        <div class="sms-bubble-wrap">
+          <div class="sms-time">Monday 9:02 AM</div>
+          <div class="sms-msg" id="demo-slot">Hey Sarah! Last-minute slot just opened up at Fade Republic — Monday 2pm. First come, first served. Grab it: [link] — reply STOP to opt out</div>
+          <div class="sms-stop">✓✓ Delivered</div>
         </div>
-        <div style="margin-top:12px;font-size:11px;color:var(--text-muted);">Sent Monday morning · Goes to 10 lapsed clients · Usually fills within the hour</div>
+        <div style="margin-top:10px;font-size:11px;color:var(--text-muted);">Sent Monday morning · Goes to lapsed clients first · Usually fills within the hour</div>
       </div>
 
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;">
-        <div style="font-size:11px;font-weight:700;color:var(--accent-light);text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;">Review request — after appointment</div>
-        <div style="background:#f2f2f7;border-radius:18px;padding:16px;font-size:13px;line-height:1.6;color:#111;">
-          Thanks for coming in today Marcus! If you have 30 seconds, a Google review means the world to us 🙏 [Google review link] — Fade Republic
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;">
+        <div style="font-size:10px;font-weight:700;color:var(--accent-light);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;">⭐ Review Request — after visit</div>
+        <div class="sms-bubble-wrap">
+          <div class="sms-time">Today 4:45 PM</div>
+          <div class="sms-msg" id="demo-review">Thanks for coming in today Sarah! 🙏 If you have 30 seconds, a Google review means the world to us — [review link] — Fade Republic</div>
+          <div class="sms-stop">✓✓ Delivered</div>
         </div>
-        <div style="margin-top:12px;font-size:11px;color:var(--text-muted);">Fires automatically after visit · One tap · Builds Google ranking</div>
+        <div style="margin-top:10px;font-size:11px;color:var(--text-muted);">Fires 2hrs after appointment · One tap · Builds your Google ranking</div>
       </div>
 
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;">
-        <div style="font-size:11px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;">Birthday text — sent on the day</div>
-        <div style="background:#f2f2f7;border-radius:18px;padding:16px;font-size:13px;line-height:1.6;color:#111;">
-          Happy birthday Sarah! 🎂 Hope you have a great day. Treat yourself — book this week and mention this text for £5 off your next visit. [booking link] — Fade Republic
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;">
+        <div style="font-size:10px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;">🎂 Birthday Text — on the day</div>
+        <div class="sms-bubble-wrap">
+          <div class="sms-time">Today — their birthday</div>
+          <div class="sms-msg" id="demo-bday">Happy birthday Sarah! 🎂 Hope you're having a great day. Treat yourself — book this week and mention this text for £5 off. [link] — Fade Republic</div>
+          <div class="sms-stop">✓✓ Delivered</div>
         </div>
-        <div style="margin-top:12px;font-size:11px;color:var(--text-muted);">Fires automatically on their birthday · Pulls from your CSV · Zero effort from you</div>
+        <div style="margin-top:10px;font-size:11px;color:var(--text-muted);">Automatic on their birthday · Pulled from your CSV · Zero effort from you</div>
       </div>
 
     </div>
-    <p style="margin-top:28px;font-size:0.85rem;color:var(--text-muted);text-align:center;">All messages include a legal opt-out. We handle GDPR compliance — every text is sent with consent and a STOP option.</p>
+    <p style="margin-top:24px;font-size:0.85rem;color:var(--text-muted);text-align:center;">All messages include a legal opt-out. We handle full GDPR compliance — every text is sent with consent and a STOP option.</p>
   </div>
 </section>
 
@@ -334,20 +417,88 @@
     <div class="section-label">The Maths</div>
     <h2>One client back pays for<br>two months.</h2>
     <p class="muted" style="margin-top:14px;max-width:480px;margin-left:auto;margin-right:auto;">A barber cut is ~£30. One rebooked client per month covers your subscription twice over. Most businesses get 5–15 back in the first 30 days.</p>
-    <div style="margin-top:36px;background:linear-gradient(135deg,rgba(0,212,170,0.08),rgba(108,99,255,0.06));border:1px solid var(--border);border-radius:var(--radius);padding:36px 44px;max-width:580px;margin-left:auto;margin-right:auto;">
-      <div style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:16px;">What typically happens in the first 30 days:</div>
-      <div style="display:flex;flex-direction:column;gap:12px;text-align:left;">
-        <div style="display:flex;align-items:center;gap:12px;font-size:0.95rem;color:var(--text-muted);"><span style="color:var(--green);font-weight:800;font-size:1.1rem;">✓</span> 5–15 lapsed clients rebook</div>
-        <div style="display:flex;align-items:center;gap:12px;font-size:0.95rem;color:var(--text-muted);"><span style="color:var(--green);font-weight:800;font-size:1.1rem;">✓</span> 3–8 new Google reviews come in</div>
-        <div style="display:flex;align-items:center;gap:12px;font-size:0.95rem;color:var(--text-muted);"><span style="color:var(--green);font-weight:800;font-size:1.1rem;">✓</span> Quiet days fill up noticeably</div>
-        <div style="display:flex;align-items:center;gap:12px;font-size:0.95rem;color:var(--text-muted);"><span style="color:var(--green);font-weight:800;font-size:1.1rem;">✓</span> You did nothing extra to make it happen</div>
+
+    <div class="roi-calc">
+      <div style="font-size:0.9rem;font-weight:700;color:var(--text);margin-bottom:4px;">How many clients are on your books?</div>
+      <div style="font-size:2.4rem;font-weight:900;color:var(--green);letter-spacing:-1px;" id="roi-clients">150</div>
+      <input type="range" class="roi-slider" id="roi-slider" min="30" max="500" value="150" step="10" oninput="updateRoi()" />
+      <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:var(--text-muted);"><span>30</span><span>500</span></div>
+      <div class="roi-result">
+        <div class="roi-box">
+          <div class="roi-box-num green-text" id="roi-lapsed">38</div>
+          <div class="roi-box-label">clients likely lapsed<br>(25% of your list)</div>
+        </div>
+        <div class="roi-box">
+          <div class="roi-box-num" style="color:var(--accent-light);" id="roi-recovery">£825</div>
+          <div class="roi-box-label">estimated monthly<br>recovery value</div>
+        </div>
+        <div class="roi-box">
+          <div class="roi-box-num green-text" id="roi-profit">£806</div>
+          <div class="roi-box-label">net profit after<br>£19/mo subscription</div>
+        </div>
       </div>
+      <div style="margin-top:14px;font-size:0.78rem;color:var(--text-muted);line-height:1.6;">Estimates based on 25% lapse rate, ~30% recovery rate on lapsed clients, £30 avg. visit value. Real results vary.</div>
     </div>
   </div>
 </section>
 
+<!-- VS COMPARISON -->
+<section class="section alt">
+  <div class="container">
+    <div class="section-label">Why Phillips Automates</div>
+    <h2>Compare the options.</h2>
+    <p class="muted" style="margin-top:14px;max-width:520px;">Every business eventually tries to solve the retention problem. Most either pay too much, spend too much time, or give up. Here's how the options stack up.</p>
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>What you get</th>
+          <th>Doing it yourself</th>
+          <th>Phillips Automates</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Lapsed client follow-ups</td>
+          <td><span class="comp-meh">⏱ Hours per week</span></td>
+          <td><span class="comp-check">✓ Automatic</span></td>
+        </tr>
+        <tr>
+          <td>Slot-fill alerts on quiet days</td>
+          <td><span class="comp-meh">⏱ Manual, easy to forget</span></td>
+          <td><span class="comp-check">✓ Fires automatically</span></td>
+        </tr>
+        <tr>
+          <td>Google review requests</td>
+          <td><span class="comp-meh">⏱ Only if you remember</span></td>
+          <td><span class="comp-check">✓ After every visit</span></td>
+        </tr>
+        <tr>
+          <td>Birthday texts</td>
+          <td><span class="comp-cross">✗ Basically never</span></td>
+          <td><span class="comp-check">✓ Every single one</span></td>
+        </tr>
+        <tr>
+          <td>GDPR / opt-out handling</td>
+          <td><span class="comp-cross">✗ Your problem</span></td>
+          <td><span class="comp-check">✓ We handle it</span></td>
+        </tr>
+        <tr>
+          <td>Works while you're at the chair</td>
+          <td><span class="comp-cross">✗ Requires your time</span></td>
+          <td><span class="comp-check">✓ Runs in the background</span></td>
+        </tr>
+        <tr>
+          <td>Monthly cost</td>
+          <td><span class="comp-meh">Your time (worth more)</span></td>
+          <td><span class="comp-check" style="color:var(--green);font-size:1.1rem;">£19</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
 <!-- PRICING -->
-<section class="section alt" id="pricing">
+<section class="section" id="pricing">
   <div class="container" style="text-align:center;">
     <div class="section-label">Pricing</div>
     <h2>One flat rate. Everything included.</h2>
@@ -423,7 +574,7 @@
         <li>Unlimited SMS for your full client list — no per-message charges</li>
         <li>GDPR-compliant — opt-outs handled automatically</li>
         <li>Works with Booksy, Fresha, Treatwell &amp; more</li>
-        <li>Set up in 24 hours — no technical work from you</li>
+        <li>Live in 24 hours — no technical work from you</li>
         <li>Update sequences or messages anytime — just email us</li>
         <li>Cancel anytime — no contract, no notice period</li>
       </ul>
@@ -474,7 +625,7 @@
 </section>
 
 <!-- GUARANTEE -->
-<section class="section">
+<section class="section alt">
   <div class="container">
     <div class="section-label" style="display:block;text-align:center;margin-bottom:32px;">Guarantee</div>
     <div class="guarantee-box">
@@ -486,7 +637,7 @@
 </section>
 
 <!-- FAQ -->
-<section class="section alt">
+<section class="section">
   <div class="container">
     <div class="section-label">Questions</div>
     <h2>Things people usually ask.</h2>
@@ -499,7 +650,7 @@
 
       <div class="faq-item">
         <div class="faq-q">How do you get my client list?<span class="faq-icon">+</span></div>
-        <div class="faq-a">You export it from Booksy, Fresha, or wherever you manage your bookings. It's a CSV download — usually takes about 30 seconds. You send it to us, we set everything up. After that, you just send us an updated CSV whenever you want us to refresh the data (weekly or monthly is typical).</div>
+        <div class="faq-a">You export it from Booksy, Fresha, or wherever you manage your bookings — it's a CSV download that takes about 30 seconds. You email it to us, we set everything up. After that, just send us an updated CSV whenever you want us to refresh the data (weekly or monthly is typical).</div>
       </div>
 
       <div class="faq-item">
@@ -523,8 +674,13 @@
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">What if my prices or messages need changing?<span class="faq-icon">+</span></div>
+        <div class="faq-q">What if my messages need changing?<span class="faq-icon">+</span></div>
         <div class="faq-a">Just email phillipsautomates@gmail.com and we'll update your messages within 24 hours. Included in your plan — no extra charge.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What's included in the £19/mo — are there any hidden costs?<span class="faq-icon">+</span></div>
+        <div class="faq-a">No hidden costs. £19/mo covers everything — the SMS sending costs, the phone number, setup, ongoing management, and updates. We absorb the per-message fees so you don't have to think about it. One flat price, everything included.</div>
       </div>
 
     </div>
@@ -532,12 +688,18 @@
 </section>
 
 <!-- FINAL CTA -->
-<section class="section" style="text-align:center;">
+<section class="section alt" style="text-align:center;">
   <div class="container">
     <h2>Start filling your quiet days — automatically.</h2>
     <p class="muted" style="margin-top:14px;margin-bottom:36px;max-width:480px;margin-left:auto;margin-right:auto;">Send us your CSV. We'll have your sequences live in 24 hours. Then just watch the bookings come in.</p>
     <button class="btn-primary" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">Get Started — £19/mo ›</button>
     <p style="margin-top:16px;font-size:0.82rem;color:var(--text-muted);">£19/month &nbsp;·&nbsp; Cancel anytime &nbsp;·&nbsp; No contracts</p>
+    <div style="display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin-top:28px;">
+      <div style="display:flex;align-items:center;gap:7px;font-size:0.8rem;color:var(--text-muted);"><span style="color:var(--green);">🔒</span> Stripe secure checkout</div>
+      <div style="display:flex;align-items:center;gap:7px;font-size:0.8rem;color:var(--text-muted);"><span style="color:var(--green);">✓</span> GDPR compliant</div>
+      <div style="display:flex;align-items:center;gap:7px;font-size:0.8rem;color:var(--text-muted);"><span style="color:var(--green);">🇬🇧</span> UK-based service</div>
+      <div style="display:flex;align-items:center;gap:7px;font-size:0.8rem;color:var(--text-muted);"><span style="color:var(--green);">✓</span> Cancel anytime</div>
+    </div>
   </div>
 </section>
 
@@ -552,6 +714,7 @@
 </div>
 
 <script>
+  // FAQ accordion
   document.querySelectorAll('.faq-q').forEach(function(q) {
     q.addEventListener('click', function() {
       var item = this.closest('.faq-item');
@@ -560,6 +723,34 @@
       if (!isOpen) item.classList.add('open');
     });
   });
+
+  // Interactive SMS demo
+  function updateDemo() {
+    var biz = document.getElementById('demo-biz').value.trim() || 'Fade Republic';
+    var client = document.getElementById('demo-client').value.trim() || 'Sarah';
+    document.getElementById('demo-lapsed').textContent =
+      'Hey ' + client + ' \uD83D\uDC4B It\u2019s been a while since your last visit at ' + biz + '. We\u2019d love to see you back \u2014 your usual Thursday slot is free this week. Book here: [link] \u2014 reply STOP to opt out';
+    document.getElementById('demo-slot').textContent =
+      'Hey ' + client + '! Last-minute slot just opened up at ' + biz + ' \u2014 Monday 2pm. First come, first served. Grab it: [link] \u2014 reply STOP to opt out';
+    document.getElementById('demo-review').textContent =
+      'Thanks for coming in today ' + client + '! \uD83D\uDE4F If you have 30 seconds, a Google review means the world to us \u2014 [review link] \u2014 ' + biz;
+    document.getElementById('demo-bday').textContent =
+      'Happy birthday ' + client + '! \uD83C\uDF82 Hope you\u2019re having a great day. Treat yourself \u2014 book this week and mention this text for \u00A35 off. [link] \u2014 ' + biz;
+  }
+
+  // ROI calculator
+  function updateRoi() {
+    var n = parseInt(document.getElementById('roi-slider').value);
+    document.getElementById('roi-clients').textContent = n;
+    var lapsed = Math.round(n * 0.25);
+    var recovered = Math.round(lapsed * 0.30);
+    var revenue = recovered * 30;
+    var profit = revenue - 19;
+    document.getElementById('roi-lapsed').textContent = lapsed;
+    document.getElementById('roi-recovery').textContent = '\u00A3' + revenue;
+    document.getElementById('roi-profit').textContent = '\u00A3' + profit;
+  }
+  updateRoi();
 </script>
 </body>
 </html>
