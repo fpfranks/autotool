@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Client Retention & Follow-Up Automation for Barbers & Salons — Phillips Automates</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0d0d14; --bg2: #12121c; --bg3: #1a1a28;
+      --accent: #6c63ff; --accent-light: #8b85ff;
+      --green: #00d4aa; --green-dark: #00a888;
+      --text: #e8e8f0; --text-muted: #8888aa;
+      --border: rgba(108,99,255,0.18);
+      --card: rgba(255,255,255,0.04);
+      --radius: 16px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.65; font-size: 17px; overflow-x: hidden; }
+
+    .topbar { background: linear-gradient(90deg, var(--accent), var(--green)); text-align: center; padding: 11px 20px; font-size: 14px; font-weight: 600; color: #fff; letter-spacing: 0.3px; }
+
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(13,13,20,0.93); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); padding: 14px 40px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { font-weight: 800; font-size: 19px; color: var(--accent-light); text-decoration: none; }
+    .nav-logo span { color: var(--green); }
+    .nav-cta { background: linear-gradient(135deg, var(--accent), #9b6bff); color: #fff; padding: 10px 22px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 14px; transition: opacity 0.2s, transform 0.15s; white-space: nowrap; }
+    .nav-cta:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    .section { padding: 90px 20px; }
+    .section.alt { background: var(--bg2); }
+    .container { max-width: 900px; margin: 0 auto; }
+
+    h1 { font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 900; line-height: 1.15; letter-spacing: -1px; }
+    h2 { font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 800; letter-spacing: -0.5px; line-height: 1.2; }
+    h3 { font-size: 1.15rem; font-weight: 700; }
+    .accent-text { color: var(--accent-light); }
+    .green-text { color: var(--green); }
+    .muted { color: var(--text-muted); }
+
+    .btn-primary { display: inline-block; background: linear-gradient(135deg, var(--accent), #9b6bff); color: #fff; padding: 18px 38px; border-radius: 12px; text-decoration: none; font-weight: 800; font-size: 1.05rem; transition: opacity 0.2s, transform 0.15s; box-shadow: 0 8px 30px rgba(108,99,255,0.35); cursor: pointer; border: none; font-family: inherit; }
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-2px); }
+
+    .badges { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; justify-content: center; }
+    .badge { display: flex; align-items: center; gap: 8px; background: var(--card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 18px; font-size: 13.5px; font-weight: 600; color: var(--text); }
+
+    #hero { padding: 100px 20px 90px; text-align: center; }
+    #hero h1 { max-width: 780px; margin: 0 auto 22px; }
+    #hero p.sub { max-width: 600px; margin: 0 auto 36px; font-size: 1.15rem; color: var(--text-muted); line-height: 1.7; }
+    .hero-price-note { margin-top: 18px; font-size: 13.5px; color: var(--text-muted); }
+
+    .section-label { display: inline-block; background: rgba(108,99,255,0.12); border: 1px solid rgba(108,99,255,0.3); color: var(--accent-light); font-size: 12px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; padding: 6px 16px; border-radius: 999px; margin-bottom: 20px; }
+
+    .problem-box { background: linear-gradient(135deg, rgba(108,99,255,0.08), rgba(0,212,170,0.06)); border: 1px solid var(--border); border-radius: var(--radius); padding: 40px 44px; font-size: 1.1rem; line-height: 1.8; color: var(--text); }
+    .problem-box strong { color: var(--accent-light); }
+    .problem-box em { display: block; margin-top: 18px; font-style: normal; font-size: 0.95rem; color: var(--text-muted); border-left: 3px solid var(--accent); padding-left: 16px; }
+
+    .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 36px; }
+    .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 24px; text-align: center; }
+    .stat-num { font-size: 2.6rem; font-weight: 900; color: var(--green); letter-spacing: -1px; line-height: 1; margin-bottom: 8px; }
+    .stat-label { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+
+    .features-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; margin-top: 40px; }
+    .feature-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 36px 30px; transition: border-color 0.2s, transform 0.2s; }
+    .feature-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+    .feature-icon { font-size: 2.4rem; margin-bottom: 14px; display: block; }
+    .feature-card h3 { margin-bottom: 10px; }
+    .feature-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.65; }
+    .feature-tag { display: inline-block; background: rgba(0,212,170,0.1); border: 1px solid rgba(0,212,170,0.25); color: var(--green); font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 999px; margin-top: 12px; }
+
+    .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
+    .step-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 36px 28px; }
+    .step-number { width: 44px; height: 44px; background: linear-gradient(135deg, var(--accent), #9b6bff); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1rem; color: #fff; margin-bottom: 18px; }
+    .step-card h3 { margin-bottom: 10px; }
+    .step-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.65; }
+
+    .works-with { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-top: 36px; }
+    .platform-pill { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px 24px; font-size: 0.9rem; font-weight: 700; color: var(--text); display: flex; align-items: center; gap: 10px; }
+
+    .roi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 40px; }
+    .roi-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 30px 24px; text-align: center; }
+    .roi-amount { font-size: 2.4rem; font-weight: 900; color: var(--green); letter-spacing: -1px; }
+    .roi-label { font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; line-height: 1.5; }
+
+    .pricing-card { background: var(--bg3); border: 2px solid var(--accent); border-radius: 20px; padding: 52px 48px; max-width: 520px; margin: 48px auto 0; text-align: center; box-shadow: 0 0 60px rgba(108,99,255,0.18); position: relative; }
+    .pricing-badge { position: absolute; top: -16px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--accent), var(--green)); color: #fff; padding: 6px 22px; border-radius: 999px; font-size: 12.5px; font-weight: 700; letter-spacing: 0.5px; white-space: nowrap; }
+    .pricing-main { font-size: clamp(2.8rem, 8vw, 4rem); font-weight: 900; color: #fff; line-height: 1; letter-spacing: -2px; }
+    .pricing-main span { font-size: 1.4rem; font-weight: 600; letter-spacing: 0; vertical-align: top; padding-top: 10px; display: inline-block; color: var(--text-muted); }
+    .pricing-period { font-size: 0.9rem; color: var(--text-muted); margin-top: 6px; margin-bottom: 28px; }
+    .pricing-features { list-style: none; margin-bottom: 36px; display: flex; flex-direction: column; gap: 12px; text-align: left; }
+    .pricing-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.95rem; }
+    .pricing-features li::before { content: '✓'; color: var(--green); font-weight: 800; flex-shrink: 0; margin-top: 1px; }
+    .pricing-sub { margin-top: 16px; font-size: 0.82rem; color: var(--text-muted); }
+
+    .sf-form { text-align: left; border: 1px solid rgba(108,99,255,0.3); border-radius: 12px; padding: 20px; background: rgba(108,99,255,0.05); margin-bottom: 24px; }
+    .sf-form-label { font-size: 0.8rem; font-weight: 700; color: #8b85ff; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px; }
+    .sf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .sf-field { margin-bottom: 12px; }
+    .sf-field label { display: block; font-size: 0.76rem; color: var(--text-muted); margin-bottom: 4px; font-weight: 500; }
+    .sf-field input, .sf-field select { width: 100%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 9px 12px; color: #e8e8f0; font-size: 0.85rem; outline: none; font-family: inherit; transition: border-color 0.15s; }
+    .sf-field select option { background: #1a1a28; color: #e8e8f0; }
+    .sf-field input:focus, .sf-field select:focus { border-color: var(--accent); }
+    .sf-warning { display: none; margin-top: 10px; padding: 9px 13px; background: rgba(255,179,71,0.1); border: 1px solid rgba(255,179,71,0.3); border-radius: 8px; font-size: 0.8rem; color: #ffb347; }
+
+    .guarantee-box { background: linear-gradient(135deg, rgba(0,212,170,0.08), rgba(0,212,170,0.03)); border: 1px solid rgba(0,212,170,0.25); border-radius: var(--radius); padding: 40px 44px; text-align: center; max-width: 600px; margin: 0 auto; }
+    .guarantee-icon { font-size: 3rem; margin-bottom: 16px; }
+    .guarantee-box h2 { font-size: 1.5rem; margin-bottom: 12px; color: var(--green); }
+    .guarantee-box p { color: var(--text-muted); line-height: 1.7; font-size: 0.95rem; }
+
+    .faq-list { display: flex; flex-direction: column; gap: 16px; margin-top: 48px; }
+    .faq-item { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .faq-q { padding: 20px 24px; font-weight: 700; font-size: 0.98rem; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; user-select: none; }
+    .faq-q:hover { color: var(--accent-light); }
+    .faq-icon { font-size: 1.3rem; color: var(--accent); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.35s ease; font-size: 0.93rem; color: var(--text-muted); line-height: 1.7; padding: 0 24px; }
+    .faq-item.open .faq-a { max-height: 400px; padding: 0 24px 22px; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    footer { background: var(--bg); border-top: 1px solid var(--border); padding: 36px 20px; text-align: center; font-size: 0.85rem; color: var(--text-muted); }
+    footer a { color: var(--accent-light); text-decoration: none; }
+
+    .mobile-cta-bar { display: none; }
+
+    /* SMS preview mockup */
+    .sms-preview { background: #f2f2f7; border-radius: 24px; max-width: 300px; margin: 0 auto; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+    .sms-bubble { background: #34c759; color: #fff; border-radius: 18px 18px 4px 18px; padding: 12px 16px; font-size: 13px; line-height: 1.6; max-width: 85%; margin-left: auto; margin-right: 10px; }
+    .sms-bubble.grey { background: #e9e9eb; color: #111; border-radius: 18px 18px 18px 4px; margin-left: 10px; margin-right: auto; }
+
+    @media (max-width: 700px) {
+      nav { padding: 12px 20px; }
+      .topbar { font-size: 12px; padding: 8px 16px; }
+      .topbar-hide { display: none; }
+      #hero { padding: 60px 20px 50px; }
+      .features-grid, .steps-grid, .stats-row, .roi-grid { grid-template-columns: 1fr; }
+      .pricing-card { padding: 36px 18px; margin-top: 24px; }
+      .problem-box { padding: 28px 24px; font-size: 1rem; }
+      .guarantee-box { padding: 32px 24px; }
+      .section { padding: 64px 20px; }
+      .sf-row { grid-template-columns: 1fr; }
+      .mobile-cta-bar { display: block; position: fixed; bottom: 0; left: 0; right: 0; z-index: 200; padding: 12px 16px 20px; background: rgba(13,13,20,0.97); backdrop-filter: blur(16px); border-top: 1px solid var(--border); }
+      .mobile-cta-bar button { display: block; width: 100%; background: linear-gradient(135deg, var(--accent), #9b6bff); color: #fff; text-align: center; padding: 16px; border-radius: 12px; font-weight: 800; font-size: 1rem; border: none; font-family: inherit; }
+      body { padding-bottom: 90px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  💬 SMS follow-ups that bring clients back automatically<span class="topbar-hide"> &nbsp;·&nbsp; Works with Booksy, Fresha &amp; Treatwell &nbsp;·&nbsp; £39/mo flat rate</span>
+</div>
+
+<nav>
+  <a href="#" class="nav-logo">Phillips <span>Automates</span></a>
+  <a href="#pricing" class="nav-cta">Get Started — £39/mo</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="container">
+    <div class="section-label">Client Retention for Hair, Beauty &amp; Barbering</div>
+    <h1>Your quiet slots,<br><span class="accent-text">filled automatically.</span></h1>
+    <p class="sub">We analyse your Booksy client list and automatically text lapsed clients, fill empty slots, and collect Google reviews — all while you're at the chair. You don't lift a finger.</p>
+    <button class="btn-primary" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">Get Started — £39/mo ›</button>
+    <p class="hero-price-note">£39/month &nbsp;·&nbsp; No contracts &nbsp;·&nbsp; Cancel anytime</p>
+    <div class="badges">
+      <div class="badge">📲 SMS — no app needed</div>
+      <div class="badge">⚡ Set up in 24 hours</div>
+      <div class="badge">📋 Works with any CSV export</div>
+      <div class="badge">💷 Flat rate — no per-message fees</div>
+      <div class="badge">🇬🇧 UK-based</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="section alt">
+  <div class="container">
+    <div class="section-label">The Problem</div>
+    <h2>You're losing clients silently — and it's costing thousands.</h2>
+    <div class="problem-box" style="margin-top:32px;">
+      Every week a few clients just stop coming. No complaint. No cancellation. They drift — to a place closer, a barber a friend recommended, or just habit. <strong>You don't know it's happening until your Thursday is half empty.</strong> Meanwhile, you haven't had time to chase reviews, fill last-minute gaps, or send that "haven't seen you in a while" message you've been meaning to send.
+      <em>It's not about the service — most of them would come back with just a well-timed text. The problem is nobody's sending it.</em>
+    </div>
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-num">1 in 4</div>
+        <div class="stat-label">clients don't rebook within 12 weeks — most of them won't come back unless you reach out</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">£4,500+</div>
+        <div class="stat-label">lost per year from just 3 empty slots a week — for a busy barber or salon that's a holiday and a half</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">78%</div>
+        <div class="stat-label">of lapsed clients would return with a personalised message — they just need someone to send it</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section">
+  <div class="container">
+    <div class="section-label">What It Does</div>
+    <h2>Four things running automatically,<br>every single day.</h2>
+    <p class="muted" style="margin-top:14px;max-width:560px;">Set up once. We handle everything. Each feature runs in the background based on your live client data — no manual work, no reminders to yourself.</p>
+    <div class="features-grid">
+
+      <div class="feature-card">
+        <span class="feature-icon">🔄</span>
+        <h3>Lapsed Client Recovery</h3>
+        <p>We track how long it's been since each client visited. When someone hits 5, 8, or 12 weeks without a rebook, they get a personalised SMS — friendly, not pushy. "Hey Sarah, it's been a while — your usual slot's free this Thursday." Most book on the spot.</p>
+        <span class="feature-tag">Most popular</span>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">📅</span>
+        <h3>Empty Slot Filler</h3>
+        <p>You tell us your quiet days. When Monday 2pm or Tuesday morning is empty, we automatically text a targeted list of lapsed clients with a last-minute offer. Quiet days get filled without you doing a thing — no Instagram stories, no last-minute scrambling.</p>
+        <span class="feature-tag">Fills slow days</span>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">⭐</span>
+        <h3>Automatic Review Requests</h3>
+        <p>Two hours after an appointment ends, your client gets a text asking for a Google review. One tap, 30 seconds. Most salons get more reviews in their first month with us than in the previous year combined. More reviews = more walk-ins from Google.</p>
+        <span class="feature-tag">More Google reviews</span>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">✍️</span>
+        <h3>Instagram Caption Generator</h3>
+        <p>Upload your before/after photo. Our AI writes the caption, suggests hashtags, and tells you the best time to post — all in under 10 seconds. Small barbers and salons rarely have time to think about content. Now they don't have to.</p>
+        <span class="feature-tag">Bonus feature</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section alt">
+  <div class="container">
+    <div class="section-label">How It Works</div>
+    <h2>Three steps. Then it runs itself.</h2>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-number">1</div>
+        <h3>Export from Booksy</h3>
+        <p>Go to your Booksy account, download your client list as a CSV — takes about 30 seconds. We accept exports from Booksy, Fresha, Treatwell, Square, Vagaro, or any spreadsheet with names, numbers, and last visit dates.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">2</div>
+        <h3>We set up your sequences</h3>
+        <p>Send us the CSV and tell us your quiet days, your Google review link, and the tone you want (casual, professional, friendly). We configure everything — your lapsed client messages, slot-filling texts, and review requests — within 24 hours.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">3</div>
+        <h3>SMS go out automatically</h3>
+        <p>From that point on, messages go out in the background based on your live client data. Upload a fresh CSV weekly or monthly and we update who gets what. You just watch the bookings come in.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKS WITH -->
+<section class="section">
+  <div class="container" style="text-align:center;">
+    <div class="section-label">Works With</div>
+    <h2>Already on a booking platform? Perfect.</h2>
+    <p class="muted" style="margin-top:14px;max-width:520px;margin-left:auto;margin-right:auto;">We don't replace your booking tool — we plug into it. Every platform lets you export a client list. That's all we need.</p>
+    <div class="works-with">
+      <div class="platform-pill">📅 Booksy</div>
+      <div class="platform-pill">📅 Fresha</div>
+      <div class="platform-pill">📅 Treatwell</div>
+      <div class="platform-pill">📅 Square Appointments</div>
+      <div class="platform-pill">📅 Vagaro</div>
+      <div class="platform-pill">📋 Any CSV export</div>
+    </div>
+    <p style="margin-top:24px;font-size:0.88rem;color:var(--text-muted);">Not sure if your platform exports a CSV? Email us — if it exports client data in any format, we can work with it.</p>
+  </div>
+</section>
+
+<!-- SMS DEMO -->
+<section class="section alt">
+  <div class="container">
+    <div class="section-label">See It In Action</div>
+    <h2>What your clients actually receive.</h2>
+    <p class="muted" style="margin-top:14px;max-width:520px;">Real SMS messages, personalised to each client. Not spammy, not generic — specific to how long it's been and what they usually book.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px;margin-top:40px;">
+
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;">
+        <div style="font-size:11px;font-weight:700;color:var(--accent-light);text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;">Lapsed client — 6 weeks</div>
+        <div style="background:#f2f2f7;border-radius:18px;padding:16px;font-size:13px;line-height:1.6;color:#111;">
+          Hey Sarah 👋 It's been a while since your last visit at Fade Republic. We'd love to see you back — your usual Thursday slot is free this week. Book here: [link] — reply STOP to opt out
+        </div>
+        <div style="margin-top:12px;font-size:11px;color:var(--text-muted);">Sends automatically at 6 weeks · Personalised with name &amp; usual day</div>
+      </div>
+
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;">
+        <div style="font-size:11px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;">Empty slot — Monday 2pm</div>
+        <div style="background:#f2f2f7;border-radius:18px;padding:16px;font-size:13px;line-height:1.6;color:#111;">
+          Hey Jordan! Last-minute slot just opened up at Fade Republic — Monday 2pm. First come first served. Grab it here: [link] — reply STOP to opt out
+        </div>
+        <div style="margin-top:12px;font-size:11px;color:var(--text-muted);">Sent Monday morning · Goes to 10 lapsed clients · Usually fills within the hour</div>
+      </div>
+
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;">
+        <div style="font-size:11px;font-weight:700;color:var(--accent-light);text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;">Review request — 2hrs after appointment</div>
+        <div style="background:#f2f2f7;border-radius:18px;padding:16px;font-size:13px;line-height:1.6;color:#111;">
+          Thanks for coming in today Marcus! If you have 30 seconds, a Google review means the world to us 🙏 [Google review link] — Fade Republic
+        </div>
+        <div style="margin-top:12px;font-size:11px;color:var(--text-muted);">Sent 2hrs after visit · One tap to leave review · Builds Google ranking</div>
+      </div>
+
+    </div>
+    <p style="margin-top:28px;font-size:0.85rem;color:var(--text-muted);text-align:center;">All messages include a legal opt-out. We handle GDPR compliance — every text is sent with consent and a STOP option.</p>
+  </div>
+</section>
+
+<!-- ROI -->
+<section class="section">
+  <div class="container" style="text-align:center;">
+    <div class="section-label">The Maths</div>
+    <h2>One client back covers the whole month.</h2>
+    <p class="muted" style="margin-top:14px;max-width:520px;margin-left:auto;margin-right:auto;">At £39/mo, you need to recover one lapsed client to break even. Most businesses recover 5–20 in their first month.</p>
+    <div class="roi-grid">
+      <div class="roi-card">
+        <div class="roi-amount">£35</div>
+        <div class="roi-label">Average barber cut — one client back per month covers your full subscription</div>
+      </div>
+      <div class="roi-card">
+        <div class="roi-amount">£600+</div>
+        <div class="roi-label">Annual value of one returning client who visits every 4 weeks — worth 15 months of the subscription</div>
+      </div>
+      <div class="roi-card">
+        <div class="roi-amount">£4,500</div>
+        <div class="roi-label">Recovered per year just from filling 3 empty slots per week — at £30/slot average</div>
+      </div>
+    </div>
+    <div style="margin-top:32px;background:linear-gradient(135deg,rgba(0,212,170,0.08),rgba(108,99,255,0.06));border:1px solid var(--border);border-radius:var(--radius);padding:28px 36px;max-width:640px;margin-left:auto;margin-right:auto;">
+      <div style="font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:10px;">The typical result after 30 days:</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;align-items:center;gap:10px;font-size:0.9rem;color:var(--text-muted);"><span style="color:var(--green);font-weight:800;">✓</span> 5–15 lapsed clients rebooked</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:0.9rem;color:var(--text-muted);"><span style="color:var(--green);font-weight:800;">✓</span> 3–8 new Google reviews</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:0.9rem;color:var(--text-muted);"><span style="color:var(--green);font-weight:800;">✓</span> Quiet days noticeably busier</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:0.9rem;color:var(--text-muted);"><span style="color:var(--green);font-weight:800;">✓</span> Zero extra work from you</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section alt" id="pricing">
+  <div class="container" style="text-align:center;">
+    <div class="section-label">Pricing</div>
+    <h2>One flat rate. Everything included.</h2>
+    <p class="muted" style="margin-top:14px;max-width:480px;margin-left:auto;margin-right:auto;">No per-message fees. No per-client charges. One price covers everything — unlimited SMS sequences for your full client list.</p>
+
+    <div class="pricing-card">
+      <div class="pricing-badge">CLIENT RETENTION — FULLY AUTOMATED</div>
+      <div class="pricing-main"><span>£</span>39</div>
+      <div class="pricing-period">per month &nbsp;·&nbsp; cancel anytime</div>
+
+      <div class="sf-form">
+        <div class="sf-form-label">Your details — we'll have everything set up in 24 hours:</div>
+        <div class="sf-row">
+          <div class="sf-field">
+            <label>Business Name *</label>
+            <input id="sf-biz" type="text" placeholder="e.g. Fade Republic">
+          </div>
+          <div class="sf-field">
+            <label>Your Name *</label>
+            <input id="sf-name" type="text" placeholder="e.g. Jordan Smith">
+          </div>
+          <div class="sf-field">
+            <label>Your Email *</label>
+            <input id="sf-email" type="email" placeholder="jordan@faderepublic.co.uk">
+          </div>
+          <div class="sf-field">
+            <label>Your Mobile *</label>
+            <input id="sf-phone" type="tel" placeholder="07700 900000">
+          </div>
+        </div>
+        <div class="sf-row">
+          <div class="sf-field">
+            <label>Business Type *</label>
+            <select id="sf-type">
+              <option value="">Select...</option>
+              <option value="Barber">✂️ Barber Shop</option>
+              <option value="Hair salon">💇 Hair Salon</option>
+              <option value="Beauty salon">💅 Beauty Salon</option>
+              <option value="Nail salon">💅 Nail Salon</option>
+              <option value="Lash & brow">👁️ Lash &amp; Brow</option>
+              <option value="Tattoo studio">🎨 Tattoo Studio</option>
+              <option value="Spa">🧖 Spa / Massage</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="sf-field">
+            <label>Booking Platform *</label>
+            <select id="sf-platform">
+              <option value="">Select...</option>
+              <option value="Booksy">Booksy</option>
+              <option value="Fresha">Fresha</option>
+              <option value="Treatwell">Treatwell</option>
+              <option value="Square">Square Appointments</option>
+              <option value="Vagaro">Vagaro</option>
+              <option value="Spreadsheet">Just a spreadsheet</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="sf-field" style="margin-bottom:0;">
+          <label>City / Town *</label>
+          <input id="sf-city" type="text" placeholder="e.g. Manchester">
+        </div>
+        <div id="sf-warning" class="sf-warning"></div>
+        <p style="font-size:0.72rem;color:var(--text-muted);margin-top:10px;line-height:1.55;">🔒 Your details are used only to set up your retention sequences. Never sold or shared. By submitting you agree to us contacting you to complete your setup.</p>
+      </div>
+
+      <ul class="pricing-features">
+        <li>Lapsed client recovery — auto SMS at 5, 8 &amp; 12 weeks</li>
+        <li>Empty slot filler — texts go out on your quiet days</li>
+        <li>Automatic review requests — 2hrs after every appointment</li>
+        <li>Instagram caption generator — upload photo, get post</li>
+        <li>Unlimited SMS for your full client list — no per-message charges</li>
+        <li>GDPR-compliant — opt-outs handled automatically</li>
+        <li>Works with Booksy, Fresha, Treatwell &amp; more</li>
+        <li>Set up in 24 hours — no technical work from you</li>
+        <li>Update sequences or messages anytime — just email us</li>
+        <li>Cancel anytime with one email — no notice period</li>
+      </ul>
+
+      <button class="btn-primary" style="width:100%;" onclick="handleGetStarted()">Get Started — £39/mo ›</button>
+      <p class="pricing-sub">No setup fee &nbsp;·&nbsp; No contract &nbsp;·&nbsp; Cancel anytime</p>
+    </div>
+
+    <div id="confirm-panel" style="display:none;background:rgba(0,212,170,0.06);border:1px solid rgba(0,212,170,0.3);border-radius:20px;padding:40px 32px;text-align:center;margin-top:24px;max-width:520px;margin-left:auto;margin-right:auto;">
+      <div style="font-size:3rem;margin-bottom:16px;">🎉</div>
+      <h3 style="font-size:1.4rem;margin-bottom:10px;color:#00d4aa;">You're almost there!</h3>
+      <p style="color:var(--text-muted);margin-bottom:10px;font-size:0.9rem;">Complete your payment in the tab that just opened.</p>
+      <p style="color:var(--text-muted);font-size:0.9rem;">We'll email you within the hour. Just send us your CSV export from Booksy and we'll have your sequences live within <strong style="color:var(--text);">24 hours</strong>.</p>
+    </div>
+
+    <script>
+    const STRIPE_URL = 'https://buy.stripe.com/fZu28qeQOehp8v73vfa3u02';
+    const GAS_URL = 'https://script.google.com/macros/s/AKfycbzEVM8f9pBVphARJywbtomSsQLTaGldysZLK2tSWlvDNSsJIFmW39OgWAbu6a5nwcuO/exec';
+
+    function handleGetStarted() {
+      document.getElementById('sf-warning').style.display = 'none';
+      const biz      = document.getElementById('sf-biz').value.trim();
+      const name     = document.getElementById('sf-name').value.trim();
+      const email    = document.getElementById('sf-email').value.trim();
+      const phone    = document.getElementById('sf-phone').value.trim();
+      const type     = document.getElementById('sf-type').value;
+      const platform = document.getElementById('sf-platform').value;
+      const city     = document.getElementById('sf-city').value.trim();
+      const emailOk  = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      if (!biz || !name || !email || !phone || !type || !platform || !city || !emailOk) {
+        const w = document.getElementById('sf-warning');
+        w.textContent = !emailOk && email ? 'Please enter a valid email address.' : 'Please fill in all required fields (marked *).';
+        w.style.display = 'block';
+        document.querySelector('.pricing-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+      window.open(STRIPE_URL, '_blank');
+      document.getElementById('confirm-panel').style.display = 'block';
+      document.getElementById('confirm-panel').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (GAS_URL) {
+        fetch(GAS_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify({ biz, name, email, phone, type, city, platform, fee: 39, date: new Date().toLocaleDateString('en-GB') })
+        }).catch(() => {});
+      }
+    }
+    </script>
+  </div>
+</section>
+
+<!-- GUARANTEE -->
+<section class="section">
+  <div class="container">
+    <div class="section-label" style="display:block;text-align:center;margin-bottom:32px;">Guarantee</div>
+    <div class="guarantee-box">
+      <div class="guarantee-icon">🛡️</div>
+      <h2>Cancel Anytime</h2>
+      <p>Not getting results? Cancel anytime with one email to phillipsautomates@gmail.com. No contracts, no lock-in, no awkward conversations. We'll cancel the same day.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section alt">
+  <div class="container">
+    <div class="section-label">Questions</div>
+    <h2>Things people usually ask.</h2>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <div class="faq-q">Do my clients have to download an app or sign up for anything?<span class="faq-icon">+</span></div>
+        <div class="faq-a">No — they just receive a text message on their normal phone. No app, no account, no login. It works exactly like getting a text from a friend. One tap to book, one tap to leave a review.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">How do you get my client list?<span class="faq-icon">+</span></div>
+        <div class="faq-a">You export it from Booksy, Fresha, or wherever you manage your bookings. It's a CSV download — usually takes about 30 seconds. You send it to us, we set everything up. After that, you just send us an updated CSV whenever you want us to refresh the data (weekly or monthly is typical).</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Is this legal? Do I need client consent to text them?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Yes, fully legal — and we handle the compliance side. Under UK PECR rules, you can contact existing clients by SMS as part of a "soft opt-in" if they've previously bought from you and you give them an easy way to opt out. Every message we send includes a STOP reply option. Anyone who replies STOP is immediately removed and never contacted again.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What if a client replies to the text?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Replies come through to us and we forward any important ones to you. If someone replies STOP, they're removed automatically. If they reply with a question, we'll let you know so you can follow up directly.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">How many messages do clients get? Will it feel spammy?<span class="faq-icon">+</span></div>
+        <div class="faq-a">We're careful about this. No client gets more than one message per sequence, and sequences are spaced well apart. A typical client might get a lapsed message at 6 weeks, a review request after their next visit, and a slot-fill text if they fit the criteria — and only if they haven't rebooked themselves. It's designed to feel helpful, not pushy.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Does it replace Booksy or my booking tool?<span class="faq-icon">+</span></div>
+        <div class="faq-a">No — it works alongside it. Your clients still book through Booksy (or wherever). We just add the automated follow-up layer that Booksy doesn't have. Think of it as the retention piece that plugs into whatever you're already using.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What if my prices or messages need changing?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Just email phillipsautomates@gmail.com and we'll update your messages within 24 hours. Included in your plan — no extra charge.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="section" style="text-align:center;">
+  <div class="container">
+    <h2>Start filling your quiet days — automatically.</h2>
+    <p class="muted" style="margin-top:14px;margin-bottom:36px;max-width:480px;margin-left:auto;margin-right:auto;">Send us your CSV. We'll have your sequences live in 24 hours. Then just watch the bookings come in.</p>
+    <button class="btn-primary" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">Get Started — £39/mo ›</button>
+    <p style="margin-top:16px;font-size:0.82rem;color:var(--text-muted);">£39/month &nbsp;·&nbsp; Cancel anytime &nbsp;·&nbsp; No contracts</p>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Phillips Automates &nbsp;|&nbsp; <a href="mailto:phillipsautomates@gmail.com">phillipsautomates@gmail.com</a></p>
+  <p style="margin-top:8px;font-size:0.78rem;">UK-based &nbsp;·&nbsp; Built for hair, beauty &amp; barbering &nbsp;·&nbsp; Works with Booksy, Fresha &amp; Treatwell</p>
+  <p style="margin-top:10px;font-size:0.75rem;"><a href="privacy.html">Privacy Policy</a></p>
+</footer>
+
+<div class="mobile-cta-bar">
+  <button onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">Get Started — £39/mo ›</button>
+</div>
+
+<script>
+  document.querySelectorAll('.faq-q').forEach(function(q) {
+    q.addEventListener('click', function() {
+      var item = this.closest('.faq-item');
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(function(el) { el.classList.remove('open'); });
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+</script>
+</body>
+</html>

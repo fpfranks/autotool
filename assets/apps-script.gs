@@ -55,8 +55,8 @@ function getSheet() {
     sheet = ss.insertSheet(SHEET_NAME);
     sheet.appendRow([
       'ID','Business','Owner','Email','Phone','Type','City',
-      'Biz Phone','Booking URL','Hours','Services',
-      'Website','Voice','Status','Fee','Date'
+      'Platform','Client Count','Booking URL','Review Link',
+      'Quiet Days','Tone','Website','Status','Fee','Date'
     ]);
     sheet.setFrozenRows(1);
   }
@@ -120,20 +120,21 @@ function doPost(e) {
     const sheet = getSheet();
     sheet.appendRow([
       String(Date.now()),
-      data.biz      || '',
-      data.name     || '',
-      data.email    || '',
-      data.phone    || '',
-      data.type     || '',
-      data.city     || '',
-      data.bizPhone || '',
-      data.booking  || '',
-      data.hours    || '',
-      data.services || '',
-      data.website  || '',
-      data.voice    || 'female',
+      data.biz         || '',
+      data.name        || '',
+      data.email       || '',
+      data.phone       || '',
+      data.type        || '',
+      data.city        || '',
+      data.platform    || '',
+      data.clientcount || '',
+      data.booking     || '',
+      data.reviewlink  || '',
+      data.quietdays   || '',
+      data.tone        || 'friendly',
+      data.website     || '',
       'pending',
-      data.fee      || 197,
+      data.fee         || 39,
       new Date().toLocaleDateString('en-GB')
     ]);
 
@@ -149,13 +150,13 @@ function doPost(e) {
             'Hi ' + (data.name || 'there') + ',\n\n' +
             'Thanks for signing up to Phillips Automates!\n\n' +
             'We\'ve received your details and once your payment is confirmed ' +
-            'you\'ll hear from me within the hour.\n\n' +
-            'All I\'ll need from you is:\n' +
-            '  1. Your opening hours\n' +
-            '  2. Your services and prices\n' +
-            '  3. Your booking link (if you have one — no worries if not)\n\n' +
-            'Just reply to that email and I\'ll build your AI receptionist and ' +
-            'have it live within 24 hours.\n\n' +
+            'you\'ll be hearing from us within the hour to get your SMS sequences set up.\n\n' +
+            'To get started quickly, it helps to have:\n' +
+            '  1. A CSV export of your client list from ' + (data.platform || 'your booking platform') + '\n' +
+            '  2. Your booking link (so we can include it in messages)\n' +
+            '  3. Your Google review link (for the review request sequence)\n\n' +
+            'Just reply to the welcome email we send and we\'ll take it from there — ' +
+            'your sequences will be live within 24 hours.\n\n' +
             'Any questions in the meantime, just reply to this email.\n\n' +
             'Speak soon,\n' +
             'Phillips Automates\n' +
@@ -166,23 +167,23 @@ function doPost(e) {
       }
     }
 
-    // ── ALERT TO FRANKIE ──
+    // ── ALERT TO YOU ──
     try {
       MailApp.sendEmail({
         to: NOTIFY_EMAIL,
         subject: '🔔 New Sign-Up: ' + (data.biz || 'Unknown Business'),
         body:
           '🔔 NEW SIGN-UP — check Stripe to confirm payment\n\n' +
-          'Business:  ' + (data.biz      || '—') + '\n' +
-          'Owner:     ' + (data.name     || '—') + '\n' +
-          'Email:     ' + (data.email    || '—') + '\n' +
-          'Mobile:    ' + (data.phone    || '—') + '\n' +
-          'Biz Phone: ' + (data.bizPhone || '—') + '\n' +
-          'Type:      ' + (data.type     || '—') + '\n' +
-          'City:      ' + (data.city     || '—') + '\n' +
-          'Voice:     ' + (data.voice    || 'female') + '\n' +
-          'Website:   ' + (data.website  || '—') + '\n' +
-          'Fee:       £' + (data.fee     || 197) + '/mo\n\n' +
+          'Business:  ' + (data.biz         || '—') + '\n' +
+          'Owner:     ' + (data.name        || '—') + '\n' +
+          'Email:     ' + (data.email       || '—') + '\n' +
+          'Mobile:    ' + (data.phone       || '—') + '\n' +
+          'Type:      ' + (data.type        || '—') + '\n' +
+          'City:      ' + (data.city        || '—') + '\n' +
+          'Platform:  ' + (data.platform    || '—') + '\n' +
+          'Clients:   ' + (data.clientcount || '—') + '\n' +
+          'Website:   ' + (data.website     || '—') + '\n' +
+          'Fee:       £' + (data.fee        || 39) + '/mo\n\n' +
           '✅ Holding email already sent to client automatically.\n' +
           '📋 Next: confirm payment in Stripe, then send welcome email.\n\n' +
           'Dashboard → ' + DASHBOARD_URL
@@ -214,23 +215,24 @@ function doGet(e) {
       const r = {};
       headers.forEach((h, i) => { r[h] = row[i]; });
       return {
-        id:       String(r['ID']),
-        biz:      r['Business']    || '',
-        name:     r['Owner']       || '',
-        email:    r['Email']       || '',
-        phone:    r['Phone']       || '',
-        type:     r['Type']        || '',
-        city:     r['City']        || '',
-        bizPhone: r['Biz Phone']   || '',
-        booking:  r['Booking URL'] || '',
-        hours:    r['Hours']       || '',
-        services: r['Services']    || '',
-        website:  r['Website']     || '',
-        voice:    r['Voice']       || 'female',
-        status:   r['Status']      || 'pending',
-        fee:      r['Fee']         || 197,
-        date:     r['Date']        || '',
-        fromSheet: true
+        id:          String(r['ID']),
+        biz:         r['Business']     || '',
+        name:        r['Owner']        || '',
+        email:       r['Email']        || '',
+        phone:       r['Phone']        || '',
+        type:        r['Type']         || '',
+        city:        r['City']         || '',
+        platform:    r['Platform']     || '',
+        clientcount: r['Client Count'] || '',
+        booking:     r['Booking URL']  || '',
+        reviewlink:  r['Review Link']  || '',
+        quietdays:   r['Quiet Days']   || '',
+        tone:        r['Tone']         || 'friendly',
+        website:     r['Website']      || '',
+        status:      r['Status']       || 'pending',
+        fee:         r['Fee']          || 39,
+        date:        r['Date']         || '',
+        fromSheet:   true
       };
     });
     return ContentService
@@ -271,7 +273,7 @@ function dailyDigest() {
   const welcomed = customers.filter(c => c['Status'] === 'welcomed');
   const building = customers.filter(c => c['Status'] === 'info-received');
   const active   = customers.filter(c => c['Status'] === 'active');
-  const revenue  = active.reduce((s, c) => s + (parseFloat(c['Fee']) || 197), 0);
+  const revenue  = active.reduce((s, c) => s + (parseFloat(c['Fee']) || 39), 0);
 
   // Only send if there's something to action
   if (pending.length === 0 && welcomed.length === 0 && building.length === 0) return;
@@ -285,8 +287,8 @@ function dailyDigest() {
     body:
       'Good morning! Here\'s your pipeline for today:\n\n' +
       '🔴 SEND WELCOME EMAIL (' + pending.length + '):\n' + fmt(pending) + '\n\n' +
-      '🟡 AWAITING INFO REPLY (' + welcomed.length + '):\n' + fmt(welcomed) + '\n\n' +
-      '🔵 BUILD VAPI — INFO RECEIVED (' + building.length + '):\n' + fmt(building) + '\n\n' +
+      '🟡 AWAITING CSV FROM CLIENT (' + welcomed.length + '):\n' + fmt(welcomed) + '\n\n' +
+      '🔵 SET UP SMS SEQUENCES (' + building.length + '):\n' + fmt(building) + '\n\n' +
       '✅ ACTIVE CLIENTS: ' + active.length + '  |  Monthly revenue: £' + revenue + '\n\n' +
       'Dashboard → ' + DASHBOARD_URL
   });

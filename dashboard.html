@@ -222,10 +222,10 @@
       </div>
     </div>
     <div class="grid-4">
-      <div class="stat"><div class="stat-label">Active Clients</div><div class="stat-value green" id="s-active">0</div><div class="stat-sub">paying £197/mo</div></div>
+      <div class="stat"><div class="stat-label">Active Clients</div><div class="stat-value green" id="s-active">0</div><div class="stat-sub">paying £39/mo</div></div>
       <div class="stat"><div class="stat-label">Monthly Revenue</div><div class="stat-value purple" id="s-revenue">£0</div><div class="stat-sub">recurring</div></div>
       <div class="stat"><div class="stat-label">Monthly Profit</div><div class="stat-value green" id="s-profit">£0</div><div class="stat-sub" id="s-profit-sub">after costs</div></div>
-      <div class="stat"><div class="stat-label">Emails to Action</div><div class="stat-value orange" id="s-email-action">0</div><div class="stat-sub" id="s-email-sub">all up to date</div></div>
+      <div class="stat"><div class="stat-label">Actions Needed</div><div class="stat-value orange" id="s-email-action">0</div><div class="stat-sub" id="s-email-sub">all up to date</div></div>
     </div>
     <div class="grid-2" style="margin-top:14px">
       <div class="card">
@@ -270,141 +270,140 @@
         <button class="btn btn-ghost btn-sm" onclick="closeCustomerForm()">Cancel</button>
       </div>
       <div class="form-row">
-        <div class="form-group"><label class="form-label">Business Name *</label><input class="form-input" id="c-biz" placeholder="Pete's Plumbing"/></div>
-        <div class="form-group"><label class="form-label">Owner Name</label><input class="form-input" id="c-name" placeholder="Pete Smith"/></div>
+        <div class="form-group"><label class="form-label">Business Name *</label><input class="form-input" id="c-biz" placeholder="Fade Republic"/></div>
+        <div class="form-group"><label class="form-label">Owner Name</label><input class="form-input" id="c-name" placeholder="Jordan Smith"/></div>
       </div>
       <div class="form-row">
-        <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="c-email" placeholder="pete@petes-plumbing.co.uk" type="email"/></div>
-        <div class="form-group"><label class="form-label">Owner Mobile (for booking alert texts)</label><input class="form-input" id="c-phone" placeholder="07700 900000"/></div>
+        <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="c-email" placeholder="jordan@faderepublic.co.uk" type="email"/></div>
+        <div class="form-group"><label class="form-label">Owner Mobile</label><input class="form-input" id="c-phone" placeholder="07700 900000"/></div>
       </div>
       <div class="form-row">
-        <div class="form-group"><label class="form-label">Business Type / Industry</label><input class="form-input" id="c-type" placeholder="Plumbing &amp; heating engineer"/></div>
+        <div class="form-group">
+          <label class="form-label">Business Type</label>
+          <select class="form-select" id="c-type">
+            <option value="">Select...</option>
+            <option value="Barber">✂️ Barber Shop</option>
+            <option value="Hair salon">💇 Hair Salon</option>
+            <option value="Beauty salon">💅 Beauty Salon</option>
+            <option value="Nail salon">💅 Nail Salon</option>
+            <option value="Lash & brow">👁️ Lash &amp; Brow</option>
+            <option value="Tattoo studio">🎨 Tattoo Studio</option>
+            <option value="Spa">🧖 Spa / Massage</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
         <div class="form-group"><label class="form-label">City</label><input class="form-input" id="c-city" placeholder="Manchester"/></div>
       </div>
-      <div style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.5px;margin:14px 0 10px;">Voice Receptionist Details</div>
-      <div class="form-row">
-        <div class="form-group"><label class="form-label">📞 Business Phone Number (AI answers this)</label><input class="form-input" id="c-bizphone" placeholder="01234 567890"/></div>
-        <div class="form-group"><label class="form-label">📅 Booking / Calendar URL</label><input class="form-input" id="c-booking" placeholder="Fresha, Booksy, Calendly link" type="url"/></div>
-      </div>
+      <div style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.5px;margin:14px 0 10px;">📋 Retention Setup</div>
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label">🎙️ AI Voice</label>
-          <select class="form-select" id="c-voice">
-            <option value="female">Female</option>
-            <option value="male">Male</option>
+          <label class="form-label">Booking Platform</label>
+          <select class="form-select" id="c-platform">
+            <option value="">Select...</option>
+            <option value="Booksy">Booksy</option>
+            <option value="Fresha">Fresha</option>
+            <option value="Treatwell">Treatwell</option>
+            <option value="Square">Square Appointments</option>
+            <option value="Vagaro">Vagaro</option>
+            <option value="Spreadsheet">Spreadsheet</option>
+            <option value="Other">Other</option>
           </select>
         </div>
-        <div class="form-group">
-          <label class="form-label">📡 Client's Network <span style="font-weight:400;color:var(--muted)">(for forwarding codes)</span></label>
-          <select class="form-select" id="c-network">
-            <option value="">Unknown / Ask client</option>
-            <option value="ee">EE</option>
-            <option value="o2">O2</option>
-            <option value="vodafone">Vodafone</option>
-            <option value="three">Three / iD Mobile</option>
-            <option value="sky">Sky / giffgaff / Talkmobile</option>
-            <option value="landline">Landline / VoIP</option>
-          </select>
+        <div class="form-group"><label class="form-label">Approx. Number of Clients</label><input class="form-input" id="c-clientcount" placeholder="e.g. 150"/></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">📅 Booking Link (sent in SMS)</label><input class="form-input" id="c-booking" placeholder="Booksy / Fresha profile URL" type="url"/></div>
+        <div class="form-group"><label class="form-label">⭐ Google Review Link</label><input class="form-input" id="c-reviewlink" placeholder="g.page/r/... shortlink" type="url"/></div>
+      </div>
+      <div class="form-group"><label class="form-label">🗓️ Quiet Days / Slow Slots <span style="font-weight:400;color:var(--muted)">(for slot-fill SMS)</span></label><input class="form-input" id="c-quietdays" placeholder="e.g. Monday all day, Tuesday before 12pm"/></div>
+      <div class="form-group">
+        <label class="form-label">💬 Message Tone</label>
+        <select class="form-select" id="c-tone">
+          <option value="friendly">Friendly &amp; casual (most popular)</option>
+          <option value="professional">Professional</option>
+          <option value="fun">Fun &amp; upbeat</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">📝 Notes</label><textarea class="form-textarea" id="c-notes" placeholder="Anything else — specific services to mention, things to avoid, seasonal promos..." style="min-height:60px;"></textarea></div>
+      <div class="form-group"><label class="form-label">🌐 Website URL</label>
+        <div style="display:flex;gap:8px;">
+          <input class="form-input" id="c-website" placeholder="https://faderepublic.co.uk" type="url" style="flex:1"/>
+          <button type="button" class="btn btn-ghost" id="scrape-btn" onclick="scrapeWebsite()" style="white-space:nowrap;flex-shrink:0;">🔍 Scrape</button>
         </div>
+        <div id="scrape-status" style="font-size:11px;color:var(--muted);margin-top:5px;display:none;"></div>
       </div>
-      <div class="form-group"><label class="form-label">🕐 Opening Hours</label><textarea class="form-textarea" id="c-hours" placeholder="e.g. Mon-Fri 8am-6pm, Sat 9am-1pm, Sunday Closed" style="min-height:60px;"></textarea></div>
-      <div class="form-group"><label class="form-label">💷 Services &amp; Pricing</label><textarea class="form-textarea" id="c-services" placeholder="List all services and prices — e.g. Tap repair £65, Boiler service £85, Emergency call-out from £120"></textarea></div>
-      <div style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.5px;margin:14px 0 10px;">Location &amp; Coverage</div>
-      <div class="form-row">
-        <div class="form-group"><label class="form-label">📍 Business Address <span style="font-weight:400;color:var(--muted)">(callers who ask "where are you?")</span></label><input class="form-input" id="c-address" placeholder="e.g. 12 High Street, Manchester, M1 1AA"/></div>
-        <div class="form-group"><label class="form-label">🗺️ Service Area / Postcodes <span style="font-weight:400;color:var(--muted)">(trades esp.)</span></label><input class="form-input" id="c-area" placeholder="e.g. All of Greater Manchester — M, SK, OL, BL postcodes"/></div>
-      </div>
-      <div style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.5px;margin:14px 0 10px;">Policies &amp; Practicalities</div>
-      <div class="form-row">
-        <div class="form-group"><label class="form-label">💳 Payment Methods Accepted</label><input class="form-input" id="c-payment" placeholder="e.g. Cash, card, bank transfer — card preferred"/></div>
-        <div class="form-group"><label class="form-label">⚡ Emergency / Out-of-Hours</label><input class="form-input" id="c-emergency" placeholder="e.g. Emergency call-outs 24/7 — £120 call-out fee applies"/></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label class="form-label">⏱️ Response / Turnaround Time</label><input class="form-input" id="c-response" placeholder="e.g. Same-day emergencies, 2–3 days routine jobs"/></div>
-        <div class="form-group"><label class="form-label">🌐 Website URL</label>
-          <div style="display:flex;gap:8px;">
-            <input class="form-input" id="c-website" placeholder="https://yourbusiness.co.uk" type="url" style="flex:1"/>
-            <button type="button" class="btn btn-ghost" id="scrape-btn" onclick="scrapeWebsite()" style="white-space:nowrap;flex-shrink:0;">🔍 Scrape</button>
-          </div>
-          <div id="scrape-status" style="font-size:11px;color:var(--muted);margin-top:5px;display:none;"></div>
-        </div>
-      </div>
-      <div class="form-group"><label class="form-label">❓ Common FAQs <span style="font-weight:400;color:var(--muted)">(one per line: Q: ... / A: ...)</span></label><textarea class="form-textarea" id="c-faq" placeholder="Q: Do you guarantee your work?&#10;A: Yes — all work guaranteed for 12 months.&#10;&#10;Q: Do you charge a call-out fee?&#10;A: No call-out charge for jobs within our area." style="min-height:90px;"></textarea></div>
-      <div class="form-group"><label class="form-label">📝 Additional Notes <span style="font-weight:400;color:var(--muted)">(anything else the AI should know)</span></label><textarea class="form-textarea" id="c-notes" placeholder="Parking info, staff names, anything a caller might ask not covered above..." style="min-height:55px;"></textarea></div>
       <div class="form-row">
         <div class="form-group">
           <label class="form-label">Status</label>
           <select class="form-select" id="c-status">
-            <option value="pending">Pending ⏳</option>
-            <option value="welcomed">Welcomed 📧</option>
-            <option value="info-received">Info Received 📋</option>
+            <option value="pending">New Lead 🟡</option>
+            <option value="welcomed">Onboarding 🟣</option>
+            <option value="info-received">CSV Received 🔵</option>
             <option value="active">Active ✅</option>
             <option value="inactive">Inactive ❌</option>
           </select>
         </div>
-        <div class="form-group"><label class="form-label">Monthly Fee (£)</label><input class="form-input" id="c-fee" value="197" type="number"/></div>
+        <div class="form-group"><label class="form-label">Monthly Fee (£)</label><input class="form-input" id="c-fee" value="39" type="number"/></div>
       </div>
       <button class="btn btn-green" id="c-save-btn" onclick="saveCustomer()">Save Customer</button>
     </div>
     <div class="pipeline" id="pipeline-board">
 
       <div class="pipe-col">
-        <div class="pipe-col-head" style="color:var(--warn)">🔴 New Sign-ups <span id="pipe-count-new" style="background:rgba(255,179,71,0.2);padding:1px 7px;border-radius:8px;">0</span></div>
+        <div class="pipe-col-head" style="color:var(--warn)">🟡 New Lead <span id="pipe-count-new" style="background:rgba(255,179,71,0.2);padding:1px 7px;border-radius:8px;">0</span></div>
         <div style="padding:10px 10px 0;border-bottom:1px solid var(--border);margin-bottom:8px;">
           <div style="font-size:10px;font-weight:700;color:var(--warn);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Your action</div>
           <ol style="font-size:11px;color:var(--muted);line-height:1.9;padding-left:16px;margin:0 0 8px;">
             <li>Check Stripe — confirm payment received</li>
-            <li>Click <strong style="color:var(--text)">👁 View → 📧 Emails</strong> and send the Welcome email</li>
-            <li>Scrape their website if they have one (auto-fills hours + services)</li>
+            <li>Send the <strong style="color:var(--text)">Welcome email</strong> — asks for their CSV + platform details</li>
+            <li>Move to Onboarding once email is sent</li>
           </ol>
-          <div style="font-size:10px;color:var(--muted);padding:7px 9px;background:rgba(255,179,71,0.06);border-radius:6px;margin-bottom:10px;line-height:1.7;">⏱ Aim: welcome email sent within <strong style="color:var(--warn);">1 hour</strong> of sign-up. Speed = trust.</div>
+          <div style="font-size:10px;color:var(--muted);padding:7px 9px;background:rgba(255,179,71,0.06);border-radius:6px;margin-bottom:10px;line-height:1.7;">⏱ Aim: welcome email within <strong style="color:var(--warn);">1 hour</strong> of sign-up. Speed builds trust.</div>
         </div>
         <div class="pipe-col-body" id="pipe-new"></div>
       </div>
 
       <div class="pipe-col">
-        <div class="pipe-col-head" style="color:var(--accent)">🟣 Awaiting Reply <span id="pipe-count-welcomed" style="background:rgba(108,99,255,0.2);padding:1px 7px;border-radius:8px;">0</span></div>
+        <div class="pipe-col-head" style="color:var(--accent)">🟣 Onboarding <span id="pipe-count-welcomed" style="background:rgba(108,99,255,0.2);padding:1px 7px;border-radius:8px;">0</span></div>
         <div style="padding:10px 10px 0;border-bottom:1px solid var(--border);margin-bottom:8px;">
           <div style="font-size:10px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Waiting on client</div>
           <ol style="font-size:11px;color:var(--muted);line-height:1.9;padding-left:16px;margin:0 0 8px;">
-            <li>Client replies with their business info</li>
-            <li>If 48 hrs pass with no reply — send the Nudge</li>
-            <li>Once info arrives — click <strong style="color:var(--text)">📋 Info In</strong></li>
+            <li>Client exports CSV from Booksy/Fresha and sends it over</li>
+            <li>If 48hrs pass with no CSV — send the Nudge email</li>
+            <li>Once CSV arrives — click <strong style="color:var(--text)">📋 CSV In</strong></li>
           </ol>
-          <div style="font-size:10px;color:var(--muted);padding:7px 9px;background:rgba(108,99,255,0.06);border-radius:6px;margin-bottom:10px;line-height:1.7;">💡 While you wait: scrape their website now so their VAPI script is ready to go the moment they reply.</div>
+          <div style="font-size:10px;color:var(--muted);padding:7px 9px;background:rgba(108,99,255,0.06);border-radius:6px;margin-bottom:10px;line-height:1.7;">💡 While waiting: check their Booksy/Google profile, note their quiet days, draft their SMS templates.</div>
         </div>
         <div class="pipe-col-body" id="pipe-welcomed"></div>
       </div>
 
       <div class="pipe-col">
-        <div class="pipe-col-head" style="color:#64b4ff">🔵 Building <span id="pipe-count-setup" style="background:rgba(100,180,255,0.2);padding:1px 7px;border-radius:8px;">0</span></div>
+        <div class="pipe-col-head" style="color:#64b4ff">🔵 Setting Up <span id="pipe-count-setup" style="background:rgba(100,180,255,0.2);padding:1px 7px;border-radius:8px;">0</span></div>
         <div style="padding:10px 10px 0;border-bottom:1px solid var(--border);margin-bottom:8px;">
           <div style="font-size:10px;font-weight:700;color:#64b4ff;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Your action</div>
           <ol style="font-size:11px;color:var(--muted);line-height:1.9;padding-left:16px;margin:0 0 8px;">
-            <li>Click <strong style="color:var(--text)">🤖 VAPI</strong> — copy the system prompt</li>
-            <li>Create assistant on vapi.ai — paste prompt, set voice</li>
-            <li>Buy a VAPI phone number: vapi.ai → Phone Numbers → Buy Number</li>
-            <li>Connect the number to your assistant in VAPI dashboard</li>
-            <li>Test: call the VAPI number yourself first</li>
-            <li>Send <strong style="color:var(--text)">📋 Forwarding Guide</strong> to client via WhatsApp/text</li>
-            <li>Click <strong style="color:var(--text)">🚀 Go Live</strong> — sends the live email</li>
+            <li>Open their CSV — review client list &amp; last visit dates</li>
+            <li>Use <strong style="color:var(--text)">📱 SMS Templates</strong> to generate their sequences</li>
+            <li>Configure lapsed, slot-fill &amp; review messages in Twilio/your SMS tool</li>
+            <li>Send them a test SMS so they can approve the tone</li>
+            <li>Click <strong style="color:var(--text)">🚀 Go Live</strong> once approved</li>
           </ol>
-          <div style="font-size:10px;color:var(--muted);padding:7px 9px;background:rgba(100,180,255,0.06);border-radius:6px;margin-bottom:10px;line-height:1.7;">⏱ Aim: built and live within <strong style="color:#64b4ff;">24 hrs</strong> of receiving their info. Fast delivery = 5-star reviews.</div>
+          <div style="font-size:10px;color:var(--muted);padding:7px 9px;background:rgba(100,180,255,0.06);border-radius:6px;margin-bottom:10px;line-height:1.7;">⏱ Aim: sequences live within <strong style="color:#64b4ff;">24 hrs</strong> of receiving the CSV.</div>
         </div>
         <div class="pipe-col-body" id="pipe-setup"></div>
       </div>
 
       <div class="pipe-col">
-        <div class="pipe-col-head" style="color:var(--green)">✅ Live <span id="pipe-count-live" style="background:rgba(0,212,170,0.15);padding:1px 7px;border-radius:8px;">0</span></div>
+        <div class="pipe-col-head" style="color:var(--green)">✅ Active <span id="pipe-count-live" style="background:rgba(0,212,170,0.15);padding:1px 7px;border-radius:8px;">0</span></div>
         <div style="padding:10px 10px 0;border-bottom:1px solid var(--border);margin-bottom:8px;">
           <div style="font-size:10px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Keep &amp; grow</div>
           <ol style="font-size:11px;color:var(--muted);line-height:1.9;padding-left:16px;margin:0 0 8px;">
-            <li>Confirm forwarding is active — call their business number</li>
-            <li>WhatsApp them: <em>"How's it going? Any feedback?"</em></li>
-            <li>After 2 weeks — ask for a Google / Trustpilot review</li>
-            <li>After 30 days — check in for retention + upsell</li>
+            <li>Sequences are running — check SMS delivery reports weekly</li>
+            <li>After 2 weeks: WhatsApp client — <em>"How's it going? Getting bookings?"</em></li>
+            <li>After 30 days: ask for a Google review from them</li>
+            <li>Monthly: remind them to send an updated CSV</li>
           </ol>
-          <div style="font-size:10px;color:var(--muted);padding:7px 9px;background:rgba(0,212,170,0.06);border-radius:6px;margin-bottom:10px;line-height:1.7;">💰 Each active client = £197/mo recurring. Keep them happy and they'll refer others. When finished, click <strong style="color:var(--green);">⭐ Complete</strong> to archive.</div>
+          <div style="font-size:10px;color:var(--muted);padding:7px 9px;background:rgba(0,212,170,0.06);border-radius:6px;margin-bottom:10px;line-height:1.7;">💰 Each active client = £39/mo recurring. Keep them happy and they'll refer other barbers/salons. Click <strong style="color:var(--green);">⭐ Complete</strong> to archive when finished.</div>
         </div>
         <div class="pipe-col-body" id="pipe-live"></div>
       </div>
@@ -441,7 +440,7 @@
   <!-- VOICE SETUP -->
   <div id="page-workflows" class="page">
     <div class="page-header flex-between">
-      <div><h1>Voice Setup</h1><p>Track setup progress for each client's AI receptionist</p></div>
+      <div><h1>SMS Setup</h1><p>Track setup progress for each client's SMS sequences</p></div>
       <button class="btn btn-primary" onclick="openWfForm()">+ Add Client Setup</button>
     </div>
 
@@ -500,9 +499,9 @@
         <div class="form-group"><label class="form-label">Notes</label><input class="form-input" id="wf-notes" placeholder="Any setup notes..."/></div>
       </div>
       <div class="form-group" style="background:rgba(0,212,170,0.06);border:1px solid rgba(0,212,170,0.2);border-radius:8px;padding:12px;">
-        <label class="form-label" style="color:var(--green);">🤖 VAPI Phone Number (buy at vapi.ai → Phone Numbers)</label>
-        <input class="form-input" id="wf-twilio" placeholder="e.g. 01234 567890 — enter after buying in VAPI dashboard"/>
-        <div style="font-size:11px;color:var(--muted);margin-top:6px;">Buy this number directly in VAPI (no Twilio needed). Client forwards their calls to this number. Added to the live email automatically.</div>
+        <label class="form-label" style="color:var(--green);">📱 Twilio Sending Number</label>
+        <input class="form-input" id="wf-twilio" placeholder="e.g. +441234567890 — your Twilio number for this client"/>
+        <div style="font-size:11px;color:var(--muted);margin-top:6px;">The Twilio number SMS sequences send from for this client. Add after setting up in Twilio console.</div>
       </div>
       <button class="btn btn-green" onclick="saveWorkflow()">Save Client Setup</button>
     </div>
@@ -518,7 +517,7 @@
         <select class="form-select" id="todo-cat" style="width:150px">
           <option value="Setup">Setup</option>
           <option value="Client">Client</option>
-          <option value="VAPI">VAPI</option>
+          <option value="Demo">Demo</option>
           <option value="Outreach">Outreach</option>
           <option value="General">General</option>
         </select>
@@ -526,7 +525,7 @@
       </div>
     </div>
     <div class="section-title">Setup</div><div id="todo-Setup"></div>
-    <div class="section-title">VAPI</div><div id="todo-VAPI"></div>
+    <div class="section-title">Demo</div><div id="todo-Demo"></div>
     <div class="section-title">Outreach</div><div id="todo-Outreach"></div>
     <div class="section-title">Client</div><div id="todo-Client"></div>
     <div class="section-title">General</div><div id="todo-General"></div>
@@ -547,25 +546,25 @@
       <div class="card-title">Cost Per Client (edit to match your actual usage)</div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px;">
         <div>
-          <label class="form-label">VAPI call costs /mo (£)</label>
-          <input class="form-input" id="cost-vapi" type="number" value="30" min="0" oninput="renderRevenue()"/>
-          <div style="font-size:10px;color:var(--muted);margin-top:4px;">~500 mins × £0.06/min avg</div>
+          <label class="form-label">Twilio SMS costs /mo (£)</label>
+          <input class="form-input" id="cost-vapi" type="number" value="3" min="0" oninput="renderRevenue()"/>
+          <div style="font-size:10px;color:var(--muted);margin-top:4px;">~£0.04/SMS × ~75 msgs/client</div>
         </div>
         <div>
-          <label class="form-label">Telnyx number /mo (£)</label>
+          <label class="form-label">Twilio number /mo (£)</label>
           <input class="form-input" id="cost-telnyx" type="number" value="1" min="0" oninput="renderRevenue()"/>
-          <div style="font-size:10px;color:var(--muted);margin-top:4px;">~$1.25/mo per UK number</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:4px;">~$1/mo per UK number</div>
         </div>
         <div>
           <label class="form-label">Other costs /mo (£)</label>
-          <input class="form-input" id="cost-other" type="number" value="5" min="0" oninput="renderRevenue()"/>
+          <input class="form-input" id="cost-other" type="number" value="2" min="0" oninput="renderRevenue()"/>
           <div style="font-size:10px;color:var(--muted);margin-top:4px;">tools, misc per client</div>
         </div>
       </div>
       <div style="background:var(--surface2);border-radius:8px;padding:12px;display:flex;gap:24px;flex-wrap:wrap;font-size:12px;">
-        <div>💰 Fee per client: <strong style="color:var(--green)">£197/mo</strong></div>
-        <div>📉 Cost per client: <strong style="color:var(--warn)" id="r-per-cost">£36</strong></div>
-        <div>✅ Profit per client: <strong style="color:var(--green)" id="r-per-profit">£161</strong></div>
+        <div>💰 Fee per client: <strong style="color:var(--green)">£39/mo</strong></div>
+        <div>📉 Cost per client: <strong style="color:var(--warn)" id="r-per-cost">£6</strong></div>
+        <div>✅ Profit per client: <strong style="color:var(--green)" id="r-per-profit">£33</strong></div>
         <div>📊 Margin: <strong style="color:var(--green)" id="r-per-margin">82%</strong></div>
       </div>
     </div>
@@ -575,7 +574,7 @@
       <div class="card-title">Active Client Breakdown</div>
       <div style="overflow-x:auto;">
         <table class="table">
-          <thead><tr><th>Business</th><th>Fee</th><th>VAPI</th><th>Telnyx</th><th>Other</th><th>Total Cost</th><th>Profit</th></tr></thead>
+          <thead><tr><th>Business</th><th>Fee</th><th>Twilio SMS</th><th>Number</th><th>Other</th><th>Total Cost</th><th>Profit</th></tr></thead>
           <tbody id="revenue-tbody"><tr><td colspan="7" class="empty">No active clients yet.</td></tr></tbody>
         </table>
       </div>
@@ -625,11 +624,11 @@
         </div>
         <div style="background:var(--surface2);border-radius:8px;padding:12px;">
           <div style="font-size:11px;font-weight:700;color:var(--green);margin-bottom:6px;">3 — INFO RECEIVED</div>
-          <div style="font-size:12px;color:var(--muted);line-height:1.6;">Build their AI script in VAPI (~30 mins). Tick off Voice Setup steps. When all done, click <strong style="color:var(--text)">Send Live Email</strong>.</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.6;">CSV received — set up SMS sequences in Twilio, tick off setup steps. When all done, click <strong style="color:var(--text)">Send Live Email</strong>.</div>
         </div>
         <div style="background:var(--surface2);border-radius:8px;padding:12px;">
           <div style="font-size:11px;font-weight:700;color:var(--green);margin-bottom:6px;">4 — LIVE</div>
-          <div style="font-size:12px;color:var(--muted);line-height:1.6;">All done. Client sets up call forwarding (30 seconds). AI answers their calls 24/7. Nothing more needed unless they want updates.</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.6;">All done. SMS sequences are live — lapsed clients, slot fills, and review requests running automatically.</div>
         </div>
       </div>
     </div>
@@ -704,44 +703,39 @@
       <div style="display:flex;flex-direction:column;gap:12px;">
 
         <div style="background:var(--surface2);border-radius:8px;padding:14px;border-left:3px solid var(--accent);">
-          <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px;">"I've seen cheaper options like Moneypenny / Voco"</div>
-          <div style="font-size:12px;color:var(--muted);line-height:1.7;">Those services charge <strong style="color:var(--text)">per minute or per call</strong>. Moneypenny starts at ~£160/mo but requires two subscriptions and charges £2.99/min over their limit. Voco caps calls and charges overages. As you get busier your bill goes up unpredictably. We charge <strong style="color:var(--green)">£197/mo flat</strong> — the more calls we handle, the better value it gets.</div>
+          <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px;">"We already use Booksy / Fresha's built-in reminders"</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.7;">Those only send a reminder <strong style="color:var(--text)">before an existing booking</strong> — they don't reach out to clients who've gone quiet. We specifically target clients who <strong style="color:var(--green)">haven't rebooked in 5, 8, and 12 weeks</strong> — the ones falling off. That's where the money is. Plus we send slot-fill texts when you have cancellations, and automated review requests after every visit.</div>
         </div>
 
         <div style="background:var(--surface2);border-radius:8px;padding:14px;border-left:3px solid var(--accent);">
-          <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px;">"What about Moneypenny's human receptionists?"</div>
-          <div style="font-size:12px;color:var(--muted);line-height:1.7;">Moneypenny uses <strong style="color:var(--text)">real people</strong>, which means they're not available the moment your call comes in — there can be a ring delay, and a human can only handle one call at a time. Our AI <strong style="color:var(--green)">picks up immediately, every time, 24/7</strong>, and already knows your prices and services before the caller says a word.</div>
+          <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px;">"What about Treatwell / Fresha's marketing tools?"</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.7;">Treatwell and Fresha offer generic blast emails to all clients — not targeted sequences based on <strong style="color:var(--text)">how long someone has been absent</strong>. They also take a commission on bookings. We integrate with their CSV export, send personalised SMS, and <strong style="color:var(--green)">you keep 100% of the revenue</strong>. No commission, no per-send charges.</div>
         </div>
 
         <div style="background:var(--surface2);border-radius:8px;padding:14px;border-left:3px solid var(--warn);">
-          <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px;">"I don't want to give up control of my phone"</div>
-          <div style="font-size:12px;color:var(--muted);line-height:1.7;">You keep your existing number. We set up <strong style="color:var(--text)">conditional call forwarding</strong> — the AI only activates when you don't answer. If you pick up, you get the call as normal. The AI is purely a safety net. You can disable it at any time in 30 seconds.</div>
+          <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px;">"I'm worried about GDPR / texting clients"</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.7;">Under UK PECR, you can text existing clients about <strong style="color:var(--text)">similar services</strong> without explicit opt-in — this is the "soft opt-in" rule. Every message includes <strong style="color:var(--green)">STOP to unsubscribe</strong>. We handle this correctly by default. It's the same legal basis Booksy uses for their own reminders.</div>
         </div>
 
         <div style="background:var(--surface2);border-radius:8px;padding:14px;border-left:3px solid var(--warn);">
-          <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px;">"Will it sound robotic / will callers know it's AI?"</div>
-          <div style="font-size:12px;color:var(--muted);line-height:1.7;">We use a natural-sounding AI voice and write the script specifically for their business. We run test calls before going live. Most callers won't know. You can always offer them a <strong style="color:var(--text)">free demo call</strong> to judge for themselves.</div>
+          <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px;">"Won't clients find it annoying?"</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.7;">Messages are sent at sensible times, no more than once every 3–4 weeks per client, and only to those who've actually gone quiet. The tone is personal and warm — not blasted spam. <strong style="color:var(--text)">Most clients forget to rebook</strong>, not that they don't want to. A friendly nudge at the right moment is welcomed, not resented.</div>
         </div>
 
         <div style="background:var(--surface2);border-radius:8px;padding:14px;border-left:3px solid var(--green);">
-          <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px;">"Is it worth £197 a month?"</div>
-          <div style="font-size:12px;color:var(--muted);line-height:1.7;">For most trades, <strong style="color:var(--text)">one extra job per week more than covers it</strong>. A plumbing call-out is ~£300. A garage job is £200–500+. UK trades lose ~£24,000/yr from missed calls. The AI needs to capture roughly one call every 6–7 days to pay for itself — at that point everything else is pure profit.</div>
+          <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px;">"Is £39/month worth it?"</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.7;">If you have 150 clients and recover just <strong style="color:var(--text)">2 lapsed clients per month</strong> at £40 a visit, that's £80/mo back — more than double the cost. Most salons we've modelled recover 5–10 clients in the first 30 days. The tool pays for itself in the first week.</div>
         </div>
 
         <div style="background:var(--surface2);border-radius:8px;padding:14px;border-left:3px solid var(--green);">
-          <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px;">"Can I try it first?"</div>
-          <div style="font-size:12px;color:var(--muted);line-height:1.7;">Yes — offer them a <strong style="color:var(--text)">demo call</strong> so they can hear the AI live. And remind them that they can <strong style="color:var(--green)">cancel anytime with one email</strong>. No lock-in, zero risk on their side.</div>
+          <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px;">"Can I cancel if it doesn't work?"</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.7;">Yes — cancel anytime with one email, no questions asked. No contracts, no lock-in. But give it 30 days — <strong style="color:var(--text)">the first results usually come in the first week</strong> once the lapsed client sequences go live.</div>
         </div>
 
       </div>
 
-      <div style="background:var(--surface2);border-radius:8px;padding:14px;border-left:3px solid var(--muted);">
-          <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px;">"What about TradeMore? It's only £8/month"</div>
-          <div style="font-size:12px;color:var(--muted);line-height:1.7;">TradeMore is a <strong style="color:var(--text)">CRM and job management app</strong> — quotes, invoices, scheduling. Their AI receptionist is one small feature bundled in, not the focus. It's not custom-scripted to their business, doesn't know their prices or services in depth, and isn't built specifically to handle calls professionally. We're a <strong style="color:var(--green)">dedicated, purpose-built AI phone receptionist</strong> — custom-configured for their exact business, tested before launch, updated when anything changes. Different product entirely.</div>
-        </div>
-
       <div style="margin-top:14px;padding:12px;background:rgba(108,99,255,0.07);border-radius:8px;font-size:11px;color:var(--muted);line-height:1.6;">
-        <strong style="color:var(--accent);">Key competitors:</strong> Moneypenny (£160/mo+ per-min, 3-mo contract), AnswerConnect UK (£149/mo per-min), Voco (£49–249/mo per-call, 48hr go-live), Team-Connect (£9.99–99.99/mo per-min, UK trades), TradeMore (£8.25/mo CRM with bundled basic AI reception — different product). US only: Smith.ai, Goodcall, Bland.ai, Air.ai (FTC lawsuit). <strong style="color:var(--text);">None offer dedicated AI reception: flat rate + custom script + 24hr go-live + UK-native.</strong>
+        <strong style="color:var(--accent);">Key context:</strong> Booksy/Fresha/Treatwell reminders only fire before existing bookings — not for lapsed clients. Their bulk marketing tools aren't targeted by absence. We fill that gap with <strong style="color:var(--text)">personalised absence-triggered SMS</strong>: lapsed recovery + slot fill + review requests. £39/mo flat, no commission, setup in 24hrs.
       </div>
     </div>
   </div>
@@ -790,7 +784,7 @@
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" id="cmodal-edit-btn">✏️ Edit</button>
-      <button class="btn btn-primary" id="cmodal-vapi-btn">🤖 VAPI</button>
+      <button class="btn btn-primary" id="cmodal-vapi-btn">📱 SMS</button>
       <button class="btn btn-green btn-sm" id="cmodal-complete-btn">⭐ Complete</button>
       <button class="btn btn-sm" id="cmodal-delete-btn" style="background:var(--red);color:#fff;border-color:var(--red);">🗑️ Delete</button>
       <button class="btn btn-ghost btn-sm" onclick="closeCustomerModal()" style="margin-left:auto">✕ Close</button>
@@ -802,17 +796,17 @@
 <div class="modal-overlay" id="vapi-modal" onclick="if(event.target===this)closeVapiModal()">
   <div class="modal-box">
     <div class="modal-header">
-      <h3 id="vapi-modal-title">🤖 VAPI System Prompt</h3>
+      <h3 id="vapi-modal-title">📱 SMS Templates</h3>
       <button class="modal-close" onclick="closeVapiModal()">✕</button>
     </div>
     <div class="modal-body">
-      <div style="background:rgba(108,99,255,0.08);border:1px solid rgba(108,99,255,0.2);border-radius:8px;padding:12px;margin-bottom:14px;font-size:12px;color:var(--muted);line-height:1.7;">
-        <strong style="color:var(--accent);">How to use:</strong> Copy the script below → go to <strong style="color:var(--text)">vapi.ai</strong> → open your assistant → paste into the <strong style="color:var(--text)">System Prompt</strong> field → Save. The AI will now know everything about this client's business.
+      <div style="background:rgba(0,212,170,0.07);border:1px solid rgba(0,212,170,0.2);border-radius:8px;padding:12px;margin-bottom:14px;font-size:12px;color:var(--muted);line-height:1.7;">
+        <strong style="color:var(--green);">How to use:</strong> Copy each message below and paste into your SMS platform (Twilio, SimpleTexting, etc.). Replace <strong style="color:var(--text)">{name}</strong> with the merge tag your platform uses. Set up each sequence at the trigger timing shown.
       </div>
       <div class="script-box" id="vapi-script-content"></div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-green" onclick="copyVapiScript()">📋 Copy to Clipboard</button>
+      <button class="btn btn-green" onclick="copyVapiScript()">📋 Copy All to Clipboard</button>
       <span id="copy-confirm" style="font-size:12px;color:var(--green);opacity:0;transition:opacity 0.3s;">Copied!</span>
       <div style="flex:1"></div>
       <button class="btn btn-ghost btn-sm" onclick="closeVapiModal()">Close</button>
@@ -863,29 +857,26 @@ let completed  = JSON.parse(localStorage.getItem('pa_completed')||'[]');
 let outreach = JSON.parse(localStorage.getItem('pa_outreach')||'{}');
 
 // Version-controlled to-do list — bump TODOS_V to reset to new defaults
-const TODOS_V = '4';
+const TODOS_V = '5';
 if(localStorage.getItem('pa_todos_v') !== TODOS_V){ localStorage.removeItem('pa_todos'); localStorage.setItem('pa_todos_v', TODOS_V); }
 let todos = JSON.parse(localStorage.getItem('pa_todos')||'null') || [
   // ── ONE-TIME SETUP ──
-  {id:1,  text:'Sign up to VAPI.ai (vapi.ai) — free trial, this is where you build the AI voice scripts', cat:'Setup', done:false},
-  {id:2,  text:'Sign up to VAPI.ai — buy UK phone numbers for each client directly in vapi.ai → Phone Numbers (~$2-3/mo each, no Twilio needed)', cat:'Setup', done:false},
-  {id:3,  text:'Sign up to Stripe and verify your account — stripe.com', cat:'Setup', done:false},
-  {id:4,  text:'Create a new Stripe payment link at £197/month (Products → Payment Links)', cat:'Setup', done:false},
-  {id:5,  text:'Sales page live on GitHub Pages with new voice copy', cat:'Setup', done:false},
-  {id:6,  text:'Update STRIPE_URL in sales-page-final.html with your new £197 link', cat:'Setup', done:false},
-  {id:7,  text:'Connect Google Sheet to dashboard — paste URL in Settings', cat:'Setup', done:false},
-  {id:8,  text:'Test Stripe payment link end-to-end — make a test purchase', cat:'Setup', done:false},
-  // ── VAPI DEMO (build once — use as sales proof) ──
-  {id:9,  text:'Build a demo AI receptionist in VAPI using a fake "Demo Plumbing Co" business', cat:'VAPI', done:false},
-  {id:10, text:'Buy a test VAPI UK phone number (vapi.ai → Phone Numbers → Buy Number) and connect it to your demo assistant', cat:'VAPI', done:false},
-  {id:11, text:'Test the demo: call the number and confirm the AI answers correctly', cat:'VAPI', done:false},
-  {id:12, text:'Record a demo call (any screen recorder or just a phone recording)', cat:'VAPI', done:false},
-  {id:13, text:'Add demo recording or transcript to sales page as proof — push to GitHub', cat:'VAPI', done:false},
+  {id:1,  text:'Sign up to Twilio (twilio.com) — free trial, this is where you send SMS sequences for clients', cat:'Setup', done:false},
+  {id:2,  text:'Sign up to Stripe and verify your account — stripe.com', cat:'Setup', done:false},
+  {id:3,  text:'Create a Stripe payment link at £39/month recurring (Products → Payment Links)', cat:'Setup', done:false},
+  {id:4,  text:'Update Stripe link in index.html if you create a new one, then push to GitHub', cat:'Setup', done:false},
+  {id:5,  text:'Connect Google Apps Script to dashboard — paste GAS URL in Settings', cat:'Setup', done:false},
+  {id:6,  text:'Test sign-up form end-to-end — submit a test entry and confirm it appears in dashboard', cat:'Setup', done:false},
+  {id:7,  text:'Set up GAS daily digest trigger (script.google.com → Triggers → dailyDigest → 8am)', cat:'Setup', done:false},
+  // ── SMS DEMO (build once — use as sales proof) ──
+  {id:8,  text:'Set up a Twilio demo number and send yourself a lapsed client SMS to screenshot for the sales page', cat:'Demo', done:false},
+  {id:9,  text:'Create a fake "Demo Barbers" customer in dashboard and generate SMS templates — screenshot the output', cat:'Demo', done:false},
+  {id:10, text:'Add screenshots or example SMS messages to index.html as social proof — push to GitHub', cat:'Demo', done:false},
   // ── OUTREACH ──
-  {id:14, text:'Build a list of 50 UK businesses where the owner answers their own phone (plumbers, salons, garages)', cat:'Outreach', done:false},
-  {id:15, text:'Write cold email / DM script — lead with the missed calls angle', cat:'Outreach', done:false},
-  {id:16, text:'Send your first 10 cold emails or DMs today', cat:'Outreach', done:false},
-  {id:17, text:'Set up follow-up sequence in Instantly.ai — Day 3, Day 7, Day 14', cat:'Outreach', done:false},
+  {id:11, text:'Build a list of 50 UK salons / barbers on Booksy or Fresha where you can DM the owner', cat:'Outreach', done:false},
+  {id:12, text:'Write a cold DM / email script — lead with the "1 in 4 clients don\'t rebook" angle', cat:'Outreach', done:false},
+  {id:13, text:'Send your first 10 DMs or cold emails today', cat:'Outreach', done:false},
+  {id:14, text:'Set up a follow-up sequence — Day 3, Day 7, Day 14 nudge', cat:'Outreach', done:false},
 ];
 let todoId = todos.reduce((m,t)=>Math.max(m,t.id),0)+1;
 
@@ -930,10 +921,10 @@ function renderDash() {
   updateSyncTime();
 
   const active = customers.filter(c=>c.status==='active');
-  const revenue = active.reduce((s,c)=>s+(parseFloat(c.fee)||197),0);
-  const vapiC=parseFloat(document.getElementById('cost-vapi')?.value)||30;
+  const revenue = active.reduce((s,c)=>s+(parseFloat(c.fee)||39),0);
+  const vapiC=parseFloat(document.getElementById('cost-vapi')?.value)||3;
   const telC=parseFloat(document.getElementById('cost-telnyx')?.value)||1;
-  const othC=parseFloat(document.getElementById('cost-other')?.value)||5;
+  const othC=parseFloat(document.getElementById('cost-other')?.value)||2;
   const cpc=vapiC+telC+othC;
   const profit=Math.max(0,revenue-active.length*cpc);
   const profitSubEl=document.getElementById('s-profit-sub');
@@ -963,14 +954,14 @@ function renderDash() {
     actions.push(actionRow('var(--red)',`<strong>${c.biz}</strong> — send welcome &amp; info request email`,'📧 Send',`sendWelcomeEmail('${c.id}')`));
   });
   customers.filter(c=>c.status!=='inactive'&&emailStage(c)==='setup').forEach(c=>{
-    actions.push(actionRow('var(--red)',`<strong>${c.biz}</strong> — info received, build VAPI script then send live email`,'🚀 Go Live',`sendLiveEmail('${c.id}')`));
+    actions.push(actionRow('var(--red)',`<strong>${c.biz}</strong> — CSV received, set up SMS sequences then send live email`,'🚀 Send Live',`sendLiveEmail('${c.id}')`));
   });
   customers.filter(c=>c.status!=='inactive'&&emailStage(c)==='welcomed').forEach(c=>{
     if(c.emailWelcome&&!c.emailNudge&&(Date.now()-new Date(c.emailWelcome).getTime())>172800000)
       actions.push(actionRow('var(--warn)',`<strong>${c.biz}</strong> — no reply in 48hrs`,'🔔 Nudge',`sendNudgeEmail('${c.id}')`));
   });
   const incompleteFl=workflows.filter(w=>w.steps.filter(Boolean).length<WF_STEPS.length);
-  if(incompleteFl.length) actions.push(actionRow('var(--warn)',`${incompleteFl.length} voice setup${incompleteFl.length>1?'s':''} not fully complete — open Pipeline to build`,'📋 Pipeline',`nav('customers',document.querySelector('[onclick*=customers]'))`));
+  if(incompleteFl.length) actions.push(actionRow('var(--warn)',`${incompleteFl.length} SMS setup${incompleteFl.length>1?'s':''} not fully complete — open Pipeline to build`,'📋 Pipeline',`nav('customers',document.querySelector('[onclick*=customers]'))`));
   const todayC=outreach[todayKey()]||0;
   actions.push(actionRow(todayC>=10?'var(--green)':todayC>=5?'var(--warn)':'var(--muted)',`Cold outreach today: <strong>${todayC} / 10</strong> sent`,'+ 1',`incrementOutreach()`));
   actEl.innerHTML = actions.length ? actions.join('') : '<div style="text-align:center;padding:20px;color:var(--green);font-size:13px">All clear — great work! 🎉</div>';
@@ -1017,7 +1008,7 @@ function renderDash() {
   const autoEl = document.getElementById('dash-automation');
   if(autoEl){
     const gasUrl=localStorage.getItem('pa_gas_url');
-    const liveVoice=workflows.filter(w=>w.steps.every(Boolean)).length;
+    const liveSequences=workflows.filter(w=>w.steps.every(Boolean)).length;
     const onboarding=customers.filter(c=>emailStage(c)!=='live'&&c.status!=='inactive').length;
     function sRow(icon,label,val,ok){return `<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:var(--surface2);border-radius:7px;margin-bottom:6px">
       <div style="font-size:12px">${icon} ${label}</div>
@@ -1026,7 +1017,7 @@ function renderDash() {
       sRow('🌐','Sales page → Sheet',gasUrl?'Connected ✓':'Not connected — go to Settings',!!gasUrl),
       sRow('🔄','Customer auto-import',gasUrl?'Running ✓':'Set up URL in Settings',!!gasUrl),
       sRow('💳','Stripe billing','Automatic ✓',true),
-      sRow('📞','AI receptionists live',liveVoice+' fully live',liveVoice>0),
+      sRow('📱','SMS sequences live',liveSequences+' fully live',liveSequences>0),
       sRow('📧','Clients being onboarded',onboarding?onboarding+' in progress':'None — keep selling!',true),
       sRow('📊','Monthly recurring','£'+revenue+' / £'+profit+' profit',revenue>0),
     ].join('');
@@ -1044,38 +1035,32 @@ function openCustomerForm(){
 function closeCustomerForm(){
   editingCustomerId=null;
   document.getElementById('customer-form').style.display='none';
-  ['c-biz','c-name','c-email','c-phone','c-type','c-city','c-bizphone','c-booking','c-hours','c-services','c-address','c-area','c-payment','c-emergency','c-response','c-website','c-faq','c-notes'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  document.getElementById('c-fee').value='197';
+  ['c-biz','c-name','c-email','c-phone','c-type','c-city','c-booking','c-reviewlink','c-quietdays','c-website','c-notes','c-clientcount'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('c-fee').value='39';
   document.getElementById('c-status').value='pending';
-  document.getElementById('c-voice').value='female';
-  document.getElementById('c-network').value='';
+  document.getElementById('c-platform').value='';
+  document.getElementById('c-tone').value='friendly';
 }
 function getFormData(existingId){
   return {
-    id: existingId||Date.now(),
-    biz:      document.getElementById('c-biz').value.trim(),
-    name:     document.getElementById('c-name').value,
-    email:    document.getElementById('c-email').value,
-    phone:    document.getElementById('c-phone').value,
-    type:     document.getElementById('c-type').value,
-    city:     document.getElementById('c-city').value,
-    bizPhone: document.getElementById('c-bizphone').value,
-    booking:   document.getElementById('c-booking').value,
-    hours:     document.getElementById('c-hours').value,
-    services:  document.getElementById('c-services').value,
-    address:   document.getElementById('c-address').value,
-    area:      document.getElementById('c-area').value,
-    payment:   document.getElementById('c-payment').value,
-    emergency: document.getElementById('c-emergency').value,
-    response:  document.getElementById('c-response').value,
-    website:   document.getElementById('c-website').value,
-    faq:       document.getElementById('c-faq').value,
-    notes:     document.getElementById('c-notes').value,
-    voice:     document.getElementById('c-voice').value,
-    network:   document.getElementById('c-network').value,
-    status:    document.getElementById('c-status').value,
-    fee:       document.getElementById('c-fee').value,
-    date:      new Date().toLocaleDateString('en-GB')
+    id:          existingId||Date.now(),
+    biz:         document.getElementById('c-biz').value.trim(),
+    name:        document.getElementById('c-name').value,
+    email:       document.getElementById('c-email').value,
+    phone:       document.getElementById('c-phone').value,
+    type:        document.getElementById('c-type').value,
+    city:        document.getElementById('c-city').value,
+    platform:    document.getElementById('c-platform').value,
+    clientcount: document.getElementById('c-clientcount').value,
+    booking:     document.getElementById('c-booking').value,
+    reviewlink:  document.getElementById('c-reviewlink').value,
+    quietdays:   document.getElementById('c-quietdays').value,
+    tone:        document.getElementById('c-tone').value,
+    website:     document.getElementById('c-website').value,
+    notes:       document.getElementById('c-notes').value,
+    status:      document.getElementById('c-status').value,
+    fee:         document.getElementById('c-fee').value,
+    date:        new Date().toLocaleDateString('en-GB')
   };
 }
 function editCustomer(id){
@@ -1090,22 +1075,16 @@ function editCustomer(id){
   document.getElementById('c-phone').value=c.phone||'';
   document.getElementById('c-type').value=c.type||'';
   document.getElementById('c-city').value=c.city||'';
-  document.getElementById('c-bizphone').value=c.bizPhone||'';
+  document.getElementById('c-platform').value=c.platform||'';
+  document.getElementById('c-clientcount').value=c.clientcount||'';
   document.getElementById('c-booking').value=c.booking||'';
-  document.getElementById('c-hours').value=c.hours||'';
-  document.getElementById('c-services').value=c.services||'';
-  document.getElementById('c-address').value=c.address||'';
-  document.getElementById('c-area').value=c.area||'';
-  document.getElementById('c-payment').value=c.payment||'';
-  document.getElementById('c-emergency').value=c.emergency||'';
-  document.getElementById('c-response').value=c.response||'';
+  document.getElementById('c-reviewlink').value=c.reviewlink||'';
+  document.getElementById('c-quietdays').value=c.quietdays||'';
+  document.getElementById('c-tone').value=c.tone||'friendly';
   document.getElementById('c-website').value=c.website||'';
-  document.getElementById('c-faq').value=c.faq||'';
   document.getElementById('c-notes').value=c.notes||'';
-  document.getElementById('c-voice').value=c.voice||'female';
-  document.getElementById('c-network').value=c.network||'';
   document.getElementById('c-status').value=c.status||'pending';
-  document.getElementById('c-fee').value=c.fee||197;
+  document.getElementById('c-fee').value=c.fee||39;
   document.getElementById('customer-form').style.display='block';
   document.getElementById('customer-form').scrollIntoView({behavior:'smooth'});
 }
@@ -1118,16 +1097,16 @@ function saveCustomer(){
       const updated={...customers[idx],...getFormData(customers[idx].id)};
       customers[idx]=updated;
       const wf=workflows.find(w=>w.biz===updated.biz);
-      if(wf){wf.phone=updated.bizPhone||'';wf.ownerPhone=updated.phone||'';wf.booking=updated.booking||'';wf.website=updated.website||'';localStorage.setItem('pa_workflows',JSON.stringify(workflows));}
+      if(wf){wf.ownerPhone=updated.phone||'';wf.booking=updated.booking||'';wf.website=updated.website||'';wf.platform=updated.platform||'';localStorage.setItem('pa_workflows',JSON.stringify(workflows));}
     }
     localStorage.setItem('pa_customers',JSON.stringify(customers));
-    closeCustomerForm();renderAll();notify('Customer updated — voice setup synced!');
+    closeCustomerForm();renderAll();notify('Customer updated!');
   } else {
     const c=getFormData(null);
     customers.push(c);
     localStorage.setItem('pa_customers',JSON.stringify(customers));
     autoCreateWorkflow(c);
-    closeCustomerForm();renderAll();notify('Customer saved — voice setup created!');
+    closeCustomerForm();renderAll();notify('Customer saved!');
   }
 }
 function deleteCustomer(id){
@@ -1228,10 +1207,10 @@ function renderCompleted(){
           <span style="font-size:10px;font-weight:700;background:rgba(0,212,170,0.12);color:var(--green);padding:2px 8px;border-radius:8px;">⭐ Complete</span>
         </div>
         <div style="font-size:12px;color:var(--muted);margin-bottom:4px;">👤 ${c.name||'—'}${c.email?' · '+c.email:''}</div>
-        <div style="font-size:12px;color:var(--muted);margin-bottom:4px;">📞 ${c.bizPhone||c.phone||'—'}</div>
-        <div style="font-size:12px;color:var(--green);font-weight:600;margin-bottom:4px;">£${c.fee||197}/mo</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:4px;">📲 ${c.platform||'—'} · 👥 ${c.clientcount||'—'} clients</div>
+        <div style="font-size:12px;color:var(--green);font-weight:600;margin-bottom:4px;">£${c.fee||39}/mo</div>
         <div style="font-size:11px;color:var(--muted);margin-bottom:12px;">Completed ${completedDate}</div>
-        ${c.notes||c.hours?`<div style="font-size:11px;color:var(--muted);background:var(--surface2);border-radius:6px;padding:8px;margin-bottom:10px;max-height:60px;overflow:hidden;">${c.notes||c.hours}</div>`:''}
+        ${c.notes?`<div style="font-size:11px;color:var(--muted);background:var(--surface2);border-radius:6px;padding:8px;margin-bottom:10px;max-height:60px;overflow:hidden;">${c.notes}</div>`:''}
         <button class="btn btn-ghost btn-sm" style="width:100%;color:var(--red);border-color:rgba(255,77,106,0.3);" onclick="removeCompleted('${c.id}')">Remove from list</button>
       </div>`;
     }).join('')}
@@ -1243,7 +1222,7 @@ function autoCreateWorkflow(c){
   workflows.push({
     id:          Date.now(),
     biz:         c.biz||'',
-    phone:       c.bizPhone||'',
+    phone:       c.phone||'',
     ownerPhone:  c.phone||'',
     email:       c.email||'',
     booking:     c.booking||'',
@@ -1280,11 +1259,10 @@ function renderPipeline(){
     const isInactive=c.status==='inactive';
     const nudge=stage==='welcomed'&&c.emailWelcome&&(Date.now()-new Date(c.emailWelcome).getTime())>172800000;
     const wf=workflows.find(w=>w.biz===c.biz);
-    const netLabels={ee:'EE',o2:'O2',vodafone:'Vodafone',three:'Three',sky:'Sky/giffgaff',landline:'Landline'};
     const tags=[];
-    if(c.bizPhone) tags.push('📞 '+c.bizPhone);
-    if(c.network&&netLabels[c.network]) tags.push('📡 '+netLabels[c.network]);
-    if(c.voice) tags.push('🎙️ '+(c.voice==='female'?'Female':'Male'));
+    if(c.platform) tags.push('📲 '+c.platform);
+    if(c.clientcount) tags.push('👥 '+c.clientcount+' clients');
+    if(c.tone) tags.push('💬 '+(c.tone==='friendly'?'Friendly':c.tone==='professional'?'Professional':'Fun'));
     if(c.website) tags.push(`<a href="${c.website}" target="_blank" style="color:var(--accent);text-decoration:none;">🌐 site</a>`);
     // actions per stage
     let actions='';
@@ -1296,14 +1274,14 @@ function renderPipeline(){
     } else if(stage==='welcomed'){
       actions=`${viewBtn}${nudge?`<button class="pipe-btn" style="background:var(--warn);border-color:var(--warn);color:#000" onclick="sendNudgeEmail('${c.id}')">🔔 Nudge</button>`:`<button class="pipe-btn" onclick="sendNudgeEmail('${c.id}')">🔔 Nudge</button>`}<button class="pipe-btn pipe-btn-green" onclick="markSetupDone('${c.id}')">📋 Info In</button>`;
     } else if(stage==='setup'){
-      actions=`${viewBtn}<button class="pipe-btn" onclick="showVapiScript('${c.id}')">🤖 VAPI</button><button class="pipe-btn pipe-btn-green" onclick="sendLiveEmail('${c.id}')">🚀 Go Live</button>`;
+      actions=`${viewBtn}<button class="pipe-btn" onclick="showVapiScript('${c.id}')">📱 SMS</button><button class="pipe-btn pipe-btn-green" onclick="sendLiveEmail('${c.id}')">🚀 Go Live</button>`;
     } else {
       actions=`${viewBtn}<button class="pipe-btn" onclick="copyForwardingGuide('${c.id}')">📋 Fwd</button><button class="pipe-btn" onclick="sendUpdateEmail('${c.id}')">📧 Update</button>`;
     }
     return `<div class="pipe-card"${isInactive?' style="opacity:0.5"':''}>
       <div style="display:flex;justify-content:space-between;align-items:flex-start;">
         <div class="pipe-card-biz">${c.biz}${c.isNew?'<span style="margin-left:5px;background:rgba(0,212,170,0.15);color:var(--green);font-size:9px;font-weight:700;padding:1px 5px;border-radius:8px;">NEW</span>':''}${nudge?'<span style="margin-left:5px;background:rgba(255,179,71,0.2);color:var(--warn);font-size:9px;font-weight:700;padding:1px 5px;border-radius:8px;">48hr!</span>':''}</div>
-        <span style="font-size:10px;color:var(--muted);">£${c.fee||197}/mo</span>
+        <span style="font-size:10px;color:var(--muted);">£${c.fee||39}/mo</span>
       </div>
       <div class="pipe-card-meta">${c.name||'—'}${c.email?' · '+c.email:''}</div>
       ${progressBar(c)}
@@ -1332,7 +1310,7 @@ function renderPipeline(){
     el.innerHTML=html;
   });
   const sub=document.getElementById('pipe-sub');
-  if(sub){const total=customers.filter(c=>c.status!=='inactive').length;const active=customers.filter(c=>c.status==='active').length;sub.textContent=`${total} client${total===1?'':'s'} · ${active} live · £${active*197}/mo`;}
+  if(sub){const total=customers.filter(c=>c.status!=='inactive').length;const active=customers.filter(c=>c.status==='active');const rev=active.reduce((s,c)=>s+(parseFloat(c.fee)||39),0);sub.textContent=`${total} client${total===1?'':'s'} · ${active.length} live · £${rev}/mo`;}
 }
 
 function statusBadge(s){
@@ -1371,7 +1349,7 @@ function renderListView(){
   const sort=(document.getElementById('lv-sort')||{value:'date-desc'}).value;
 
   let list=customers.filter(c=>{
-    const matchQ=!q||[c.biz,c.name,c.email,c.city,c.type,c.phone,c.bizPhone].some(f=>(f||'').toLowerCase().includes(q));
+    const matchQ=!q||[c.biz,c.name,c.email,c.city,c.type,c.phone,c.platform].some(f=>(f||'').toLowerCase().includes(q));
     const matchS=statusFilter==='all'||c.status===statusFilter;
     return matchQ&&matchS;
   });
@@ -1381,7 +1359,7 @@ function renderListView(){
     if(sort==='date-desc') return (Number(b.id)||0)-(Number(a.id)||0);
     if(sort==='biz-asc')   return (a.biz||'').localeCompare(b.biz||'');
     if(sort==='biz-desc')  return (b.biz||'').localeCompare(a.biz||'');
-    if(sort==='fee-desc')  return (parseFloat(b.fee)||197)-(parseFloat(a.fee)||197);
+    if(sort==='fee-desc')  return (parseFloat(b.fee)||39)-(parseFloat(a.fee)||39);
     return 0;
   });
 
@@ -1400,7 +1378,7 @@ function renderListView(){
     <div class="lv-row">
       <div>
         <strong>${c.biz}</strong>${c.isNew?'<span style="margin-left:5px;background:rgba(0,212,170,0.15);color:var(--green);font-size:9px;font-weight:700;padding:1px 5px;border-radius:8px;">NEW</span>':''}
-        ${c.bizPhone?`<br><span style="font-size:11px;color:var(--muted);">📞 ${c.bizPhone}</span>`:''}
+        ${c.platform?`<br><span style="font-size:11px;color:var(--muted);">📲 ${c.platform}</span>`:''}
       </div>
       <div>
         <div>${c.name||'—'}</div>
@@ -1411,7 +1389,7 @@ function renderListView(){
         <div style="font-size:11px;color:var(--muted);">${c.type||''}</div>
       </div>
       <div>${statusBadge(c.status)}</div>
-      <div style="font-weight:700;color:var(--green);">£${c.fee||197}</div>
+      <div style="font-weight:700;color:var(--green);">£${c.fee||39}</div>
       <div style="font-size:11px;color:var(--muted);">${c.date||''}</div>
       <div class="lv-actions">
         <button class="btn btn-ghost btn-sm" onclick="showCustomerModal('${c.id}')">👁 View</button>
@@ -1437,7 +1415,7 @@ function renderGlobalSearch(){
   gsSelectedIdx=-1;
   if(!q){res.innerHTML='<div class="gs-empty">Start typing to find any customer instantly</div>';return;}
   const pool=[...customers,...(archived||[]),...(completed||[])];
-  const matches=pool.filter(c=>[c.biz,c.name,c.email,c.city,c.type,c.phone,c.bizPhone].some(f=>(f||'').toLowerCase().includes(q))).slice(0,15);
+  const matches=pool.filter(c=>[c.biz,c.name,c.email,c.city,c.type,c.phone,c.platform].some(f=>(f||'').toLowerCase().includes(q))).slice(0,15);
   if(!matches.length){res.innerHTML='<div class="gs-empty">No customers found</div>';return;}
   res.innerHTML=matches.map(c=>`
     <div class="gs-result" data-id="${c.id}" onclick="gsOpenCustomer('${c.id}')">
@@ -1445,7 +1423,7 @@ function renderGlobalSearch(){
         <div class="gs-result-biz">${c.biz}${c.isNew?'<span style="margin-left:6px;background:rgba(0,212,170,0.15);color:var(--green);font-size:9px;font-weight:700;padding:1px 5px;border-radius:8px;">NEW</span>':''}</div>
         <div class="gs-result-meta">${[c.name,c.email,c.city,c.type].filter(Boolean).join(' · ')}</div>
       </div>
-      <div style="display:flex;gap:7px;align-items:center;">${statusBadge(c.status)}<span style="font-size:11px;color:var(--muted);">£${c.fee||197}/mo</span></div>
+      <div style="display:flex;gap:7px;align-items:center;">${statusBadge(c.status)}<span style="font-size:11px;color:var(--muted);">£${c.fee||39}/mo</span></div>
     </div>`).join('');
 }
 function gsOpenCustomer(id){
@@ -1466,12 +1444,12 @@ function gsKeyNav(e){
 }
 
 const WF_STEPS = [
-  'Business info received (hours, pricing, booking link)',
-  'VAPI account created &amp; AI script written',
-  'VAPI phone number purchased &amp; connected to assistant',
-  'Test call passed — AI responds correctly',
-  'Forwarding guide sent to client',
-  'Client confirmed — call forwarding live!'
+  'CSV received from client',
+  'SMS templates generated &amp; approved by client',
+  'Sequences configured in SMS platform (Twilio etc.)',
+  'Test SMS sent &amp; confirmed working',
+  'Review request sequence active',
+  'Client confirmed — all sequences live!'
 ];
 
 function openWfForm(){document.getElementById('wf-form').style.display='block';}
@@ -1515,7 +1493,7 @@ function toggleWfStep(wfId,stepIdx){
   renderAll();
 }
 function deleteWf(id){
-  if(!confirm('Remove this voice setup?'))return;
+  if(!confirm('Remove this SMS setup?'))return;
   workflows=workflows.filter(w=>String(w.id)!==String(id));
   localStorage.setItem('pa_workflows',JSON.stringify(workflows));
   renderWorkflows();
@@ -1523,12 +1501,12 @@ function deleteWf(id){
 function editTwilioNumber(id){
   const wf=workflows.find(w=>String(w.id)===String(id));
   if(!wf)return;
-  const num=prompt('Enter the VAPI phone number for '+wf.biz+' (buy at vapi.ai → Phone Numbers):',wf.twilioNumber||'');
+  const num=prompt('Enter the Twilio sending number for '+wf.biz+' (e.g. +441234567890):',wf.twilioNumber||'');
   if(num===null)return;
   wf.twilioNumber=num.trim();
   localStorage.setItem('pa_workflows',JSON.stringify(workflows));
   renderWorkflows();
-  if(num.trim()) notify('AI number saved — live email will now include forwarding codes!');
+  if(num.trim()) notify('Twilio number saved!');
 }
 function renderWorkflows(){
   const el=document.getElementById('workflows-list');
@@ -1553,8 +1531,8 @@ ${WF_STEPS.map((s,i)=>`<div class="wf-step ${wf.steps[i]?'done':''}" onclick="to
 ${wf.phone?`<span style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;">📞 Client: ${wf.phone}</span>`:''}
 ${wf.ownerPhone?`<span style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;">📱 Owner: ${wf.ownerPhone}</span>`:''}
 ${wf.twilioNumber
-  ? `<span style="background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);padding:3px 8px;border-radius:5px;font-size:11px;color:var(--green);">🤖 AI: ${wf.twilioNumber}</span>`
-  : `<span onclick="editTwilioNumber('${wf.id}')" style="background:rgba(255,179,71,0.1);border:1px solid rgba(255,179,71,0.3);padding:3px 8px;border-radius:5px;font-size:11px;color:var(--warn);cursor:pointer;">⚠️ Add VAPI number</span>`}
+  ? `<span style="background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);padding:3px 8px;border-radius:5px;font-size:11px;color:var(--green);">📱 ${wf.twilioNumber}</span>`
+  : `<span onclick="editTwilioNumber('${wf.id}')" style="background:rgba(255,179,71,0.1);border:1px solid rgba(255,179,71,0.3);padding:3px 8px;border-radius:5px;font-size:11px;color:var(--warn);cursor:pointer;">⚠️ Add Twilio number</span>`}
 ${wf.booking?`<a href="${wf.booking}" target="_blank" style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;color:var(--green);text-decoration:none;">📅 Booking</a>`:''}
 ${wf.website?`<a href="${wf.website}" target="_blank" style="background:var(--surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px;font-size:11px;color:var(--accent);text-decoration:none;">🌐 Website</a>`:''}
 </div>
@@ -1576,7 +1554,7 @@ function addTodo(){
 function toggleTodo(id){const t=todos.find(x=>x.id===id);if(t){t.done=!t.done;localStorage.setItem('pa_todos',JSON.stringify(todos));renderTodos();renderDash();}}
 function deleteTodo(id){todos=todos.filter(t=>t.id!==id);localStorage.setItem('pa_todos',JSON.stringify(todos));renderTodos();renderDash();}
 function renderTodos(){
-  ['Setup','VAPI','Outreach','Client','General'].forEach(cat=>{
+  ['Setup','Demo','Outreach','Client','General'].forEach(cat=>{
     const el=document.getElementById('todo-'+cat);
     if(!el)return;
     const items=todos.filter(t=>t.cat===cat);
@@ -1587,11 +1565,11 @@ function renderTodos(){
 
 function renderRevenue(){
   const active=customers.filter(c=>c.status==='active');
-  const vapi=parseFloat(document.getElementById('cost-vapi')?.value)||30;
+  const vapi=parseFloat(document.getElementById('cost-vapi')?.value)||3;
   const telnyx=parseFloat(document.getElementById('cost-telnyx')?.value)||1;
-  const other=parseFloat(document.getElementById('cost-other')?.value)||5;
+  const other=parseFloat(document.getElementById('cost-other')?.value)||2;
   const costPerClient=vapi+telnyx+other;
-  const gross=active.reduce((s,c)=>s+(parseFloat(c.fee)||197),0);
+  const gross=active.reduce((s,c)=>s+(parseFloat(c.fee)||39),0);
   const totalCost=active.length*costPerClient;
   const profit=Math.max(0,gross-totalCost);
   const margin=gross>0?Math.round((profit/gross)*100):0;
@@ -1618,7 +1596,7 @@ function renderRevenue(){
   const tbody=document.getElementById('revenue-tbody');
   if(!active.length){tbody.innerHTML='<tr><td colspan="7" class="empty">No active clients yet.</td></tr>';return;}
   tbody.innerHTML=active.map(c=>{
-    const fee=parseFloat(c.fee)||197;
+    const fee=parseFloat(c.fee)||39;
     const p=fee-costPerClient;
     return `<tr>
       <td><strong>${c.biz}</strong></td>
@@ -1659,58 +1637,50 @@ function emailStage(c){
 
 function buildWelcomeBody(c){
   const firstName = (c.name||c.biz).split(' ')[0];
-  const bizLine = c.type ? `${c.biz} (${c.type})` : c.biz;
-  const cityLine = c.city ? ` in ${c.city}` : '';
-  const hasHours    = c.hours    && c.hours.trim();
-  const hasServices = c.services && c.services.trim();
-  const hasBooking  = c.booking  && c.booking.trim();
-  const allFilled   = hasHours && hasServices;
-
-  let infoSection;
-  if(allFilled){
-    infoSection =
-`I've already pulled some details from your website — just check these are correct and let me know if anything needs updating:
-
-────────────────────────────
-OPENING HOURS (confirm or correct)
-────────────────────────────
-${c.hours}
-
-────────────────────────────
-SERVICES & PRICING (confirm or correct)
-────────────────────────────
-${c.services}
-${hasBooking?`
-────────────────────────────
-BOOKING LINK
-────────────────────────────
-${c.booking}
-`:''}
-────────────────────────────
-
-If any of the above is wrong or out of date, just reply with the corrections. Otherwise just reply "all correct" and I'll get started.`;
-  } else {
-    const need1 = !hasHours    ? `────────────────────────────\n1. YOUR OPENING HOURS\n────────────────────────────\n\ne.g. Mon-Fri 8am-6pm, Saturday 9am-1pm, Sunday Closed\n` : '';
-    const need2 = !hasServices ? `\n────────────────────────────\n${!hasHours?'2':'1'}. YOUR SERVICES & PRICING\n────────────────────────────\n\nList your main services and prices. A photo of a price list, menu board, or website screenshot is perfect — no need to type it all out.\n` : '';
-    const need3 = !hasBooking  ? `\n────────────────────────────\n${(!hasHours&&!hasServices)?'3':(!hasHours||!hasServices)?'2':'1'}. BOOKING LINK (if you have one)\n────────────────────────────\n\ne.g. Fresha, Booksy, or Calendly link. If you don't have one, no problem — the AI will take a caller's name and number and let them know you'll call back.\n` : '';
-    infoSection = need1 + need2 + need3 +
-`
-────────────────────────────
-
-Just hit reply and paste them in — no logins, no forms, nothing complicated.`;
-  }
+  const platform = c.platform || 'your booking platform';
+  const hasBooking = c.booking && c.booking.trim();
+  const hasReview  = c.reviewlink && c.reviewlink.trim();
 
   return `Hi ${firstName},
 
-Great news — your payment is confirmed and I'm setting up your AI phone receptionist for ${bizLine}${cityLine} now.
+Great news — your payment is confirmed and I'm setting up your automated client follow-up sequences for ${c.biz} now.
 
-It'll be live within 24 hours. To get it built I just need${allFilled?' you to confirm the details below — I\'ve already pulled them from your website:':' a few quick things from you:'}
+Everything will be live within 24 hours. To get started I just need a few things from you:
 
-${infoSection}
+────────────────────────────
+1. YOUR CLIENT LIST (CSV EXPORT)
+────────────────────────────
 
-Once I have everything I'll build your AI receptionist, run test calls to make sure it answers correctly, then send you a simple 30-second guide to set up call forwarding on your phone. That's the only thing you'll ever need to do.
+Export your client list from ${platform}:
+• Booksy: Dashboard → Clients → Export
+• Fresha: Clients → Export Clients → CSV
+• Treatwell: Reports → Clients → Download
 
-Any questions just reply to this email — I'll come straight back to you.
+The file needs: client name, mobile number, and last appointment date. Reply to this email with the CSV attached.
+
+────────────────────────────
+2. YOUR BOOKING LINK${hasBooking?' ✓ (we have this — just confirm it\'s correct)':''}
+────────────────────────────
+
+${hasBooking?`The link we have for you: ${c.booking}\n\nIs this correct? If not, just send the right one.`:'Send us the link your clients use to book — your Booksy profile, Fresha page, or wherever they book from.'}
+
+────────────────────────────
+3. YOUR GOOGLE REVIEW LINK${hasReview?' ✓ (we have this)':''}
+────────────────────────────
+
+${hasReview?`Review link we have: ${c.reviewlink}`:'Go to your Google Business Profile, click "Ask for reviews", and copy the short link. Paste it here. (If you don\'t have one set up yet, just say so and we\'ll help.)'}
+
+────────────────────────────
+4. YOUR QUIET DAYS / SLOW SLOTS
+────────────────────────────
+
+Which days or times are usually quiet? e.g. "Monday all day" or "Tuesdays before midday". We'll target those with the slot-fill SMS.
+
+────────────────────────────
+
+That's it — just reply with those and your sequences will be running in 24 hours.
+
+Any questions just reply.
 
 Phillips Automates
 phillipsautomates@gmail.com`;
@@ -1719,87 +1689,148 @@ phillipsautomates@gmail.com`;
 function buildNudgeBody(c){
   return `Hi ${c.name||c.biz},
 
-Just checking in — did you get a chance to send over your hours and pricing? It's the only thing holding me back from getting your AI receptionist live.
+Just checking in — did you get a chance to export your client list from ${c.platform||'your booking platform'}? That's the only thing we need to get your sequences running.
 
-If you got stuck anywhere just reply and I'll help.
+If you got stuck on the export, just let us know which platform you're on and we'll send you the exact steps.
 
 Phillips Automates
 phillipsautomates@gmail.com`;
 }
 
-function getForwardingCodes(network, rawNum){
-  const num = (rawNum||'').replace(/\s/g,'');
-  const intNum = num.startsWith('0') ? '+44'+num.slice(1) : num;
-  if(network==='ee') return {
-    noAnswer:`**61*${intNum}*11*20#`, busy:`**67*${intNum}#`, off:`**62*${intNum}#`,
-    cancel:'##61# then ##67# then ##62#',
-    note:'EE requires the number in international format — so +44 instead of a leading 0. The codes above have already been formatted for you.'
-  };
-  return {
-    noAnswer:`**61*${num}#`, busy:`**67*${num}#`, off:`**62*${num}#`,
-    cancel:'##61# then ##67# then ##62#', note:''
-  };
-}
-
-function buildLiveBody(c, twilioNumber){
-  const num = (twilioNumber||'').replace(/\s/g,'');
-  const numDisplay = twilioNumber || '[AI phone number — add in Voice Setup first]';
-  const network = c.network||'';
-  let fwdSection;
-  if(!num){
-    fwdSection = `HOW TO ACTIVATE:\nWe'll send you the call forwarding codes in a separate message shortly.`;
-  } else if(network==='landline'){
-    fwdSection = `HOW TO ACTIVATE (landline / VoIP):
-
-Your business number is a landline or VoIP number, so the setup is slightly different:
-
-• If you use a VoIP system (RingCentral, 3CX, etc.): log into your portal and set up "No Answer" divert to: ${numDisplay}
-• If you use a standard BT landline: call 0800 800 150 and ask them to set up conditional divert to: ${numDisplay}
-• If you use another provider: contact them and ask to forward unanswered calls to: ${numDisplay}
-
-It usually takes less than 10 minutes to set up and they'll walk you through it.`;
-  } else {
-    const codes = getForwardingCodes(network, num);
-    fwdSection = `HOW TO ACTIVATE (takes 30 seconds on your phone):
-${codes.note?'\n'+codes.note+'\n':''}
-Dial each of these codes on your phone then press the Call button:
-
-When you don't answer:  ${codes.noAnswer}
-When you're on a call:  ${codes.busy}
-When your phone is off: ${codes.off}
-
-That's it — your AI is live. Any call you don't pick up goes to your AI receptionist instead of voicemail.
-
-To turn it off at any time, dial: ${codes.cancel}`;
-  }
-
+function buildLiveBody(c){
+  const tone = c.tone === 'professional' ? 'professional' : c.tone === 'fun' ? 'fun and upbeat' : 'friendly and casual';
   return `Hi ${c.name||c.biz},
 
-Great news — your AI phone receptionist is ready and has been fully tested!
-
-Your AI number: ${numDisplay}
+Your automated client follow-up sequences are now live! Here's what's running in the background for you:
 
 ────────────────────────────
-${fwdSection}
+WHAT'S ACTIVE
 ────────────────────────────
 
-HOW IT WORKS ONCE LIVE:
-- You answer your phone as normal — nothing changes for you
-- If you don't pick up, the AI answers instantly in your business name
-- It handles pricing, hours, and booking questions automatically
-- When a caller wants to book, it takes their name and number and texts you straight away
-- You call them back when you're free — no missed leads
+✅ LAPSED CLIENT RECOVERY
+Clients who haven't rebooked in 5, 8, and 12 weeks will automatically receive a personalised SMS inviting them back. Tone: ${tone}.
 
-TURNING IT OFF:
-To pause the AI and go back to normal voicemail, dial ##61# ##67# ##62# on your phone.
+✅ EMPTY SLOT FILLER
+On your quiet days (${c.quietdays||'the days you told us about'}), a targeted text goes out to lapsed clients with a last-minute availability nudge.
 
-UPDATES:
-If your prices, hours, or services change, just email phillipsautomates@gmail.com and I'll update the AI within 24 hours. Included in your plan — no extra charge.
+✅ REVIEW REQUESTS
+Two hours after each appointment, clients receive a text asking for a Google review.
 
-Thanks for choosing Phillips Automates!
+────────────────────────────
+WHAT YOU NEED TO DO
+────────────────────────────
+
+Nothing — it all runs automatically.
+
+The one thing that keeps it accurate: send us a fresh CSV export from ${c.platform||'your booking platform'} once a month (or whenever you remember). That keeps the client list up to date.
+
+────────────────────────────
+UPDATING YOUR SEQUENCES
+────────────────────────────
+
+Want to change a message, add a promotion, or update your booking link? Just email phillipsautomates@gmail.com — we'll update everything within 24 hours at no extra charge.
+
+Thanks for joining Phillips Automates — excited to see your quiet slots start filling up.
 
 Phillips Automates
 phillipsautomates@gmail.com`;
+}
+
+function buildUpdateBody(c){
+  return `Hi ${c.name||c.biz},
+
+Hope things are going well — are you seeing more bookings come through from the sequences?
+
+Just checking in to see if anything needs updating. Common things we can change anytime:
+
+• New or updated booking link
+• Change the message tone or wording
+• Add a seasonal promotion or offer
+• Update your quiet days for the slot-fill SMS
+• Add or remove clients from sequences
+
+Also — it's a good time to send over a fresh CSV export from ${c.platform||'your booking platform'} if you haven't recently. Keeps everything accurate.
+
+Just reply with anything you need.
+
+Phillips Automates
+phillipsautomates@gmail.com`;
+}
+
+// ── SMS TEMPLATE GENERATOR ──
+function generateSmsTemplates(c){
+  const biz = c.biz || 'us';
+  const booking = c.booking || '[BOOKING LINK]';
+  const review  = c.reviewlink || '[REVIEW LINK]';
+  const tone = c.tone || 'friendly';
+
+  let lapsedShort, lapsedMedium, lapsedLong, slotFill, reviewReq;
+
+  if(tone === 'professional'){
+    lapsedShort  = `Hi {name}, we noticed it's been a little while since your last visit to ${biz}. We'd love to welcome you back — book your next appointment here: ${booking} · Reply STOP to opt out`;
+    lapsedMedium = `Hi {name}, it's been a couple of months since we last saw you at ${biz}! We'd love to catch up — your usual slot may still be available: ${booking} · Reply STOP to opt out`;
+    lapsedLong   = `Hi {name}, we miss seeing you at ${biz}. It's been a while — whenever you're ready, we're here: ${booking} · Reply STOP to opt out`;
+    slotFill     = `Hi {name}, we have a last-minute appointment available ${c.quietdays ? 'on ' + c.quietdays.split(',')[0] : 'this week'} at ${biz}. Interested? Book here: ${booking} · Reply STOP to opt out`;
+    reviewReq    = `Hi {name}, thank you for visiting ${biz} today. If you have a moment, we'd really appreciate a Google review — it only takes 30 seconds: ${review} · ${biz}`;
+  } else if(tone === 'fun'){
+    lapsedShort  = `Hey {name}! 👋 Your chair at ${biz} is missing you — it's been a few weeks! Ready for a fresh cut? Book here: ${booking} · Reply STOP to opt out`;
+    lapsedMedium = `Hey {name}! 😄 It's been a while at ${biz} — the team has been asking after you! Come back and treat yourself: ${booking} · Reply STOP to opt out`;
+    lapsedLong   = `Hey {name}! Long time no see 👀 We miss you at ${biz}! Your usual's waiting whenever you're ready: ${booking} · Reply STOP to opt out`;
+    slotFill     = `Hey {name}! 🔥 Last-minute slot just dropped at ${biz} — ${c.quietdays ? c.quietdays.split(',')[0] : 'this week'}! First to grab it wins 😄 Book here: ${booking} · Reply STOP to opt out`;
+    reviewReq    = `Hey {name}! Thanks for coming in today 🙌 If you loved it, a quick Google review would mean SO much to us — takes 30 seconds: ${review} · ${biz}`;
+  } else {
+    lapsedShort  = `Hey {name}, it's been a little while since your last visit to ${biz}! We'd love to see you back — book here whenever you're ready: ${booking} · Reply STOP to opt out`;
+    lapsedMedium = `Hey {name} 👋 It's been a couple of months at ${biz} — hope you're well! Your usual slot might still be free: ${booking} · Reply STOP to opt out`;
+    lapsedLong   = `Hey {name}, we haven't seen you in a while at ${biz} and wanted to reach out! Whenever you're ready to come back: ${booking} · Reply STOP to opt out`;
+    slotFill     = `Hey {name}! We've got a last-minute slot available ${c.quietdays ? 'on ' + c.quietdays.split(',')[0] : 'this week'} at ${biz} — interested? Book here: ${booking} · Reply STOP to opt out`;
+    reviewReq    = `Hey {name}, thanks so much for coming in today! 🙏 If you have 30 seconds, a Google review would really help us out: ${review} · ${biz}`;
+  }
+
+  return `SMS TEMPLATES FOR: ${biz.toUpperCase()}
+Tone: ${tone} | Platform: ${c.platform||'?'} | Booking link: ${booking}
+──────────────────────────────────────────────────
+
+LAPSED CLIENT — 5 WEEKS (first nudge)
+──────────────────────────────────────────────────
+${lapsedShort}
+
+Character count: ${lapsedShort.length} / 160
+
+──────────────────────────────────────────────────
+LAPSED CLIENT — 8 WEEKS (second nudge)
+──────────────────────────────────────────────────
+${lapsedMedium}
+
+Character count: ${lapsedMedium.length} / 160
+
+──────────────────────────────────────────────────
+LAPSED CLIENT — 12 WEEKS (final nudge)
+──────────────────────────────────────────────────
+${lapsedLong}
+
+Character count: ${lapsedLong.length} / 160
+
+──────────────────────────────────────────────────
+EMPTY SLOT FILLER
+──────────────────────────────────────────────────
+${slotFill}
+
+Character count: ${slotFill.length} / 160
+
+──────────────────────────────────────────────────
+REVIEW REQUEST (sent 2hrs after appointment)
+──────────────────────────────────────────────────
+${reviewReq}
+
+Character count: ${reviewReq.length} / 160
+
+──────────────────────────────────────────────────
+SETUP NOTES
+• Replace {name} with merge tag from your SMS platform
+• Twilio: use {{name}} | SimpleTexting: use {first_name}
+• Quiet days for slot-fill: ${c.quietdays||'[not set — update customer record]'}
+• Client count: ${c.clientcount||'?'} | Est. monthly SMS: ~${Math.round((parseInt(c.clientcount)||100)*0.15)} sends/mo
+• At Twilio pricing (~£0.04/SMS): est. £${(Math.round((parseInt(c.clientcount)||100)*0.15)*0.04).toFixed(2)}/mo in costs`;
 }
 
 function openMailto(to, subject, body){
@@ -1809,7 +1840,7 @@ function openMailto(to, subject, body){
 function sendWelcomeEmail(id){
   const c=customers.find(x=>String(x.id)===String(id));
   if(!c||!c.email){notify('No email address for this customer');return;}
-  openMailto(c.email,'Your AI receptionist for '+c.biz+' — quick details needed',buildWelcomeBody(c));
+  openMailto(c.email,'Phillips Automates — getting your sequences set up for '+c.biz,buildWelcomeBody(c));
   c.emailWelcome=new Date().toISOString();
   localStorage.setItem('pa_customers',JSON.stringify(customers));
   renderAll();notify('Welcome email opened — send it from Gmail!');
@@ -1817,7 +1848,7 @@ function sendWelcomeEmail(id){
 function sendNudgeEmail(id){
   const c=customers.find(x=>String(x.id)===String(id));
   if(!c||!c.email){notify('No email address for this customer');return;}
-  openMailto(c.email,'Re: Welcome to Phillips Automates — quick nudge',buildNudgeBody(c));
+  openMailto(c.email,'Re: Phillips Automates — still waiting on your client list',buildNudgeBody(c));
   c.emailNudge=new Date().toISOString();
   localStorage.setItem('pa_customers',JSON.stringify(customers));
   renderAll();notify('Nudge email opened — send it from Gmail!');
@@ -1827,44 +1858,22 @@ function markSetupDone(id){
   if(!c)return;
   c.setupDone=true;
   localStorage.setItem('pa_customers',JSON.stringify(customers));
-  renderAll();notify(c.biz+' marked as info received — now build their VAPI script!');
+  renderAll();notify(c.biz+' marked as CSV received — now build their SMS templates!');
 }
 function sendLiveEmail(id){
   const c=customers.find(x=>String(x.id)===String(id));
   if(!c||!c.email){notify('No email address for this customer');return;}
-  const wf=workflows.find(w=>w.biz===c.biz);
-  const twilioNum=wf?wf.twilioNumber||'':'';
-  if(!twilioNum&&!confirm('No AI number set yet for '+c.biz+' — the email will have a placeholder instead of real forwarding codes.\n\nSend anyway?'))return;
-  openMailto(c.email,'Your AI receptionist is ready! 🚀',buildLiveBody(c,twilioNum));
+  openMailto(c.email,'Your client follow-up sequences are live! 🚀 — '+c.biz,buildLiveBody(c));
   c.emailLive=new Date().toISOString();
   c.status='active';
   localStorage.setItem('pa_customers',JSON.stringify(customers));
   renderAll();notify('Live email opened — send it from Gmail! Client set to Active.');
 }
-
-function buildUpdateBody(c){
-  return `Hi ${c.name||c.biz},
-
-Hope everything's going well with your AI receptionist!
-
-I just wanted to check in — let me know if anything needs updating and I'll have it live within 24 hours at no extra charge.
-
-Common updates I can make:
-• New or changed prices
-• New services added or removed
-• Updated opening hours
-• New booking link
-
-Just hit reply with whatever needs changing.
-
-Phillips Automates
-phillipsautomates@gmail.com`;
-}
 function sendUpdateEmail(id){
   const c=customers.find(x=>String(x.id)===String(id));
   if(!c||!c.email){notify('No email address for this customer');return;}
-  openMailto(c.email,'Checking in — any updates for your AI receptionist?',buildUpdateBody(c));
-  notify('Update email opened — send it from Gmail!');
+  openMailto(c.email,'Checking in — how are the sequences going for '+c.biz+'?',buildUpdateBody(c));
+  notify('Check-in email opened — send it from Gmail!');
 }
 
 function markCustomerActive(id){
@@ -1929,21 +1938,12 @@ function progressBar(c){
     '</div>';
 }
 
-// ── COPY FORWARDING GUIDE ──
+// ── COPY SETUP CONFIRMATION ──
 function copyForwardingGuide(id){
   const c=customers.find(x=>String(x.id)===String(id));
   if(!c)return;
-  const wf=workflows.find(w=>w.biz===c.biz);
-  const twilioNum=wf&&wf.twilioNumber?wf.twilioNumber:'[YOUR AI NUMBER]';
-  const network=c.network||'';
-  let msg='';
-  if(network==='landline'){
-    msg=`Hi ${c.name||c.biz}! Your AI receptionist is ready.\n\nYour AI number: ${twilioNum}\n\nTo activate, contact your phone provider and ask them to forward unanswered calls to ${twilioNum}. Takes ~10 mins.\n\nAny questions just reply! — Phillips Automates`;
-  } else {
-    const codes=getForwardingCodes(network,twilioNum);
-    msg=`Hi ${c.name||c.biz}! Your AI receptionist is ready.\n\nYour AI number: ${twilioNum}\n\nTo activate (30 seconds):\nDial on your phone:\n${codes.noAnswer} (no answer)\n${codes.busy} (busy)\n${codes.off} (phone off)\n\nThat's it — you're live! To turn off: ${codes.cancel}\n\n— Phillips Automates`;
-  }
-  navigator.clipboard.writeText(msg).then(()=>notify('Forwarding guide copied — paste into WhatsApp/SMS!')).catch(()=>notify('Copy failed — try selecting manually'));
+  const msg=`Hi ${c.name||c.biz}! Your SMS sequences are now live.\n\nYour lapsed-client re-engagement, slot-fill alerts, and review request messages are all configured and running.\n\nYou don't need to do anything — we'll handle it from here. Any questions just reply!\n\n— Phillips Automates`;
+  navigator.clipboard.writeText(msg).then(()=>notify('Setup confirmation copied!')).catch(()=>notify('Copy failed — try selecting manually'));
 }
 
 function saveClaudeKey(){
@@ -1999,13 +1999,13 @@ async function scrapeWebsite(){
         max_tokens:1500,
         messages:[{
           role:'user',
-          content:`You are extracting information from a UK small business website to configure an AI phone receptionist. Extract every piece of information a caller might ask about.
+          content:`You are extracting information from a UK hair salon, barber, or beauty business website to help set up personalised SMS re-engagement sequences for their clients.
 
 Return ONLY valid JSON with exactly these fields (use empty string if not found):
 {
   "hours": "opening hours, one day per line e.g. Monday: 9am-5pm",
   "services": "every service and price mentioned, one per line e.g. Haircut: £25",
-  "notes": "everything else useful: full address, areas covered, parking, payment methods, qualifications, FAQs, how to book, response times, emergency info, anything a caller might ask"
+  "notes": "everything else useful: full business name, address, booking platform used, Google review link, specialisms, staff names, any promotions or loyalty info"
 }
 
 Be thorough. Include everything. Do not summarise — use the actual text from the page.
@@ -2021,14 +2021,16 @@ ${trimmedText}`
     const jsonMatch=raw.match(/\{[\s\S]*\}/);
     if(!jsonMatch) throw new Error('Could not parse Claude response');
     const extracted=JSON.parse(jsonMatch[0]);
-    // Fill fields
+    // Fill fields — merge all scraped info into notes
     let filled=[];
-    if(extracted.hours&&extracted.hours.trim()){document.getElementById('c-hours').value=extracted.hours.trim();filled.push('hours');}
-    if(extracted.services&&extracted.services.trim()){document.getElementById('c-services').value=extracted.services.trim();filled.push('services & pricing');}
-    if(extracted.notes&&extracted.notes.trim()){
+    const parts=[];
+    if(extracted.hours&&extracted.hours.trim())parts.push('HOURS:\n'+extracted.hours.trim());
+    if(extracted.services&&extracted.services.trim())parts.push('SERVICES & PRICING:\n'+extracted.services.trim());
+    if(extracted.notes&&extracted.notes.trim())parts.push(extracted.notes.trim());
+    if(parts.length){
       const existing=document.getElementById('c-notes').value.trim();
-      document.getElementById('c-notes').value=existing?existing+'\n\n'+extracted.notes.trim():extracted.notes.trim();
-      filled.push('extra info');
+      document.getElementById('c-notes').value=existing?existing+'\n\n'+parts.join('\n\n'):parts.join('\n\n');
+      filled.push('notes');
     }
     btn.textContent='✅ Done!';
     status.textContent=filled.length?'Filled in: '+filled.join(', ')+' — review then save':'Nothing found — the site may block scraping';
@@ -2117,7 +2119,7 @@ function renderEmails(){
   const setupEl=document.getElementById('email-col-setup');
   if(setupEl) setupEl.innerHTML=cols.setup.length
     ?cols.setup.map(c=>card(c,`
-      <div style="font-size:10px;color:var(--muted);margin-bottom:4px;">Build their VAPI script now (~30 mins)</div>
+      <div style="font-size:10px;color:var(--muted);margin-bottom:4px;">Set up SMS sequences in Twilio, then go live</div>
       <button class="btn btn-primary btn-sm" onclick="sendLiveEmail('${c.id}')" style="width:100%">🚀 Send Live Email</button>
     `)).join('')
     :'<div class="empty" style="padding:16px 0;font-size:12px">None here</div>';
@@ -2197,30 +2199,29 @@ function fetchFromSheet(url){
           // fix column mismatch: if status looks like a voice value, correct it
           const rawStatus=sc.status||'';
           const cleanStatus=validStatuses.includes(rawStatus)?rawStatus:'pending';
-          const cleanVoice=['male','female'].includes(sc.voice||'')?sc.voice:'female';
-          const cleanFee=isNaN(Number(sc.fee))?197:Number(sc.fee)||197;
+          const cleanFee=isNaN(Number(sc.fee))?39:Number(sc.fee)||39;
           const cleanDate=typeof sc.date==='string'&&sc.date.includes('/')?sc.date:new Date().toLocaleDateString('en-GB');
           const newC={
-            id:       String(sc.id)||String(Date.now()),
-            biz:      sc.biz||'',
-            name:     sc.name||'',
-            email:    sc.email||'',
-            phone:    String(sc.phone||''),
-            type:     sc.type||'',
-            city:     sc.city||'',
-            bizPhone: String(sc.bizPhone||''),
-            booking:  sc.booking||'',
-            hours:    sc.hours||'',
-            services: sc.services||'',
-            website:  sc.website||'',
-            notes:    '',
-            voice:    cleanVoice,
-            network:  sc.network||'',
-            logs:     [],
-            status:   cleanStatus,
-            fee:      cleanFee,
-            date:     cleanDate,
-            isNew:    true
+            id:          String(sc.id)||String(Date.now()),
+            biz:         sc.biz||'',
+            name:        sc.name||'',
+            email:       sc.email||'',
+            phone:       String(sc.phone||''),
+            type:        sc.type||'',
+            city:        sc.city||'',
+            platform:    sc.platform||'',
+            clientcount: sc.clientcount||'',
+            booking:     sc.booking||'',
+            reviewlink:  sc.reviewlink||'',
+            quietdays:   sc.quietdays||'',
+            tone:        sc.tone||'friendly',
+            website:     sc.website||'',
+            notes:       '',
+            logs:        [],
+            status:      cleanStatus,
+            fee:         cleanFee,
+            date:        cleanDate,
+            isNew:       true
           };
           customers.push(newC);
           knownIds.add(sid);
@@ -2293,24 +2294,25 @@ function infoCell(icon,label,val,isLink,copyVal){
   return`<div class="info-cell"><div class="info-cell-label">${icon} ${label}</div><div class="info-cell-val">${v}${btn}</div></div>`;
 }
 function renderCmodalInfo(c){
-  const netLabels={ee:'EE',o2:'O2',vodafone:'Vodafone',three:'Three / iD Mobile',sky:'Sky / giffgaff',landline:'Landline / VoIP'};
+  const toneLabels={friendly:'Friendly & casual',professional:'Professional',fun:'Fun & playful'};
   document.getElementById('cmodal-info').innerHTML=`
     <div class="info-grid">
       ${infoCell('👤','Owner',c.name||'—',false,c.name)}
       ${infoCell('📧','Email',c.email||'—',false,c.email)}
       ${infoCell('📱','Mobile',c.phone||'—',false,c.phone)}
-      ${infoCell('📞','Business Phone',c.bizPhone||'—',false,c.bizPhone)}
-      ${infoCell('📡','Network',(c.network&&netLabels[c.network])||'Unknown')}
-      ${infoCell('🎙️','Voice',(c.voice||'female').charAt(0).toUpperCase()+(c.voice||'female').slice(1))}
+      ${infoCell('🏢','Business Type',c.type||'—')}
       ${infoCell('📍','City',c.city||'—')}
-      ${infoCell('💷','Monthly Fee','£'+(c.fee||197)+'/mo')}
+      ${infoCell('📲','Booking Platform',c.platform||'—')}
+      ${infoCell('👥','Approx. Clients',c.clientcount||'—')}
+      ${infoCell('💬','Message Tone',toneLabels[c.tone]||c.tone||'Friendly & casual')}
+      ${infoCell('💷','Monthly Fee','£'+(c.fee||39)+'/mo')}
       ${infoCell('📅','Since',c.date||'—')}
       ${c.website?infoCell('🌐','Website',c.website,true):''}
-      ${c.booking?infoCell('📅','Booking URL',c.booking,true):''}
+      ${c.booking?infoCell('📅','Booking Link',c.booking,true,c.booking):''}
+      ${c.reviewlink?infoCell('⭐','Review Link',c.reviewlink,true,c.reviewlink):''}
     </div>
-    ${c.hours?`<div style="margin-top:10px;background:var(--surface2);border-radius:8px;padding:12px;"><div class="info-cell-label">🕐 Opening Hours</div><div style="font-size:12px;white-space:pre-wrap;line-height:1.6;margin-top:4px;">${c.hours}</div></div>`:''}
-    ${c.services?`<div style="margin-top:8px;background:var(--surface2);border-radius:8px;padding:12px;"><div class="info-cell-label">💷 Services & Pricing</div><div style="font-size:12px;white-space:pre-wrap;line-height:1.6;margin-top:4px;">${c.services}</div></div>`:''}
-    ${c.type?`<div style="margin-top:8px;background:var(--surface2);border-radius:8px;padding:12px;"><div class="info-cell-label">🏢 Business Type</div><div style="font-size:13px;font-weight:600;">${c.type}</div></div>`:''}
+    ${c.quietdays?`<div style="margin-top:10px;background:var(--surface2);border-radius:8px;padding:12px;"><div class="info-cell-label">🗓️ Quiet Days / Slow Slots</div><div style="font-size:12px;line-height:1.6;margin-top:4px;">${c.quietdays}</div></div>`:''}
+    ${c.notes?`<div style="margin-top:8px;background:var(--surface2);border-radius:8px;padding:12px;"><div class="info-cell-label">📝 Notes</div><div style="font-size:12px;white-space:pre-wrap;line-height:1.6;margin-top:4px;">${c.notes}</div></div>`:''}
   `;
 }
 function renderCmodalEmails(c){
@@ -2339,21 +2341,20 @@ function renderCmodalEmails(c){
 }
 function renderCmodalSetup(c){
   const wf=workflows.find(w=>w.biz===c.biz);
-  if(!wf){document.getElementById('cmodal-setup').innerHTML='<div class="empty">No voice setup found for this client.</div>';return;}
+  if(!wf){document.getElementById('cmodal-setup').innerHTML='<div class="empty">No SMS setup found for this client.</div>';return;}
   const pct=Math.round(wf.steps.filter(Boolean).length/WF_STEPS.length*100);
   document.getElementById('cmodal-setup').innerHTML=`
     <div style="margin-bottom:14px;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><span style="font-size:12px;font-weight:600;">Progress</span><span style="font-size:12px;color:${pct===100?'var(--green)':'var(--muted)'};">${pct}%</span></div>
       <div style="background:var(--bg);border-radius:6px;height:6px;overflow:hidden;"><div style="height:100%;background:${pct===100?'var(--green)':'var(--accent)'};width:${pct}%;transition:width 0.3s"></div></div>
     </div>
-    ${wf.twilioNumber?`<div style="background:rgba(0,212,170,0.07);border:1px solid rgba(0,212,170,0.25);border-radius:8px;padding:10px 12px;margin-bottom:12px;"><div style="font-size:10px;color:var(--green);margin-bottom:3px;">🤖 AI Phone Number (Telnyx/VAPI)</div><div style="font-size:14px;font-weight:700;">${wf.twilioNumber}</div><div style="display:flex;gap:6px;margin-top:6px;"><button class="btn btn-ghost btn-sm" onclick="copyForwardingGuide('${c.id}')">📋 Copy Forwarding Guide</button><button class="btn btn-ghost btn-sm" onclick="copyCell('${wf.twilioNumber}')" title="Copy number">📋 Copy Number</button></div></div>`:'<div style="background:rgba(255,179,71,0.08);border:1px solid rgba(255,179,71,0.25);border-radius:8px;padding:10px 12px;margin-bottom:12px;font-size:12px;color:var(--warn);">⚠️ No VAPI/Telnyx number yet — buy at telnyx.com, connect in VAPI, add it to this client\'s Voice Setup</div>'}
     <div style="display:flex;flex-direction:column;gap:6px;">
       ${WF_STEPS.map((step,i)=>`<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--surface2);border-radius:8px;cursor:pointer;" onclick="toggleWfStepModal('${wf.id}',${i})">
         <div style="width:18px;height:18px;border-radius:5px;border:2px solid ${wf.steps[i]?'var(--green)':'var(--border)'};background:${wf.steps[i]?'var(--green)':'transparent'};display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;color:#000;">${wf.steps[i]?'✓':''}</div>
         <div style="font-size:12px;${wf.steps[i]?'color:var(--green);text-decoration:line-through;':''};">${step}</div>
       </div>`).join('')}
     </div>
-    <div style="margin-top:12px;"><button class="btn btn-primary" style="width:100%" onclick="showVapiScript('${c.id}')">🤖 Generate VAPI Script</button></div>
+    <div style="margin-top:12px;"><button class="btn btn-primary" style="width:100%" onclick="showVapiScript('${c.id}')">📱 Generate SMS Templates</button></div>
   `;
 }
 function renderCmodalNotes(c){
@@ -2385,191 +2386,12 @@ function toggleWfStepModal(wfId,i){
   if(c) renderCmodalSetup(c);
 }
 
-// ── VAPI SCRIPT GENERATOR ──
-function generateVapiScript(c){
-  const biz       = c.biz       || 'this business';
-  const type      = c.type      || 'local business';
-  const hours     = c.hours     || 'Please contact us for opening hours.';
-  const services  = c.services  || 'Please contact us for service and pricing information.';
-  const booking   = c.booking   || '';
-  const phone     = c.bizPhone  || c.phone || '';
-  const voice     = c.voice     || 'female';
-  const address   = c.address   || '';
-  const area      = c.area      || '';
-  const payment   = c.payment   || '';
-  const emergency = c.emergency || '';
-  const response  = c.response  || '';
-  const faq       = c.faq       || '';
-  const notes     = c.notes     || '';
-  const ownerFirst= (c.name||'the team').split(' ')[0];
-
-  const bookingFlow = booking
-    ? `When a caller wants to book or make an appointment:
-
-1. First offer the online booking link:
-   "I can send you our online booking link — it's ${booking}
-   You can pick a time there directly. Would that work for you?"
-
-2. If they'd prefer to book over the phone or can't use the link:
-   Take their full name and best phone number, then say:
-   "Perfect — I've noted that down. ${ownerFirst} will call you back shortly to confirm your slot."`
-    : `When a caller wants to book or make an appointment:
-
-Take their full name and best phone number, then say:
-"Perfect — I've noted that down. ${ownerFirst} will call you back shortly to confirm a time."
-
-Do NOT try to confirm specific times or slots — you don't have access to the live calendar.`;
-
-  return `# AI RECEPTIONIST — SYSTEM PROMPT
-# Business: ${biz}
-# Voice: ${voice.charAt(0).toUpperCase()+voice.slice(1)} (set this in vapi.ai → Voice tab)
-# Generated by Phillips Automates
-# ─────────────────────────────────────────────────
-# HOW TO USE:
-#   1. Go to vapi.ai → Your Assistant → System Prompt
-#   2. Delete any existing content
-#   3. Paste this entire script
-#   4. Click Save
-#   5. In the Voice tab — select a ${voice} voice
-# ─────────────────────────────────────────────────
-
-
-## ROLE & PURPOSE
-
-You are an AI receptionist for ${biz}, a ${type}${c.city?` based in ${c.city}`:''}. You answer incoming calls professionally, handle common questions about services and pricing, and capture booking requests so the team can call back to confirm.
-
-You are an AI assistant — if a caller sincerely asks whether they're speaking to a person, say:
-"I'm ${biz}'s AI receptionist — I'm here to help with any questions and can take your details for the team."
-
-Never claim to be human if sincerely asked.
-
-
-## VOICE & PERSONALITY
-
-- Warm, friendly, and professional at all times
-- Speak naturally — use contractions ("I'll", "you're", "that's", "we're")
-- Be patient and clear — some callers may be elderly or less familiar with AI
-- If you mishear something: "I'm sorry, I didn't quite catch that — could you say that again?"
-- Never sound rushed or dismissive
-- If you genuinely don't know an answer, be honest — don't make things up
-
-
-## GREETING
-
-Start every call with:
-"Hello, thanks for calling ${biz}! How can I help you today?"
-
-If it's clearly outside opening hours:
-"Hi, thanks for calling ${biz}! We're not open right now, but I can take your details and make sure ${ownerFirst} calls you back."
-
-
-## WHAT YOU CAN HELP WITH
-
-
-### 1. SERVICES & PRICING
-
-When asked about services, prices, or what you offer:
-
-${services}
-
-If asked about something not listed:
-"I don't have the exact details on that — let me take your name and number and get ${ownerFirst} to call you back with the right information."
-
-
-### 2. OPENING HOURS
-
-When asked about opening times:
-
-${hours}
-
-If called outside those hours:
-"We're closed at the moment — our hours are ${hours.split('\n')[0]}. I can take your details and make sure someone calls you back when we're next open."
-${address ? `
-
-### 3. LOCATION & DIRECTIONS
-
-When asked where you're based or for the address:
-
-${biz} is located at: ${address}
-${area ? `\nService area: ${area}` : ''}
-
-If asked whether you cover a particular area:
-${area ? `"We cover ${area} — if you're outside that area, I can still take your details and someone will let you know."`:'Check whether the location falls within the service area. If unsure, say: "I\'ll take your details and someone will confirm whether we cover your area."'}` : ''}
-
-
-### ${address ? '4' : '3'}. BOOKING AN APPOINTMENT
-
-${bookingFlow}
-
-
-### ${address ? '5' : '4'}. TAKING A MESSAGE
-
-If a caller has a question you can't answer, or wants to speak to someone directly:
-"Of course — let me take your name and number and ${ownerFirst} will get back to you."
-
-Always collect:
-- Full name
-- Best phone number
-- Brief reason for calling (1 sentence)
-
-Then say: "Got that — ${ownerFirst} will be in touch shortly."
-${payment ? `
-
-### PAYMENT
-
-When asked about payment methods:
-"We accept ${payment}."` : ''}
-${emergency ? `
-
-### EMERGENCIES & OUT-OF-HOURS
-
-When asked about emergency or out-of-hours work:
-"${emergency}"` : ''}
-${response ? `
-
-### RESPONSE TIMES
-
-When asked how quickly you can come out or how long jobs take:
-"${response}"` : ''}
-${faq ? `
-
-### COMMON QUESTIONS
-
-${faq}` : ''}
-
-
-## WHAT NOT TO DO
-
-- Do NOT confirm specific appointment times or availability — you don't have live calendar access
-- Do NOT give medical, legal, or professional advice
-- Do NOT invent prices or services not listed in this prompt
-- Do NOT say "please hold" — you're a voice AI
-- Do NOT end the call without asking "Is there anything else I can help with?"
-
-
-## CLOSING THE CALL
-
-If you've answered their question:
-"Is there anything else I can help you with today?"
-Then: "Thanks for calling ${biz} — have a great day!"
-
-If you've taken their details:
-"${ownerFirst} will be in touch shortly. Thanks for calling ${biz} — take care!"
-
-
-## REFERENCE
-
-- Business: ${biz}${c.city ? ` · ${c.city}` : ''}
-- Type: ${type}${phone ? `\n- Business phone: ${phone}` : ''}${booking ? `\n- Booking link: ${booking}` : ''}${address ? `\n- Address: ${address}` : ''}${area ? `\n- Covers: ${area}` : ''}${payment ? `\n- Payment: ${payment}` : ''}
-${notes ? `\n## ADDITIONAL NOTES FOR THE AI\n\n${notes}` : ''}
-Always refer to this business as "${biz}".`;
-}
 
 function showVapiScript(id){
   const c = customers.find(x=>String(x.id)===String(id));
   if(!c) return;
-  const script = generateVapiScript(c);
-  document.getElementById('vapi-modal-title').textContent = '🤖 VAPI Script — ' + c.biz;
+  const script = generateSmsTemplates(c);
+  document.getElementById('vapi-modal-title').textContent = '📱 SMS Templates — ' + c.biz;
   document.getElementById('vapi-script-content').textContent = script;
   document.getElementById('vapi-modal').classList.add('open');
 }
